@@ -1,0 +1,2 @@
+C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\GreenSa.UWP.csproj;x86
+C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\GreenSa.csproj;neutral
