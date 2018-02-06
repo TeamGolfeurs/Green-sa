@@ -26,6 +26,7 @@ namespace GreenSa.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::GreenSa.Droid.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation
