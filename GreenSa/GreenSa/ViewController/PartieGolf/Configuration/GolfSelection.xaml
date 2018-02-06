@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GreenSa.ViewController.PartieGolf.Configuration.GolfSelection">
     <ContentPage.Content>
-        <ListView x:Name="GolfCourse">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <TextCell 
-                    Text="{Binding nom}" Detail="{Binding adresse}">
-                </TextCell>
-            </DataTemplate>git
-        </ListView.ItemTemplate>
-    </ListView> 
+        <ListView x:Name="listeGolf">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell 
+                        Text="{Binding nom}" Detail="{Binding adresse}">
+                    </TextCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </ContentPage.Content>
 </ContentPage>

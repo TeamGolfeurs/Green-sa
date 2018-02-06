@@ -18,6 +18,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
         public GolfSelection(Partie partie)
         {
             InitializeComponent();
+
         }
 
         /**
@@ -26,11 +27,18 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          * */
         protected override void OnAppearing()
         {
-            Filter<GolfCourse>.Filtre f = (c => c.attribute == 2);
-            //get the list from
+            //Définition du filtre
+            Filter<GolfCourse>.Filtre f = (c => true);
+
+            //Recupere la liste des Golfs filtré par la classe GestionGolf
+            List<GolfCourse> l = GestionGolfs.getListGolfs(f);
+
+            listeGolf.ItemsSource = l;
 
             base.OnAppearing();
         }
+
+
 
         /*
          * Appelée à la sélection d'un golf
@@ -38,6 +46,8 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          * */
         private async void onGolfSelection(object sender, SelectedItemChangedEventArgs e)
         {
+            
+            
         }
 
 
