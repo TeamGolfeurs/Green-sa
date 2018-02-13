@@ -3,6 +3,7 @@ using GreenSa.Models.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,10 +14,11 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
 {
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ClubSelection : ContentPage
+    public partial class ClubSelectionPage : ContentPage
     {
-        public ClubSelection(Partie partie)
+        public ClubSelectionPage(Partie partie)
         {
+            var a = 52;
             InitializeComponent();
         }
 

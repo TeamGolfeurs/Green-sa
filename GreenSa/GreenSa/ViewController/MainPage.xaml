@@ -5,9 +5,34 @@
              x:Class="GreenSa.ViewController.MainPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="GREEN'SA"
+                   FontSize="Large"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Button 
+                VerticalOptions="Start"
+                HorizontalOptions="End"
+                Clicked="onOptionsClicked"
+                >
+                <Button.Image>
+                    <OnPlatform x:TypeArguments="FileImageSource"
+                        iOS="tools.png"
+                        Android="tools.png"
+                        WinPhone="tools.png"/>
+                </Button.Image>
+            </Button>
+            <Button 
+                Text="JOUER"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Clicked="onPlayClicked"
+                    />
+            <Button 
+                Text="STATISTIQUES"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Clicked="onStatsClicked"
+                    />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

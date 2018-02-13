@@ -13,9 +13,9 @@ using Xamarin.Forms.Xaml;
 namespace GreenSa.ViewController.PartieGolf.Configuration
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class GolfSelection : ContentPage
+    public partial class GolfSelectionPage : ContentPage
     {
-        public GolfSelection(Partie partie)
+        public GolfSelectionPage(Partie partie)
         {
             InitializeComponent();
         }
@@ -26,7 +26,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          * */
         protected override void OnAppearing()
         {
-            Filter<GolfCourse>.Filtre f = (c => c.attribute == 2);
+            Filter<GolfCourse>.Filtre f = (c => true);
             //get the list from
 
             base.OnAppearing();
