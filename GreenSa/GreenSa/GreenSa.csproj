@@ -39,7 +39,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\GolfModel\Club.cs" />
-    <Compile Include="Models\Stastistiques\StastitiquesGolf.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomPinMovable.cs" />
     <Compile Include="Persistence\ISQLiteDb.cs" />
