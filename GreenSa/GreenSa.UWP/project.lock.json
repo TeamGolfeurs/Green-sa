@@ -23851,10 +23851,7 @@
       "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
       "sqlite-net-pcl": "1.5.166-beta",
       "Xamarin.Forms": "2.4.0.280",
-      "Xamarin.Forms.Maps": {
-        "target": "Package",
-        "version": "[2.5.0.122203, )"
-      }
+      "Xamarin.Forms.Maps": "2.5.0.122203"
     },
     "frameworks": {
       "uap10.0.10586": {}

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GreenSa.Models.GolfModel;
+using GreenSa.ViewController.PartieGolf.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +32,8 @@ namespace GreenSa.ViewController
          * */
         async private void onPlayClicked(object sender, EventArgs e)
         {
-
+            Partie partie = new Partie();
+            await Navigation.PushAsync(new GolfSelectionPage(partie));
         }
 
         /**
@@ -42,7 +45,11 @@ namespace GreenSa.ViewController
 
         }
 
+        async private void onOptionsClicked(object sender, EventArgs e)
+        {
 
+        }
+        
 
 
     }

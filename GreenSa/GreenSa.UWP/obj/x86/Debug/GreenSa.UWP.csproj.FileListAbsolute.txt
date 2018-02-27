@@ -230,3 +230,6 @@ C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\obj\x86\D
 C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\obj\x86\Debug\Xamarin.Forms.Platform.UAP.pri.xml
 C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\obj\x86\Debug\ProjectArchitectures.txt
+C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\Xamarin.Forms.Maps.UWP.dll
+C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\Xamarin.Forms.Maps.dll
+C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\obj\x86\Debug\Xamarin.Forms.Maps.UWP.pri.xml

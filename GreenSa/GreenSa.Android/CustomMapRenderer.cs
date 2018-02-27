@@ -14,6 +14,9 @@ using Xamarin.Forms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Gms.Maps;
 using static Android.Gms.Maps.GoogleMap;
+using Xamarin.Forms;
+using GreenSa.Model.Tools.GPS_Maps;
+using Greensa.Droid;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace Greensa.Droid

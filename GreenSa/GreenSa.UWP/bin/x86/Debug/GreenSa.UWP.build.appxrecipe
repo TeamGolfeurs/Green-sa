@@ -406,11 +406,17 @@
     <AppxPackagedFile Include="C:\Users\willi\.nuget\packages\xamarin.forms\2.4.0.280\lib\uap10.0\Xamarin.Forms.Xaml.dll">
       <PackagePath>Xamarin.Forms.Xaml.dll</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\.nuget\packages\xamarin.forms.maps\2.5.0.122203\lib\uap10.0\Xamarin.Forms.Maps.UWP.dll">
+      <PackagePath>Xamarin.Forms.Maps.UWP.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\.nuget\packages\xamarin.forms.maps\2.5.0.122203\lib\uap10.0\Xamarin.Forms.Maps.dll">
+      <PackagePath>Xamarin.Forms.Maps.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\bin\Debug\GreenSa.dll">
       <PackagePath>GreenSa.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Properties\Default.rd.xml">
-      <PackagePath>Properties\Default.rd.xml</PackagePath>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Assets\tools.png">
+      <PackagePath>Assets\tools.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Assets\LockScreenLogo.scale-100.png">
       <PackagePath>Assets\LockScreenLogo.scale-100.png</PackagePath>
@@ -530,6 +536,18 @@
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Assets\Wide310x150Logo.scale-400.png">
       <PackagePath>Assets\Wide310x150Logo.scale-400.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Properties\Default.rd.xml">
+      <PackagePath>Properties\Default.rd.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\Clubs\Fer3.xml">
+      <PackagePath>GreenSa\Ressources\Clubs\Fer3.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\GolfCourses\SaintJacques_18trous.xml">
+      <PackagePath>GreenSa\Ressources\GolfCourses\SaintJacques_18trous.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\GolfCourses\SaintJacques_9trous.xml">
+      <PackagePath>GreenSa\Ressources\GolfCourses\SaintJacques_9trous.xml</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\GreenSa.UWP.xr.xml">
       <PackagePath>GreenSa.UWP.xr.xml</PackagePath>

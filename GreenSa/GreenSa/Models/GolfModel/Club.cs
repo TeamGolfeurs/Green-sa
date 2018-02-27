@@ -11,9 +11,11 @@ namespace GreenSa.Models.GolfModel
         /**
          * id et name ?
          * */
-       public Club()
-        {
+        public string name {get;set;}
 
+       public Club(string name)
+        {
+            this.name = name;
         }
 
         /*

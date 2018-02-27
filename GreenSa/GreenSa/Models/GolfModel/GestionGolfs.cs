@@ -31,7 +31,7 @@ namespace GreenSa.Models.GolfModel
             //si la table n'existe pas encore on parse les fichiers XML (/Ressources) et on insert
 
 
-            return new List<GolfCourse> { new GolfCourse(), new GolfCourse() };
+            return new List<GolfCourse> { new GolfCourse("Fer1"), new GolfCourse("Driver") };
         }
 
 
@@ -41,7 +41,7 @@ namespace GreenSa.Models.GolfModel
          * le fitre peut être null, dans ce cas tous les golfs seront récupérés.
          * */
         //NOT IMPLEMENTED YET
-        public static List<Club> getListClubs(Filter<GolfCourse>.Filtre filtre)
+        public static List<Club> getListClubs(Filter<Club>.Filtre filtre)
         {
             if (filtre == null)
                 filtre = x => true;
@@ -51,7 +51,7 @@ namespace GreenSa.Models.GolfModel
             //si la table n'existe pas encore on parse les fichiers XML et on insert
 
 
-            return new List<Club> { new Club(), new Club() };
+            return new List<Club> { new Club("Fer1"), new Club("Fer2") };
         }
     }
 
