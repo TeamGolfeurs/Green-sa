@@ -8,29 +8,29 @@ using Xamarin.Forms.Maps;
 
 namespace GreenSa.Model.Tools.GPS_Maps
 {
-    public class CustomPinMovable : Xamarin.Forms.Maps.Pin
+    public class CustomPin : Xamarin.Forms.Maps.Pin
     {
+        public static string LOCKED = "NO_MOVABLE";
+        public static string MOVABLE = "MOVABLE";
+        public static string HOLE = "HOLE";
+        public static string USER = "USER";
+
+        public string type { get; set; }
         //
         // Résumé :
         //     The latitude and longitude of the Xamarin.Forms.Maps.Pin.
         //
         // Notes :
         //     To be added.
-        public new Position Position { get
-            {
-                return base.Position;
-            }
-             set
-            {
-                base.Position = value;
-                
-            }
+        public new Position Position {
+            get {return base.Position;}
+            set {base.Position=value; }
         }
 
 
-        public CustomPinMovable() : base()
+        public CustomPin(string type) : base()
         {
-
+            this.type = type;
         }
 
         public override bool Equals(object obj)

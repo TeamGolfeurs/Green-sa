@@ -34,7 +34,7 @@ namespace Greensa.Droid
         public void OnMarkerDragEnd(Marker marker)
         {
             cmr.UpdatePolyLinePos(false,marker.Position);
-            marker.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueCyan));
+            marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.shape_circle));
 
         }
 

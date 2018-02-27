@@ -17,13 +17,14 @@ using static Android.Gms.Maps.GoogleMap;
 using Xamarin.Forms;
 using GreenSa.Model.Tools.GPS_Maps;
 using Greensa.Droid;
+using GreenSa.Droid;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace Greensa.Droid
 {
     public class CustomMapRenderer : MapRenderer
     {
-        public CustomMapRenderer() : base() { }
+        //public CustomMapRenderer() : base() { }
 
         public CustomMapRenderer(Context context) : base(context){}
 
@@ -68,14 +69,22 @@ namespace Greensa.Droid
 
         protected override MarkerOptions CreateMarker(Pin pin)
         {
-            if(!( pin is CustomPinMovable ))
-            {
-                return base.CreateMarker(pin);
-            }
             var marker = base.CreateMarker(pin);
-            marker.Draggable(true);
-            marker.SetRotation(30.5f);
-            marker.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueCyan));
+            if (!( pin is CustomPin ))
+            {
+                return marker;
+            }
+            if(((CustomPin)(pin)).type == CustomPin.MOVABLE)
+            {
+                marker.Draggable(true);
+                marker.SetRotation(30.5f);
+                marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.shape_circle));
+            }
+            else if (((CustomPin)(pin)).type == CustomPin.HOLE)
+            {
+                marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.flag));
+            }
+
 
             return marker;
         }

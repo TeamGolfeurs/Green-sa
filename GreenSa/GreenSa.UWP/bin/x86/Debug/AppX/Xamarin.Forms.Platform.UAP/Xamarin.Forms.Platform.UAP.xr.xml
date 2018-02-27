@@ -115,7 +115,6 @@
       <RootProperty Name="Padding" />
       <RootProperty Name="IsTabStop" />
       <RootProperty Name="ZoomMode" />
-      <RootProperty Name="Foreground" />
       <RootProperty Name="Content" />
       <RootProperty Name="BringIntoViewOnFocusChange" />
       <RootProperty Name="HorizontalSnapPointsAlignment" />
@@ -263,6 +262,7 @@
       <RootProperty Name="FontSize" />
       <RootProperty Name="FontFamily" />
       <RootProperty Name="MaxLines" />
+      <RootProperty Name="Name" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Automation.AutomationProperties">
       <RootMethod Name="GetAccessibilityView" />
@@ -595,5 +595,9 @@
       <RootProperty Name="Visibility" />
       <RootProperty Name="RenderTransform" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Page">
+      <RootProperty Name="Content" />
+    </RootType>
+    <RootType FullName="Xamarin.Forms.Platform.UWP.FormsEmbeddedPageWrapper" />
   </Roots.RootTypes>
 </Roots>

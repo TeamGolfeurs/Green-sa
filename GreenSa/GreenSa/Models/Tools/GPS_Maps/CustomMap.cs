@@ -13,7 +13,7 @@ namespace GreenSa.Model.Tools.GPS_Maps
 {
     public class CustomMap : Map , INotifyPropertyChanged
     {
-        public static readonly BindableProperty RouteCoordinatesProperty =
+        private static readonly BindableProperty routeCoordinatesProperty =
              BindableProperty.Create<CustomMap, List<Position>>(p => p.RouteCoordinates, new List<Position>());
 
         public List<Position> RouteCoordinates
@@ -29,6 +29,13 @@ namespace GreenSa.Model.Tools.GPS_Maps
 
             }
         }
+
+        public static BindableProperty RouteCoordinatesProperty => RouteCoordinatesProperty1;
+
+        public static BindableProperty RouteCoordinatesProperty1 => routeCoordinatesProperty;
+
+        public static BindableProperty RouteCoordinatesProperty2 => routeCoordinatesProperty;
+
         public CustomMap()
         {
             RouteCoordinates = new List<Position>();
@@ -39,9 +46,9 @@ namespace GreenSa.Model.Tools.GPS_Maps
             RouteCoordinates = new List<Position>();
 
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+         public new event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string propertyName = null)
+        protected override void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

@@ -18,7 +18,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
     {
         public ClubSelectionPage(Partie partie)
         {
-            var a = 52;
+
             InitializeComponent();
         }
 
