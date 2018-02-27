@@ -4,11 +4,11 @@
              x:Class="GreenSa.ViewController.PartieGolf.Configuration.GolfSelectionPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Listes des golfs"/>
-            <ListView x:Name="GolfCourse">
+            <Label Text="Selectionner votre Golf "/>
+            <ListView x:Name="ListGolfCourse">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell Text="name" Detail="Status"/>
+                        <ImageCell Text="name"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

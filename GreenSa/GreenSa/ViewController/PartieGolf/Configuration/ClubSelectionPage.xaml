@@ -1,12 +1,32 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GreenSa.ViewController.PartieGolf.Configuration.ClubSelectionPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label x:Name="nam"  Text="Welcome to Xamarin.Forms!"
+            <Label Text="Selectionner Vos Clubs"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="ListClubs">
+               <ListView.ItemTemplate>
+                <DataTemplate >
+                    <ViewCell >
+                        <StackLayout Orientation="Horizontal">
+                            <Label 
+                                HorizontalOptions="StartAndExpand"
+                                Text="{Binding name}">    
+                            </Label>
+                            <Switch 
+                                HorizontalOptions="End"
+                                IsToggled="false" 
+
+                                x:Name="switch">
+                            </Switch>
+                        </StackLayout>
+                    </ViewCell> 
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

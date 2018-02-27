@@ -15,9 +15,11 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GolfSelectionPage : ContentPage
     {
+        
         public GolfSelectionPage(Partie partie)
         {
             InitializeComponent();
+
         }
 
         /**
@@ -26,19 +28,27 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          * */
         protected override void OnAppearing()
         {
+
+            //Définition du filtre
             Filter<GolfCourse>.Filtre f = (c => true);
-            //get the list from
+
+            //Recupere la liste des Golfs filtré par la classe GestionGolf
+            ListGolfCourse.ItemsSource = GestionGolfs.getListGolfs(f);
 
             base.OnAppearing();
         }
+
+
 
         /*
          * Appelée à la sélection d'un golf
          * doit mettre à jour la partie, et ouvrir la page parametre suivant (ClubSelection)
          * */
-        private async void onGolfSelection(object sender, SelectedItemChangedEventArgs e)
+       /* private async void onGolfSelection(object sender, SelectedItemChangedEventArgs e)
         {
-        }
+            
+            
+        }*/
 
 
     }

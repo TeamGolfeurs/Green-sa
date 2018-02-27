@@ -32,6 +32,9 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
             Filter<Club>.Filtre f = (c => true);
             //get the list from gestionGolf
 
+            ListClubs.ItemsSource = GestionGolfs.getListClubs(f);
+
+
             base.OnAppearing();
         }
 
