@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-02-22T13:49:53.314</Modified>
+      <Modified>2018-03-01T15:38:19.029</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\GreenSa.UWP.exe">
       <PackagePath>entrypoint\GreenSa.UWP.exe</PackagePath>
-      <Modified>2018-02-22T13:49:41.431</Modified>
+      <Modified>2018-03-01T15:38:08.461</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\.nuget\packages\microsoft.csharp\4.0.1\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -553,7 +553,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\bin\Debug\GreenSa.dll">
       <PackagePath>GreenSa.dll</PackagePath>
-      <Modified>2018-02-22T13:44:19.173</Modified>
+      <Modified>2018-03-01T15:38:02.220</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Assets\tools.png">
       <PackagePath>Assets\tools.png</PackagePath>
@@ -740,11 +740,11 @@
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-02-22T13:49:48.423</Modified>
+      <Modified>2018-03-01T15:38:15.768</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\Core\GreenSa.UWP.exe">
       <PackagePath>GreenSa.UWP.exe</PackagePath>
-      <Modified>2018-02-22T13:49:53.261</Modified>
+      <Modified>2018-03-01T15:38:19.006</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
