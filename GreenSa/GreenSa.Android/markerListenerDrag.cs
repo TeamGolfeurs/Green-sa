@@ -28,6 +28,7 @@ namespace Greensa.Droid
 
         public void OnMarkerDrag(Marker marker)
         {
+            //if(Pin  )
             cmr.UpdatePolyLinePos(false,marker.Position);
         }
 
