@@ -108,6 +108,7 @@ class MonoPackageManager_Resources {
 		/* We need to ensure that "GreenSa.Android.dll" comes first in this list. */
 		"GreenSa.Android.dll",
 		"FormsViewGroup.dll",
+		"GreenSa.dll",
 		"SQLite-net.dll",
 		"SQLitePCLRaw.batteries_green.dll",
 		"SQLitePCLRaw.batteries_v2.dll",
@@ -140,7 +141,6 @@ class MonoPackageManager_Resources {
 		"Xamarin.GooglePlayServices.Tasks.dll",
 		"Xamarin.GooglePlayServices.Base.dll",
 		"Xamarin.GooglePlayServices.Maps.dll",
-		"GreenSa.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};
