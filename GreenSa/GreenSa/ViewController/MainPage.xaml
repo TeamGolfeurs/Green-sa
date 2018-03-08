@@ -1,38 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:GreenSa"
+             xmlns:local="clr-namespace:GreenSa.MarkupExtension"
              x:Class="GreenSa.ViewController.MainPage">
+    <!---->
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="GREEN'SA"
-                   FontSize="Large"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-            <Button 
-                VerticalOptions="Start"
-                HorizontalOptions="End"
-                Clicked="onOptionsClicked"
-                >
-                <Button.Image>
-                    <OnPlatform x:TypeArguments="FileImageSource"
-                        iOS="tools.png"
-                        Android="tools.png"
-                        WinPhone="tools.png"/>
-                </Button.Image>
-            </Button>
-            <Button 
-                Text="JOUER"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                Clicked="onPlayClicked"
-                    />
-            <Button 
-                Text="STATISTIQUES"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                Clicked="onStatsClicked"
-                    />
-        </StackLayout>
+            <StackLayout>
+                <Label 
+                    x:Name="label"
+                    Text="GREEN'SA"
+                       FontSize="Large"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                   />
+           
+                <Button 
+                    Text="JOUER"
+                    Clicked="onPlayClicked" 
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"/>
+                <Button 
+                    Text="STATISTIQUES"
+                    Clicked="onStatsClicked" 
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"/>
+                 <Image 
+                    x:Name="optionButton"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="End"
+                    Source="{local:EmbeddedImage GreenSa.Ressources.Images.tools.png}"
+                      Grid.Row="0"
+                    Grid.Column="2"/><!-- The Event Listener is in the code-behind-->
+                
+                    <!--<Button.Image>
+                        <OnPlatform x:TypeArguments="FileImageSource"
+                            iOS="tools.png"
+                            Android="tools.png"
+                            WinPhone="tools.png"/>
+                    </Button.Image>-->
+
+    </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>

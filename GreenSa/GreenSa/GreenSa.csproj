@@ -38,11 +38,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MarkupExtension\EmbeddedImage.cs" />
     <Compile Include="Models\GolfModel\Club.cs" />
     <Compile Include="Models\GolfModel\StatistiquesGolf.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomPin.cs" />
     <Compile Include="Models\Tools\Position.cs" />
+    <Compile Include="Models\Tools\Services\GpsService.cs" />
+    <Compile Include="Models\Tools\Services\NotAvaibleException.cs" />
+    <Compile Include="Models\Tools\Services\Service.cs" />
     <Compile Include="Models\Tools\Services\WindInfo.cs" />
     <Compile Include="Models\Tools\Services\WindService.cs" />
     <Compile Include="Persistence\ISQLiteDb.cs" />
@@ -146,6 +150,8 @@
     <Content Include="Ressources\Clubs\Fer3.xml" />
     <Content Include="Ressources\GolfCourses\SaintJacques_18trous.xml" />
     <Content Include="Ressources\GolfCourses\SaintJacques_9trous.xml" />
+    <Content Include="Ressources\Images\left-arrow.png" />
+    <EmbeddedResource Include="Ressources\Images\tools.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScoreEvolutionPage.xaml">

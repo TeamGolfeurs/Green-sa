@@ -415,8 +415,17 @@
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\bin\Debug\GreenSa.dll">
       <PackagePath>GreenSa.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Assets\tools.png">
-      <PackagePath>Assets\tools.png</PackagePath>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Properties\Default.rd.xml">
+      <PackagePath>Properties\Default.rd.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\Clubs\Fer3.xml">
+      <PackagePath>GreenSa\Ressources\Clubs\Fer3.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\GolfCourses\SaintJacques_18trous.xml">
+      <PackagePath>GreenSa\Ressources\GolfCourses\SaintJacques_18trous.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\GolfCourses\SaintJacques_9trous.xml">
+      <PackagePath>GreenSa\Ressources\GolfCourses\SaintJacques_9trous.xml</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Assets\LockScreenLogo.scale-100.png">
       <PackagePath>Assets\LockScreenLogo.scale-100.png</PackagePath>
@@ -537,17 +546,8 @@
       <PackagePath>Assets\Wide310x150Logo.scale-400.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Properties\Default.rd.xml">
-      <PackagePath>Properties\Default.rd.xml</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\Clubs\Fer3.xml">
-      <PackagePath>GreenSa\Ressources\Clubs\Fer3.xml</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\GolfCourses\SaintJacques_18trous.xml">
-      <PackagePath>GreenSa\Ressources\GolfCourses\SaintJacques_18trous.xml</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\GolfCourses\SaintJacques_9trous.xml">
-      <PackagePath>GreenSa\Ressources\GolfCourses\SaintJacques_9trous.xml</PackagePath>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\Images\left-arrow.png">
+      <PackagePath>GreenSa\Ressources\Images\left-arrow.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\GreenSa.UWP.xr.xml">
       <PackagePath>GreenSa.UWP.xr.xml</PackagePath>

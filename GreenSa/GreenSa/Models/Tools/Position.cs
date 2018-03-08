@@ -8,10 +8,10 @@ namespace GreenSa.Models.Tools
 {
     public class Position
     {
-        public float X { get; set; }
-        public float Y { get; set; }
+        public Double X { get; set; }
+        public Double Y { get; set; }
 
-        public Position(float x,float y )
+        public Position(Double x,Double y )
         {
             X = x;
             Y = y;

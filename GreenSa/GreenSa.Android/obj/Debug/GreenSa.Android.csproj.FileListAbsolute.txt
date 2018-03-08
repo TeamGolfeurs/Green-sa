@@ -77,4 +77,5 @@ C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.Android\bin\D
 C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.Android\bin\Debug\Xamarin.GooglePlayServices.Tasks.dll
 C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.Android\bin\Debug\Xamarin.Forms.Maps.xml
 C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.Android\obj\Debug\res\drawable\funny.png
-C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.Android\obj\Debug\res\drawable\tools.png
+C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.Android\obj\Debug\res\drawable\flag.png
+C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.Android\obj\Debug\res\drawable\shape_circle.png
