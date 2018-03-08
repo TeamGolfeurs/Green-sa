@@ -62,6 +62,7 @@ C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\bin\Debug\Xam
 C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\bin\Debug\Xamarin.Forms.Xaml.xml
 C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\obj\Debug\GreenSa.ViewController.PartieGolf.Game.ClubSelectionInGamePage.xaml.g.cs
 C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\obj\Debug\GreenSa.ViewController.PartieGolf.Game.HoleFinishedPage.xaml.g.cs
+C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\obj\Debug\GreenSa.csprojResolveAssemblyReference.cache
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa\bin\Debug\GreenSa.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa\bin\Debug\GreenSa.pdb
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa\bin\Debug\SQLite-net.dll
@@ -93,5 +94,6 @@ C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa\obj\Debug\GreenSa.
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa\obj\Debug\GreenSa.ViewController.PartieGolf.Game.GameFinishedPage.xaml.g.cs
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa\obj\Debug\GreenSa.ViewController.PartieGolf.Game.ClubSelectionInGamePage.xaml.g.cs
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa\obj\Debug\GreenSa.ViewController.PartieGolf.Game.HoleFinishedPage.xaml.g.cs
+C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa\obj\Debug\GreenSa.csproj.CopyComplete
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa\obj\Debug\GreenSa.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa\obj\Debug\GreenSa.pdb

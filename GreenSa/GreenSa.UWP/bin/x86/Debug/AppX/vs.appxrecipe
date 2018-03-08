@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-03-01T15:38:19.029</Modified>
+      <Modified>2018-03-08T12:28:47.240</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\GreenSa.UWP.exe">
       <PackagePath>entrypoint\GreenSa.UWP.exe</PackagePath>
-      <Modified>2018-03-01T15:38:08.461</Modified>
+      <Modified>2018-03-08T12:28:46.064</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\.nuget\packages\microsoft.csharp\4.0.1\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -553,11 +553,23 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\bin\Debug\GreenSa.dll">
       <PackagePath>GreenSa.dll</PackagePath>
-      <Modified>2018-03-01T15:38:02.220</Modified>
+      <Modified>2018-03-08T12:28:43.470</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Assets\tools.png">
-      <PackagePath>Assets\tools.png</PackagePath>
-      <Modified>2018-02-13T22:31:13.718</Modified>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Properties\Default.rd.xml">
+      <PackagePath>Properties\Default.rd.xml</PackagePath>
+      <Modified>2018-01-30T15:55:32.577</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\Clubs\Fer3.xml">
+      <PackagePath>GreenSa\Ressources\Clubs\Fer3.xml</PackagePath>
+      <Modified>2018-02-03T13:51:32.527</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\GolfCourses\SaintJacques_18trous.xml">
+      <PackagePath>GreenSa\Ressources\GolfCourses\SaintJacques_18trous.xml</PackagePath>
+      <Modified>2018-02-03T13:23:35.835</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\GolfCourses\SaintJacques_9trous.xml">
+      <PackagePath>GreenSa\Ressources\GolfCourses\SaintJacques_9trous.xml</PackagePath>
+      <Modified>2018-02-03T13:24:52.275</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Assets\LockScreenLogo.scale-100.png">
       <PackagePath>Assets\LockScreenLogo.scale-100.png</PackagePath>
@@ -709,21 +721,9 @@
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2018-01-30T15:55:32.572</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Properties\Default.rd.xml">
-      <PackagePath>Properties\Default.rd.xml</PackagePath>
-      <Modified>2018-01-30T15:55:32.577</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\Clubs\Fer3.xml">
-      <PackagePath>GreenSa\Ressources\Clubs\Fer3.xml</PackagePath>
-      <Modified>2018-02-03T13:51:32.527</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\GolfCourses\SaintJacques_18trous.xml">
-      <PackagePath>GreenSa\Ressources\GolfCourses\SaintJacques_18trous.xml</PackagePath>
-      <Modified>2018-02-03T13:23:35.835</Modified>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\GolfCourses\SaintJacques_9trous.xml">
-      <PackagePath>GreenSa\Ressources\GolfCourses\SaintJacques_9trous.xml</PackagePath>
-      <Modified>2018-02-03T13:24:52.275</Modified>
+    <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\Images\left-arrow.png">
+      <PackagePath>GreenSa\Ressources\Images\left-arrow.png</PackagePath>
+      <Modified>2018-03-05T15:39:07.842</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\GreenSa.UWP.xr.xml">
       <PackagePath>GreenSa.UWP.xr.xml</PackagePath>
@@ -740,11 +740,11 @@
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-03-01T15:38:15.768</Modified>
+      <Modified>2018-03-08T11:45:33.388</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\Core\GreenSa.UWP.exe">
       <PackagePath>GreenSa.UWP.exe</PackagePath>
-      <Modified>2018-03-01T15:38:19.006</Modified>
+      <Modified>2018-03-08T12:28:47.234</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

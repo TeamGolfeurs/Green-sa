@@ -1,5 +1,6 @@
 ﻿using GreenSa.Models;
 using GreenSa.Models.GolfModel;
+using GreenSa.Models.Tools.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,16 @@ namespace GreenSa.ViewController.PartieGolf.Game
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainGamePage : ContentPage
     {
+        public const String BEGIN_STATE = "BEGIN";
+        public const String LOCK_STATE = "LOCK";
+        public const String NEXT_STATE = "NEXT";
 
+        private String state;
 
         public MainGamePage(Partie partie)
         {
             InitializeComponent();
+            state = BEGIN_STATE;
         }
         /**
         * Méthode qui s'execute automatiquement au chargement de la page
@@ -31,15 +37,23 @@ namespace GreenSa.ViewController.PartieGolf.Game
         * */
         protected override void OnAppearing()
         {
-
             base.OnAppearing();
+            WindService.getCurrentWindInfo();
         }
         /**
         * Méthode qui met à jour l'état du jeu 
         */
         private void setNextState()
         {
-            //if... (voir diagramme)
+            switch (state)
+            {
+                case BEGIN_STATE:state = LOCK_STATE;
+                    break;
+                case LOCK_STATE: state = NEXT_STATE;
+                    break;
+                case NEXT_STATE: state = LOCK_STATE;
+                    break;
+            }
         }
 
         /* Méthode qui s'execute au click sur le bouton principal.

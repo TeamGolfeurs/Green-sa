@@ -11,7 +11,12 @@ namespace GreenSa.Models.GolfModel
      * */
     public class Partie
     {
-        GolfCourse golfCourse { get; set; }
-        List<Club> listeClubs { get; set; }
+        public GolfCourse golfCourse { get; set; }
+        public List<Club> listeClubs { get; set; }
+        public Club currentClub { get; set; }
+        
+
     }
+
+    
 }

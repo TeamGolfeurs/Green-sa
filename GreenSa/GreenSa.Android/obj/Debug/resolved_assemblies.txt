@@ -48,14 +48,15 @@ C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Threading.Tasks.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Collections.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Linq.Expressions.dll
+C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.ComponentModel.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Threading.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Reflection.dll
-C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.ComponentModel.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Collections.Concurrent.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Linq.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Runtime.InteropServices.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Runtime.Extensions.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Reflection.Extensions.dll
+C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Reflection.Primitives.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Net.Http.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.Runtime.Serialization.dll
 C:\Users\Florian-PC\Documents\GitHub\Green-sa\GreenSa\GreenSa.Android\obj\Debug\android\assets\System.ServiceModel.Internals.dll

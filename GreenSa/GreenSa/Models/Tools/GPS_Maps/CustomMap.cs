@@ -22,7 +22,6 @@ namespace GreenSa.Model.Tools.GPS_Maps
             {
                 return (List<Position>)GetValue(RouteCoordinatesProperty);
             }
-
             set {
                 SetValue(RouteCoordinatesProperty, value);
                 OnPropertyChanged(CustomMap.RouteCoordinatesProperty.PropertyName);
@@ -30,9 +29,7 @@ namespace GreenSa.Model.Tools.GPS_Maps
             }
         }
 
-        public static BindableProperty RouteCoordinatesProperty => RouteCoordinatesProperty1;
-
-        public static BindableProperty RouteCoordinatesProperty1 => routeCoordinatesProperty;
+        public static BindableProperty RouteCoordinatesProperty => routeCoordinatesProperty;
 
         public static BindableProperty RouteCoordinatesProperty2 => routeCoordinatesProperty;
 
@@ -46,7 +43,8 @@ namespace GreenSa.Model.Tools.GPS_Maps
             RouteCoordinates = new List<Position>();
 
         }
-         public new event PropertyChangedEventHandler PropertyChanged;
+
+        public new event PropertyChangedEventHandler PropertyChanged;
 
         protected override void OnPropertyChanged(string propertyName = null)
         {

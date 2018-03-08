@@ -194,9 +194,6 @@
     <AndroidResource Include="Resources\drawable\funny.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\tools.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\flag.png" />
   </ItemGroup>
   <ItemGroup>
