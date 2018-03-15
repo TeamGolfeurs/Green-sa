@@ -1,16 +1,26 @@
-﻿namespace GreenSa.Models.GolfModel
+﻿using GreenSa.Models.Tools;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace GreenSa.Models.GolfModel
 {
     public class GolfCourse
     {
-        //just for example, need to be deleted
-        public string name { get; set; }
+        public string Name;
 
+        // Id
+        private int id;
+        public int Id { get => id; set => id = value; }
+
+        // Holes
+        private List<Position> holes;
+        public List<Position> Holes { get => holes; set => holes = value; }
 
         public GolfCourse(string name)
         {
-            this.name = name;
+            Name = name;
+            holes = new List<Position>();
         }
-        //id name Coordonnées des trous
 
         //methode pour remplir à partir d'un XML ?
     }

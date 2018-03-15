@@ -9,19 +9,12 @@ namespace GreenSa.Models.GolfModel
 {
     public class GestionGolfs
     {
-
-
-        /*
-         *
-         
-         * 
-         * */
         /**
          * Donne une liste de golf en fonction d'un filtre
          * le fitre peut être null, dans ce cas tous les golfs seront récupérés.
          * */
         //NOT IMPLEMENTED YET
-        public static List<GolfCourse> getListGolfs(Filter<GolfCourse>.Filtre filtre )
+        public static List<GolfCourse> getListGolfs(Filter<GolfCourse>.Filtre filtre)
         {
             if (filtre == null)
                 filtre = x => true;
@@ -30,11 +23,9 @@ namespace GreenSa.Models.GolfModel
             //utilise SQLite
             //si la table n'existe pas encore on parse les fichiers XML (/Ressources) et on insert
 
-
+            throw new NotImplementedException();
             return new List<GolfCourse> { new GolfCourse("Fer1"), new GolfCourse("Driver") };
         }
-
-
 
         /**
          * Donne une liste de golf en fonction d'un filtre
@@ -55,5 +46,5 @@ namespace GreenSa.Models.GolfModel
         }
     }
 
-    
+
 }

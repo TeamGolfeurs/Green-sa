@@ -17381,7 +17381,7 @@
       ]
     },
     "Microsoft.NETCore.UniversalWindowsPlatform/5.2.2": {
-      "sha512": "9UHv2YObWmcF8gqtBoDC4UW5gdHzFRtaZ5KtB9QKvCy+NC9LH1DMYyOI/ltupjVZlwYEulj3msjBXys9/QI6nw==",
+      "sha512": "eHccUiYTkiY8xeixRA0DV9mcFpi9GA9UzKt3v0d6NtNGrGefhmqwnb60PSWQPe49tXbxZaP0x+W0ghvj6hflHg==",
       "type": "package",
       "path": "microsoft.netcore.universalwindowsplatform/5.2.2",
       "files": [
@@ -23813,20 +23813,25 @@
     "UAP,Version=v10.0.10586": []
   },
   "packageFolders": {
-    "C:\\Users\\willi\\.nuget\\packages\\": {}
+    "C:\\Users\\Florian-PC\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\Users\\willi\\Documents\\workspace\\Android\\GreenSa\\GreenSa\\GreenSa.UWP\\GreenSa.UWP.csproj",
+      "projectUniqueName": "C:\\Users\\Florian-PC\\Documents\\GitHub\\Green-sa\\GreenSa\\GreenSa.UWP\\GreenSa.UWP.csproj",
       "projectName": "GreenSa.UWP",
-      "projectPath": "C:\\Users\\willi\\Documents\\workspace\\Android\\GreenSa\\GreenSa\\GreenSa.UWP\\GreenSa.UWP.csproj",
-      "projectJsonPath": "C:\\Users\\willi\\Documents\\workspace\\Android\\GreenSa\\GreenSa\\GreenSa.UWP\\project.json",
-      "packagesPath": "C:\\Users\\willi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\willi\\Documents\\workspace\\Android\\GreenSa\\GreenSa\\GreenSa.UWP\\obj\\",
+      "projectPath": "C:\\Users\\Florian-PC\\Documents\\GitHub\\Green-sa\\GreenSa\\GreenSa.UWP\\GreenSa.UWP.csproj",
+      "projectJsonPath": "C:\\Users\\Florian-PC\\Documents\\GitHub\\Green-sa\\GreenSa\\GreenSa.UWP\\project.json",
+      "packagesPath": "C:\\Users\\Florian-PC\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Florian-PC\\Documents\\GitHub\\Green-sa\\GreenSa\\GreenSa.UWP\\obj\\",
       "projectStyle": "ProjectJson",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\willi\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Florian-PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -23835,18 +23840,18 @@
       "frameworks": {
         "uap10.0.10586": {
           "projectReferences": {
-            "C:\\Users\\willi\\Documents\\workspace\\Android\\GreenSa\\GreenSa\\GreenSa\\GreenSa.csproj": {
-              "projectPath": "C:\\Users\\willi\\Documents\\workspace\\Android\\GreenSa\\GreenSa\\GreenSa\\GreenSa.csproj"
+            "C:\\Users\\Florian-PC\\Documents\\GitHub\\Green-sa\\GreenSa\\GreenSa\\GreenSa.csproj": {
+              "projectPath": "C:\\Users\\Florian-PC\\Documents\\GitHub\\Green-sa\\GreenSa\\GreenSa\\GreenSa.csproj"
             }
           }
         }
       }
     },
     "dependencies": {
-      "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-      "sqlite-net-pcl": "1.5.166-beta",
-      "Xamarin.Forms": "2.5.0.280555",
-      "Xamarin.Forms.Maps": "2.5.0.280555"
+      "Microsoft.NETCore.UniversalWindowsPlatform": "[5.2.2, )",
+      "Xamarin.Forms": "[2.5.0.280555, )",
+      "Xamarin.Forms.Maps": "[2.5.0.280555, )",
+      "sqlite-net-pcl": "[1.5.166-beta, )"
     },
     "frameworks": {
       "uap10.0.10586": {}
