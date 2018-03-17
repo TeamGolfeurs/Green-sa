@@ -131,12 +131,13 @@ namespace GreenSa.ViewController.PartieGolf.Game
         * **/
         private async void onMainButtonClicked(object sender, SelectedItemChangedEventArgs e)
         {
-            if(state==LOCK_STATE)
-            {
-                map.lockTarget();
-            }else
+            if(state!=LOCK_STATE)
             {
                 map.setTargetMovable();
+            }
+            else
+            {
+                map.lockTarget();
             }
             setNextState();
         }
