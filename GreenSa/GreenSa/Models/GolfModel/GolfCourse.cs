@@ -13,13 +13,13 @@ namespace GreenSa.Models.GolfModel
         public int Id { get => id; set => id = value; }
 
         // Holes
-        private List<Position> holes;
-        public List<Position> Holes { get => holes; set => holes = value; }
+        private List<MyPosition> holes;
+        public List<MyPosition> Holes { get => holes; set => holes = value; }
 
         public GolfCourse(string name)
         {
             Name = name;
-            holes = new List<Position>();
+            holes = new List<MyPosition>();
         }
 
         //methode pour remplir à partir d'un XML ?

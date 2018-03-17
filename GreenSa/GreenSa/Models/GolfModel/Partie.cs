@@ -23,7 +23,7 @@ namespace GreenSa.Models.GolfModel
         /// Retourne le prochain trou si il existe sinon retourne null.
         /// </summary>
         /// <returns>La position du trou.</returns>
-        public Position getNextHole()
+        public MyPosition getNextHole()
         {
             if (hasNextHole())
             {
@@ -33,7 +33,7 @@ namespace GreenSa.Models.GolfModel
 
         }
 
-        public void addPositionForCurrentHole(Position oldTarget, Position userPosition)
+        public void addPositionForCurrentHole(MyPosition oldTarget, MyPosition userPosition)
         {
             throw new NotImplementedException();
         }
@@ -50,6 +50,7 @@ namespace GreenSa.Models.GolfModel
         /// <returns></returns>
         public bool hasNextHole()
         {
+            return true;
             return golfCourse.Holes.GetEnumerator().MoveNext();
         }
 

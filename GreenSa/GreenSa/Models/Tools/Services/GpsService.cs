@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Geolocator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,20 +10,23 @@ namespace GreenSa.Models.Tools.Services
     class GpsService : Service
     {
         public GpsService()
-        {
+        {//STATIC? NOT USE
         }
 
-        public static Position getCurrentPosition()  
+        public static async Task<MyPosition> getCurrentPositionAsync()  
         {
+            CrossGeolocator.Current.DesiredAccuracy = 5;
+
             if (!isAvaible()) throw new NotAvaibleException();
-
-            return new Position(48.109450, -1.639983);
+            Plugin.Geolocator.Abstractions.Position position = await CrossGeolocator.Current.GetPositionAsync(TimeSpan.FromSeconds(15), null, false);
+            return new MyPosition(position.Latitude, position.Longitude);
         }
 
-
+          //  throw new NotImplementedException();
         public static bool isAvaible()
         {
-            throw new NotImplementedException();
+          
+                return  CrossGeolocator.Current.IsGeolocationAvailable && CrossGeolocator.Current.IsGeolocationEnabled;
         }
 
 

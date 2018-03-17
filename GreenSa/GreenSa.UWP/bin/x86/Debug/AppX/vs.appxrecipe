@@ -19,7 +19,7 @@
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
     <LayoutDir>C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\AppX</LayoutDir>
-    <RegisteredManifestChecksum>12BA47C339BE021A9F69195987E7FFF9E39C02A4DA58A35806C29677371B9DF8</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>3C397C07F353C838927D0BCF0ED4D028C5149E85FD45F7CDFB4B50563A4F0CFD</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>a7cc0bcc-4997-4feb-b7f1-105dd69376bb_1.0.0.0_x86__k80v56m70afdr</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>a7cc0bcc-4997-4feb-b7f1-105dd69376bb_k80v56m70afdr!App</RegisteredUserModeAppID>
     <RegisteredPackageID>a7cc0bcc-4997-4feb-b7f1-105dd69376bb</RegisteredPackageID>
@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-03-08T12:28:47.240</Modified>
+      <Modified>2018-03-16T19:58:12.822</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\GreenSa.UWP.exe">
       <PackagePath>entrypoint\GreenSa.UWP.exe</PackagePath>
-      <Modified>2018-03-08T12:28:46.064</Modified>
+      <Modified>2018-03-16T19:28:46.258</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\.nuget\packages\microsoft.csharp\4.0.1\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -527,6 +527,14 @@
       <PackagePath>System.Xml.XmlSerializer.dll</PackagePath>
       <Modified>2016-06-11T21:15:04.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\.nuget\packages\xam.plugin.geolocator\4.2.0\lib\UAP10\Plugin.Geolocator.Abstractions.dll">
+      <PackagePath>Plugin.Geolocator.Abstractions.dll</PackagePath>
+      <Modified>2018-01-04T11:50:10.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\willi\.nuget\packages\xam.plugin.geolocator\4.2.0\lib\UAP10\Plugin.Geolocator.dll">
+      <PackagePath>Plugin.Geolocator.dll</PackagePath>
+      <Modified>2018-01-04T11:50:10.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\.nuget\packages\xamarin.forms\2.5.0.280555\lib\uap10.0\Xamarin.Forms.Core.dll">
       <PackagePath>Xamarin.Forms.Core.dll</PackagePath>
       <Modified>2018-02-14T18:07:36.000</Modified>
@@ -553,7 +561,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\bin\Debug\GreenSa.dll">
       <PackagePath>GreenSa.dll</PackagePath>
-      <Modified>2018-03-08T12:28:43.470</Modified>
+      <Modified>2018-03-16T19:07:15.601</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
@@ -723,11 +731,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa\Ressources\Images\left-arrow.png">
       <PackagePath>GreenSa\Ressources\Images\left-arrow.png</PackagePath>
-      <Modified>2018-03-05T15:39:07.842</Modified>
+      <Modified>2018-03-08T13:00:22.457</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\GreenSa.UWP.xr.xml">
       <PackagePath>GreenSa.UWP.xr.xml</PackagePath>
-      <Modified>2018-02-02T18:59:15.787</Modified>
+      <Modified>2018-03-15T14:08:53.243</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.16299.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -740,11 +748,11 @@
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-03-08T11:45:33.388</Modified>
+      <Modified>2018-03-16T19:58:11.945</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\willi\Documents\workspace\Android\GreenSa\GreenSa\GreenSa.UWP\bin\x86\Debug\Core\GreenSa.UWP.exe">
       <PackagePath>GreenSa.UWP.exe</PackagePath>
-      <Modified>2018-03-08T12:28:47.234</Modified>
+      <Modified>2018-03-16T19:58:12.818</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

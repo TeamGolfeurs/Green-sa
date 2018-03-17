@@ -35,6 +35,6 @@ namespace GreenSa.Models.GolfModel
 
     public enum TypeClub
     {
-        BOIS, FER;
+        BOIS, FER
     }
 }

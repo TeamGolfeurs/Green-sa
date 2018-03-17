@@ -23,7 +23,6 @@ namespace GreenSa.Models.GolfModel
             //utilise SQLite
             //si la table n'existe pas encore on parse les fichiers XML (/Ressources) et on insert
 
-            throw new NotImplementedException();
             return new List<GolfCourse> { new GolfCourse("Fer1"), new GolfCourse("Driver") };
         }
 
@@ -42,7 +41,7 @@ namespace GreenSa.Models.GolfModel
             //si la table n'existe pas encore on parse les fichiers XML et on insert
 
 
-            return new List<Club> { new Club("Fer1"), new Club("Fer2") };
+            return new List<Club> { new Club("Fer1",TypeClub.FER), new Club("Fer2", TypeClub.FER) };
         }
     }
 

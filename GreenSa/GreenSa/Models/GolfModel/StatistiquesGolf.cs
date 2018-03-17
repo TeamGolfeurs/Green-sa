@@ -20,8 +20,8 @@ namespace GreenSa.Models.GolfModel
         public List<Tuple<Club, int>> getAverageDistanceForClubs(Filter<Club>.Filtre filtre)
         {
             List<Tuple<Club, int>> l = new List<Tuple<Club, int>>();
-            l.Add(new Tuple<Club, int>(new Club("Fer1"), 4));
-            l.Add(new Tuple<Club, int>(new Club("Fer2"), 8));
+            l.Add(new Tuple<Club, int>(new Club("Fer1",TypeClub.FER), 4));
+            l.Add(new Tuple<Club, int>(new Club("Fer2", TypeClub.FER), 8));
             return l;
         }
         //Tuple<Terrain,AverageScore,BestScore,WorstScore,nbFoisJouée

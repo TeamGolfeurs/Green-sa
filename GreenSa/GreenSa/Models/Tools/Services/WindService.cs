@@ -24,6 +24,7 @@ namespace GreenSa.Models.Tools.Services
 
         public static bool isAvaible()
         {
+            return true;
             throw new NotImplementedException();
         }
 
