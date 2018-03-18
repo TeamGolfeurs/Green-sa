@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Diagnostics;
 
 namespace GreenSa.ViewController.PartieGolf.Configuration
 {
@@ -16,10 +17,14 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ClubSelectionPage : ContentPage
     {
+        
+        Partie p;
+
         public ClubSelectionPage(Partie partie)
         {
-            var a = 52;
             InitializeComponent();
+            p = partie;
+            
         }
 
         /**
@@ -32,7 +37,9 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
             Filter<Club>.Filtre f = (c => true);
             //get the list from gestionGolf
 
-            ListClubs.ItemsSource = GestionGolfs.getListClubs(f);
+           
+
+            listviewclub.ItemsSource = GestionGolfs.getListClubs(f);
 
 
             base.OnAppearing();
@@ -44,6 +51,16 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          * */
         private async void onValidClubSelection(object sender, SelectedItemChangedEventArgs e)
         {
+            List<Club> clubselected = new List<Club>();
+            foreach(Club c in listviewclub.ItemsSource){
+                if(c.selected){
+                    clubselected.Add(c);
+                    Debug.WriteLine(c.name);
+                }
+            }
+            p.setClubs(clubselected);
+
+            await Navigation.PushAsync(new Game.MainGamePage(p));
         }
     }
 }

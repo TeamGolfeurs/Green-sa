@@ -12,6 +12,7 @@ namespace GreenSa.Models.GolfModel
          * id et name ?
          * */
         public string name {get;set;}
+        public bool selected { get; set; }
 
        public Club(string name)
         {

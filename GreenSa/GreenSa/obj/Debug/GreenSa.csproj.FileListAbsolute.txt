@@ -60,3 +60,4 @@ C:/Users/willi/Documents/workspace/Android/GreenSa/GreenSa/GreenSa/obj/Debug/Gre
 /Users/couanonyohan1/Desktop/Green-sa/Green-sa/GreenSa/GreenSa/bin/Debug/Xamarin.Forms.Xaml.pdb
 /Users/couanonyohan1/Desktop/Green-sa/Green-sa/GreenSa/GreenSa/bin/Debug/Xamarin.Forms.Xaml.dll.mdb
 /Users/couanonyohan1/Desktop/Green-sa/Green-sa/GreenSa/GreenSa/bin/Debug/Xamarin.Forms.Xaml.xml
+/Users/couanonyohan1/Desktop/Green-sa/Green-sa/GreenSa/GreenSa/obj/Debug/GreenSa.ViewController.PartieGolf.Configuration.SelectMultipleBasePage_T_.xaml.g.cs
