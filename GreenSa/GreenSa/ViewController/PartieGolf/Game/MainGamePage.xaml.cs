@@ -1,12 +1,17 @@
 ﻿using GreenSa.Models;
 using GreenSa.Models.GolfModel;
+using GreenSa.Models.Tools;
+using GreenSa.Models.Tools.GPS_Maps;
+using GreenSa.Models.Tools.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
 
 namespace GreenSa.ViewController.PartieGolf.Game
@@ -14,14 +19,142 @@ namespace GreenSa.ViewController.PartieGolf.Game
     /**
      * Page principale du jeu
      * Affiche la carte, boutons etc
-     * 
+     * Voir diagramme "onMainGamePageAppearing"
      * */
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainGamePage : ContentPage
     {
+        public const String BEGIN_STATE = "BEGIN";
+        public const String LOCK_STATE = "LOCK";
+        public const String NEXT_STATE = "NEXT";
+
+        private String state;
+        private Partie partie;
+
         public MainGamePage(Partie partie)
         {
             InitializeComponent();
+            state = BEGIN_STATE;
+            this.partie = partie;
+            map.MoveToRegion(
+            MapSpan.FromCenterAndRadius(
+                new Position(48.1116654, -1.6843768), Distance.FromMiles(30)));
+
+
+            //message which come from the markerListenerDrag,
+            //when the target pin is moved =>update the display of the distance
+            MessagingCenter.Subscribe<CustomPin>(this,CustomPin.UPDATEDMESSAGE, (sender) => {
+                updateDistance();
+            });
         }
+        /**
+        * Méthode qui s'execute automatiquement au chargement de la page
+        * Affiche le résumé de la partie avec possibilité de correction et de ne pas enregistrer cette partie dans les stats
+        * */
+        async protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (partie.hasNextHole())
+            {
+                MyPosition nextHole = new MyPosition(48.067001, -1.741196);// partie.getNextHole();
+                map.setHolePosition(nextHole);
+                MyPosition position = new MyPosition(0, 0) ;
+                bool success = false;
+                do//make sure that the GPS is avaible
+                {
+                    try
+                    {
+                        position = await GpsService.getCurrentPositionAsync();
+                        success = true;
+                        map.setUserPosition(position);
+                    }
+                    catch (NotAvaibleException e)
+                    {
+                        await DisplayAlert("Gps non disponible", "La localisation GPS n'est pas disponible, assurez-vous de l'avoir activé.", "OK");
+                    }
+                } while (!success);
+                
+                try
+                {
+                    WindInfo windInfo = WindService.getCurrentWindInfo();
+                    windImg.Source = windInfo.icon;
+                    forceVent.Text = windInfo.strength + " km/h";
+                }
+                catch (NotAvaibleException e)
+                {
+                    await DisplayAlert("Vent non disponible", "L'information concernant le vent n'est pas disponible", "OK");
+                }
+
+                updateDistance();
+            
+            }
+            else
+            {
+                await Navigation.PushAsync(new GameFinishedPage(partie));
+                return;
+            }
+
+
+        }
+
+        private void updateDistance()
+        {
+           distTotal.Text= string.Format("{0:0.0}", map.getDistanceUserHole()) +"m";
+           distSplit.Text = string.Format("{0:0.0}", map.getDistanceUserTarget())  + "m / "+ string.Format("{0:0.0}", map.getDistanceTargetHole())+" m";
+        }
+
+        /**
+* Méthode qui met à jour l'état du jeu 
+*/
+        private void setNextState()
+        {
+            string newLabel = "";
+            switch (state)
+            {
+                case BEGIN_STATE:
+                case NEXT_STATE:
+                    state = LOCK_STATE;
+                    newLabel = "LOCK";
+                    break;
+                case LOCK_STATE: state = NEXT_STATE;
+                    newLabel = "NEXT";
+                    DisplayAlert("Cible verrouillée", "Tirez puis déplacez-vous au niveau de la balle et appuyez sur le bouton 'NEXT'","OK");
+                    break;
+                default: newLabel = "??";
+                    break;
+            }
+
+            mainButton.Text = newLabel;
+        }
+
+        /* Méthode qui s'execute au click sur le bouton principal.
+        * **/
+        private async void onMainButtonClicked(object sender, SelectedItemChangedEventArgs e)
+        {
+            if(state!=LOCK_STATE)
+            {
+                map.setTargetMovable();
+            }
+            else
+            {
+                map.lockTarget();
+            }
+            setNextState();
+        }
+
+        /* Méthode qui s'execute au click sur le bouton de la selection du club.
+        * **/
+        private async void onClubSelectionClicked(object sender, SelectedItemChangedEventArgs e)
+        {
+
+        }
+
+          /* Méthode qui s'execute au click sur le bouton principal.
+           * **/
+        private async void onHoleFinishedButtonClicked(object sender, SelectedItemChangedEventArgs e)
+        {
+               
+        }
+
     }
 }

@@ -15,20 +15,28 @@ using Android.Gms.Maps.Model;
 using Android.Gms.Maps;
 using static Android.Gms.Maps.GoogleMap;
 using Xamarin.Forms;
-using GreenSa.Model.Tools.GPS_Maps;
+using GreenSa.Models.Tools.GPS_Maps;
 using Greensa.Droid;
+using GreenSa.Droid;
+using System.Collections.ObjectModel;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace Greensa.Droid
 {
     public class CustomMapRenderer : MapRenderer
     {
-        public CustomMapRenderer() : base() { }
+        //public CustomMapRenderer() : base() { }
 
-        public CustomMapRenderer(Context context) : base(context){}
+        public CustomMapRenderer(Context context) : base(context){
+            MessagingCenter.Subscribe<CustomMap>(this, "updateThisPosition", (sender) => {
+                UpdatePolyLinePos(false);
+
+            });
+        }
 
         GoogleMap map;
         Polyline polyline;//the current polyline
+
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
@@ -68,14 +76,35 @@ namespace Greensa.Droid
 
         protected override MarkerOptions CreateMarker(Pin pin)
         {
-            if(!( pin is CustomPinMovable ))
-            {
-                return base.CreateMarker(pin);
-            }
             var marker = base.CreateMarker(pin);
-            marker.Draggable(true);
-            marker.SetRotation(30.5f);
-            marker.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueCyan));
+
+            if (!( pin is CustomPin ))
+            {
+                return marker;
+            }
+            if (((CustomPin)(pin)).type == CustomPin.MOVABLE)
+            {
+                marker.Draggable(true);
+                marker.SetRotation(30.5f);
+                BitmapDescriptor ic = BitmapDescriptorFactory.FromResource(Resource.Drawable.shape_circle);
+
+                marker.SetIcon(ic);
+                marker.Anchor(0.5f, 0.5f);
+            }
+            else if (((CustomPin)(pin)).type == CustomPin.HOLE)
+            {
+                marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.flag));
+            }
+            else if (((CustomPin)(pin)).type == CustomPin.USER)
+            {
+
+            }
+            else if (((CustomPin)(pin)).type == CustomPin.LOCKED)
+            {
+                marker.SetRotation(30.5f);
+                marker.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueCyan));
+            }
+
 
             return marker;
         }
@@ -96,7 +125,7 @@ namespace Greensa.Droid
             int i = 0;
             foreach (var position in ((CustomMap)this.Element).RouteCoordinates)
             {
-                if (i == 1 && !init)
+                if (i == 1 && !init && pos!=null)
                     polylineOptions.Add(pos);
                 else
                     polylineOptions.Add(new LatLng(position.Latitude, position.Longitude));
@@ -105,6 +134,5 @@ namespace Greensa.Droid
             }
             polyline = map.AddPolyline(polylineOptions);
         }
-
-    }
+      }
 }

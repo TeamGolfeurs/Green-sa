@@ -23,7 +23,17 @@ namespace GreenSa.ViewController
     {
         public MainPage()
         {
+
             InitializeComponent();
+            //ptionButton = new FileImageSource { File = "GreenSa.Ressources.Images.tools.png" };
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (s, e) => {
+                onOptionsClicked(s, e);
+            };
+            optionButton.GestureRecognizers.Add(tapGestureRecognizer);
+            //optionButton.Source = ImageSource.FromResource("GreenSa.Ressources.Images.tools.png");
+            //optionButton.Image = new FileImageSource { File = "GreenSa.Ressources.Images.tools.png" };
+
         }
 
         /**
@@ -47,9 +57,10 @@ namespace GreenSa.ViewController
 
         async private void onOptionsClicked(object sender, EventArgs e)
         {
+            label.Text= "WIIIIIIIIIIII";
 
         }
-        
+
 
 
     }

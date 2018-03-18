@@ -50,7 +50,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          private async void onGolfSelection(object sender, SelectedItemChangedEventArgs e)
          {
             var g = e.SelectedItem as GolfCourse;
-            p.setGolCourse(g);
+            p.GolfCourse = g;
 
             await Navigation.PushAsync(new ClubSelectionPage(p));
          }

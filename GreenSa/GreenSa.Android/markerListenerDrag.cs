@@ -14,6 +14,8 @@ using static Android.Gms.Maps.GoogleMap;
 using Android.Gms.Maps.Model;
 using Java.Lang;
 using GreenSa.Droid;
+using Xamarin.Forms;
+using GreenSa.Models.Tools.GPS_Maps;
 
 namespace Greensa.Droid
 {
@@ -28,13 +30,17 @@ namespace Greensa.Droid
 
         public void OnMarkerDrag(Marker marker)
         {
+            CustomPin pin = new CustomPin(CustomPin.HOLE);
+            pin.Position = new Xamarin.Forms.Maps.Position(marker.Position.Latitude, marker.Position.Longitude);
+            MessagingCenter.Send<CustomPin>(pin,"updatePosion");
+
             cmr.UpdatePolyLinePos(false,marker.Position);
         }
 
         public void OnMarkerDragEnd(Marker marker)
         {
             cmr.UpdatePolyLinePos(false,marker.Position);
-            marker.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueCyan));
+            marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.shape_circle));
 
         }
 

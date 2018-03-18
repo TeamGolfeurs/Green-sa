@@ -22,6 +22,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
 
         public ClubSelectionPage(Partie partie)
         {
+
             InitializeComponent();
             p = partie;
             
@@ -55,10 +56,10 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
             foreach(Club c in listviewclub.ItemsSource){
                 if(c.selected){
                     clubselected.Add(c);
-                    Debug.WriteLine(c.name);
+
                 }
             }
-            p.setClubs(clubselected);
+            p.Clubs = clubselected;
 
             await Navigation.PushAsync(new Game.MainGamePage(p));
         }
