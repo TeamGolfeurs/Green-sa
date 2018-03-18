@@ -29,6 +29,10 @@ namespace GreenSa.Models.Tools.GPS_Maps
             }
         }
 
+        public CustomPin UserPin { get => userPin; set => userPin = value; }
+        public CustomPin TargetPin { get => targetPin; set => targetPin = value; }
+        public CustomPin HolePin { get => holePin; set => holePin = value; }
+
         private CustomPin userPin;
         private CustomPin targetPin;
         private CustomPin holePin;
@@ -40,24 +44,24 @@ namespace GreenSa.Models.Tools.GPS_Maps
             //message which come from the markerListenerDrag,
             //when the target pin is moved =>update the model position of the target
             MessagingCenter.Subscribe<CustomPin>(this, CustomPin.UPDATEDMESSAGE, (sender) => {
-                targetPin.Position = sender.Position;
+                TargetPin.Position = sender.Position;
             });
 
             RouteCoordinates = new List<Position>();
             Position pos = new Position(0, 0);
-            userPin = new CustomPin(CustomPin.USER)
+            UserPin = new CustomPin(CustomPin.USER)
             {
                 Type = PinType.Place,
                 Position = pos,
                 Label = "Je suis là"
             };
-            targetPin = new CustomPin(CustomPin.MOVABLE)
+            TargetPin = new CustomPin(CustomPin.MOVABLE)
             {
                 Type = PinType.Place,
                 Position = pos,
                 Label = "Je suis là"
             };
-            holePin = new CustomPin(CustomPin.HOLE)
+            HolePin = new CustomPin(CustomPin.HOLE)
             {
                 Type = PinType.Place,
                 Position = pos,
@@ -77,9 +81,9 @@ namespace GreenSa.Models.Tools.GPS_Maps
 
         public void setUserPosition(MyPosition pos)
         {
-            userPin.Position = new Position(pos.X, pos.Y);
+            UserPin.Position = new Position(pos.X, pos.Y);
 
-            targetPin.Position = calculationNewInterTarget();
+            TargetPin.Position = calculationNewInterTarget();
             update();
 
         }
@@ -87,14 +91,14 @@ namespace GreenSa.Models.Tools.GPS_Maps
 
         public void setHolePosition(MyPosition pos)
         {
-            holePin.Position = new Position(pos.X, pos.Y);
+            HolePin.Position = new Position(pos.X, pos.Y);
 
         }
 
         public Position calculationNewInterTarget()
         {
-            return new Position(  (userPin.Position.Latitude+ holePin.Position.Latitude )/2, 
-                                    (userPin.Position.Longitude + holePin.Position.Longitude)/2);
+            return new Position(  (UserPin.Position.Latitude+ HolePin.Position.Latitude )/2, 
+                                    (UserPin.Position.Longitude + HolePin.Position.Longitude)/2);
         }
 
 
@@ -102,38 +106,38 @@ namespace GreenSa.Models.Tools.GPS_Maps
         public void update()
         {
             Pins.Clear();
-            this.Pins.Add(userPin);
-            this.Pins.Add(targetPin);
-            this.Pins.Add(holePin);
+            this.Pins.Add(UserPin);
+            this.Pins.Add(TargetPin);
+            this.Pins.Add(HolePin);
             /*Device.BeginInvokeOnMainThread(() =>
             {*/
             var list = new List<Position>();
-            list.Add(userPin.Position);
-            list.Add(targetPin.Position);
-            list.Add(holePin.Position);
+            list.Add(UserPin.Position);
+            list.Add(TargetPin.Position);
+            list.Add(HolePin.Position);
             this.RouteCoordinates = list;
             // });
 
-            this.MoveToRegion(MapSpan.FromCenterAndRadius(targetPin.Position, Distance.FromMiles(1)));
+            this.MoveToRegion(MapSpan.FromCenterAndRadius(TargetPin.Position, Distance.FromMiles(1)));
         }
 
 
         public double getDistanceUserHole()
         {
-            return DistanceTo(userPin.Position.Latitude, userPin.Position.Longitude,
-                                holePin.Position.Latitude, holePin.Position.Longitude,"M");
+            return DistanceTo(UserPin.Position.Latitude, UserPin.Position.Longitude,
+                                HolePin.Position.Latitude, HolePin.Position.Longitude,"M");
         }
 
         public double getDistanceTargetHole()
         {
-            return DistanceTo(targetPin.Position.Latitude, targetPin.Position.Longitude,
-                                holePin.Position.Latitude, holePin.Position.Longitude, "M");
+            return DistanceTo(TargetPin.Position.Latitude, TargetPin.Position.Longitude,
+                                HolePin.Position.Latitude, HolePin.Position.Longitude, "M");
         }
 
         public double getDistanceUserTarget()
         {
-            return DistanceTo(userPin.Position.Latitude, userPin.Position.Longitude,
-                                targetPin.Position.Latitude, targetPin.Position.Longitude, "M");
+            return DistanceTo(UserPin.Position.Latitude, UserPin.Position.Longitude,
+                                TargetPin.Position.Latitude, TargetPin.Position.Longitude, "M");
         }
 
         static double DistanceTo(double lat1, double lon1, double lat2, double lon2, string unit)
@@ -160,13 +164,13 @@ namespace GreenSa.Models.Tools.GPS_Maps
         internal void setTargetMovable()
         {
 
-            targetPin.type = CustomPin.MOVABLE;
+            TargetPin.type = CustomPin.MOVABLE;
             update();
         }
 
         public void lockTarget()
         {
-            targetPin.type = CustomPin.LOCKED;
+            TargetPin.type = CustomPin.LOCKED;
             update();
         }
 

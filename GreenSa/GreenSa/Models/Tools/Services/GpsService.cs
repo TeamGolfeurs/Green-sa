@@ -13,7 +13,7 @@ namespace GreenSa.Models.Tools.Services
         {//STATIC? NOT USE
         }
 
-        public static async Task<MyPosition> getCurrentPositionAsync()  
+        public static async Task<MyPosition> getCurrentPosition()  
         {
             CrossGeolocator.Current.DesiredAccuracy = 5;
 

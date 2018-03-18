@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GreenSa.Models.GolfModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,12 @@ namespace GreenSa.ViewController.PartieGolf.Game
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HoleFinishedPage : ContentPage
     {
-        public HoleFinishedPage()
+        private Partie partie;
+
+        public HoleFinishedPage(Partie partie)
         {
             InitializeComponent();
+            this.partie = partie;
         }
 
         protected override void OnAppearing()

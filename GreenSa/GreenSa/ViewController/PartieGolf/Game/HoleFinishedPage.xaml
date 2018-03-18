@@ -4,7 +4,7 @@
              x:Class="GreenSa.ViewController.PartieGolf.Game.HoleFinishedPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <Label Text="HOLE FINISHED PAGE"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>

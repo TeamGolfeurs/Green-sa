@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
@@ -24,10 +24,11 @@ namespace GreenSa.ViewController.PartieGolf.Game
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainGamePage : ContentPage
     {
+        
         public const String BEGIN_STATE = "BEGIN";
         public const String LOCK_STATE = "LOCK";
         public const String NEXT_STATE = "NEXT";
-
+         
         private String state;
         private Partie partie;
 
@@ -64,7 +65,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
                 {
                     try
                     {
-                        position = await GpsService.getCurrentPositionAsync();
+                        position = await localize();
                         success = true;
                         map.setUserPosition(position);
                     }
@@ -95,6 +96,13 @@ namespace GreenSa.ViewController.PartieGolf.Game
             }
 
 
+        }
+        public async Task<MyPosition> localize()
+        {
+            localisationState.Text = "Localisation en cours...";
+            MyPosition position = await GpsService.getCurrentPosition();
+            localisationState.Text = "";
+            return position;
         }
 
         private void updateDistance()
@@ -131,13 +139,16 @@ namespace GreenSa.ViewController.PartieGolf.Game
         * **/
         private async void onMainButtonClicked(object sender, SelectedItemChangedEventArgs e)
         {
-            if(state!=LOCK_STATE)
-            {
-                map.setTargetMovable();
-            }
-            else
+            if(state==LOCK_STATE)
             {
                 map.lockTarget();
+            }
+            else if(state==NEXT_STATE)
+            {
+                MyPosition newUserPosition = await localize();
+                partie.addPositionForCurrentHole(new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
+                map.setUserPosition(newUserPosition);
+                map.setTargetMovable();
             }
             setNextState();
         }
@@ -146,14 +157,25 @@ namespace GreenSa.ViewController.PartieGolf.Game
         * **/
         private async void onClubSelectionClicked(object sender, SelectedItemChangedEventArgs e)
         {
+            await Navigation.PushModalAsync(new ClubSelectionInGamePage(partie));
+        }
+
+        /* Méthode qui s'execute au click sur le bouton principal.
+         * **/
+        private async void onHoleFinishedButtonClicked(object sender, SelectedItemChangedEventArgs e)
+        {
+            await Navigation.PushAsync(new HoleFinishedPage(partie));
 
         }
 
-          /* Méthode qui s'execute au click sur le bouton principal.
-           * **/
-        private async void onHoleFinishedButtonClicked(object sender, SelectedItemChangedEventArgs e)
+        private async void onRelocalizeAction(object sender, EventArgs e)
         {
-               
+            MyPosition newUserPosition = await localize();
+            map.setUserPosition(newUserPosition);
+        }
+        protected override bool OnBackButtonPressed()
+        {
+            return base.OnBackButtonPressed();
         }
 
     }

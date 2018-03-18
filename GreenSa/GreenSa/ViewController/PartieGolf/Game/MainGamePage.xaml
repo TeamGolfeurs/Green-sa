@@ -5,7 +5,7 @@
               xmlns:local2="clr-namespace:GreenSa.MarkupExtension"
              x:Class="GreenSa.ViewController.PartieGolf.Game.MainGamePage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Relocalize"/>
+        <ToolbarItem Text="Relocalize" Clicked="onRelocalizeAction"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid   >
@@ -27,7 +27,7 @@
 
                     <Label x:Name="forceVent" Text="0 km/h" Grid.Row="1"/>
                 </StackLayout>
-
+                <Label x:Name="localisationState" Text="" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                 <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
                    
                     <Label x:Name="distTotal" Text="" HorizontalOptions="CenterAndExpand"/>
@@ -39,10 +39,10 @@
             
             <local:CustomMap Grid.Row="1" Grid.Column="0" x:Name="map" MapType="Street" WidthRequest="960" HeightRequest="100" VerticalOptions="FillAndExpand" />
             <StackLayout Grid.Row="2" Grid.Column="0"  Orientation="Horizontal" >
-               
-                <Button Text="Club" HorizontalOptions="Start" />
+
+                <Button Text="Club" HorizontalOptions="Start" Clicked="onClubSelectionClicked" />
                 <Button x:Name="mainButton" Text="GO" HorizontalOptions="FillAndExpand" Clicked="onMainButtonClicked"/>
-                <Button Text="Trou terminé" HorizontalOptions="End" />
+                <Button Text="Trou terminé" HorizontalOptions="End"  Clicked="onHoleFinishedButtonClicked"  />
             </StackLayout>
         </Grid>
     </ContentPage.Content>

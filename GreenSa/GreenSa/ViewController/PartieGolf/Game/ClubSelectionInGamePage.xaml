@@ -4,7 +4,7 @@
              x:Class="GreenSa.ViewController.PartieGolf.Game.ClubSelectionInGamePage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <Label Text="Selection Club IN GAME"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>

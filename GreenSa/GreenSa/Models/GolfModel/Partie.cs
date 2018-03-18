@@ -36,11 +36,13 @@ namespace GreenSa.Models.GolfModel
 
         public void addPositionForCurrentHole(MyPosition oldTarget, MyPosition userPosition)
         {
+            return;
             throw new NotImplementedException();
         }
 
         public void holeFinished()
         {
+            return;
             throw new NotImplementedException();
 
         }
