@@ -17,13 +17,22 @@ namespace GreenSa.Models.GolfModel
         private List<Club> clubs;
         public Club currentClub;
 
-        public GolfCourse GolfCourse { get => golfCourse; set => golfCourse = value; }
+        public GolfCourse GolfCourse {
+            get
+            {
+               return  golfCourse;
+            }
+            set {
+                golfCourse = value;
+                itHole = value.GetHoleEnumerator();
+
+            }
+        }
         public List<Club> Clubs { get => clubs; set => clubs = value; }
         private List<MyPosition>.Enumerator itHole;
 
         public Partie()
         {
-            itHole = GolfCourse.GetHoleEnumerator();
 
         }
         /// <summary>
@@ -55,6 +64,7 @@ namespace GreenSa.Models.GolfModel
         /// <returns></returns>
         public bool hasNextHole()
         {
+
             return itHole.MoveNext();        
         }
 
