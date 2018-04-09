@@ -133,6 +133,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Ressources\Clubs\Club_Descriptor.xml" />
+    <None Include="Ressources\Clubs\Bois3.xml" />
+    <None Include="Ressources\Clubs\Driver.xml" />
+    <None Include="Ressources\Clubs\Fer3.xml" />
+    <None Include="Ressources\Clubs\Fer4.xml" />
+    <None Include="Ressources\Clubs\Fer5.xml" />
+    <None Include="Ressources\Clubs\Fer6.xml" />
+    <None Include="Ressources\Clubs\Fer7.xml" />
+    <None Include="Ressources\Clubs\Fer8.xml" />
+    <None Include="Ressources\Clubs\Fer9.xml" />
+    <None Include="Ressources\Clubs\Sandwedge.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\PartieGolf\Configuration\ClubSelectionPage.xaml">
@@ -164,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Ressources\Images\left-arrow.png" />
     <EmbeddedResource Include="Ressources\Images\tools.png" />
+    <Content Include="Ressources\Clubs\Pitching.xml" />
+    <Content Include="Ressources\Clubs\Bois5.xml" />
+    <Content Include="Ressources\Clubs\Hybride.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScoreEvolutionPage.xaml">
@@ -197,11 +211,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\PartieGolf\Game\ClubSelectionInGamePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewController\PartieGolf\Game\HoleFinishedPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
