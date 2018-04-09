@@ -24,7 +24,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
             set
             {
                 routeCoordinates = value;
-                MessagingCenter.Send<CustomMap>(this, "updateThisPosition");
+                MessagingCenter.Send<CustomMap>(this, "updateTheMap");
 
             }
         }
@@ -173,7 +173,6 @@ namespace GreenSa.Models.Tools.GPS_Maps
             TargetPin.type = CustomPin.LOCKED;
             update();
         }
-
         public new event PropertyChangedEventHandler PropertyChanged;
 
         protected override void OnPropertyChanged(string propertyName = null)

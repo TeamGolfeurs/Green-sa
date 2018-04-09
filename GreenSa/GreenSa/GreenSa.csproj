@@ -154,8 +154,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ressources\Clubs\Fer3.xml" />
-    <Content Include="Ressources\GolfCourses\SaintJacques_18trous.xml" />
-    <Content Include="Ressources\GolfCourses\SaintJacques_9trous.xml" />
+    <EmbeddedResource Include="Ressources\GolfCourses\GolfCourses_Descriptor.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ressources\GolfCourses\SaintJacques_18trous.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ressources\GolfCourses\SaintJacques_9trous.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ressources\Images\left-arrow.png" />
     <EmbeddedResource Include="Ressources\Images\tools.png" />
   </ItemGroup>
@@ -198,6 +205,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewController\Test\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.5.0.122203\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.5.0.122203\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />

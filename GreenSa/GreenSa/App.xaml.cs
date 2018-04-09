@@ -16,7 +16,7 @@ namespace GreenSa
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainGamePage(new Models.GolfModel.Partie()));
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

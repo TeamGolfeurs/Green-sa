@@ -29,8 +29,8 @@ namespace GreenSa.Models.GolfModel
         public List<Tuple<GolfCourse, int, int, int, int>> getScoreForGolfCourses(Filter<GolfCourse>.Filtre filtre)
         {
             List<Tuple<GolfCourse, int, int, int, int>> l = new List<Tuple<GolfCourse, int, int, int, int>>();
-            l.Add(new Tuple<GolfCourse, int, int, int, int> (new GolfCourse("StJacques9trous"), 4,2,1,2));
-            l.Add(new Tuple<GolfCourse, int, int, int, int>(new GolfCourse("StJacques18trous"), 8, 5, 1, 2));
+            l.Add(new Tuple<GolfCourse, int, int, int, int> (new GolfCourse("StJacques9trousEN DUR","StJac",new List<MyPosition>()), 4,2,1,2));
+            l.Add(new Tuple<GolfCourse, int, int, int, int>(new GolfCourse("StJacques9trous EN DUR", "StJac", new List<MyPosition>()), 8, 5, 1, 2));
             return l;
         }
 

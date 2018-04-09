@@ -19,18 +19,20 @@ namespace GreenSa.Models.GolfModel
 
         public GolfCourse GolfCourse { get => golfCourse; set => golfCourse = value; }
         public List<Club> Clubs { get => clubs; set => clubs = value; }
+        private List<MyPosition>.Enumerator itHole;
 
+        public Partie()
+        {
+            itHole = GolfCourse.GetHoleEnumerator();
+
+        }
         /// <summary>
         /// Retourne le prochain trou si il existe sinon retourne null.
         /// </summary>
         /// <returns>La position du trou.</returns>
         public MyPosition getNextHole()
         {
-            if (hasNextHole())
-            {
-                return golfCourse.Holes.GetEnumerator().Current;
-            }
-            return null;
+            return itHole.Current;
 
         }
 
@@ -53,9 +55,7 @@ namespace GreenSa.Models.GolfModel
         /// <returns></returns>
         public bool hasNextHole()
         {
-            return true;
-            return golfCourse.Holes.GetEnumerator().MoveNext();
-
+            return itHole.MoveNext();        
         }
 
     }

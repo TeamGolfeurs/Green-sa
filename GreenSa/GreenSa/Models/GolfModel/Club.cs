@@ -14,7 +14,7 @@ namespace GreenSa.Models.GolfModel
         private int id;
         public int Id { get => id; set => id = value; }
 
-        public string Name;
+        public string Name { get; set; }
         public int MinDistance;
         public int MaxDistance;
         public TypeClub TypeClub;
