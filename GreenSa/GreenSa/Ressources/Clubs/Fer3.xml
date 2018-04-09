@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Club>
-  <Name></Name>
-  <DistanceMoyenne>
-    <Min></Min>
-    <Max></Max>
-  </DistanceMoyenne>
+  <Name>Fer3</Name>
+  <DistanceMoyenne>170</DistanceMoyenne>
 </Club>
