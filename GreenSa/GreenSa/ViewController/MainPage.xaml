@@ -1,13 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:GreenSa"
+             xmlns:local="clr-namespace:GreenSa.MarkupExtension"
              x:Class="GreenSa.ViewController.MainPage">
+    <!---->
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+            <Grid>
+                <Label 
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    x:Name="label"
+                    Margin="30"
+                    Text="GREEN'SA"
+                    TextColor="ForestGreen"
+                    FontSize="Large"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Center"
+                   />
+                <StackLayout
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                >
+                <Button 
+                    Text="JOUER"
+                    FontSize="Large"
+                    Clicked="onPlayClicked" 
+                    />
+                <Button 
+                    Text="STATISTIQUES"
+                    FontSize="Large"
+                    Clicked="onStatsClicked" 
+                    />
+               </StackLayout>
+               <StackLayout
+                    Grid.Column="3"
+                    >
+                    <Image 
+                        x:Name="optionButton"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="End"
+                        Source="{local:EmbeddedImage GreenSa.Ressources.Images.tools.png}" 
+                     />
+                         <!-- The Event Listener is in the code-behind-->
+                
+                <!--    <Button.Image>
+                            <OnPlatform x:TypeArguments="FileImageSource"
+                            iOS="tools.png"
+                            Android="tools.png"
+                            WinPhone="tools.png"/>
+                    </Button.Image> -->
+               </StackLayout>
+
+            </Grid>
+
     </ContentPage.Content>
 </ContentPage>

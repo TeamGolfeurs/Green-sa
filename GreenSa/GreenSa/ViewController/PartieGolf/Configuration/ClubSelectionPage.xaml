@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GreenSa.ViewController.PartieGolf.Configuration.ClubSelectionPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Selectionner Vos Clubs"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand"
+                FontAttributes="Bold"/>
+            <ListView x:Name="listviewclub" >
+               <ListView.ItemTemplate >
+                <DataTemplate >
+                    <ViewCell >
+                        <StackLayout Orientation="Horizontal">
+                            <Label 
+                                Text="{Binding name}"
+                                HorizontalOptions="StartAndExpand">    
+                            </Label>
+                            <Switch  
+                                IsToggled="{Binding selected}"
+                                HorizontalOptions="End">
+                            </Switch>
+                        </StackLayout>
+                    </ViewCell> 
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            </ListView>
+            <Button 
+                x:Name = "Btn"
+                Text="Terminer"
+                VerticalOptions="End"
+                HorizontalOptions="CenterAndExpand"
+                Clicked="onValidClubSelection"
+                TextColor="Black">
+            </Button>     
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GreenSa.Models.GolfModel;
+using GreenSa.ViewController.PartieGolf.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +23,17 @@ namespace GreenSa.ViewController
     {
         public MainPage()
         {
+
             InitializeComponent();
+            //optionButton = new FileImageSource { File = "GreenSa.Ressources.Images.tools.png" };
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (s, e) => {
+                onOptionsClicked(s, e);
+            };
+            optionButton.GestureRecognizers.Add(tapGestureRecognizer);
+            //optionButton.Source = ImageSource.FromResource("GreenSa.Ressources.Images.tools.png");
+            //optionButton.Image = new FileImageSource { File = "GreenSa.Ressources.Images.tools.png" };
+
         }
 
         /**
@@ -30,7 +42,8 @@ namespace GreenSa.ViewController
          * */
         async private void onPlayClicked(object sender, EventArgs e)
         {
-
+            Partie partie = new Partie();
+            await Navigation.PushAsync(new GolfSelectionPage(partie));
         }
 
         /**
@@ -42,6 +55,11 @@ namespace GreenSa.ViewController
 
         }
 
+        async private void onOptionsClicked(object sender, EventArgs e)
+        {
+            label.Text= "WIIIIIIIIIIII";
+
+        }
 
 
 

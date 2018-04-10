@@ -1,12 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GreenSa.Models.Tools.GPS_Maps"
+              xmlns:local2="clr-namespace:GreenSa.MarkupExtension"
              x:Class="GreenSa.ViewController.PartieGolf.Game.MainGamePage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Relocalize" Clicked="onRelocalizeAction"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid   >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <StackLayout  Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                <StackLayout Orientation="Vertical">
+                    <Image 
+                    x:Name="windImg"
+                    HorizontalOptions="Center"/>
+
+                    <Label x:Name="forceVent" Text="0 km/h" Grid.Row="1"/>
+                </StackLayout>
+                <Label x:Name="localisationState" Text="" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
+                   
+                    <Label x:Name="distTotal" Text="" HorizontalOptions="CenterAndExpand"/>
+                    <Label x:Name="distSplit" Text=""/>
+
+                </StackLayout>
+            </StackLayout>
+
+            
+            <local:CustomMap Grid.Row="1" Grid.Column="0" x:Name="map" MapType="Street" WidthRequest="960" HeightRequest="100" VerticalOptions="FillAndExpand" />
+            <StackLayout Grid.Row="2" Grid.Column="0"  Orientation="Horizontal" >
+
+                <Button Text="Club" HorizontalOptions="Start" Clicked="onClubSelectionClicked" />
+                <Button x:Name="mainButton" Text="GO" HorizontalOptions="FillAndExpand" Clicked="onMainButtonClicked"/>
+                <Button Text="Trou terminé" HorizontalOptions="End"  Clicked="onHoleFinishedButtonClicked"  />
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
