@@ -12,7 +12,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
 {
     public class CustomPin : Xamarin.Forms.Maps.Pin
     {
-        public static string UPDATEDMESSAGE = "updatePosion";
+        public static string UPDATEDMESSAGE = "updatePosition";
 
 
         public static string LOCKED = "NO_MOVABLE";
@@ -33,8 +33,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
         public new Xamarin.Forms.Maps.Position Position {
             get {return base.Position;}
             set {base.Position=value;
-                Debug.WriteLine("UPDATE SET POSITION IN CUSTOM PIN");
-
+                //Debug.WriteLine("UPDATE SET POSITION IN CUSTOM PIN");
             }
         }
 

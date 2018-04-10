@@ -10,6 +10,7 @@ namespace GreenSa.Models.Tools
     {
         public Double X { get; set; }
         public Double Y { get; set; }
+        public MyPosition() { }
 
         public MyPosition(Double x, Double y)
         {

@@ -169,10 +169,16 @@
       <HintPath>..\..\packages\Xamarin.Forms.2.5.0.122203\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="PCLStorage.Abstractions">
+      <HintPath>..\..\packages\PCLStorage.1.0.2\lib\portable-Xamarin.iOS+Xamarin.Mac\PCLStorage.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLStorage">
+      <HintPath>..\..\packages\PCLStorage.1.0.2\lib\portable-Xamarin.iOS+Xamarin.Mac\PCLStorage.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GreenSa\GreenSa.csproj">
-      <Project>{429d54e5-18bc-4e6d-820a-5eb3bbcecefb}</Project>
+      <Project>{4B709EBA-13B9-4252-B42F-9F74D8A161F3}</Project>
       <Name>GreenSa</Name>
     </ProjectReference>
   </ItemGroup>

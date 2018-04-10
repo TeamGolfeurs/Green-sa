@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using GreenSa.ViewController.Statistiques;
 
 namespace GreenSa.ViewController
 {
@@ -52,7 +53,7 @@ namespace GreenSa.ViewController
           * */
         async private void onStatsClicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new StatistiqueMainTabbedPage() );
         }
 
         async private void onOptionsClicked(object sender, EventArgs e)

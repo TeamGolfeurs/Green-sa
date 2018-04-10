@@ -1,12 +1,14 @@
 ﻿using GreenSa.Models.Tools;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 namespace GreenSa.Models.GolfModel
 {
     public class GolfCourse
     {
-        public string Name;
+        public string Name { get; set; }
+        public string NameCourse { get; set; }
 
         // Id
         private int id;
@@ -14,14 +16,25 @@ namespace GreenSa.Models.GolfModel
 
         // Holes
         private List<MyPosition> holes;
+
         public List<MyPosition> Holes { get => holes; set => holes = value; }
 
-        public GolfCourse(string name)
+    
+
+        public GolfCourse(string name,string nameCourse,List<MyPosition> holes)
         {
-            Name = name;
-            holes = new List<MyPosition>();
+            this.Name = name;
+            this.holes = holes;
+            this.NameCourse = nameCourse;
+
         }
 
-        //methode pour remplir à partir d'un XML ?
+        internal List<MyPosition>.Enumerator GetHoleEnumerator()
+        {
+            return holes.GetEnumerator();
+        }
+
+      
+       
     }
 }

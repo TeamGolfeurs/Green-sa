@@ -11,7 +11,7 @@
                 >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding name}" Tapped="onGolfSelection"/>
+                        <TextCell Text="{Binding Name}" Tapped="onGolfSelection"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
