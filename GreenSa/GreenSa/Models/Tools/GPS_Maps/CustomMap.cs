@@ -175,6 +175,11 @@ namespace GreenSa.Models.Tools.GPS_Maps
         }
         public new event PropertyChangedEventHandler PropertyChanged;
 
+        internal MyPosition getUserPosition()
+        {
+            return new MyPosition(userPin.Position.Latitude, userPin.Position.Longitude);
+        }
+
         protected override void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

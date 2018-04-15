@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace GreenSa.Models.GolfModel
 {
@@ -11,27 +13,29 @@ namespace GreenSa.Models.GolfModel
         public string NameCourse { get; set; }
 
         // Id
-        private int id;
-        public int Id { get => id; set => id = value; }
+        [PrimaryKey,AutoIncrement]
+        public int Id { get; set; }
 
         // Holes
-        private List<MyPosition> holes;
+        [OneToMany]
+        public List<MyPosition> Holes { get; set; }
 
-        public List<MyPosition> Holes { get => holes; set => holes = value; }
 
-    
+        public GolfCourse()
+        {
 
+        }
         public GolfCourse(string name,string nameCourse,List<MyPosition> holes)
         {
             this.Name = name;
-            this.holes = holes;
+            this.Holes = holes;
             this.NameCourse = nameCourse;
 
         }
 
         internal List<MyPosition>.Enumerator GetHoleEnumerator()
         {
-            return holes.GetEnumerator();
+            return Holes.GetEnumerator();
         }
 
       

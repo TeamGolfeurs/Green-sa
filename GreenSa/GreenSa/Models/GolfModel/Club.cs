@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,11 @@ namespace GreenSa.Models.GolfModel
 {
     public class Club
     {
-        public bool selected { get; set; }
-
-        // Id
-        private int id;
-        public int Id { get => id; set => id = value; }
-
+        public bool selected { get; set; }//used for IHM
+        
+        [PrimaryKey,AutoIncrement]
+        public int Id { get; set; }
+        [MaxLength(255)]
         public string Name { get; set; }
         public int MinDistance;
         public int MaxDistance;
@@ -23,6 +23,7 @@ namespace GreenSa.Models.GolfModel
         {
             Name = name;
             TypeClub = typeClub;
+            selected = true;
         }
 
         /*

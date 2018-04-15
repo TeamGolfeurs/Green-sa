@@ -26,5 +26,11 @@ namespace GreenSa.ViewController.PartieGolf.Game
 
             base.OnAppearing();
         }
+
+        private void validButtonClicked(object sender, EventArgs e)
+        {
+            partie.holeFinished(save.IsToggled);
+            Navigation.PopAsync();
+        }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using GreenSa.Models.Tools;
+using GreenSa.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace GreenSa.Models.GolfModel
 {
@@ -14,8 +16,10 @@ namespace GreenSa.Models.GolfModel
     {
 
         private GolfCourse golfCourse;
-        private List<Club> clubs;
-        public Club currentClub;
+        public Club currentClub { get; set; }
+        public List<Shot> Shots { get; set; }
+        public List<Club> Clubs { get ; set; }
+        private List<MyPosition>.Enumerator itHole;
 
         public GolfCourse GolfCourse {
             get
@@ -28,11 +32,11 @@ namespace GreenSa.Models.GolfModel
 
             }
         }
-        public List<Club> Clubs { get => clubs; set => clubs = value; }
-        private List<MyPosition>.Enumerator itHole;
+      
 
         public Partie()
         {
+            Shots = new List<Shot>();
 
         }
         /// <summary>
@@ -42,19 +46,22 @@ namespace GreenSa.Models.GolfModel
         public MyPosition getNextHole()
         {
             return itHole.Current;
-
         }
 
-        public void addPositionForCurrentHole(MyPosition oldTarget, MyPosition userPosition)
+        public void addPositionForCurrentHole(MyPosition start,MyPosition oldTarget, MyPosition userPosition)
         {
-            return;
-            throw new NotImplementedException();
+            Shots.Add(new Shot(currentClub,start, oldTarget, userPosition,DateTime.Now));
         }
 
-        public void holeFinished()
+        public async void holeFinished(bool saveForStatistics)
         {
-            return;
-            throw new NotImplementedException();
+            if (saveForStatistics)
+            {
+                SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+                await connection.CreateTableAsync<Shot>();
+                await connection.InsertAllAsync(Shots);
+                
+            }
 
         }
 

@@ -47,6 +47,11 @@ namespace GreenSa.ViewController.PartieGolf.Game
             MessagingCenter.Subscribe<CustomPin>(this,CustomPin.UPDATEDMESSAGE, (sender) => {
                 updateDistance();
             });
+           /* if (Navigation.NavigationStack.Count == 3)
+            {*/
+             /*   Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 1]);
+                Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 1]);*/
+            //}
         }
         /**
         * Méthode qui s'execute automatiquement au chargement de la page
@@ -55,9 +60,10 @@ namespace GreenSa.ViewController.PartieGolf.Game
         async protected override void OnAppearing()
         {
             base.OnAppearing();
+            
             if (partie.hasNextHole())
             {
-                MyPosition nextHole = new MyPosition(48.067001, -1.741196);// partie.getNextHole();
+                MyPosition nextHole = partie.getNextHole();// partie.getNextHole();
                 map.setHolePosition(nextHole);
                 MyPosition position = new MyPosition(0, 0) ;
                 bool success = false;
@@ -100,8 +106,11 @@ namespace GreenSa.ViewController.PartieGolf.Game
         public async Task<MyPosition> localize()
         {
             localisationState.Text = "Localisation en cours...";
+            mainButton.IsEnabled = false;
             MyPosition position = await GpsService.getCurrentPosition();
             localisationState.Text = "";
+            mainButton.IsEnabled = true;
+
             return position;
         }
 
@@ -146,7 +155,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
             else if(state==NEXT_STATE)
             {
                 MyPosition newUserPosition = await localize();
-                partie.addPositionForCurrentHole(new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
+                MyPosition start = map.getUserPosition();
+                partie.addPositionForCurrentHole(start,new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
                 map.setUserPosition(newUserPosition);
                 map.setTargetMovable();
             }

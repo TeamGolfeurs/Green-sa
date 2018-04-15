@@ -29,7 +29,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          * Méthode qui s'execute automatiquement au chargement de la page
          * Demande à la classe GestionGolf
          * */
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
@@ -37,7 +37,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
             Filter<GolfCourse>.Filtre f = (c => true);
 
             //Recupere la liste des Golfs filtré par la classe GestionGolf
-            ListGolfCourse.ItemsSource = GestionGolfs.getListGolfs(f);
+            ListGolfCourse.ItemsSource = await GestionGolfs.getListGolfsAsync(f);
 
 
         }

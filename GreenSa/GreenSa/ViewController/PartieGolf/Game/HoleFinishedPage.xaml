@@ -7,6 +7,11 @@
             <Label Text="HOLE FINISHED PAGE"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Sauvegarder les stats"/>
+                <Switch x:Name="save"  IsToggled="true"/>
+            </StackLayout>
+            <Button Text="Valider le trou" Clicked="validButtonClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
