@@ -185,7 +185,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
         }
         protected override bool OnBackButtonPressed()
         {
-            return base.OnBackButtonPressed();
+            Navigation.PopToRootAsync();
+            return true;
         }
 
     }

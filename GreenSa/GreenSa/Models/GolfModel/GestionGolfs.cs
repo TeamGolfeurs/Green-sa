@@ -1,6 +1,6 @@
 ﻿using GreenSa.Models.Tools;
 using GreenSa.Persistence;
-using SQLite;
+using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,21 +23,27 @@ namespace GreenSa.Models.GolfModel
          * Donne une liste de golf en fonction d'un filtre
          * le fitre peut être null, dans ce cas tous les golfs seront récupérés.
          * */
-        //NOT IMPLEMENTED YET
-        public static async Task<List<GolfCourse>> getListGolfsAsync(Filter<GolfCourse>.Filtre filtre)
+        //NOT IMPLEMENTED YE
+        public static  List<GolfCourse> getListGolfsAsync(Filter<GolfCourse>.Filtre filtre)
         {
             if (filtre == null)
                 filtre = x => true;
-            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-
+            SQLite.SQLiteConnection connection =  DependencyService.Get<ISQLiteDb>().GetConnection();
+            Debug.WriteLine("Got connection");
+          
+            
             //récup avec filtre
             //utilise SQLite
             //si la table n'existe pas encore on parse les fichiers XML (/Ressources) et on insert
             List<GolfCourse> gfcs = new List<GolfCourse>();
-            await connection.CreateTableAsync<GolfCourse>();
-            await connection.CreateTableAsync<MyPosition>();
+            connection.CreateTable<MyPosition>();
+            Debug.WriteLine("Vreated table pos");
+            connection.CreateTable<GolfCourseMyPosition>();
 
-            gfcs = (await connection.Table<GolfCourse>().ToListAsync());
+            connection.CreateTable<GolfCourse>();
+            Debug.WriteLine("Vreated table GolfCourse");
+
+            gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection));
             if (gfcs.Count==0)/*!existe dans BD*/
             {
                 Debug.WriteLine("PARSING");
@@ -79,29 +85,16 @@ namespace GreenSa.Models.GolfModel
 
                 //add in the database
                 //addGolfCoursesInDatabase(connection,gfcs);
-                await connection.InsertAllAsync(gfcs);
+                //connection.InsertAll(gfcs);
+                SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection,gfcs,recursive:true);
+
+
             }
             return gfcs;
         }
 
       
-
-        public static Boolean TableExists(String tableName, SQLiteConnection connection)
-        {
-            SQLite.TableMapping map = new TableMapping(typeof(ISQLiteDb)); // Instead of mapping to a specific table just map the whole database type
-            object[] ps = new object[0]; // An empty parameters object since I never worked out how to use it properly! (At least I'm honest)
-
-            Int32 tableCount = connection.Query(map, "SELECT * FROM sqlite_master WHERE type = 'table' AND name = '" + tableName + "'", ps).Count; // Executes the query from which we can count the results
-            if (tableCount == 0)
-                return false;
-            if (tableCount == 1)
-                return true;
-            else
-                throw new Exception("More than one table by the name of " + tableName + " exists in the database.", null);
-            
-
-        }
-
+        
       
 
         /**

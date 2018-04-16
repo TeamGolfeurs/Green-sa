@@ -56,10 +56,10 @@ namespace GreenSa.Models.GolfModel
         public async void holeFinished(bool saveForStatistics)
         {
             if (saveForStatistics)
-            {
-                SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-                await connection.CreateTableAsync<Shot>();
-                await connection.InsertAllAsync(Shots);
+            { 
+                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+                connection.CreateTable<Shot>();
+                connection.InsertAll(Shots);
                 
             }
 

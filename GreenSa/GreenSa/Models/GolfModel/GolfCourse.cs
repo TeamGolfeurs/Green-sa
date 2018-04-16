@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using SQLite;
+using System.Diagnostics;
 using SQLiteNetExtensions.Attributes;
+using SQLite;
 
 namespace GreenSa.Models.GolfModel
 {
@@ -16,9 +17,17 @@ namespace GreenSa.Models.GolfModel
         [PrimaryKey,AutoIncrement]
         public int Id { get; set; }
 
+        [ManyToMany(typeof(GolfCourseMyPosition), CascadeOperations = CascadeOperation.CascadeInsert)]
+        public List<MyPosition> Holes {
+            get { return holes; }
+            set{
+                holes = value;
+                Debug.WriteLine("SETTING HOLE " +value);
+            }
+        }
+
         // Holes
-        [OneToMany]
-        public List<MyPosition> Holes { get; set; }
+        private List<MyPosition> holes;
 
 
         public GolfCourse()
@@ -27,18 +36,27 @@ namespace GreenSa.Models.GolfModel
         }
         public GolfCourse(string name,string nameCourse,List<MyPosition> holes)
         {
+
             this.Name = name;
             this.Holes = holes;
             this.NameCourse = nameCourse;
 
         }
 
-        internal List<MyPosition>.Enumerator GetHoleEnumerator()
+        public List<MyPosition>.Enumerator GetHoleEnumerator()
         {
             return Holes.GetEnumerator();
         }
 
-      
-       
+        public override string ToString()
+        {
+            String str= Id+" - "+Name+", "+ NameCourse + " { "+Holes.Count+"\n";
+            foreach (MyPosition m in Holes)
+                str += m.ToString() + " \n";
+            str += "}";
+            return str;
+        }
+
+
     }
 }

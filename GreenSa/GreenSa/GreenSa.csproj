@@ -42,6 +42,7 @@
     <Compile Include="Models\GolfModel\Club.cs" />
     <Compile Include="Models\GolfModel\Shot.cs" />
     <Compile Include="Models\GolfModel\StatistiquesGolf.cs" />
+    <Compile Include="Models\Tools\GolfCourseMyPosition.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomPin.cs" />
     <Compile Include="Models\Tools\MyPosition.cs" />
@@ -89,6 +90,9 @@
     <Compile Include="ViewController\Statistiques\StatistiqueMainTabbedPage.xaml.cs">
       <DependentUpon>StatistiqueMainTabbedPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewController\Test\SeeBDContent.xaml.cs">
+      <DependentUpon>SeeBDContent.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\MainPage.xaml">
@@ -101,8 +105,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Geolocator, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xam.Plugin.Geolocator.4.2.0\lib\netstandard1.0\Plugin.Geolocator.dll</HintPath>
@@ -116,14 +120,14 @@
     <Reference Include="SQLiteNetExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SQLiteNetExtensions.2.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\SQLiteNetExtensions.dll</HintPath>
     </Reference>
-    <Reference Include="SQLitePCLRaw.batteries_green, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SQLitePCLRaw.bundle_green.1.1.5\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_green.dll</HintPath>
+    <Reference Include="SQLitePCLRaw.batteries_green, Version=1.1.10.86, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLitePCLRaw.bundle_green.1.1.10\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_green.dll</HintPath>
     </Reference>
-    <Reference Include="SQLitePCLRaw.batteries_v2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SQLitePCLRaw.bundle_green.1.1.5\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_v2.dll</HintPath>
+    <Reference Include="SQLitePCLRaw.batteries_v2, Version=1.1.10.86, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLitePCLRaw.bundle_green.1.1.10\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_v2.dll</HintPath>
     </Reference>
-    <Reference Include="SQLitePCLRaw.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SQLitePCLRaw.core.1.1.5\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.core.dll</HintPath>
+    <Reference Include="SQLitePCLRaw.core, Version=1.1.10.86, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLitePCLRaw.core.1.1.10\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.core.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.2.5.0.122203\lib\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.Core.dll</HintPath>
@@ -139,6 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -212,9 +217,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewController\Test\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Ressources\Clubs\Clubs_Descriptor.xml" />
     <Content Include="Ressources\Clubs\Driver.xml" />
@@ -230,6 +233,12 @@
     <Content Include="Ressources\Clubs\Fer6.xml" />
     <Content Include="Ressources\Clubs\Fer5.xml" />
     <Content Include="Ressources\Clubs\Bois3.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ViewController\Test\SeeBDContent.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.5.0.122203\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.5.0.122203\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />

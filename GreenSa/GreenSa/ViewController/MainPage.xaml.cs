@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using GreenSa.ViewController.Statistiques;
+using GreenSa.ViewController.Test;
 
 namespace GreenSa.ViewController
 {
@@ -62,7 +63,10 @@ namespace GreenSa.ViewController
 
         }
 
-
+        async private void voirBD(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SeeBDContent());
+        }
 
     }
 }

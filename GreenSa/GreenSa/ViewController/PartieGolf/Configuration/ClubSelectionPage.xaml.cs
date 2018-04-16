@@ -37,8 +37,8 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
         {
             Filter<Club>.Filtre f = (c => true);
             //get the list from gestionGolf
-            if (listviewclub.ItemsSource != null)
-                Navigation.PopToRootAsync();
+            /*if (listviewclub.ItemsSource != null)
+                Navigation.PopToRootAsync();*/
            
 
             listviewclub.ItemsSource = GestionGolfs.getListClubs(f);

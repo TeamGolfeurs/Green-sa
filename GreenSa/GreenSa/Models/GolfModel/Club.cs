@@ -11,9 +11,9 @@ namespace GreenSa.Models.GolfModel
     {
         public bool selected { get; set; }//used for IHM
         
-        [PrimaryKey,AutoIncrement]
+        //[PrimaryKey,AutoIncrement]
         public int Id { get; set; }
-        [MaxLength(255)]
+       // [MaxLength(255)]
         public string Name { get; set; }
         public int MinDistance;
         public int MaxDistance;

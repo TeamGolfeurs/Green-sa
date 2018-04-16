@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -37,7 +36,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
             Filter<GolfCourse>.Filtre f = (c => true);
 
             //Recupere la liste des Golfs filtré par la classe GestionGolf
-            ListGolfCourse.ItemsSource = await GestionGolfs.getListGolfsAsync(f);
+            ListGolfCourse.ItemsSource = GestionGolfs.getListGolfsAsync(f);
 
 
         }
