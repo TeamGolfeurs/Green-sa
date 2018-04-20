@@ -19,7 +19,7 @@ namespace GreenSa.Models.GolfModel
         public Club currentClub { get; set; }
         public List<Shot> Shots { get; set; }
         public List<Club> Clubs { get ; set; }
-        private List<MyPosition>.Enumerator itHole;
+        private List<Hole>.Enumerator itHole;
 
         public GolfCourse GolfCourse {
             get
@@ -37,13 +37,13 @@ namespace GreenSa.Models.GolfModel
         public Partie()
         {
             Shots = new List<Shot>();
-
+           currentClub = new Club("Fer3",170);
         }
         /// <summary>
         /// Retourne le prochain trou si il existe sinon retourne null.
         /// </summary>
         /// <returns>La position du trou.</returns>
-        public MyPosition getNextHole()
+        public Hole getNextHole()
         {
             return itHole.Current;
         }
@@ -53,13 +53,12 @@ namespace GreenSa.Models.GolfModel
             Shots.Add(new Shot(currentClub,start, oldTarget, userPosition,DateTime.Now));
         }
 
-        public async void holeFinished(bool saveForStatistics)
+        public void holeFinished(bool saveForStatistics)
         {
             if (saveForStatistics)
-            { 
-                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-                connection.CreateTable<Shot>();
-                connection.InsertAll(Shots);
+            {
+                StatistiquesGolf.saveForStats(Shots);
+                Shots.Clear();
                 
             }
 

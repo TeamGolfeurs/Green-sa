@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,21 +10,23 @@ namespace GreenSa.Models.GolfModel
 {
     public class Club
     {
+        [Ignore]
         public bool selected { get; set; }//used for IHM
-        
-        //[PrimaryKey,AutoIncrement]
-        public int Id { get; set; }
-       // [MaxLength(255)]
-        public string Name { get; set; }
-        public int MinDistance;
-        public int MaxDistance;
-        public TypeClub TypeClub;
 
-        public Club(string name, TypeClub typeClub)
+        [PrimaryKey]
+        public string Name { get; set; }
+        public int DistanceMoyenne { get; set; }
+        public Club()
+        {
+            selected = true;
+        }
+
+        public Club(string name,int distMoy)
         {
             Name = name;
-            TypeClub = typeClub;
             selected = true;
+
+            DistanceMoyenne = distMoy;
         }
 
         /*
@@ -31,13 +34,24 @@ namespace GreenSa.Models.GolfModel
          **/
         public int getDistanceMoyenne()
         {
-            throw new NotImplementedException();
-            return 0;
+           
+            return DistanceMoyenne;
+        }
+
+        public override string ToString()
+        {
+            return Name+"  dMoy = "+DistanceMoyenne;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Club && ((Club)obj).Name==Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
         }
     }
-
-    public enum TypeClub
-    {
-        BOIS, FER
-    }
+    
 }

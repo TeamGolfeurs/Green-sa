@@ -10,8 +10,11 @@
                     <Button Text ="Golfcourse" Clicked="seeGolfCourse"/>
                     <Button Text ="Shot" Clicked="seeShot"/>
                     <Button Text ="Positions" Clicked="seePosition"/>
-                    <Button Text ="GolfCourse/Position" Clicked="seeGolfCoursePosition"/>
 
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Button Text ="GolfCourse/Position" Clicked="seeGolfCoursePosition"/>
+                    <Button Text ="Clubs" Clicked="seeClub"/>
                 </StackLayout>
                 <Button Text ="Drop Tables" Clicked="dropAllTable" BackgroundColor="Red"/>
 

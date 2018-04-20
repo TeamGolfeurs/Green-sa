@@ -40,9 +40,12 @@
     </Compile>
     <Compile Include="MarkupExtension\EmbeddedImage.cs" />
     <Compile Include="Models\GolfModel\Club.cs" />
+    <Compile Include="Models\GolfModel\ScoreHole.cs" />
     <Compile Include="Models\GolfModel\Shot.cs" />
     <Compile Include="Models\GolfModel\StatistiquesGolf.cs" />
-    <Compile Include="Models\Tools\GolfCourseMyPosition.cs" />
+    <Compile Include="Models\GolfModel\Hole.cs" />
+    <Compile Include="Models\GolfModel\GolfCourseHole.cs" />
+    <Compile Include="Models\Tools\GolfXMLReader.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomPin.cs" />
     <Compile Include="Models\Tools\MyPosition.cs" />
@@ -219,20 +222,20 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Ressources\Clubs\Clubs_Descriptor.xml" />
-    <Content Include="Ressources\Clubs\Driver.xml" />
-    <Content Include="Ressources\Clubs\Hybride.xml" />
-    <Content Include="Ressources\Clubs\Sandwedge.xml" />
-    <Content Include="Ressources\Clubs\Pitching.xml" />
-    <Content Include="Ressources\Clubs\Bois5.xml" />
-    <Content Include="Ressources\Clubs\Fer3.xml" />
-    <Content Include="Ressources\Clubs\Fer4.xml" />
-    <Content Include="Ressources\Clubs\Fer9.xml" />
-    <Content Include="Ressources\Clubs\Fer8.xml" />
-    <Content Include="Ressources\Clubs\Fer7.xml" />
-    <Content Include="Ressources\Clubs\Fer6.xml" />
-    <Content Include="Ressources\Clubs\Fer5.xml" />
-    <Content Include="Ressources\Clubs\Bois3.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Clubs_Descriptor.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Driver.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Hybride.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Sandwedge.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Pitching.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Bois5.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer3.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer4.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer9.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer8.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer7.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer6.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer5.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Bois3.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\Test\SeeBDContent.xaml">

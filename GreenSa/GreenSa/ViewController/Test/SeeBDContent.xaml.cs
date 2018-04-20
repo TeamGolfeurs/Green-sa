@@ -92,9 +92,29 @@ namespace GreenSa.ViewController.Test
             {
 
                 SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-                List<GolfCourseMyPosition> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourseMyPosition>(connection));
+                List<GolfCourseHole> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourseHole>(connection));
                 label.Text = "";
-                foreach (GolfCourseMyPosition c in gfcs)
+                foreach (GolfCourseHole c in gfcs)
+                {
+                    label.Text += c.ToString() + "\n";
+                }
+            }
+            catch (Exception ex)
+            {
+                label.Text = "Table not exist";
+
+            }
+        }
+
+        private void seeClub(object sender, EventArgs e)
+        {
+            try
+            {
+
+                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+                List<Club> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Club>(connection));
+                label.Text = "";
+                foreach (Club c in gfcs)
                 {
                     label.Text += c.ToString() + "\n";
                 }
@@ -112,7 +132,11 @@ namespace GreenSa.ViewController.Test
 
             connection.DropTable<MyPosition>();
             connection.DropTable<GolfCourse>();
-            connection.DropTable<GolfCourseMyPosition>();
+            connection.DropTable<GolfCourseHole>();
+            connection.DropTable<Club>();
+            connection.DropTable<Shot>();
+
+
         }
     }
 }

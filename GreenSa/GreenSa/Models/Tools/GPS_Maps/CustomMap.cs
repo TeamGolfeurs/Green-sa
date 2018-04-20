@@ -140,7 +140,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
                                 TargetPin.Position.Latitude, TargetPin.Position.Longitude, "M");
         }
 
-        static double DistanceTo(double lat1, double lon1, double lat2, double lon2, string unit)
+        public static double DistanceTo(double lat1, double lon1, double lat2, double lon2, string unit)
         {
             var rlat1 = Math.PI * lat1 / 180;
             var rlat2 = Math.PI * lat2 / 180;

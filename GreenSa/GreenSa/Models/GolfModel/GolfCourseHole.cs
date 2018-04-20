@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace GreenSa.Models.Tools
 {
-    class GolfCourseMyPosition
+    class GolfCourseHole
     {
         [ForeignKey(typeof(GolfCourse))]
-        public int Id { get; set; }
+        public String Id { get; set; }
 
-        [ForeignKey(typeof(MyPosition))]
+        [ForeignKey(typeof(Hole))]
         public int IdPos { get; set; }
 
         public override string ToString()
