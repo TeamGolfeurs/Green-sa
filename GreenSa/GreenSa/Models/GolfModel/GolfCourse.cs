@@ -15,7 +15,7 @@ namespace GreenSa.Models.GolfModel
         public string NameCourse { get; set; }
         
 
-        [ManyToMany(typeof(GolfCourseHole), CascadeOperations = CascadeOperation.All)]
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Hole> Holes { get;   set;       }
         
 

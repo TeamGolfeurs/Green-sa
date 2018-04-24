@@ -32,7 +32,12 @@ namespace GreenSa.Models.Tools
 
         public override string ToString()
         {
-            return IdPos+" : ("+X+";"+Y+")";
+            return " ("+X+";"+Y+")";
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is MyPosition && ((MyPosition)obj).X == X && ((MyPosition)obj).Y==Y;
         }
     }
 }

@@ -16,17 +16,17 @@ namespace GreenSa.Models.GolfModel
         public Club Club { get; set; }
 
         [ForeignKey(typeof(MyPosition))]
-        public int InitPlaceId { get; set; }
+        public string InitPlaceId { get; set; }
         [OneToOne(foreignKey: "InitPlaceId", CascadeOperations = CascadeOperation.All)]
         public MyPosition InitPlace { get; set; }
 
         [ForeignKey(typeof(MyPosition))]
-        public int TargetId { get; set; }
+        public string TargetId { get; set; }
         [OneToOne(foreignKey: "TargetId", CascadeOperations = CascadeOperation.All)]
         public MyPosition Target { get; set; }
 
         [ForeignKey(typeof(MyPosition))]
-        public int RealShotId { get; set; }
+        public string RealShotId { get; set; }
         [OneToOne(foreignKey:"RealShotId",CascadeOperations =CascadeOperation.All)]
         public MyPosition RealShot { get; set; }
 

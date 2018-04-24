@@ -50,13 +50,42 @@ namespace GreenSa.Models.GolfModel
             }
             return res;
         }
-        //Tuple<Terrain,AverageScore,BestScore,WorstScore,nbFoisJouée
+        // Terrain, List Tuple<Hole,AverageScore,BestScore,WorstScore>, nbFoisJouée 
         //ordered by nbFoisJouée
-        public static List<Tuple<GolfCourse, Tuple<Club, int, int, int>>> getScoreForGolfCourses(Filter<GolfCourse>.Filtre filtre)
+        public static Dictionary<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>> getScoreForGolfCourses(Filter<GolfCourse>.Filtre filtre)
         {
-            List<Tuple<GolfCourse, Tuple<Club, int, int, int>>> l = new List<Tuple<GolfCourse, Tuple<Club, int, int, int>>>();
-           // l.Add(new Tuple<GolfCourse, int, int, int, int> (new GolfCourse("StJacques9trousEN DUR","StJac",new List<MyPosition>()), 4,2,1,2));
+            Dictionary<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>> l = new Dictionary<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>>();
+            // l.Add(new Tuple<GolfCourse, int, int, int, int> (new GolfCourse("StJacques9trousEN DUR","StJac",new List<MyPosition>()), 4,2,1,2));
             //l.Add(new Tuple<GolfCourse, int, int, int, int>(new GolfCourse("StJacques9trous EN DUR", "StJac", new List<MyPosition>()), 8, 5, 1, 2));
+
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<GolfCourse>();
+            connection.CreateTable<ScoreHole>();
+            List<GolfCourse> gfcs = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection, (GolfCourse gf) => filtre(gf), true);
+
+            foreach (GolfCourse gc in gfcs)
+            {
+                List<Tuple<Hole, float, int, int>> lsHole = new List<Tuple<Hole, float, int, int>>();
+
+                int nbFoisJoue = 0;
+                foreach (Hole h in gc.Holes)
+                {
+                    float moy = 0;
+                    int min = 99;
+                    int max = -99;
+                    List<ScoreHole> scores = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection, (ScoreHole gf) => gf.Hole.Equals(h) , true);
+                    nbFoisJoue = scores.Count;
+                    foreach (ScoreHole sh in scores)
+                    {
+                        moy += sh.Score;
+                        min = sh.Score < min ? sh.Score : min;
+                        max = sh.Score > max ? sh.Score : max;
+                    }
+                    moy = moy / nbFoisJoue;
+                    lsHole.Add(new Tuple<Hole, float, int, int>(h, moy, min, max));
+                }
+                l.Add(gc, new Tuple<List<Tuple<Hole, float, int, int>>, int>( lsHole,nbFoisJoue));
+            }
             return l;
         }
 
@@ -76,7 +105,7 @@ namespace GreenSa.Models.GolfModel
             connection.CreateTable<MyPosition>();
             connection.CreateTable<Shot>();
 
-            SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, shots, true);
+            SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceAllWithChildren(connection, shots, true);
             connection.CreateTable<ScoreHole>();
             List<ScoreHole> li = new List<ScoreHole>();
             ScoreHole h = new ScoreHole(hole, hole.Par-shots.Count+1);//plus 1 car le dernier coup n'est pas dans la liste

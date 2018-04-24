@@ -49,6 +49,11 @@ namespace GreenSa.Models.Tools
                     trous.Add(new Hole(pos,2));//TODO modif
                 }
                 GolfCourse gc = new GolfCourse(nodeGolfC.Element("Name").Value, nodeGolfC.Element("NomGolf").Value, trous);
+                foreach (Hole h in trous)
+                {
+                    h.GolfCourse = gc;
+                }
+
                 gfcs.Add(gc);
             }
             return gfcs;

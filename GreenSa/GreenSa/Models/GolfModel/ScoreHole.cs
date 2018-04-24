@@ -12,12 +12,12 @@ namespace GreenSa.Models.GolfModel
     public class ScoreHole
     {
         [PrimaryKey]
-        int Id { get; set; }
+        public int Id { get; set; }
         [ForeignKey(typeof(MyPosition))]
-        private String IdHole { get; set; }
+        public String IdHole { get; set; }
         [OneToOne]
-        private Hole Hole { get; set; }
-        private int Score { get; set; }
+        public Hole Hole { get; set; }
+        public int Score { get; set; }
 
         public ScoreHole()
         {

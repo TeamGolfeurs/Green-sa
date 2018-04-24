@@ -86,25 +86,7 @@ namespace GreenSa.ViewController.Test
              }
 }
 
-        private void seeGolfCoursePosition(object sender, EventArgs e)
-        {
-            try
-            {
-
-                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-                List<GolfCourseHole> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourseHole>(connection));
-                label.Text = "";
-                foreach (GolfCourseHole c in gfcs)
-                {
-                    label.Text += c.ToString() + "\n";
-                }
-            }
-            catch (Exception ex)
-            {
-                label.Text = "Table not exist";
-
-            }
-        }
+       
 
         private void seeClub(object sender, EventArgs e)
         {
@@ -132,11 +114,31 @@ namespace GreenSa.ViewController.Test
 
             connection.DropTable<MyPosition>();
             connection.DropTable<GolfCourse>();
-            connection.DropTable<GolfCourseHole>();
             connection.DropTable<Club>();
             connection.DropTable<Shot>();
+            connection.DropTable<Hole>();
+            connection.DropTable<ScoreHole>();
 
 
+        }
+
+        private void seeHoles(object sender, EventArgs e)
+        {
+            try
+            {
+                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+                List<Hole> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Hole>(connection));
+                label.Text = "";
+                foreach (Hole c in gfcs)
+                {
+                    label.Text += c.ToString() + "\n";
+                }
+            }
+            catch (Exception ex)
+            {
+                label.Text = "Table not exist";
+
+            }
         }
     }
 }

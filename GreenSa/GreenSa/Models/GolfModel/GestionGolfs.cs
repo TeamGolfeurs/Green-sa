@@ -24,7 +24,7 @@ namespace GreenSa.Models.GolfModel
          * le fitre peut être null, dans ce cas tous les golfs seront récupérés.
          * */
         //NOT IMPLEMENTED YE
-        public static  List<GolfCourse> getListGolfsAsync(Filter<GolfCourse>.Filtre filtre)
+        public static  List<GolfCourse> getListGolfs(Filter<GolfCourse>.Filtre filtre)
         {
             if (filtre == null)
                 filtre = x => true;
@@ -34,11 +34,12 @@ namespace GreenSa.Models.GolfModel
             //utilise SQLite
             //si la table n'existe pas encore on parse les fichiers XML (/Ressources) et on insert
             List<GolfCourse> gfcs = new List<GolfCourse>();
+            connection.CreateTable<Hole>();
+
             connection.CreateTable<MyPosition>();
-            connection.CreateTable<GolfCourseHole>();
             connection.CreateTable<GolfCourse>();
 
-            gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection));
+            gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection,(g)=>true,true));
             if (gfcs.Count==0)/*!existe dans BD*/
             {
                 gfcs = GolfXMLReader.getListGolfCourseFromXMLFiles();
@@ -46,7 +47,7 @@ namespace GreenSa.Models.GolfModel
                 //add in the database
                 //addGolfCoursesInDatabase(connection,gfcs);
                 //connection.InsertAll(gfcs);
-                SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection,gfcs);
+                SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection,gfcs,true);
 
 
             }
