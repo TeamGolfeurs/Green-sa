@@ -16,7 +16,7 @@ namespace GreenSa.Models.GolfModel
         [ForeignKey(typeof(MyPosition))]
         private String IdHole { get; set; }
         [OneToOne]
-        private MyPosition Hole { get; set; }
+        private Hole Hole { get; set; }
         private int Score { get; set; }
 
         public ScoreHole()
@@ -24,7 +24,7 @@ namespace GreenSa.Models.GolfModel
 
         }
 
-        public ScoreHole(MyPosition hole, int score)
+        public ScoreHole(Hole hole, int score)
         {
             this.Hole = hole;
             this.Score = score;

@@ -57,7 +57,7 @@ namespace GreenSa.Models.GolfModel
         {
             if (saveForStatistics)
             {
-                StatistiquesGolf.saveForStats(Shots);
+                StatistiquesGolf.saveForStats(Shots,itHole.Current);
                 Shots.Clear();
                 
             }

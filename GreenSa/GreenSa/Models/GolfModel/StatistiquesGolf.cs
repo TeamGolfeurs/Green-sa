@@ -69,7 +69,7 @@ namespace GreenSa.Models.GolfModel
             return l;
         }
 
-        public static void saveForStats(List<Shot> shots,MyPosition hole)
+        public static void saveForStats(List<Shot> shots,Hole hole)
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             connection.CreateTable<Club>();
@@ -79,18 +79,10 @@ namespace GreenSa.Models.GolfModel
             SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, shots, true);
             connection.CreateTable<ScoreHole>();
             List<ScoreHole> li = new List<ScoreHole>();
-            ScoreHole h = new ScoreHole(hole, shots.Count+1);//plus 1 car le dernier coup n'est pas dans la liste
+            ScoreHole h = new ScoreHole(hole, hole.Par-shots.Count+1);//plus 1 car le dernier coup n'est pas dans la liste
             SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, h, true);
         }
 
-        public static void saveScoreForStats(int score,GolfCourse golfCourse)
-        {
-            DateTime now = DateTime.Now;
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<Club>();
-            connection.CreateTable<MyPosition>();
-            connection.CreateTable<Shot>();
-            SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, shots, true);
-        }
+       
     }
 }

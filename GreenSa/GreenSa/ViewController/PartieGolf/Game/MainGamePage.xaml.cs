@@ -63,7 +63,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
             
             if (partie.hasNextHole())
             {
-                Hole nextHole = partie.getNextHole();// partie.getNextHole();
+                Hole nextHole = partie.getNextHole();
                 map.setHolePosition(nextHole.position);
                 MyPosition position = new MyPosition(0, 0) ;
                 bool success = false;
