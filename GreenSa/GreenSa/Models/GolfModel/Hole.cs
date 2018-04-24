@@ -1,4 +1,5 @@
 ﻿using GreenSa.Models.Tools;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,25 @@ namespace GreenSa.Models.GolfModel
 {
     public class Hole
     {
+        [PrimaryKey]
         public int Id { get; set; }
-        public MyPosition position { get; set; }
+        public MyPosition Position { get; set; }
         public int Par { get; set; }
+
+        public Hole()
+        {
+
+        }
+
+        public Hole(MyPosition p,int par)
+        {
+            this.Position = p;
+            this.Par = par;
+        }
 
         public override string ToString()
         {
-            return Id+" "+position+" Par "+Par ;
+            return Id+" "+Position+" Par "+Par ;
         }
     }
 }

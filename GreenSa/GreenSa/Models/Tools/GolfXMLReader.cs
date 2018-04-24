@@ -41,12 +41,12 @@ namespace GreenSa.Models.Tools
 
                 XDocument golfC = XDocument.Load(GenerateStreamFromString(text));//xmlparser
 
-                List<MyPosition> trous = new List<MyPosition>();
+                List<Hole> trous = new List<Hole>();
                 var nodeGolfC = golfC.Element("GolfCourse");
                 foreach (var trou in nodeGolfC.Element("Coordinates").Elements("Trou"))//get the list of all holes
                 {
                     MyPosition pos = new MyPosition(Double.Parse(trou.Element("lat").Value, CultureInfo.InvariantCulture), Double.Parse(trou.Element("lng").Value, CultureInfo.InvariantCulture));
-                    trous.Add(pos);
+                    trous.Add(new Hole(pos,2));//TODO modif
                 }
                 GolfCourse gc = new GolfCourse(nodeGolfC.Element("Name").Value, nodeGolfC.Element("NomGolf").Value, trous);
                 gfcs.Add(gc);
