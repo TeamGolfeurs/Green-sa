@@ -44,7 +44,6 @@
     <Compile Include="Models\GolfModel\Shot.cs" />
     <Compile Include="Models\GolfModel\StatistiquesGolf.cs" />
     <Compile Include="Models\GolfModel\Hole.cs" />
-    <Compile Include="Models\GolfModel\GolfCourseHole.cs" />
     <Compile Include="Models\Tools\GolfXMLReader.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomPin.cs" />

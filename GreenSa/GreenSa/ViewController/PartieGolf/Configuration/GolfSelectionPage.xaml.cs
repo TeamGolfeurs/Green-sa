@@ -36,7 +36,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
             Filter<GolfCourse>.Filtre f = (c => true);
 
             //Recupere la liste des Golfs filtré par la classe GestionGolf
-            ListGolfCourse.ItemsSource = GestionGolfs.getListGolfsAsync(f);
+            ListGolfCourse.ItemsSource = GestionGolfs.getListGolfs(f);
 
 
         }
