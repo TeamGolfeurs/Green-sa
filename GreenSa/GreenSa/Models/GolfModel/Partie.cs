@@ -32,6 +32,16 @@ namespace GreenSa.Models.GolfModel
 
             }
         }
+
+        public void setCurrentClub(Club club)
+        {
+            currentClub = club;
+        }
+
+        public List<Club> getListClub()
+        {
+            return Clubs;
+        }
       
 
         public Partie()

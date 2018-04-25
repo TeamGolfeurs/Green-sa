@@ -4,7 +4,7 @@
              x:Class="GreenSa.ViewController.PartieGolf.Configuration.GolfSelectionPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Selectionner votre Golf "
+            <Label Text="Selectionnez votre Golf "
             HorizontalOptions="CenterAndExpand"
             FontAttributes="Bold"/>
             <ListView x:Name="ListGolfCourse"

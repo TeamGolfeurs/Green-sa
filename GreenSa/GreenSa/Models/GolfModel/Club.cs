@@ -26,6 +26,11 @@ namespace GreenSa.Models.GolfModel
             selected = true;
         }
 
+        public string getName ()
+        {
+            return Name;
+        }
+
         /*
          * Va chercher dans la base de donnée la valeur moyenne
          **/
