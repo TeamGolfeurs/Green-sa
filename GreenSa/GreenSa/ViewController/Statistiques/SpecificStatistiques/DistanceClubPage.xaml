@@ -1,12 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GreenSa.ViewController.Statistiques.SpecificStatistiques.DistanceClubPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label x:Name="lab" Text="GG"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="GreenSa.ViewController.Statistiques.SpecificStatistiques.DistanceClubPage"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms">
+              <microcharts:ChartView x:Name="chartView" />
+            
 </ContentPage>

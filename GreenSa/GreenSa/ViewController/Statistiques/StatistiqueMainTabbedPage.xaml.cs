@@ -27,21 +27,13 @@ namespace GreenSa.ViewController.Statistiques
 
         protected async override void OnAppearing()
         {
-            string path = "GreenSa.ViewController.Statistiques.SpecificStatistiques";
-            List < String > l = new List<String>();
-            l.Add("DistanceClubPage");
-            l.Add("ScoreEvolutionDetailsPage");
-            l.Add("ScoreEvolutionPage");
+           
+            this.Children.Add(new DistanceClubPage());
+            this.Children.Add(new ScoreEvolutionDetailsPage());
+            this.Children.Add(new ScoreEvolutionPage());
 
 
-            foreach(String file in l){
-                
-                string assemblyName = path+"."+file;
-                Type t = Type.GetType(assemblyName);
-                ContentPage p = (ContentPage)Activator.CreateInstance(t);
-                p.Title = file;
-                this.Children.Add(p);
-            }
+          
            
             base.OnAppearing();
 
