@@ -4,7 +4,7 @@
              x:Class="GreenSa.ViewController.Statistiques.SpecificStatistiques.DistanceClubPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="GG"
+            <Label x:Name="lab" Text="GG"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>

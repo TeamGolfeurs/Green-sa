@@ -1,27 +1,52 @@
 ﻿using GreenSa.Models.Tools;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Diagnostics;
+using SQLiteNetExtensions.Attributes;
+using SQLite;
 
 namespace GreenSa.Models.GolfModel
 {
     public class GolfCourse
     {
-        public string Name;
+        [PrimaryKey]
+        public string Name { get; set; }
+        public string NameCourse { get; set; }
+        
 
-        // Id
-        private int id;
-        public int Id { get => id; set => id = value; }
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Hole> Holes { get;   set;       }
+        
 
-        // Holes
-        private List<MyPosition> holes;
-        public List<MyPosition> Holes { get => holes; set => holes = value; }
 
-        public GolfCourse(string name)
+        public GolfCourse()
         {
-            Name = name;
-            holes = new List<MyPosition>();
+
+        }
+        public GolfCourse(string name,string nameCourse,List<Hole> holes)
+        {
+
+            this.Name = name;
+            this.Holes = holes;
+            this.NameCourse = nameCourse;
+
         }
 
-        //methode pour remplir à partir d'un XML ?
+        public List<Hole>.Enumerator GetHoleEnumerator()
+        {
+            return Holes.GetEnumerator();
+        }
+
+        public override string ToString()
+        {
+            String str= " - "+Name+", "+ NameCourse + " { "+Holes.Count+"\n";
+            foreach (Hole m in Holes)
+                str += m.ToString() + " \n";
+            str += "}";
+            return str;
+        }
+
+
     }
 }

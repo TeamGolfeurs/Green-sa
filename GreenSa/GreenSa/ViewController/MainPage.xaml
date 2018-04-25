@@ -6,41 +6,60 @@
     <!---->
 
     <ContentPage.Content>
-            <StackLayout>
+            <Grid>
                 <Label 
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
                     x:Name="label"
+                    Margin="30"
                     Text="GREEN'SA"
-                       FontSize="Large"
+                    TextColor="ForestGreen"
+                    FontSize="Large"
+                    VerticalOptions="Start"
                     HorizontalOptions="Center"
-                    VerticalOptions="Center"
                    />
-           
+                <StackLayout
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                >
                 <Button 
                     Text="JOUER"
+                    FontSize="Large"
                     Clicked="onPlayClicked" 
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"/>
+                    />
                 <Button 
                     Text="STATISTIQUES"
+                    FontSize="Large"
                     Clicked="onStatsClicked" 
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"/>
-                 <Image 
-                    x:Name="optionButton"
-                    VerticalOptions="Center" 
-                    HorizontalOptions="End"
-                    Source="{local:EmbeddedImage GreenSa.Ressources.Images.tools.png}"
-                      Grid.Row="0"
-                    Grid.Column="2"/><!-- The Event Listener is in the code-behind-->
+                    />
+                     <Button 
+                    Text="Voir BD"
+                    FontSize="Large"
+                    Clicked="voirBD" 
+                    />
+               </StackLayout>
+               <StackLayout
+                    Grid.Column="3"
+                    >
+                    <Image 
+                        x:Name="optionButton"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="End"
+                        Source="{local:EmbeddedImage GreenSa.Ressources.Images.tools.png}" 
+                     />
+                         <!-- The Event Listener is in the code-behind-->
                 
-                    <!--<Button.Image>
-                        <OnPlatform x:TypeArguments="FileImageSource"
+                <!--    <Button.Image>
+                            <OnPlatform x:TypeArguments="FileImageSource"
                             iOS="tools.png"
                             Android="tools.png"
                             WinPhone="tools.png"/>
-                    </Button.Image>-->
+                    </Button.Image> -->
+               </StackLayout>
 
-    </StackLayout>
+            </Grid>
 
     </ContentPage.Content>
 </ContentPage>

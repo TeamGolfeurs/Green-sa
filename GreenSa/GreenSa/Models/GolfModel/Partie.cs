@@ -1,9 +1,11 @@
 ﻿using GreenSa.Models.Tools;
+using GreenSa.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace GreenSa.Models.GolfModel
 {
@@ -14,36 +16,51 @@ namespace GreenSa.Models.GolfModel
     {
 
         private GolfCourse golfCourse;
-        private List<Club> clubs;
-        public Club currentClub;
+        public Club currentClub { get; set; }
+        public List<Shot> Shots { get; set; }
+        public List<Club> Clubs { get ; set; }
+        private List<Hole>.Enumerator itHole;
 
-        public GolfCourse GolfCourse { get => golfCourse; set => golfCourse = value; }
-        public List<Club> Clubs { get => clubs; set => clubs = value; }
+        public GolfCourse GolfCourse {
+            get
+            {
+               return  golfCourse;
+            }
+            set {
+                golfCourse = value;
+                itHole = value.GetHoleEnumerator();
 
+            }
+        }
+      
+
+        public Partie()
+        {
+            Shots = new List<Shot>();
+           currentClub = new Club("Fer3",170);
+        }
         /// <summary>
         /// Retourne le prochain trou si il existe sinon retourne null.
         /// </summary>
         /// <returns>La position du trou.</returns>
-        public MyPosition getNextHole()
+        public Hole getNextHole()
         {
-            if (hasNextHole())
+            return itHole.Current;
+        }
+
+        public void addPositionForCurrentHole(MyPosition start,MyPosition oldTarget, MyPosition userPosition)
+        {
+            Shots.Add(new Shot(currentClub,start, oldTarget, userPosition,DateTime.Now));
+        }
+
+        public void holeFinished(bool saveForStatistics)
+        {
+            if (saveForStatistics)
             {
-                return golfCourse.Holes.GetEnumerator().Current;
+                StatistiquesGolf.saveForStats(Shots,itHole.Current);
+                Shots.Clear();
+                
             }
-            return null;
-
-        }
-
-        public void addPositionForCurrentHole(MyPosition oldTarget, MyPosition userPosition)
-        {
-            return;
-            throw new NotImplementedException();
-        }
-
-        public void holeFinished()
-        {
-            return;
-            throw new NotImplementedException();
 
         }
 
@@ -53,9 +70,8 @@ namespace GreenSa.Models.GolfModel
         /// <returns></returns>
         public bool hasNextHole()
         {
-            return true;
-            return golfCourse.Holes.GetEnumerator().MoveNext();
 
+            return itHole.MoveNext();        
         }
 
     }

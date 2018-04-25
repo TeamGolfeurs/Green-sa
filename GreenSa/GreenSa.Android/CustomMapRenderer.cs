@@ -28,9 +28,11 @@ namespace Greensa.Droid
         //public CustomMapRenderer() : base() { }
 
         public CustomMapRenderer(Context context) : base(context){
-            MessagingCenter.Subscribe<CustomMap>(this, "updateThisPosition", (sender) => {
-                UpdatePolyLinePos(false);
-
+            MessagingCenter.Subscribe<CustomMap>(this, "updateTheMap", (sender) => {
+                try
+                {
+                    UpdatePolyLinePos(false);
+                }catch(Exception e) { }
             });
         }
 

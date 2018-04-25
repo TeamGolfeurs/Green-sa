@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using GreenSa.ViewController.Statistiques;
+using GreenSa.ViewController.Test;
 
 namespace GreenSa.ViewController
 {
@@ -26,7 +27,7 @@ namespace GreenSa.ViewController
         {
 
             InitializeComponent();
-            //ptionButton = new FileImageSource { File = "GreenSa.Ressources.Images.tools.png" };
+            //optionButton = new FileImageSource { File = "GreenSa.Ressources.Images.tools.png" };
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += (s, e) => {
                 onOptionsClicked(s, e);
@@ -62,7 +63,10 @@ namespace GreenSa.ViewController
 
         }
 
-
+        async private void voirBD(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SeeBDContent());
+        }
 
     }
 }

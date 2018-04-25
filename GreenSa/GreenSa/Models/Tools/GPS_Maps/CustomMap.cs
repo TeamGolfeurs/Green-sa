@@ -24,7 +24,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
             set
             {
                 routeCoordinates = value;
-                MessagingCenter.Send<CustomMap>(this, "updateThisPosition");
+                MessagingCenter.Send<CustomMap>(this, "updateTheMap");
 
             }
         }
@@ -140,7 +140,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
                                 TargetPin.Position.Latitude, TargetPin.Position.Longitude, "M");
         }
 
-        static double DistanceTo(double lat1, double lon1, double lat2, double lon2, string unit)
+        public static double DistanceTo(double lat1, double lon1, double lat2, double lon2, string unit)
         {
             var rlat1 = Math.PI * lat1 / 180;
             var rlat2 = Math.PI * lat2 / 180;
@@ -173,8 +173,12 @@ namespace GreenSa.Models.Tools.GPS_Maps
             TargetPin.type = CustomPin.LOCKED;
             update();
         }
-
         public new event PropertyChangedEventHandler PropertyChanged;
+
+        internal MyPosition getUserPosition()
+        {
+            return new MyPosition(userPin.Position.Latitude, userPin.Position.Longitude);
+        }
 
         protected override void OnPropertyChanged(string propertyName = null)
         {

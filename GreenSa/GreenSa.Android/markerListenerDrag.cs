@@ -32,7 +32,10 @@ namespace Greensa.Droid
         {
             CustomPin pin = new CustomPin(CustomPin.HOLE);
             pin.Position = new Xamarin.Forms.Maps.Position(marker.Position.Latitude, marker.Position.Longitude);
-            MessagingCenter.Send<CustomPin>(pin,"updatePosion");
+
+            //send message to CustomMap
+            MessagingCenter.Send<CustomPin>(pin,CustomPin.UPDATEDMESSAGE);
+
 
             cmr.UpdatePolyLinePos(false,marker.Position);
         }

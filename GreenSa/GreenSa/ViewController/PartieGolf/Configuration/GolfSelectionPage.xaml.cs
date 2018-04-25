@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -29,8 +28,9 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          * Méthode qui s'execute automatiquement au chargement de la page
          * Demande à la classe GestionGolf
          * */
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
+            base.OnAppearing();
 
             //Définition du filtre
             Filter<GolfCourse>.Filtre f = (c => true);
@@ -39,7 +39,6 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
             ListGolfCourse.ItemsSource = GestionGolfs.getListGolfs(f);
 
 
-            base.OnAppearing();
         }
 
 
@@ -49,7 +48,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          * */
          private async void onGolfSelection(object sender, SelectedItemChangedEventArgs e)
          {
-            var g = e.SelectedItem as GolfCourse;
+            var g = ListGolfCourse.SelectedItem as GolfCourse;
             p.GolfCourse = g;
 
             await Navigation.PushAsync(new ClubSelectionPage(p));
