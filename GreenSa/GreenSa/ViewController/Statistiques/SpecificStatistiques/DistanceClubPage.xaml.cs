@@ -6,8 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microcharts;
+using Entry = Microcharts.Entry; 
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SkiaSharp;
 
 namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
 {
@@ -21,10 +25,16 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
         protected override void OnAppearing()
         {
 
+
+
             base.OnAppearing();
             getScores(c => true);
+           
+
+
+
         }
-        /**
+        /*
         * Méthode déclenchée à l'application du filtre
         * Appel a la classe StatstiquesGolf avec un filtre
         * */
@@ -36,11 +46,24 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
         private void getScores(Filter<Club>.Filtre f)
         {
             IEnumerable<Tuple<Club, double>> res = StatistiquesGolf.getAverageDistanceForClubs(f);
-            lab.Text = "";
+
+            List<Entry> l = new List<Entry>();
+
             foreach (Tuple<Club, double> couple in res)
             {
-                lab.Text += couple.Item1.Name + " : " + couple.Item2 + " \n";
+
+                Entry e = new Entry((float)couple.Item2)
+                {
+                    Label = couple.Item1.Name,
+                    ValueLabel = couple.Item2.ToString(),
+                    Color = SKColor.Parse("#3498db")
+                };
+
+                l.Add(e);
             }
+
+
+            this.chartView.Chart = new PointChart() { Entries = l.ToArray() };
         }
     }
 }
