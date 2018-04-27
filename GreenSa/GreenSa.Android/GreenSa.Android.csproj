@@ -190,10 +190,12 @@
       <HintPath>..\..\packages\SkiaSharp.Views.1.59.1.1\lib\MonoAndroid\SkiaSharp.Views.Android.dll</HintPath>
     </Reference>
     <Reference Include="Microcharts">
-      <HintPath>..\..\packages\Microcharts.0.7.0\lib\MonoAndroid10\Microcharts.dll</HintPath>
+      <HintPath>..\..\packages\Microcharts.0.7.1\lib\MonoAndroid10\Microcharts.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microcharts.Droid">
-      <HintPath>..\..\packages\Microcharts.0.7.0\lib\MonoAndroid10\Microcharts.Droid.dll</HintPath>
+      <HintPath>..\..\packages\Microcharts.0.7.1\lib\MonoAndroid10\Microcharts.Droid.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
