@@ -211,6 +211,7 @@ namespace GreenSa.iOS
                 Pin=pin,
                 Title = pin.Label,
                 Subtitle = pin.Address ?? "",
+                CustomMapRenderer = this,
                 Coordinate = new CLLocationCoordinate2D(pin.Position.Latitude, pin.Position.Longitude)
             };
             return mk;

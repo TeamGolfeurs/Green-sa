@@ -10,7 +10,7 @@ namespace GreenSa.iOS
     {
 
         public Pin Pin{get;set;}
-        CustomMapRenderer CustomMapRenderer { get; set; }
+        public CustomMapRenderer CustomMapRenderer { get; set; }
         //[Export("setCoordinate:")]
         public override void SetCoordinate(CLLocationCoordinate2D value)
         {
