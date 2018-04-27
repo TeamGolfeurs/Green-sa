@@ -20,7 +20,13 @@ namespace GreenSa.Models.Tools.GPS_Maps
 
         public List<Position> RouteCoordinates
         {
-            get { return routeCoordinates; }
+            get {
+                routeCoordinates = new List<Position>();
+                routeCoordinates.Add(UserPin.Position);
+                routeCoordinates.Add(TargetPin.Position);
+                routeCoordinates.Add(HolePin.Position);
+                return routeCoordinates; 
+            }
             set
             {
                 routeCoordinates = value;

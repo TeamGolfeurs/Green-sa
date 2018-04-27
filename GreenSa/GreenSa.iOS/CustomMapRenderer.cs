@@ -49,10 +49,11 @@ namespace GreenSa.iOS
         {
             var nativeMap = Control as MKMapView;
             nativeMap.OverlayRenderer = GetOverlayRenderer;
-
+            if(nativeMap.Overlays !=null)
+                nativeMap.RemoveOverlays(nativeMap.Overlays);
             CLLocationCoordinate2D[] coords = new CLLocationCoordinate2D[formsMap.RouteCoordinates.Count];
             int index = 0;
-            foreach (var position in formsMap.RouteCoordinates)
+            foreach (var position in formsMap.RouteCoordinates)//48.0699815 ; -1.7472885
             {
                 coords[index] = new CLLocationCoordinate2D(position.Latitude, position.Longitude);
                 index++;
@@ -150,6 +151,7 @@ namespace GreenSa.iOS
 
                     mapView.GetViewForAnnotation = GetViewForAnnotation;
                     mapView.RegionChanged += MkMapViewOnRegionChanged;
+                     
                   }
 
                 MessagingCenter.Subscribe<Map, MapSpan>(this, MoveMessageName, (s, a) => MoveToRegion(a), mapModel);
@@ -250,6 +252,7 @@ namespace GreenSa.iOS
                 if (cpin.type == CustomPin.MOVABLE)
                 {
                     mapPin.Draggable = true;
+                    //mapPin.AccessibilityDragSourceDescriptors.
                 mapPin.Image = UIImage.FromFile("shape_circle.png");
                     mapPin.CalloutOffset = new CGPoint(0, 0);
                     mapPin.PinColor = MKPinAnnotationColor.Green;
