@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -83,17 +83,20 @@
     <Compile Include="ViewController\Statistiques\SpecificStatistiques\DistanceClubPage.xaml.cs">
       <DependentUpon>DistanceClubPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Statistiques\SpecificStatistiques\ScoreEvolutionDetailsPage.xaml.cs">
-      <DependentUpon>ScoreEvolutionDetailsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewController\Statistiques\SpecificStatistiques\ScoreEvolutionPage.xaml.cs">
-      <DependentUpon>ScoreEvolutionPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewController\Statistiques\StatistiqueMainTabbedPage.xaml.cs">
       <DependentUpon>StatistiqueMainTabbedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewController\Test\SeeBDContent.xaml.cs">
       <DependentUpon>SeeBDContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Statistiques\SpecificStatistiques\ScorePage.xaml.cs">
+      <DependentUpon>ScorePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Statistiques\SpecificStatistiques\ScoreVsParPage.xaml.cs">
+      <DependentUpon>ScoreVsParPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Statistiques\SpecificStatistiques\GIRPage.xaml.cs">
+      <DependentUpon>GIRPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +109,18 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Ressources\Clubs\Putter.xml" />
+    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScorePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScoreVsParPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\GIRPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -145,7 +160,8 @@
       <HintPath>..\..\packages\Xamarin.Forms.2.5.0.122203\lib\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
     <Reference Include="SkiaSharp">
-      <HintPath>..\..\packages\SkiaSharp.1.59.1\lib\portable-net45+win8+wpa81+wp8\SkiaSharp.dll</HintPath>
+      <HintPath>..\..\packages\SkiaSharp.1.60.0\lib\portable-net45+win8+wpa81+wp8\SkiaSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SkiaSharp.Views.Forms">
       <HintPath>..\..\packages\SkiaSharp.Views.Forms.1.59.1\lib\portable-net45+win8+wpa81+wp8\SkiaSharp.Views.Forms.dll</HintPath>
@@ -190,12 +206,6 @@
     <EmbeddedResource Include="Ressources\Images\tools.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScoreEvolutionPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="ViewController\Statistiques\StatistiqueMainTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -203,12 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\DistanceClubPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScoreEvolutionDetailsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

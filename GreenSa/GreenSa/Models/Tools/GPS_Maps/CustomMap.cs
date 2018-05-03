@@ -20,7 +20,13 @@ namespace GreenSa.Models.Tools.GPS_Maps
 
         public List<Position> RouteCoordinates
         {
-            get { return routeCoordinates; }
+            get {
+                routeCoordinates = new List<Position>();
+                routeCoordinates.Add(UserPin.Position);
+                routeCoordinates.Add(TargetPin.Position);
+                routeCoordinates.Add(HolePin.Position);
+                return routeCoordinates; 
+            }
             set
             {
                 routeCoordinates = value;
@@ -28,7 +34,18 @@ namespace GreenSa.Models.Tools.GPS_Maps
 
             }
         }
-
+        public List<CustomPin> CustomPins{
+            get{
+                List<CustomPin> l = new List<CustomPin>();
+                l.Add(UserPin);
+                l.Add(TargetPin);
+                l.Add(HolePin);
+                return l;
+            }
+            set{
+                
+            }
+        }
         public CustomPin UserPin { get => userPin; set => userPin = value; }
         public CustomPin TargetPin { get => targetPin; set => targetPin = value; }
         public CustomPin HolePin { get => holePin; set => holePin = value; }
@@ -41,7 +58,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
         {
 
 
-            //message which come from the markerListenerDrag,
+            //message which come from the markerListenerDrag (android only, ios set direclty)
             //when the target pin is moved =>update the model position of the target
             MessagingCenter.Subscribe<CustomPin>(this, CustomPin.UPDATEDMESSAGE, (sender) => {
                 TargetPin.Position = sender.Position;

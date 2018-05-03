@@ -24,14 +24,10 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
         }
         protected override void OnAppearing()
         {
-
-
-
+            
             base.OnAppearing();
             getScores(c => true);
            
-
-
 
         }
         /*
@@ -49,6 +45,7 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
 
             List<Entry> l = new List<Entry>();
 
+
             foreach (Tuple<Club, double> couple in res)
             {
 
@@ -61,7 +58,6 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
 
                 l.Add(e);
             }
-
 
             this.chartView.Chart = new PointChart() { Entries = l.ToArray() };
         }
