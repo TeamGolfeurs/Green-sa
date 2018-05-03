@@ -20,28 +20,28 @@ namespace GreenSa.ViewController.Statistiques
         {
             InitializeComponent();
 
-
-           
-
         }
 
         protected async override void OnAppearing()
         {
-           
-            this.Children.Add(new DistanceClubPage());
-            this.Children.Add(new ScoreEvolutionDetailsPage());
-            this.Children.Add(new ScoreEvolutionPage());
+            var Page1 = new DistanceClubPage();
+            Page1.Title = "Distance Clubs";
+            this.Children.Add(Page1);
 
+            var Page2 = new ScorePage();
+            Page2.Title = "Score";
+            this.Children.Add(Page2);
 
-          
-           
+            var Page3 = new ScoreVsParPage();
+            Page3.Title = "Score par Par";
+            this.Children.Add(Page3);
+
+            var Page4 = new GIRPage();
+            Page4.Title = "GIR";
+            this.Children.Add(Page4);
+            
             base.OnAppearing();
-
-
         }
     
-
-
-
     }
 }
