@@ -44,7 +44,7 @@ namespace GreenSa.ViewController.Test
             }
             catch (Exception ex)
             {
-                label.Text = "Table not exist";
+                label.Text = "" + ex.Message;
 
             }
 
@@ -63,7 +63,7 @@ namespace GreenSa.ViewController.Test
                 }
             }catch(Exception ex)
             {
-                label.Text = "Table not exist";
+                label.Text = "" + ex.Message;
 
             }
 
@@ -81,10 +81,10 @@ namespace GreenSa.ViewController.Test
                 }
             }catch(Exception ex)
             {
-                 label.Text = "Table not exist";
+                label.Text = "" + ex.Message;
 
-             }
-}
+            }
+        }
 
        
 
@@ -103,7 +103,7 @@ namespace GreenSa.ViewController.Test
             }
             catch (Exception ex)
             {
-                label.Text = "Table not exist";
+                label.Text = "" + ex.Message;
 
             }
         }
@@ -136,9 +136,29 @@ namespace GreenSa.ViewController.Test
             }
             catch (Exception ex)
             {
-                label.Text = "Table not exist";
+                label.Text = "" + ex.Message;
 
             }
+        }
+
+        private void seeScore(object sender, EventArgs e)
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            try
+            {
+                List<ScoreHole> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection));
+                label.Text = "";
+                foreach (ScoreHole c in gfcs)
+                {
+                    label.Text += c.ToString() + "\n";
+                }
+            }
+            catch (Exception ex)
+            {
+                label.Text = ""+ex.Message;
+
+            }
+
         }
     }
 }

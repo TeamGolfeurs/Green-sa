@@ -10,6 +10,8 @@ namespace GreenSa.Models.GolfModel
 {
     public class Club
     {
+
+        public static Club PUTTER = new Club("Putter", 0);
         [Ignore]
         public bool selected { get; set; }//used for IHM
 

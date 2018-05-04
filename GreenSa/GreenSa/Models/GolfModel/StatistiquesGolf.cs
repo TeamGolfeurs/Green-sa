@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using static GreenSa.Models.GolfModel.Hole;
 
 namespace GreenSa.Models.GolfModel
 {
@@ -90,16 +91,73 @@ namespace GreenSa.Models.GolfModel
         }
 
         //get the list
-        public static List<Tuple<DateTime, int>> getListScoresWithDates(GolfCourse golfCourse)
+        public Dictionary<ScorePossible,float> getProportionScore()
         {
-            List<Tuple<DateTime, int>>  l = new List<Tuple<DateTime, int>>();
-            l.Add(new Tuple<DateTime, int>(new DateTime(), 4));
-            l.Add(new Tuple<DateTime, int>(new DateTime(7), 8));
-            return l;
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<ScoreHole>();
+            connection.CreateTable<Hole>();
+
+            Dictionary<ScorePossible, float> res = new Dictionary<ScorePossible, float>();
+            List<ScoreHole> all = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection,recursive:true);
+            int nbTotal = all.Count;
+            res.Add(ScorePossible.ALBATROS, all.Where<ScoreHole>(sh => (sh.Score <= (int)ScorePossible.ALBATROS)).Count() / (float)nbTotal * 100);
+            res.Add(ScorePossible.EAGLE, all.Where<ScoreHole>(sh => (sh.Score==(int)ScorePossible.EAGLE)).Count()/ (float)nbTotal *100 );
+            res.Add(ScorePossible.BIRDIE, all.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.BIRDIE)).Count() / (float)nbTotal * 100);
+            res.Add(ScorePossible.PAR, all.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.PAR)).Count() / (float)nbTotal * 100);
+            res.Add(ScorePossible.BOGEY, all.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.BOGEY)).Count() / (float)nbTotal * 100);
+            res.Add(ScorePossible.DOUBLE_BOUGEY, all.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.DOUBLE_BOUGEY)).Count() / (float)nbTotal * 100);
+            res.Add(ScorePossible.MORE, all.Where<ScoreHole>(sh => (sh.Score >= (int)ScorePossible.MORE)).Count() / (float)nbTotal * 100);
+
+            return res;
+        }
+        //Dictionary<Par, Moyenne> 
+        public Dictionary<int,float> getScoreForPar()
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<ScoreHole>();
+            connection.CreateTable<Hole>();
+
+            Dictionary<int, float> res = new Dictionary<int, float>();
+            Dictionary<int, int> counter = new Dictionary<int, int>();
+
+            List<ScoreHole> all = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection,recursive:true);
+            int nbTotal = all.Count;
+            foreach( ScoreHole h in all)
+            {
+                int par = h.Hole.Par;
+                if (!res.ContainsKey(par))
+                {
+                    res.Add(par, 0);
+                    counter.Add(par, 0);
+                }
+                res[par]+= h.Score;
+                counter[par] +=1;
+            }
+
+            foreach (KeyValuePair<int, float> entry in res)
+            {
+                res[entry.Key] = entry.Value / counter[entry.Key];
+            }
+
+            return res;
+        }
+        //Hit
+        public float getProportionHit()
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<ScoreHole>();
+            connection.CreateTable<Hole>();
+
+            List<ScoreHole> all = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection, recursive: true);
+            int nbTotal = all.Count;
+          
+            return all.Where(sh=> sh.Hit).Count()/(float)nbTotal*100 ;
         }
 
         public static void saveForStats(List<Shot> shots,Hole hole)
         {
+            if (shots.Count == 0)
+                throw new Exception("0 shots dans la liste des shots.");
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             connection.CreateTable<Club>();
             connection.CreateTable<MyPosition>();
@@ -108,10 +166,28 @@ namespace GreenSa.Models.GolfModel
             SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceAllWithChildren(connection, shots, true);
             connection.CreateTable<ScoreHole>();
             List<ScoreHole> li = new List<ScoreHole>();
-            ScoreHole h = new ScoreHole(hole, hole.Par-shots.Count+1);//plus 1 car le dernier coup n'est pas dans la liste
-            SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, h, true);
+            
+            
+            ScoreHole h = new ScoreHole(hole, shots.Count-hole.Par, isHit(shots, hole.Par),DateTime.Now);
+            SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceWithChildren(connection, h, false);
         }
 
-       
+        private static bool isHit(List<Shot> shots, int par)
+        {
+            Club used = shots[0].Club;
+            int nbCoupAvantPasserAuGreen = 0;
+            while ((!used.Equals(Club.PUTTER)) && nbCoupAvantPasserAuGreen < shots.Count-1)//2 <4-1, 3 =4-1
+            {
+                nbCoupAvantPasserAuGreen++;
+                used = shots[nbCoupAvantPasserAuGreen].Club;
+            }
+
+            int nbCoutNecessairePourHit = (int)3.0 / 5 * par;
+
+            return nbCoupAvantPasserAuGreen <= nbCoutNecessairePourHit;
+
+        }
+
+
     }
 }

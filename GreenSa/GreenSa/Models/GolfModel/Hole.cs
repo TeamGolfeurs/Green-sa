@@ -11,8 +11,23 @@ namespace GreenSa.Models.GolfModel
 {
     public class Hole
     {
-        [PrimaryKey,AutoIncrement]
-        public int Id { get; set; }
+        public enum ScorePossible
+        {
+            ALBATROS = -3,EAGLE =-2,BIRDIE=-1,PAR=0,BOGEY=1,DOUBLE_BOUGEY=2,MORE=3            
+        }
+        [PrimaryKey]
+        public string Id
+        {
+            get
+            {
+                return Position.X + ":"+Position.Y+":"+Par;
+            }
+            set {
+                string[] tab = value.Split(':');
+                Position = new MyPosition(Double.Parse(tab[0]), Double.Parse(tab[1]));
+                Par=int.Parse(tab[2]);
+            }
+        }
 
         [ForeignKey(typeof(GolfCourse))]
         public string IdGolfC { get; set; }
@@ -48,7 +63,7 @@ namespace GreenSa.Models.GolfModel
 
         public override string ToString()
         {
-            return Id+" "+Position+" Par "+Par ;
+            return Id+"" ;
         }
         public override bool Equals(object obj)
         {
