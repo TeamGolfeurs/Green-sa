@@ -42,8 +42,11 @@ namespace GreenSa.Models.GolfModel
         {
             return Clubs;
         }
-      
 
+        public List<Shot> getListShot()
+        {
+            return Shots;
+        }
         public Partie()
         {
             Shots = new List<Shot>();

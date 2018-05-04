@@ -16,9 +16,17 @@ namespace GreenSa.Models.GolfModel
         public MyPosition RealShot { get; set; }
         public DateTime Date { get; set; }
 
-        public Shot()
-        {
 
+        public Club getClubDuShot()
+        {
+            return Club;
+        }
+
+        public double getDistance()
+        {
+            var X = RealShot.X - InitPlace.X;
+            var Y = RealShot.Y - InitPlace.Y;
+            return (Math.Sqrt((X * X + Y * Y)));
         }
 
         public Shot(Club currentClub, MyPosition initPlace,MyPosition target, MyPosition realShot, DateTime date )
@@ -30,5 +38,9 @@ namespace GreenSa.Models.GolfModel
             this.Date = date;
         }
 
+        public Shot()
+        {
+
+        }
     }
 }

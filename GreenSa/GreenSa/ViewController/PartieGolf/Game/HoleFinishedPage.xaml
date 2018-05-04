@@ -4,14 +4,73 @@
              x:Class="GreenSa.ViewController.PartieGolf.Game.HoleFinishedPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="HOLE FINISHED PAGE"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <StackLayout
+                VerticalOptions="Start" >
+                <Grid >
+                    <Label 
+                        FontSize="Medium"
+                        Grid.Column="0"
+                        Text="Putter"
+                    HorizontalOptions="Start" />
+                    <Label 
+                        FontSize="Medium"
+                        Grid.Column="1"
+                        Text="Club"
+                    HorizontalOptions="Center" />
+                    <Label 
+                        FontSize="Medium"
+                        Grid.Column="2"
+                        Text="Distance"
+                    HorizontalOptions="End" />
+                </Grid>
+            </StackLayout>
+
+            <ListView x:Name="ListClubsPartie" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+                            <StackLayout Orientation="Horizontal">
+                                <Switch 
+                                IsToggled="{Binding IsChecked}" 
+                                IsEnabled="true"
+                                HorizontalOptions="Start" />
+
+                                <Picker 
+                                Title="{Binding Name}"
+                                ItemDisplayBinding="{Binding Name}"
+                                HorizontalOptions="Center">
+                                </Picker>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Label Text="Ajouter un shot"
+                   FontSize="Medium"
+                   HorizontalOptions="Center"/>
+            <StackLayout Orientation="Horizontal" >
+                <Switch 
+               x:Name="AjoutShot"
+               IsToggled="True"
+               HorizontalOptions="Start" />
+
+                <Picker 
+                    Title="Sélectionner un club"
+                    x:Name="ListClubPartie"
+                    ItemDisplayBinding="{Binding Name}"
+                    HorizontalOptions="Center">
+                </Picker>
+            </StackLayout>
+
             <StackLayout Orientation="Horizontal">
-                <Label Text="Sauvegarder les stats"/>
+                <Label Text="Sauvegarder les stats" />
                 <Switch x:Name="save"  IsToggled="true"/>
             </StackLayout>
-            <Button Text="Valider le trou" Clicked="validButtonClicked"/>
+
+            <Label Text="Score du trou" BackgroundColor="Pink" HorizontalOptions="End"></Label>
+            <Label x:Name="score" Text="{Binding Name}" HorizontalOptions="End" Margin="5"></Label>
+            <Button Text="Passer au trou suivant" Clicked="validButtonClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
