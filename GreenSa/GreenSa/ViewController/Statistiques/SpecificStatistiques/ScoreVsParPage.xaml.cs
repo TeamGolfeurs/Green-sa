@@ -42,9 +42,28 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
 
         private void getScores(Filter<Club>.Filtre f)
         {
-            float p3 = 4.6f;
-            float p4 = 5.3f;
-            float p5 = 6.9f;
+
+            float p3= 0f;
+            float p4= 0f;
+            float p5= 0f;
+
+            Dictionary<int, float> d = StatistiquesGolf.getScoreForPar();
+
+            foreach(KeyValuePair<int,float> k in d){
+                if (k.Key==3){
+                    p3 = k.Value;
+                }
+                if (k.Key == 4)
+                {
+                    p4 = k.Value;
+                }
+                if (k.Key == 5)
+                {
+                    p5 = k.Value;
+                }
+            }
+
+
             var entries = new[]
              {
                  new Entry(p3)

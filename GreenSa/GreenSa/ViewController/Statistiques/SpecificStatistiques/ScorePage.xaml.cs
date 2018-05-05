@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 using Microcharts;
 using Entry = Microcharts.Entry;
 
@@ -42,16 +43,50 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
 
         private void getScores(Filter<Club>.Filtre f)
         {
+            float albatros = 0f;
+            float eagle = 0f;
+            float birdie = 0f;
+            float par = 0f;
+            float bogey = 0f;
+            float dbogey = 0f;
+            float more = 0f;
 
-            float eagle = 2f;
-            float birdie = 10f;
-            float par = 40f;
-            float bogey = 30f;
-            float dbogey = 10f;
-            float more = 8f;
+            Dictionary<Hole.ScorePossible, float> d = StatistiquesGolf.getProportionScore();
 
+            foreach(KeyValuePair<Hole.ScorePossible, float> k in d){
+                if (k.Key.Equals(Hole.ScorePossible.ALBATROS)){
+                    albatros = k.Value;
+                }
+                if (k.Key.Equals(Hole.ScorePossible.BIRDIE)){
+                    birdie = k.Value;
+                }
+                if (k.Key.Equals(Hole.ScorePossible.BOGEY)){
+                    bogey = k.Value;
+                }
+                if (k.Key.Equals(Hole.ScorePossible.DOUBLE_BOUGEY)){
+                    dbogey = k.Value;
+                }
+                if (k.Key.Equals(Hole.ScorePossible.EAGLE)){
+                    eagle = k.Value;
+                }
+                if (k.Key.Equals(Hole.ScorePossible.MORE)){
+                    more = k.Value;
+                }
+                if (k.Key.Equals(Hole.ScorePossible.PAR)){
+                    par = k.Value;
+                }
+            }
+
+            
             var entries = new[]
              {
+
+                new Entry(eagle)
+                 {
+                     Label = "Albatros",
+                     ValueLabel = albatros.ToString()+"%",
+                    Color = SKColor.Parse("#0BF5A3")
+                 },    
                 new Entry(eagle)
                  {
                      Label = "Eagle",

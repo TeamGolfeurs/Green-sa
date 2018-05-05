@@ -91,7 +91,7 @@ namespace GreenSa.Models.GolfModel
         }
 
         //get the list
-        public Dictionary<ScorePossible,float> getProportionScore()
+        public static Dictionary<ScorePossible,float> getProportionScore()
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             connection.CreateTable<ScoreHole>();
@@ -111,7 +111,7 @@ namespace GreenSa.Models.GolfModel
             return res;
         }
         //Dictionary<Par, Moyenne> 
-        public Dictionary<int,float> getScoreForPar()
+        public static Dictionary<int,float> getScoreForPar()
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             connection.CreateTable<ScoreHole>();
@@ -142,7 +142,7 @@ namespace GreenSa.Models.GolfModel
             return res;
         }
         //Hit
-        public float getProportionHit()
+        public static float getProportionHit()
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             connection.CreateTable<ScoreHole>();

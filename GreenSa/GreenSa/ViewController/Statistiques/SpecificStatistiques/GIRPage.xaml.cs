@@ -25,11 +25,8 @@ namespace GreenSa.ViewController.Statistiques
         }
         protected override void OnAppearing()
         {
-
             base.OnAppearing();
             getScores(c => true);
-
-
         }
         /*
         * Méthode déclenchée à l'application du filtre
@@ -42,8 +39,9 @@ namespace GreenSa.ViewController.Statistiques
 
         private void getScores(Filter<Club>.Filtre f)
         {
-            float hit = 20f;
-            float missed = 80f;
+            
+            float hit = StatistiquesGolf.getProportionHit();
+            float missed = 100-hit;
 
             var entries = new[]
             {
