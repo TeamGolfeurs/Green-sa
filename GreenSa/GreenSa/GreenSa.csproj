@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -98,10 +98,10 @@
     <Compile Include="ViewController\Statistiques\SpecificStatistiques\GIRPage.xaml.cs">
       <DependentUpon>GIRPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\StatistiquesGolfCourse\StatGolfSelectionPage.xaml.cs">
+    <Compile Include="ViewController\Statistiques\StatistiquesGolfCourse\StatGolfSelectionPage.xaml.cs">
       <DependentUpon>StatGolfSelectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\StatistiquesGolfCourse\StatGolfCoursePage.xaml.cs">
+    <Compile Include="ViewController\Statistiques\StatistiquesGolfCourse\StatGolfCoursePage.xaml.cs">
       <DependentUpon>StatGolfCoursePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -127,11 +127,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewController\StatistiquesGolfCourse\StatGolfSelectionPage.xaml">
+    <EmbeddedResource Include="ViewController\Statistiques\StatistiquesGolfCourse\StatGolfSelectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewController\StatistiquesGolfCourse\StatGolfCoursePage.xaml">
+    <EmbeddedResource Include="ViewController\Statistiques\StatistiquesGolfCourse\StatGolfCoursePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -270,9 +270,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewController\StatistiquesGolfCourse\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.5.0.122203\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.5.0.122203\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
