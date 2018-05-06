@@ -28,14 +28,9 @@ namespace GreenSa.ViewController.PartieGolf.Game
 
             //Définition du filtre pour la liste des clubs des shots de la partie
             Filter<Club>.Filtre f = (c => true);
-            var ListClubShots = new List<Club>();
-            foreach (Shot shot in partie.getListShot())
-            {
-                ListClubShots.Add(shot.getClubDuShot());
-            }
-            ListClubsPartie.ItemsSource = ListClubShots;
-
-
+            IEnumerable<Tuple<Shot, List<Club>>> item = partie.Shots.Select(s => new Tuple<Shot, List<Club>>(s, partie.Clubs));
+            ListShotPartie.ItemsSource = item;
+            
             //Définition du filtre pour la distance 
             Filter<Shot>.Filtre f2 = (c => true);
             //var ListDistance = new List<String>();
@@ -45,17 +40,16 @@ namespace GreenSa.ViewController.PartieGolf.Game
 
             //Définition du filtre pour la liste déroulante ajouter
             Filter<Club>.Filtre filterlisteD = (c => true);
-            ListClubPartie.ItemsSource = partie.getListClub();
+            ListClubPartie.ItemsSource = partie.Clubs;
 
             //Définition du filtre pour le score du trou
             Filter<Shot>.Filtre filterScore = (c => true);
 
-            int d = partie.getListShot().Count;
-            if (AjoutShot.IsToggled)
+            int d = partie.Shots.Count;
+            if (isPutterAjoutShot.IsToggled)
             {
                 d = +1;
-                var club = ListClubsPartie.SelectedItem as Club;
-                ListClubShots.Add(club);
+                var club = ListShotPartie.SelectedItem as Club;
             }
             score.Text = Convert.ToString(d);
         }

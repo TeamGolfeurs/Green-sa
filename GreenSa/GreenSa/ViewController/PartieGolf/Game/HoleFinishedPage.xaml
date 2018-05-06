@@ -7,39 +7,37 @@
             <StackLayout
                 VerticalOptions="Start" >
                 <Grid >
-                    <Label 
+                 <!--   <Label 
                         FontSize="Medium"
                         Grid.Column="0"
                         Text="Putter"
+                    HorizontalOptions="Start" />-->
+                    <Label 
+                        FontSize="Medium"
+                        Grid.Column="0"
+                        Text="Club"
                     HorizontalOptions="Start" />
                     <Label 
                         FontSize="Medium"
                         Grid.Column="1"
-                        Text="Club"
-                    HorizontalOptions="Center" />
-                    <Label 
-                        FontSize="Medium"
-                        Grid.Column="2"
                         Text="Distance"
                     HorizontalOptions="End" />
                 </Grid>
             </StackLayout>
 
-            <ListView x:Name="ListClubsPartie" >
+            <ListView x:Name="ListShotPartie" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell >
                             <StackLayout Orientation="Horizontal">
-                                <Switch 
-                                IsToggled="{Binding IsChecked}" 
-                                IsEnabled="true"
-                                HorizontalOptions="Start" />
-
                                 <Picker 
-                                Title="{Binding Name}"
-                                ItemDisplayBinding="{Binding Name}"
-                                HorizontalOptions="Center">
-                                </Picker>
+                                SelectedItem="{Binding Item1.Club}"
+                                ItemDisplayBinding="{Binding Item1.Club.Name}"
+                                HorizontalOptions="Start" 
+                                ItemsSource="{Binding Item2}"/>
+
+                                <Entry Text="{Binding Item1.Distance, StringFormat='{0:0.0}'}"
+                                        HorizontalOptions="End" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
@@ -51,7 +49,7 @@
                    HorizontalOptions="Center"/>
             <StackLayout Orientation="Horizontal" >
                 <Switch 
-               x:Name="AjoutShot"
+               x:Name="isPutterAjoutShot"
                IsToggled="True"
                HorizontalOptions="Start" />
 

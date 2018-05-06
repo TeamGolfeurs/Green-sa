@@ -1,4 +1,6 @@
 ﻿using GreenSa.Models.Tools;
+using GreenSa.Models.Tools.GPS_Maps;
+using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System;
 
@@ -15,13 +17,15 @@ namespace GreenSa.Models.GolfModel
         [ForeignKey(typeof(MyPosition))]
         public MyPosition RealShot { get; set; }
         public DateTime Date { get; set; }
-
-
-        public Club getClubDuShot()
+        [Ignore]
+        public double Distance
         {
-            return Club;
+            get
+            {
+                return CustomMap.DistanceTo(InitPlace.X,InitPlace.Y,RealShot.X,RealShot.Y,"M");
+            }
         }
-
+        
         public double getDistance()
         {
             var X = RealShot.X - InitPlace.X;

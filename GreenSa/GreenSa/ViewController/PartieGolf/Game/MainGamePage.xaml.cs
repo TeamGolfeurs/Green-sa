@@ -60,7 +60,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
         async protected override void OnAppearing()
         {
             base.OnAppearing();
-            
+            partie.currentClub = partie.Clubs[0];
             if (partie.hasNextHole())
             {
                 MyPosition nextHole = partie.getNextHole();// partie.getNextHole();

@@ -32,7 +32,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
 
             //Définition du filtre
             Filter<Club>.Filtre f = (c => true);
-            ListClubsPartie.ItemsSource = p.getListClub();
+            ListClubsPartie.ItemsSource = p.Clubs;
         }
 
         /**

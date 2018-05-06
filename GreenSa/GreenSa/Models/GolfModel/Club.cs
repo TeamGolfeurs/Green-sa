@@ -31,14 +31,7 @@ namespace GreenSa.Models.GolfModel
             return Name;
         }
 
-        /*
-         * Va chercher dans la base de donnée la valeur moyenne
-         **/
-        public int getDistanceMoyenne()
-        {
-            throw new NotImplementedException();
-            return 0;
-        }
+        
     }
 
     public enum TypeClub
