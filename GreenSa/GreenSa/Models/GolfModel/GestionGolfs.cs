@@ -24,78 +24,40 @@ namespace GreenSa.Models.GolfModel
          * le fitre peut être null, dans ce cas tous les golfs seront récupérés.
          * */
         //NOT IMPLEMENTED YE
-        public static  List<GolfCourse> getListGolfsAsync(Filter<GolfCourse>.Filtre filtre)
+        public static  List<GolfCourse> getListGolfs(Filter<GolfCourse>.Filtre filtre)
         {
             if (filtre == null)
                 filtre = x => true;
-            SQLite.SQLiteConnection connection =  DependencyService.Get<ISQLiteDb>().GetConnection();
-            Debug.WriteLine("Got connection");
-          
+            SQLite.SQLiteConnection connection =  DependencyService.Get<ISQLiteDb>().GetConnection();          
             
             //récup avec filtre
             //utilise SQLite
             //si la table n'existe pas encore on parse les fichiers XML (/Ressources) et on insert
             List<GolfCourse> gfcs = new List<GolfCourse>();
+            connection.CreateTable<Hole>();
+
             connection.CreateTable<MyPosition>();
-            Debug.WriteLine("Vreated table pos");
-            connection.CreateTable<GolfCourseMyPosition>();
-
             connection.CreateTable<GolfCourse>();
-            Debug.WriteLine("Vreated table GolfCourse");
 
-            gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection));
+            gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection,(g)=>true,true));
             if (gfcs.Count==0)/*!existe dans BD*/
             {
-                Debug.WriteLine("PARSING");
-                var assembly = IntrospectionExtensions.GetTypeInfo(typeof(App)).Assembly;
-                Stream stream = assembly.GetManifestResourceStream("GreenSa.Ressources.GolfCourses.GolfCourses_Descriptor.xml");
-                string text = "";
-                using (var reader = new System.IO.StreamReader(stream))//lit fichier contenant la liste des golf
-                {
-                    text = reader.ReadToEnd();
-                }
-                                
-                //XDocument xDocumentForListOfGolfCoursesFiles = XDocument.Load("GreenSa/Ressources/GolfCourses/GolfCourses_Descriptor.xml");
-                XDocument xDocumentForListOfGolfCoursesFiles = XDocument.Load(GenerateStreamFromString(text));//parsing
-
-
-                foreach ( var node in xDocumentForListOfGolfCoursesFiles.Element("GolfCourses").Elements("GolfCourse"))//for each file golfCourse
-                {
-
-
-                    stream = assembly.GetManifestResourceStream("GreenSa.Ressources.GolfCourses."+node.Value+".xml");
-                    text = "";
-                    using (var reader = new System.IO.StreamReader(stream))//read the file
-                    {
-                        text = reader.ReadToEnd();
-                    }
-
-                    XDocument golfC = XDocument.Load(GenerateStreamFromString(text));//xmlparser
-
-                    List<MyPosition> trous = new List<MyPosition>();
-                    var nodeGolfC = golfC.Element("GolfCourse");
-                    foreach (var trou in nodeGolfC.Element("Coordinates").Elements("Trou"))//get the list of all holes
-                    {
-                        MyPosition pos = new MyPosition(Double.Parse(trou.Element("lat").Value, CultureInfo.InvariantCulture), Double.Parse(trou.Element("lng").Value, CultureInfo.InvariantCulture));
-                        trous.Add(pos);
-                    }
-                    GolfCourse gc = new GolfCourse(nodeGolfC.Element("Name").Value, nodeGolfC.Element("NomGolf").Value, trous);
-                    gfcs.Add(gc);
-                }
-
+                gfcs = GolfXMLReader.getListGolfCourseFromXMLFiles();
+               
                 //add in the database
                 //addGolfCoursesInDatabase(connection,gfcs);
                 //connection.InsertAll(gfcs);
-                SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection,gfcs,recursive:true);
+                SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection,gfcs,true);
 
 
             }
             return gfcs;
         }
 
-      
         
-      
+
+
+
 
         /**
          * Donne une liste de golf en fonction d'un filtre
@@ -112,20 +74,32 @@ namespace GreenSa.Models.GolfModel
             //si la table n'existe pas encore on parse les fichiers XML et on insert
 
 
-            return new List<Club> { new Club("Fer1",TypeClub.FER), new Club("Fer2", TypeClub.FER) };
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+
+            //récup avec filtre
+            //utilise SQLite
+            //si la table n'existe pas encore on parse les fichiers XML (/Ressources) et on insert
+            List<Club> clubs = new List<Club>();
+            connection.CreateTable<Club>();
+
+            clubs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Club>(connection));
+            if (clubs.Count == 0)/*!existe dans BD*/
+            {
+                clubs = GolfXMLReader.getListClubFromXMLFiles();
+
+                //add in the database
+                //addGolfCoursesInDatabase(connection,gfcs);
+                //connection.InsertAll(gfcs);
+                //SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, clubs, recursive: true);
+                connection.InsertAll(clubs);
+
+            }
+            return clubs;
         }
 
-        
+      
 
-        public static Stream GenerateStreamFromString(string s)
-        {
-                    var stream = new MemoryStream();
-                    var writer = new StreamWriter(stream);
-                    writer.Write(s);
-                    writer.Flush();
-                    stream.Position = 0;
-                    return stream;
-        }
+       
     }
 
 

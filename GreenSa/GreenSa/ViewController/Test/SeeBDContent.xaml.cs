@@ -44,7 +44,7 @@ namespace GreenSa.ViewController.Test
             }
             catch (Exception ex)
             {
-                label.Text = "Table not exist";
+                label.Text = "" + ex.Message;
 
             }
 
@@ -63,7 +63,7 @@ namespace GreenSa.ViewController.Test
                 }
             }catch(Exception ex)
             {
-                label.Text = "Table not exist";
+                label.Text = "" + ex.Message;
 
             }
 
@@ -81,27 +81,29 @@ namespace GreenSa.ViewController.Test
                 }
             }catch(Exception ex)
             {
-                 label.Text = "Table not exist";
+                label.Text = "" + ex.Message;
 
-             }
-}
+            }
+        }
 
-        private void seeGolfCoursePosition(object sender, EventArgs e)
+       
+
+        private void seeClub(object sender, EventArgs e)
         {
             try
             {
 
                 SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-                List<GolfCourseMyPosition> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourseMyPosition>(connection));
+                List<Club> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Club>(connection));
                 label.Text = "";
-                foreach (GolfCourseMyPosition c in gfcs)
+                foreach (Club c in gfcs)
                 {
                     label.Text += c.ToString() + "\n";
                 }
             }
             catch (Exception ex)
             {
-                label.Text = "Table not exist";
+                label.Text = "" + ex.Message;
 
             }
         }
@@ -112,7 +114,51 @@ namespace GreenSa.ViewController.Test
 
             connection.DropTable<MyPosition>();
             connection.DropTable<GolfCourse>();
-            connection.DropTable<GolfCourseMyPosition>();
+            connection.DropTable<Club>();
+            connection.DropTable<Shot>();
+            connection.DropTable<Hole>();
+            connection.DropTable<ScoreHole>();
+
+
+        }
+
+        private void seeHoles(object sender, EventArgs e)
+        {
+            try
+            {
+                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+                List<Hole> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Hole>(connection));
+                label.Text = "";
+                foreach (Hole c in gfcs)
+                {
+                    label.Text += c.ToString() + "\n";
+                }
+            }
+            catch (Exception ex)
+            {
+                label.Text = "" + ex.Message;
+
+            }
+        }
+
+        private void seeScore(object sender, EventArgs e)
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            try
+            {
+                List<ScoreHole> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection));
+                label.Text = "";
+                foreach (ScoreHole c in gfcs)
+                {
+                    label.Text += c.ToString() + "\n";
+                }
+            }
+            catch (Exception ex)
+            {
+                label.Text = ""+ex.Message;
+
+            }
+
         }
     }
 }

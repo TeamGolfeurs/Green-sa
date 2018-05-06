@@ -10,31 +10,21 @@ namespace GreenSa.Models.GolfModel
 {
     public class GolfCourse
     {
+        [PrimaryKey]
         public string Name { get; set; }
         public string NameCourse { get; set; }
+        
 
-        // Id
-        [PrimaryKey,AutoIncrement]
-        public int Id { get; set; }
-
-        [ManyToMany(typeof(GolfCourseMyPosition), CascadeOperations = CascadeOperation.CascadeInsert)]
-        public List<MyPosition> Holes {
-            get { return holes; }
-            set{
-                holes = value;
-                Debug.WriteLine("SETTING HOLE " +value);
-            }
-        }
-
-        // Holes
-        private List<MyPosition> holes;
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<Hole> Holes { get;   set;       }
+        
 
 
         public GolfCourse()
         {
 
         }
-        public GolfCourse(string name,string nameCourse,List<MyPosition> holes)
+        public GolfCourse(string name,string nameCourse,List<Hole> holes)
         {
 
             this.Name = name;
@@ -43,15 +33,15 @@ namespace GreenSa.Models.GolfModel
 
         }
 
-        public List<MyPosition>.Enumerator GetHoleEnumerator()
+        public List<Hole>.Enumerator GetHoleEnumerator()
         {
             return Holes.GetEnumerator();
         }
 
         public override string ToString()
         {
-            String str= Id+" - "+Name+", "+ NameCourse + " { "+Holes.Count+"\n";
-            foreach (MyPosition m in Holes)
+            String str= " - "+Name+", "+ NameCourse + " { "+Holes.Count+"\n";
+            foreach (Hole m in Holes)
                 str += m.ToString() + " \n";
             str += "}";
             return str;

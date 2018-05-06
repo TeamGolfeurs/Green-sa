@@ -33,7 +33,7 @@ namespace Greensa.Droid
             CustomPin pin = new CustomPin(CustomPin.HOLE);
             pin.Position = new Xamarin.Forms.Maps.Position(marker.Position.Latitude, marker.Position.Longitude);
 
-            //send message to CustomMap
+            //send message to CustomMap AND  mainGamePage
             MessagingCenter.Send<CustomPin>(pin,CustomPin.UPDATEDMESSAGE);
 
 

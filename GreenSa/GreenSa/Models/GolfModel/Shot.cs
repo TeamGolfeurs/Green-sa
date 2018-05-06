@@ -8,14 +8,29 @@ namespace GreenSa.Models.GolfModel
 {
     public class Shot
     {
-        [ForeignKey(typeof(Club))]
-        public Club Club { get;  set; }
+        [PrimaryKey,AutoIncrement]
+        public int Id { get; set; }
+
+        [ForeignKey(foreignType: typeof(Club))]
+        public String ClubId { get; set; }
+        [OneToOne]
+        public Club Club { get; set; }
+
         [ForeignKey(typeof(MyPosition))]
+        public string InitPlaceId { get; set; }
+        [OneToOne(foreignKey: "InitPlaceId", CascadeOperations = CascadeOperation.All)]
         public MyPosition InitPlace { get; set; }
+
         [ForeignKey(typeof(MyPosition))]
+        public string TargetId { get; set; }
+        [OneToOne(foreignKey: "TargetId", CascadeOperations = CascadeOperation.All)]
         public MyPosition Target { get; set; }
+
         [ForeignKey(typeof(MyPosition))]
+        public string RealShotId { get; set; }
+        [OneToOne(foreignKey:"RealShotId",CascadeOperations =CascadeOperation.All)]
         public MyPosition RealShot { get; set; }
+
         public DateTime Date { get; set; }
         [Ignore]
         public double Distance
@@ -26,12 +41,6 @@ namespace GreenSa.Models.GolfModel
             }
         }
         
-        public double getDistance()
-        {
-            var X = RealShot.X - InitPlace.X;
-            var Y = RealShot.Y - InitPlace.Y;
-            return (Math.Sqrt((X * X + Y * Y)));
-        }
 
         public Shot(Club currentClub, MyPosition initPlace,MyPosition target, MyPosition realShot, DateTime date )
         {
@@ -41,10 +50,15 @@ namespace GreenSa.Models.GolfModel
             this.RealShot = realShot;
             this.Date = date;
         }
-
+        
         public Shot()
         {
 
         }
+        public override string ToString()
+        {
+            return "From "+InitPlace+", try "+Target+" but "+RealShot +" with "+Club+" the "+Date.DayOfWeek+" "+Date.Day+" "+Date.Month;
+        }
+        
     }
 }

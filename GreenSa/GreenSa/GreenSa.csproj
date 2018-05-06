@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -40,9 +40,11 @@
     </Compile>
     <Compile Include="MarkupExtension\EmbeddedImage.cs" />
     <Compile Include="Models\GolfModel\Club.cs" />
+    <Compile Include="Models\GolfModel\ScoreHole.cs" />
     <Compile Include="Models\GolfModel\Shot.cs" />
     <Compile Include="Models\GolfModel\StatistiquesGolf.cs" />
-    <Compile Include="Models\Tools\GolfCourseMyPosition.cs" />
+    <Compile Include="Models\GolfModel\Hole.cs" />
+    <Compile Include="Models\Tools\GolfXMLReader.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomPin.cs" />
     <Compile Include="Models\Tools\MyPosition.cs" />
@@ -81,17 +83,20 @@
     <Compile Include="ViewController\Statistiques\SpecificStatistiques\DistanceClubPage.xaml.cs">
       <DependentUpon>DistanceClubPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Statistiques\SpecificStatistiques\ScoreEvolutionDetailsPage.xaml.cs">
-      <DependentUpon>ScoreEvolutionDetailsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewController\Statistiques\SpecificStatistiques\ScoreEvolutionPage.xaml.cs">
-      <DependentUpon>ScoreEvolutionPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewController\Statistiques\StatistiqueMainTabbedPage.xaml.cs">
       <DependentUpon>StatistiqueMainTabbedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewController\Test\SeeBDContent.xaml.cs">
       <DependentUpon>SeeBDContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Statistiques\SpecificStatistiques\ScorePage.xaml.cs">
+      <DependentUpon>ScorePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Statistiques\SpecificStatistiques\ScoreVsParPage.xaml.cs">
+      <DependentUpon>ScoreVsParPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Statistiques\SpecificStatistiques\GIRPage.xaml.cs">
+      <DependentUpon>GIRPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +105,19 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ressources\Clubs\Putter.xml" />
+    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScorePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScoreVsParPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\GIRPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -141,6 +159,16 @@
     <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.2.5.0.122203\lib\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+    <Reference Include="SkiaSharp">
+      <HintPath>..\..\packages\SkiaSharp.1.60.0\lib\portable-net45+win8+wpa81+wp8\SkiaSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SkiaSharp.Views.Forms">
+      <HintPath>..\..\packages\SkiaSharp.Views.Forms.1.59.1\lib\portable-net45+win8+wpa81+wp8\SkiaSharp.Views.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microcharts.Forms">
+      <HintPath>..\..\packages\Microcharts.Forms.0.7.0\lib\portable-net45+win8+wpa81+wp8\Microcharts.Forms.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -178,12 +206,6 @@
     <EmbeddedResource Include="Ressources\Images\tools.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScoreEvolutionPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="ViewController\Statistiques\StatistiqueMainTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -196,12 +218,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScoreEvolutionDetailsPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="ViewController\PartieGolf\Game\GameFinishedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -209,30 +225,30 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\PartieGolf\Game\ClubSelectionInGamePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewController\PartieGolf\Game\HoleFinishedPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Ressources\Clubs\Clubs_Descriptor.xml" />
-    <Content Include="Ressources\Clubs\Driver.xml" />
-    <Content Include="Ressources\Clubs\Hybride.xml" />
-    <Content Include="Ressources\Clubs\Sandwedge.xml" />
-    <Content Include="Ressources\Clubs\Pitching.xml" />
-    <Content Include="Ressources\Clubs\Bois5.xml" />
-    <Content Include="Ressources\Clubs\Fer3.xml" />
-    <Content Include="Ressources\Clubs\Fer4.xml" />
-    <Content Include="Ressources\Clubs\Fer9.xml" />
-    <Content Include="Ressources\Clubs\Fer8.xml" />
-    <Content Include="Ressources\Clubs\Fer7.xml" />
-    <Content Include="Ressources\Clubs\Fer6.xml" />
-    <Content Include="Ressources\Clubs\Fer5.xml" />
-    <Content Include="Ressources\Clubs\Bois3.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Clubs_Descriptor.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Driver.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Hybride.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Sandwedge.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Pitching.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Bois5.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer3.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer4.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer9.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer8.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer7.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer6.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Fer5.xml" />
+    <EmbeddedResource Include="Ressources\Clubs\Bois3.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\Test\SeeBDContent.xaml">

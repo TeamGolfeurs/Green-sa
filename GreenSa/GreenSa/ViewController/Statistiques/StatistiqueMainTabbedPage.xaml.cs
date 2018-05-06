@@ -20,36 +20,28 @@ namespace GreenSa.ViewController.Statistiques
         {
             InitializeComponent();
 
-
-           
-
         }
 
         protected async override void OnAppearing()
         {
-            string path = "GreenSa.ViewController.Statistiques.SpecificStatistiques";
-            List < String > l = new List<String>();
-            l.Add("DistanceClubPage");
-            l.Add("ScoreEvolutionDetailsPage");
-            l.Add("ScoreEvolutionPage");
+            var Page1 = new DistanceClubPage();
+            Page1.Title = "Distance Clubs";
+            this.Children.Add(Page1);
 
+            var Page2 = new ScorePage();
+            Page2.Title = "Score";
+            this.Children.Add(Page2);
 
-            foreach(String file in l){
-                
-                string assemblyName = path+"."+file;
-                Type t = Type.GetType(assemblyName);
-                ContentPage p = (ContentPage)Activator.CreateInstance(t);
-                p.Title = file;
-                this.Children.Add(p);
-            }
-           
+            var Page3 = new ScoreVsParPage();
+            Page3.Title = "Score par Par";
+            this.Children.Add(Page3);
+
+            var Page4 = new GIRPage();
+            Page4.Title = "GIR";
+            this.Children.Add(Page4);
+            
             base.OnAppearing();
-
-
         }
     
-
-
-
     }
 }
