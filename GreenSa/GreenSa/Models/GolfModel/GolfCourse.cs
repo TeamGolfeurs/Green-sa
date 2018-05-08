@@ -46,6 +46,15 @@ namespace GreenSa.Models.GolfModel
             str += "}";
             return str;
         }
+        public override bool Equals(object obj)
+        {
+            return obj is GolfCourse &&  (obj as GolfCourse).Name.Equals(Name);
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
 
 
     }
