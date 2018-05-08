@@ -247,7 +247,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Ressources\Clubs\Clubs_Descriptor.xml" />
     <EmbeddedResource Include="Ressources\Clubs\Driver.xml" />

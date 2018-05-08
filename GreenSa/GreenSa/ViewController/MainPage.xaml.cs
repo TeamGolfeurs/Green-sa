@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using GreenSa.ViewController.Statistiques;
-using GreenSa.ViewController.StatistiquesGolfCourse;
 using GreenSa.ViewController.Test;
+using GreenSa.ViewController.Statistiques.StatistiquesGolfCourse;
 
 namespace GreenSa.ViewController
 {

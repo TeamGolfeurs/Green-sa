@@ -5,7 +5,7 @@ using GreenSa.Models.Tools;
 
 using Xamarin.Forms;
 
-namespace GreenSa.ViewController.StatistiquesGolfCourse
+namespace GreenSa.ViewController.Statistiques.StatistiquesGolfCourse
 {
     public partial class StatGolfCoursePage : ContentPage
     {
