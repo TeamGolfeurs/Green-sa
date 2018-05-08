@@ -41,7 +41,7 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
             getScores(c=>true);
         }
 
-        private void getScores(Filter<Club>.Filtre f)
+        private void getScores(Func<Club, bool> f)
         {
             float b3 = 0f;
             float b5 = 0f;

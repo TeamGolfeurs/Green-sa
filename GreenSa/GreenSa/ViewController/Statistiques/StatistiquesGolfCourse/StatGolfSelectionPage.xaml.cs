@@ -23,7 +23,7 @@ namespace GreenSa.ViewController.Statistiques.StatistiquesGolfCourse
             base.OnAppearing();
 
             //Définition du filtre
-            Filter<GolfCourse>.Filtre f = (c => true);
+            Func<GolfCourse, bool> f = (c => true);
 
             //Recupere la liste des Golfs filtré par la classe GestionGolf
             ListGolfCourse.ItemsSource = GestionGolfs.getListGolfs(f);

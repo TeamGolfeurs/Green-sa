@@ -37,7 +37,7 @@ namespace GreenSa.ViewController.Statistiques.StatistiquesGolfCourse
             grid.Children.Add(nomb, 4, 0);
 
             //On récupère les Stats du Modele
-            Filter<GolfCourse>.Filtre f = (c => true);
+            Func<GolfCourse, bool> f = (c => true);
             Dictionary<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>> d = StatistiquesGolf.getScoreForGolfCourses(f);
 
             foreach (KeyValuePair<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>> k in d)

@@ -26,28 +26,9 @@ namespace GreenSa.ViewController.PartieGolf.Game
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            //Définition du filtre pour la liste des clubs des shots de la partie
-            Filter<Club>.Filtre f = (c => true);
             item = new ObservableCollection<Tuple<Shot, IEnumerable<Club>>>(partie.Shots.Select(s => new Tuple<Shot, IEnumerable<Club>>(s, partie.Clubs)));
             ListShotPartie.ItemsSource = item;
-            
-            //Définition du filtre pour la distance 
-            Filter<Shot>.Filtre f2 = (c => true);
-            //var ListDistance = new List<String>();
-            //foreach (Shot shot in partie.getListShot())
-            // { ListDistance.Add(Convert.ToString(shot.getDistance())); }
-            // ListClubsPartie.ItemsSource = ListDistance;
-
-            //Définition du filtre pour la liste déroulante ajouter
-            Filter<Club>.Filtre filterlisteD = (c => true);
-            //ListClubPartieNewShot.ItemsSource = partie.Clubs;
-
-            //Définition du filtre pour le score du trou
-            Filter<Shot>.Filtre filterScore = (c => true);
-
             int d = partie.Shots.Count;
-           
             score.Text = Convert.ToString(d);
         }
 

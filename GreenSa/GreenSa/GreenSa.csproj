@@ -55,7 +55,6 @@
     <Compile Include="Models\Tools\Services\WindInfo.cs" />
     <Compile Include="Models\Tools\Services\WindService.cs" />
     <Compile Include="Persistence\ISQLiteDb.cs" />
-    <Compile Include="Models\Tools\Filter.cs" />
     <Compile Include="Models\GolfModel\GestionGolfs.cs" />
     <Compile Include="Models\GolfModel\GolfCourse.cs" />
     <Compile Include="Models\GolfModel\Partie.cs" />

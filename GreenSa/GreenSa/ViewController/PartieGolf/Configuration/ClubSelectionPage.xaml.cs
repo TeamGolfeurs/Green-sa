@@ -35,7 +35,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
        * */
         protected override void OnAppearing()
         {
-            Filter<Club>.Filtre f = (c => true);
+            Func<Club, bool> f = (c => true);
             //get the list from gestionGolf
             /*if (listviewclub.ItemsSource != null)
                 Navigation.PopToRootAsync();*/

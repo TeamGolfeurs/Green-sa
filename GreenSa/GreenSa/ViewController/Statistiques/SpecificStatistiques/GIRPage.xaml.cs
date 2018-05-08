@@ -37,7 +37,7 @@ namespace GreenSa.ViewController.Statistiques
             getScores(c => true);
         }
 
-        private void getScores(Filter<Club>.Filtre f)
+        private void getScores(Func<Club, bool> f)
         {
             
             float hit = StatistiquesGolf.getProportionHit();

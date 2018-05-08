@@ -24,7 +24,7 @@ namespace GreenSa.Models.GolfModel
          * le fitre peut être null, dans ce cas tous les golfs seront récupérés.
          * */
         //NOT IMPLEMENTED YE
-        public static  List<GolfCourse> getListGolfs(Filter<GolfCourse>.Filtre filtre)
+        public static  List<GolfCourse> getListGolfs(Func<GolfCourse, bool> filtre)
         {
             if (filtre == null)
                 filtre = x => true;
@@ -64,7 +64,7 @@ namespace GreenSa.Models.GolfModel
          * le fitre peut être null, dans ce cas tous les golfs seront récupérés.
          * */
         //NOT IMPLEMENTED YET
-        public static List<Club> getListClubs(Filter<Club>.Filtre filtre)
+        public static List<Club> getListClubs(Func<Club, bool> filtre)
         {
             if (filtre == null)
                 filtre = x => true;

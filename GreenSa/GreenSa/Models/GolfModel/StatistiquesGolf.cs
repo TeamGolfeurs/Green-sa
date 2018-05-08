@@ -21,7 +21,7 @@ namespace GreenSa.Models.GolfModel
         /**
          * Get the average distance for all clubs
          * */
-        public static IEnumerable<Tuple<Club, double>> getAverageDistanceForClubs(Filter<Club>.Filtre filtre)
+        public static IEnumerable<Tuple<Club, double>> getAverageDistanceForClubs(Func<Club,bool> filtre)
         {
             IEnumerable<Tuple<Club, double>> res=new List<Tuple<Club, double>>();
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
@@ -54,7 +54,7 @@ namespace GreenSa.Models.GolfModel
         }
         // Terrain, List Tuple<Hole,AverageScore,BestScore,WorstScore>, nbFoisJouée 
         //ordered by nbFoisJouée
-        public static Dictionary<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>> getScoreForGolfCourses(Filter<GolfCourse>.Filtre filtre)
+        public static Dictionary<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>> getScoreForGolfCourses(Func<GolfCourse, bool> filtre)
         {
             Dictionary<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>> l = new Dictionary<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>>();
             // l.Add(new Tuple<GolfCourse, int, int, int, int> (new GolfCourse("StJacques9trousEN DUR","StJac",new List<MyPosition>()), 4,2,1,2));
@@ -63,8 +63,8 @@ namespace GreenSa.Models.GolfModel
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             connection.CreateTable<GolfCourse>();
             connection.CreateTable<ScoreHole>();
-            List<GolfCourse> gfcs = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection, (GolfCourse gf) => filtre(gf), true);
-
+            IEnumerable<GolfCourse> gfcs = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection, recursive: true);
+            gfcs=gfcs.Where((gf) => filtre(gf));
             foreach (GolfCourse gc in gfcs)
             {
                 List<Tuple<Hole, float, int, int>> lsHole = new List<Tuple<Hole, float, int, int>>();

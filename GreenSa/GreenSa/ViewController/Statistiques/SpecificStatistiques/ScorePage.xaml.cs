@@ -41,7 +41,7 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
             getScores(c => true);
         }
 
-        private void getScores(Filter<Club>.Filtre f)
+        private void getScores(Func<Club, bool> f)
         {
             float albatros = 0f;
             float eagle = 0f;

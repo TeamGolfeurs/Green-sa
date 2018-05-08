@@ -30,7 +30,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
         {
            base.OnAppearing();
             //Définition du filtre
-            Filter<Club>.Filtre f = (c => true);
+            Func<Club, bool> f = (c => true);
             ListClubsPartie.ItemsSource = p.Clubs;
         }
 
