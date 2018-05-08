@@ -118,7 +118,7 @@ namespace GreenSa.Models.GolfModel
             connection.CreateTable<ScoreHole>();
             connection.CreateTable<Hole>();
 
-            Dictionary<int, float> res = new Dictionary<int, float>();
+            Dictionary<int, float> resTmp = new Dictionary<int, float>();
             Dictionary<int, int> counter = new Dictionary<int, int>();
 
             List<ScoreHole> all = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection,recursive:true);
@@ -126,18 +126,19 @@ namespace GreenSa.Models.GolfModel
             foreach( ScoreHole h in all)
             {
                 int par = h.Hole.Par;
-                if (!res.ContainsKey(par))
+                if (!resTmp.ContainsKey(par))
                 {
-                    res.Add(par, 0);
+                    resTmp.Add(par, 0);
                     counter.Add(par, 0);
                 }
-                res[par]+= h.Score;
+                resTmp[par]+= h.Score;
                 counter[par] +=1;
             }
+            Dictionary<int, float> res = new Dictionary<int, float>();
 
             foreach (KeyValuePair<int, float> entry in res)
             {
-                res[entry.Key] = entry.Value / counter[entry.Key];
+                res.Add(entry.Key, entry.Value / counter[entry.Key]);
             }
 
             return res;
