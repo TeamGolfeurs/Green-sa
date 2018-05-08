@@ -32,8 +32,13 @@ namespace GreenSa.Models.GolfModel
 
             }
         }
-      
 
+        public void setCurrentClub(Club club)
+        {
+            currentClub = club;
+        }
+
+      
         public Partie()
         {
             Shots = new List<Shot>();
@@ -46,6 +51,11 @@ namespace GreenSa.Models.GolfModel
         public Hole getNextHole()
         {
             return itHole.Current;
+        }
+        //index,nbTotal
+        public Tuple<int,int> getIndexHole()
+        {
+            return new Tuple<int,int>(golfCourse.Holes.IndexOf( itHole.Current)+1,golfCourse.Holes.Count);
         }
 
         public void addPositionForCurrentHole(MyPosition start,MyPosition oldTarget, MyPosition userPosition)

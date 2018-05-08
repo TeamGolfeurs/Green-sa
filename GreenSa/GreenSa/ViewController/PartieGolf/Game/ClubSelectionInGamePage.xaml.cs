@@ -1,4 +1,5 @@
 ﻿using GreenSa.Models.GolfModel;
+using GreenSa.Models.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,13 @@ namespace GreenSa.ViewController.PartieGolf.Game
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ClubSelectionInGamePage : ContentPage
     {
+        Partie p;
         public ClubSelectionInGamePage(Partie partie)
         {
-
             InitializeComponent();
+            p = partie;
         }
-
+       
         /**
        * Méthode qui s'execute automatiquement au chargement de la page
        * Permet la selection du club à utiliser pour le prochain coup
@@ -26,16 +28,21 @@ namespace GreenSa.ViewController.PartieGolf.Game
        * */
         protected override void OnAppearing()
         {
-            base.OnAppearing();
+           base.OnAppearing();
+            //Définition du filtre
+            Filter<Club>.Filtre f = (c => true);
+            ListClubsPartie.ItemsSource = p.Clubs;
         }
 
         /**
-         * Méthode activé au clic sur un élement de la liste
+         * Méthode activée au clic sur un élement de la liste
          * set le currentClub de la Partie à l'élément choisi
          */
         private async void onClubClicked(object sender, SelectedItemChangedEventArgs e)
         {
+            var club = ListClubsPartie.SelectedItem as Club;
+            p.setCurrentClub(club);
+            await Navigation.PopModalAsync();
         }
     }
 }
- 

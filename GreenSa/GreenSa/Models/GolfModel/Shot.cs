@@ -1,4 +1,5 @@
 ﻿using GreenSa.Models.Tools;
+using GreenSa.Models.Tools.GPS_Maps;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System;
@@ -32,10 +33,17 @@ namespace GreenSa.Models.GolfModel
 
         public DateTime Date { get; set; }
 
-        public Shot()
-        {
 
+        [Ignore]
+        public double Distance
+        {
+            get
+            {
+                if (InitPlace == null) return 0;
+                return CustomMap.DistanceTo(InitPlace.X,InitPlace.Y,RealShot.X,RealShot.Y,"M");
+            }
         }
+        
 
         public Shot(Club currentClub, MyPosition initPlace,MyPosition target, MyPosition realShot, DateTime date )
         {
@@ -45,11 +53,15 @@ namespace GreenSa.Models.GolfModel
             this.RealShot = realShot;
             this.Date = date;
         }
+        
+        public Shot()
+        {
 
+        }
         public override string ToString()
         {
             return "From "+InitPlace+", try "+Target+" but "+RealShot +" with "+Club+" the "+Date.DayOfWeek+" "+Date.Day+" "+Date.Month;
         }
-
+        
     }
 }

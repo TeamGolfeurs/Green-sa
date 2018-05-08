@@ -38,7 +38,6 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
             //Recupere la liste des Golfs filtré par la classe GestionGolf
             ListGolfCourse.ItemsSource = GestionGolfs.getListGolfs(f);
 
-
         }
 
 
@@ -50,7 +49,6 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          {
             var g = ListGolfCourse.SelectedItem as GolfCourse;
             p.GolfCourse = g;
-
             await Navigation.PushAsync(new ClubSelectionPage(p));
          }
 

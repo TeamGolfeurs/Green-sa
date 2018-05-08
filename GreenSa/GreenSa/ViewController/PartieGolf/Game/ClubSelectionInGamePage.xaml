@@ -4,9 +4,18 @@
              x:Class="GreenSa.ViewController.PartieGolf.Game.ClubSelectionInGamePage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Selection Club IN GAME"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Selectionnez votre Club"
+            HorizontalOptions="CenterAndExpand"
+            FontAttributes="Bold"/>
+            <ListView x:Name="ListClubsPartie" 
+                  >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}" Tapped="onClubClicked"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
+
 </ContentPage>

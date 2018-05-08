@@ -26,7 +26,6 @@ namespace GreenSa.ViewController
     {
         public MainPage()
         {
-
             InitializeComponent();
             //optionButton = new FileImageSource { File = "GreenSa.Ressources.Images.tools.png" };
             var tapGestureRecognizer = new TapGestureRecognizer();
@@ -55,7 +54,7 @@ namespace GreenSa.ViewController
           * */
         async private void onStatsClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new StatistiqueMainTabbedPage() );
+            await Navigation.PushAsync(new StatistiqueMainTabbedPage());
         }
 
         async private void onStatsGolfsClicked(object sender, EventArgs e)
@@ -66,7 +65,6 @@ namespace GreenSa.ViewController
         async private void onOptionsClicked(object sender, EventArgs e)
         {
             label.Text= "WIIIIIIIIIIII";
-
         }
 
         async private void voirBD(object sender, EventArgs e)

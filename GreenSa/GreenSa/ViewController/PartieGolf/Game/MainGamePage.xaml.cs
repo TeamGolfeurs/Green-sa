@@ -41,7 +41,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
             MapSpan.FromCenterAndRadius(
                 new Position(48.1116654, -1.6843768), Distance.FromMiles(30)));
 
-
+            BindingContext = partie;
+            ListClubPartie.SelectedItem = partie.currentClub;
             //message which come from the markerListenerDrag,
             //when the target pin is moved =>update the display of the distance
             MessagingCenter.Subscribe<CustomPin>(this,CustomPin.UPDATEDMESSAGE, (sender) => {
@@ -60,11 +61,13 @@ namespace GreenSa.ViewController.PartieGolf.Game
         async protected override void OnAppearing()
         {
             base.OnAppearing();
-            
+            partie.currentClub = partie.Clubs[0];
             if (partie.hasNextHole())
             {
                 Hole nextHole = partie.getNextHole();
                 map.setHolePosition(nextHole.Position);
+                Title = "Trou " + partie.getIndexHole().Item1 + "/" + partie.getIndexHole().Item2;
+
                 MyPosition position = new MyPosition(0, 0) ;
                 bool success = false;
                 do//make sure that the GPS is avaible
@@ -174,7 +177,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
          * **/
         private async void onHoleFinishedButtonClicked(object sender, SelectedItemChangedEventArgs e)
         {
-            await Navigation.PushAsync(new HoleFinishedPage(partie));
+            await Navigation.PushModalAsync(new HoleFinishedPage(partie));
 
         }
 
@@ -184,10 +187,15 @@ namespace GreenSa.ViewController.PartieGolf.Game
             map.setUserPosition(newUserPosition);
         }
         protected override bool OnBackButtonPressed()
-        {
-            Navigation.PopToRootAsync();
-            return true;
+        {            
+                Navigation.PopToRootAsync();
+                return true;
         }
 
+
+        private void ListClubPartie_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            partie.currentClub =(Club) ListClubPartie.SelectedItem;
+        }
     }
 }
