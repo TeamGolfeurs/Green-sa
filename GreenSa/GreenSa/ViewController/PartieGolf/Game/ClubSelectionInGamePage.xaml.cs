@@ -29,7 +29,6 @@ namespace GreenSa.ViewController.PartieGolf.Game
         protected override void OnAppearing()
         {
            base.OnAppearing();
-
             //Définition du filtre
             Filter<Club>.Filtre f = (c => true);
             ListClubsPartie.ItemsSource = p.Clubs;

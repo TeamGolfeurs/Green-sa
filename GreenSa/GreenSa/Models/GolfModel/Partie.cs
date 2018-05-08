@@ -52,6 +52,11 @@ namespace GreenSa.Models.GolfModel
         {
             return itHole.Current;
         }
+        //index,nbTotal
+        public Tuple<int,int> getIndexHole()
+        {
+            return new Tuple<int,int>(golfCourse.Holes.IndexOf( itHole.Current)+1,golfCourse.Holes.Count);
+        }
 
         public void addPositionForCurrentHole(MyPosition start,MyPosition oldTarget, MyPosition userPosition)
         {

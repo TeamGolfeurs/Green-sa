@@ -32,11 +32,14 @@ namespace GreenSa.Models.GolfModel
         public MyPosition RealShot { get; set; }
 
         public DateTime Date { get; set; }
+
+
         [Ignore]
         public double Distance
         {
             get
             {
+                if (InitPlace == null) return 0;
                 return CustomMap.DistanceTo(InitPlace.X,InitPlace.Y,RealShot.X,RealShot.Y,"M");
             }
         }
