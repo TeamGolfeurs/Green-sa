@@ -75,8 +75,9 @@ namespace GreenSa.Models.GolfModel
                     float moy = 0;
                     int min = 99;
                     int max = -99;
-                    List<ScoreHole> scores = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection, (ScoreHole gf) => gf.Hole.Equals(h) , true);
-                    nbFoisJoue = scores.Count;
+                    IEnumerable<ScoreHole> scores = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection ,recursive: true);
+                    scores = scores.Where((ScoreHole gf) => gf.Hole.Equals(h));
+                    nbFoisJoue = scores.Count();
                     foreach (ScoreHole sh in scores)
                     {
                         moy += sh.Score;
