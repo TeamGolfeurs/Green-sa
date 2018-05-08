@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GreenSa.Models.Tools.GPS_Maps"
               xmlns:local2="clr-namespace:GreenSa.MarkupExtension"
-             x:Class="GreenSa.ViewController.PartieGolf.Game.MainGamePage">
+             x:Class="GreenSa.ViewController.PartieGolf.Game.MainGamePage"
+             NavigationPage.HasBackButton="False"
+            >
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Relocalize" Clicked="onRelocalizeAction"/>
     </ContentPage.ToolbarItems>
@@ -38,12 +40,26 @@
 
             
             <local:CustomMap Grid.Row="1" Grid.Column="0" x:Name="map" MapType="Street" WidthRequest="960" HeightRequest="100" VerticalOptions="FillAndExpand" />
-            <StackLayout Grid.Row="2" Grid.Column="0"  Orientation="Horizontal" >
+            <Grid Grid.Row="2" Grid.Column="0"  >
 
-                <Button Text="Club" HorizontalOptions="Start" Clicked="onClubSelectionClicked" />
-                <Button x:Name="mainButton" Text="GO" HorizontalOptions="FillAndExpand" Clicked="onMainButtonClicked"/>
-                <Button Text="Trou terminé" HorizontalOptions="End"  Clicked="onHoleFinishedButtonClicked"  />
-            </StackLayout>
+                <Picker 
+                    Title="Club"
+                    x:Name="ListClubPartie"
+                    ItemDisplayBinding="{Binding Name}"
+                    ItemsSource="{Binding Clubs}"
+                    HorizontalOptions="FillAndExpand"
+                    SelectedIndexChanged="ListClubPartie_SelectedIndexChanged"
+                    Grid.Column="0">
+                    
+                </Picker>
+                <Button x:Name="mainButton" Text="GO"  Clicked="onMainButtonClicked"    
+                     HorizontalOptions="FillAndExpand"
+                    Grid.Column="1"
+                    />
+                <Button Text="Trou terminé"   Clicked="onHoleFinishedButtonClicked"
+                         HorizontalOptions="FillAndExpand"
+                    Grid.Column="2"/>
+            </Grid>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

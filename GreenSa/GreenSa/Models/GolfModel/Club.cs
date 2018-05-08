@@ -31,14 +31,8 @@ namespace GreenSa.Models.GolfModel
             DistanceMoyenne = distMoy;
         }
 
-        /*
-         * Va chercher dans la base de donnée la valeur moyenne
-         **/
-        public int getDistanceMoyenne()
-        {
+
            
-            return DistanceMoyenne;
-        }
 
         public override string ToString()
         {

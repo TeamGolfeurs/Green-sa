@@ -4,7 +4,7 @@
              x:Class="GreenSa.ViewController.PartieGolf.Configuration.ClubSelectionPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Selectionner Vos Clubs"
+            <Label Text="Selectionnez vos clubs"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand"
                 FontAttributes="Bold"/>
@@ -28,7 +28,7 @@
             </ListView>
             <Button 
                 x:Name = "Btn"
-                Text="Terminer"
+                Text="Valider"
                 VerticalOptions="End"
                 HorizontalOptions="CenterAndExpand"
                 Clicked="onValidClubSelection"

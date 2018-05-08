@@ -4,14 +4,77 @@
              x:Class="GreenSa.ViewController.PartieGolf.Game.HoleFinishedPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="HOLE FINISHED PAGE"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <StackLayout
+                VerticalOptions="Start" >
+                <Grid >
+                 <!--   <Label 
+                        FontSize="Medium"
+                        Grid.Column="0"
+                        Text="Putter"
+                    HorizontalOptions="Start" />-->
+                    <Label 
+                        FontSize="Medium"
+                        Grid.Column="0"
+                        Text="Club"
+                    HorizontalOptions="CenterAndExpand" />
+                    <Label 
+                        FontSize="Medium"
+                        Grid.Column="1"
+                        Text="Distance"
+                    HorizontalOptions="CenterAndExpand" />
+                </Grid>
+            </StackLayout>
+
+            <Grid>
+                <ListView x:Name="ListShotPartie" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+                            <StackLayout Orientation="Horizontal">
+                                <Picker 
+                                ItemDisplayBinding="{Binding Name, Path=Item1.Club}"
+                                HorizontalOptions="CenterAndExpand" 
+                                ItemsSource="{Binding Item2}"
+                                SelectedItem="{Binding Item1.Club}"
+                                Grid.Column="0"/>
+                                
+                                <Label Text="{Binding Item1.Distance, StringFormat='{0:0.00}'}"
+                                       Grid.Column="1"
+                                       HorizontalOptions="CenterAndExpand"/>
+
+                                </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            </Grid>
+
+            <!--  <Label Text="Ajouter un shot"
+                   FontSize="Medium"
+                   HorizontalOptions="Center"/>
+            <StackLayout Orientation="Horizontal" >
+
+                <Picker 
+                    Title="Sélectionner un club"
+                    x:Name="ListClubPartieNewShot"
+                    ItemDisplayBinding="{Binding Name}"
+                    HorizontalOptions="Center"
+                    SelectedIndexChanged="ListClubPartieNewShot_SelectedIndexChanged">
+                </Picker>
+                <Entry 
+                    x:Name="DistanceNewShot"
+                    IsEnabled="{Binding Source="{x:"}"/>
+            </StackLayout>-->
+            <Button Text="Ajouter un coup de putter" Clicked="AddShotButtonClicked" />
+
             <StackLayout Orientation="Horizontal">
-                <Label Text="Sauvegarder les stats"/>
+                <Label Text="Sauvegarder les stats" />
                 <Switch x:Name="save"  IsToggled="true"/>
             </StackLayout>
-            <Button Text="Valider le trou" Clicked="validButtonClicked"/>
+
+            <Label Text="Score du trou" BackgroundColor="Pink" HorizontalOptions="End"></Label>
+            <Label x:Name="score" Text="{Binding Name}" HorizontalOptions="End" Margin="5"></Label>
+            <Button Text="Passer au trou suivant" Clicked="validButtonClicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
