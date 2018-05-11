@@ -52,11 +52,15 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
         private async void onValidClubSelection(object sender, SelectedItemChangedEventArgs e)
         {
             List<Club> clubselected = new List<Club>();
-            foreach(Club c in listviewclub.ItemsSource){
+            foreach (Club c in listviewclub.ItemsSource){
                 if(c.selected){
                     clubselected.Add(c);
-
                 }
+            }
+            if (clubselected.Count == 0)
+            {
+                await DisplayAlert("Aucun club selectionné", "Vous devez selectionner au moins un club", "ok");
+                return;
             }
             p.Clubs = clubselected;
             await Navigation.PushAsync(new Game.MainGamePage(p));

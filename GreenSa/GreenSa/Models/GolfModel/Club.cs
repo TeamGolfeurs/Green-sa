@@ -18,6 +18,18 @@ namespace GreenSa.Models.GolfModel
         [PrimaryKey]
         public string Name { get; set; }
         public int DistanceMoyenne { get; set; }
+        [Ignore]
+        public int DistanceMoyenneJoueur
+        {
+            get
+            {
+                IEnumerable<Tuple<Club, double>> listWith1item = StatistiquesGolf.getAverageDistanceForClubs(c => c.Equals(this));
+                if (listWith1item.Count() == 0)
+                    return DistanceMoyenne;
+                return (int)listWith1item.First().Item2;
+            }
+        }
+
         public Club()
         {
             selected = true;

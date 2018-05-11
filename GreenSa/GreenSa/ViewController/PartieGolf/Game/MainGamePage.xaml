@@ -29,8 +29,15 @@
 
                     <Label x:Name="forceVent" Text="0 km/h" Grid.Row="1"/>
                 </StackLayout>
+                
                 <Label x:Name="localisationState" Text="" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Moyenne Club" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+
+                    <Switch x:Name="moyenne" IsToggled="True" Toggled="moyenne_Toggled" HorizontalOptions="Center"/>
+                 </StackLayout>
+
+            <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
                    
                     <Label x:Name="distTotal" Text="" HorizontalOptions="CenterAndExpand"/>
                     <Label x:Name="distSplit" Text=""/>

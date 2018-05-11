@@ -15,7 +15,6 @@ namespace GreenSa.Models.Tools.GPS_Maps
     public class CustomMap : Map , INotifyPropertyChanged
     {
         private List<Position>   routeCoordinates = new List<Position>();
-        public  delegate void MyAction();
 
 
         public List<Position> RouteCoordinates

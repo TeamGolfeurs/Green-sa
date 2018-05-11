@@ -42,7 +42,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
                 new Position(48.1116654, -1.6843768), Distance.FromMiles(30)));
 
             BindingContext = partie;
-            ListClubPartie.SelectedItem = partie.currentClub;
+            partie.CurrentClub = partie.Clubs.First();
+            ListClubPartie.SelectedItem = partie.CurrentClub;
             //message which come from the markerListenerDrag,
             //when the target pin is moved =>update the display of the distance
             MessagingCenter.Subscribe<CustomPin>(this,CustomPin.UPDATEDMESSAGE, (sender) => {
@@ -61,7 +62,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
         async protected override void OnAppearing()
         {
             base.OnAppearing();
-            partie.currentClub = partie.Clubs[0];
+
             if (partie.hasNextHole())
             {
                 Hole nextHole = partie.getNextHole();
@@ -77,6 +78,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
                         position = await localize();
                         success = true;
                         map.setUserPosition(position);
+                        partie.CurrentClub = partie.CurrentClub;//just to update hte circle
+
                     }
                     catch (NotAvaibleException e)
                     {
@@ -195,7 +198,12 @@ namespace GreenSa.ViewController.PartieGolf.Game
 
         private void ListClubPartie_SelectedIndexChanged(object sender, EventArgs e)
         {
-            partie.currentClub =(Club) ListClubPartie.SelectedItem;
+            partie.CurrentClub =(Club) ListClubPartie.SelectedItem;
+        }
+
+        private void moyenne_Toggled(object sender, ToggledEventArgs e)
+        {
+            MessagingCenter.Send<MainGamePage,bool>(this, "updateTheCircleVisbility", moyenne.IsToggled);
         }
     }
 }

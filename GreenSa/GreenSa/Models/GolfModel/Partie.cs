@@ -16,7 +16,17 @@ namespace GreenSa.Models.GolfModel
     {
 
         private GolfCourse golfCourse;
-        public Club currentClub { get; set; }
+        private Club currentClub;
+
+        public Club CurrentClub { get
+            {
+                return currentClub;
+            }
+            set{
+                currentClub = value;
+                MessagingCenter.Send<Partie>(this, "updateTheCircle");
+            }
+        }
         public List<Shot> Shots { get; set; }
         public List<Club> Clubs { get ; set; }
         private List<Hole>.Enumerator itHole;
@@ -33,16 +43,17 @@ namespace GreenSa.Models.GolfModel
             }
         }
 
+
         public void setCurrentClub(Club club)
         {
-            currentClub = club;
+            CurrentClub = club;
         }
 
       
         public Partie()
         {
             Shots = new List<Shot>();
-           currentClub = new Club("Fer3",170);
+           CurrentClub = new Club("Fer3",170);
         }
         /// <summary>
         /// Retourne le prochain trou si il existe sinon retourne null.
@@ -60,7 +71,7 @@ namespace GreenSa.Models.GolfModel
 
         public void addPositionForCurrentHole(MyPosition start,MyPosition oldTarget, MyPosition userPosition)
         {
-            Shots.Add(new Shot(currentClub,start, oldTarget, userPosition,DateTime.Now));
+            Shots.Add(new Shot(CurrentClub,start, oldTarget, userPosition,DateTime.Now));
         }
 
         public void holeFinished(bool saveForStatistics)

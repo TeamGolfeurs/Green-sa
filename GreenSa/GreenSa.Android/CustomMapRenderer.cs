@@ -19,6 +19,8 @@ using GreenSa.Models.Tools.GPS_Maps;
 using Greensa.Droid;
 using GreenSa.Droid;
 using System.Collections.ObjectModel;
+using GreenSa.Models.GolfModel;
+using GreenSa.ViewController.PartieGolf.Game;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace Greensa.Droid
@@ -34,10 +36,28 @@ namespace Greensa.Droid
                     UpdatePolyLinePos(false);
                 }catch(Exception e) { }
             });
+
+            MessagingCenter.Subscribe<Partie>(this, "updateTheCircle", (sender) => {
+                try
+                {
+                    updateCircle(sender.CurrentClub.DistanceMoyenneJoueur);
+                }
+                catch (Exception e) { }
+            });
+
+            MessagingCenter.Subscribe<MainGamePage,bool>(this, "updateTheCircleVisbility", (sender,visible) => {
+                try
+                {
+                    setCircleVisible(visible);
+                    
+                }
+                catch (Exception e) { }
+            });
         }
 
         GoogleMap map;
         Polyline polyline;//the current polyline
+        private Circle circle;
 
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
@@ -72,7 +92,7 @@ namespace Greensa.Droid
             this.map = map;
             map.SetOnMarkerDragListener(new markerListenerDrag(this));
            
-            UpdatePolyLinePos(true);
+            //UpdatePolyLinePos(true);
         }
 
 
@@ -135,6 +155,33 @@ namespace Greensa.Droid
                 i++;
             }
             polyline = map.AddPolyline(polylineOptions);
+            
+         
+        }
+
+        public void updateCircle(int radius)
+        {
+            List<Position> r = ((CustomMap)this.Element).RouteCoordinates;
+            if (r.Count != 0)
+            {
+                if (circle != null)
+                {
+                    circle.Remove();
+                    circle.Dispose();
+                }
+                CircleOptions circleOptions = new CircleOptions();
+                circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
+                circleOptions.InvokeRadius(radius);
+                circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(95,0,255,0));
+                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(120, 20, 170, 20));
+
+                circle = map.AddCircle(circleOptions);
+            }
+        }
+
+        public void setCircleVisible(bool visible)
+        {
+            circle.Visible = visible;
         }
       }
 }
