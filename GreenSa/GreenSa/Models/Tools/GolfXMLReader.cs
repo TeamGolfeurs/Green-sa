@@ -45,7 +45,7 @@ namespace GreenSa.Models.Tools
                 var nodeGolfC = golfC.Element("GolfCourse");
                 foreach (var trou in nodeGolfC.Element("Coordinates").Elements("Trou"))//get the list of all holes
                 {
-                    MyPosition pos = new MyPosition(Double.Parse(trou.Element("lat").Value), Double.Parse(trou.Element("lng").Value));
+                    MyPosition pos = new MyPosition(Double.Parse(trou.Element("lat").Value.Replace(',','.'),NumberStyles.Any,CultureInfo.InvariantCulture), Double.Parse(trou.Element("lng").Value.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture));
                     trous.Add(new Hole(pos,int.Parse(trou.Element("par").Value)));//TODO modif
                 }
                 GolfCourse gc = new GolfCourse(nodeGolfC.Element("Name").Value, nodeGolfC.Element("NomGolf").Value, trous);

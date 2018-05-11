@@ -39,7 +39,7 @@ namespace GreenSa.Models.GolfModel
             connection.CreateTable<MyPosition>();
             connection.CreateTable<GolfCourse>();
 
-            gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection,(g)=>true,true));
+            gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection, recursive: true));
             if (gfcs.Count==0)/*!existe dans BD*/
             {
                 gfcs = GolfXMLReader.getListGolfCourseFromXMLFiles();

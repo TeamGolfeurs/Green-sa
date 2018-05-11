@@ -39,7 +39,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
             this.partie = partie;
             map.MoveToRegion(
             MapSpan.FromCenterAndRadius(
-                new Position(48.1116654, -1.6843768), Distance.FromMiles(30)));
+                    new Position(48.1116654, -1.6843768), Distance.FromMiles(30)));
 
             BindingContext = partie;
             partie.CurrentClub = partie.Clubs.First();

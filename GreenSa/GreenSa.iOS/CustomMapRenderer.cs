@@ -10,7 +10,9 @@ using CoreGraphics;
 using CoreLocation;
 using Foundation;
 using GreenSa.iOS;
+using GreenSa.Models.GolfModel;
 using GreenSa.Models.Tools.GPS_Maps;
+using GreenSa.ViewController.PartieGolf.Game;
 using MapKit;
 using ObjCRuntime;
 using UIKit;
@@ -32,6 +34,8 @@ namespace GreenSa.iOS
 
         MKPolylineRenderer polylineRenderer;
         private CustomMap formsMap;
+        private MKCircleRenderer circleRenderer;
+        private MKCircle circleOver;
 
         public CustomMapRenderer( ) : base()
         {
@@ -43,14 +47,70 @@ namespace GreenSa.iOS
                 }
                 catch (Exception e) { }
             });
+
+            MessagingCenter.Subscribe<Partie>(this, "updateTheCircle", (sender) => {
+                try
+                {
+                    updateCircle(sender.CurrentClub.DistanceMoyenneJoueur);
+                }
+                catch (Exception e) { }
+            });
+
+            MessagingCenter.Subscribe<MainGamePage, bool>(this, "updateTheCircleVisbility", (sender, visible) => {
+                try
+                {
+                    setCircleVisible(visible);
+
+                }
+                catch (Exception e) { }
+            });
+        }
+
+        private void setCircleVisible(bool visible)
+        {
+            var nativeMap = Control as MKMapView;
+            nativeMap.OverlayRenderer = GetOverlayRendererCircle;
+            if(!visible)
+                nativeMap.RemoveOverlay(circleOver);
+            else
+                nativeMap.AddOverlay(circleOver);
+        }
+
+        private void updateCircle(int distanceMoyenneJoueur)
+        {
+
+            List<Position> r = ((CustomMap)this.Element).RouteCoordinates;
+            if (r.Count != 0)
+            {
+                var nativeMap = Control as MKMapView;
+                nativeMap.OverlayRenderer = GetOverlayRendererCircle;
+
+                MKCircle mkcircle = null;
+                if (nativeMap.Overlays != null)
+                foreach (IMKOverlay elem in nativeMap.Overlays)
+                    if (elem is MKCircle)
+                    {
+                        mkcircle = elem as MKCircle;
+                        break;
+                    }
+
+                if (mkcircle != null)
+                    nativeMap.RemoveOverlay(mkcircle);
+                 circleOver = MKCircle.Circle(new CLLocationCoordinate2D(r[0].Latitude, r[0].Longitude), distanceMoyenneJoueur);
+                nativeMap.AddOverlay(circleOver);
+            }        
         }
 
         public void UpdatePolyLinePos()
         {
             var nativeMap = Control as MKMapView;
             nativeMap.OverlayRenderer = GetOverlayRenderer;
-            if(nativeMap.Overlays !=null)
-                nativeMap.RemoveOverlays(nativeMap.Overlays);
+
+            if(nativeMap.Overlays!=null)
+            foreach (IMKOverlay elem in nativeMap.Overlays)
+                    if ( !(elem is MKCircle))
+                        nativeMap.RemoveOverlay(elem);
+                    
             CLLocationCoordinate2D[] coords = new CLLocationCoordinate2D[formsMap.RouteCoordinates.Count];
             int index = 0;
             foreach (var position in formsMap.RouteCoordinates)//48.0699815 ; -1.7472885
@@ -59,7 +119,7 @@ namespace GreenSa.iOS
                 index++;
             }
 
-            var routeOverlay = MKPolyline.FromCoordinates(coords);
+            MKPolyline routeOverlay = MKPolyline.FromCoordinates(coords);
             nativeMap.AddOverlay(routeOverlay);
         }
 
@@ -463,6 +523,23 @@ namespace GreenSa.iOS
             //}
 
             return polylineRenderer;
+        }
+
+        MKOverlayRenderer GetOverlayRendererCircle(MKMapView mapView, IMKOverlay overlayWrapper)
+        {
+            //if (polylineRenderer == null && !Equals(overlayWrapper, null))
+            //{
+            var overlay = Runtime.GetNSObject(overlayWrapper.Handle) as IMKOverlay;
+            circleRenderer = new MKCircleRenderer(overlay as MKCircle)
+            {
+                FillColor = UIColor.FromRGBA(130,0,255,0),
+                StrokeColor = UIColor.FromRGBA(150, 20, 170, 20),
+                
+
+            };
+            //}
+
+            return circleRenderer;
         }
     }
 
