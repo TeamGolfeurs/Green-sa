@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 using GreenSa.ViewController.Statistiques;
 using GreenSa.ViewController.Test;
 using GreenSa.ViewController.Statistiques.StatistiquesGolfCourse;
+using GreenSa.ViewController.Option;
 
 namespace GreenSa.ViewController
 {
@@ -64,7 +65,7 @@ namespace GreenSa.ViewController
 
         async private void onOptionsClicked(object sender, EventArgs e)
         {
-            label.Text= "WIIIIIIIIIIII";
+            await Navigation.PushAsync(new ImportGolfCourse());
         }
 
         async private void voirBD(object sender, EventArgs e)

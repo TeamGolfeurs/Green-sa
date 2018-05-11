@@ -58,6 +58,9 @@
     <Compile Include="Models\GolfModel\GestionGolfs.cs" />
     <Compile Include="Models\GolfModel\GolfCourse.cs" />
     <Compile Include="Models\GolfModel\Partie.cs" />
+    <Compile Include="ViewController\Option\ImportGolfCourse.xaml.cs">
+      <DependentUpon>ImportGolfCourse.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewController\PartieGolf\Configuration\ClubSelectionPage.xaml.cs">
       <DependentUpon>ClubSelectionPage.xaml</DependentUpon>
     </Compile>
@@ -281,7 +284,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="ViewController\Option\ImportGolfCourse.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

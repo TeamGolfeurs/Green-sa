@@ -47,7 +47,7 @@ namespace GreenSa.Models.GolfModel
                 //add in the database
                 //addGolfCoursesInDatabase(connection,gfcs);
                 //connection.InsertAll(gfcs);
-                SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection,gfcs,true);
+                SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceAllWithChildren(connection,gfcs,true);
 
 
             }
