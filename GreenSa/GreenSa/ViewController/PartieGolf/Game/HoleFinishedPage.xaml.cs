@@ -28,8 +28,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
             base.OnAppearing();
             item = new ObservableCollection<Tuple<Shot, IEnumerable<Club>>>(partie.Shots.Select(s => new Tuple<Shot, IEnumerable<Club>>(s, partie.Clubs)));
             ListShotPartie.ItemsSource = item;
-            int d = partie.Shots.Count;
-            score.Text = Convert.ToString(d);
+            score.Text = (partie.Shots.Count-partie.getNextHole().Par)+"" ;
         }
 
         private async void validButtonClicked(object sender, EventArgs e)
@@ -50,6 +49,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
             List<Club> l = new List<Club>();
             l.Add(Club.PUTTER);
             item.Add(new Tuple<Shot, IEnumerable<Club>>(s, l));
+            score.Text = (partie.Shots.Count - partie.getNextHole().Par) + "";
+
         }
 
     }

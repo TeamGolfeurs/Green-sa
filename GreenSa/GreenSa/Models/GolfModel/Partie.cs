@@ -56,7 +56,7 @@ namespace GreenSa.Models.GolfModel
            CurrentClub = new Club("Fer3",170);
         }
         /// <summary>
-        /// Retourne le prochain trou si il existe sinon retourne null.
+        /// Retourne le (current) trou si il existe sinon retourne null.
         /// </summary>
         /// <returns>La position du trou.</returns>
         public Hole getNextHole()
@@ -86,7 +86,7 @@ namespace GreenSa.Models.GolfModel
         }
 
         /// <summary>
-        /// Vérifie l'existence d'un prochain trou.
+        /// Vérifie l'existence d'un prochain trou et se decale 
         /// </summary>
         /// <returns></returns>
         public bool hasNextHole()

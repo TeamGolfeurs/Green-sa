@@ -73,7 +73,7 @@
             </StackLayout>
 
             <Label Text="Score du trou" BackgroundColor="Pink" HorizontalOptions="End"></Label>
-            <Label x:Name="score" Text="{Binding Name}" HorizontalOptions="End" Margin="5"></Label>
+            <Label x:Name="score" Text="" HorizontalOptions="End" Margin="5"></Label>
             <Button Text="Passer au trou suivant" Clicked="validButtonClicked"/>
         </StackLayout>
     </ContentPage.Content>

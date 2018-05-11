@@ -51,19 +51,22 @@ namespace GreenSa.ViewController.Option
                 status.Text = "Format de texte non valide";
                 return;
             }
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
 
             try
             {
-                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
                 connection.CreateTable<Hole>();
                 connection.CreateTable<MyPosition>();
                 connection.CreateTable<GolfCourse>();
-                SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceWithChildren(connection, gc, true);
+                connection.BeginTransaction();
+                SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, gc, true);
+                connection.Commit();
                 status.Text = "Parcours bien inséré dans la base de données !";
             }
             catch(Exception ex)
             {
-                status.Text = "Problème dans l'insertion dans la base de données";
+                status.Text = "Problème dans l'insertion dans la base de données (duplication,...)";
+                connection.Rollback();
             }
 
 

@@ -86,6 +86,7 @@ namespace GreenSa.Models.GolfModel
                     }
                     moy = moy / nbFoisJoue;
                     lsHole.Add(new Tuple<Hole, float, int, int>(h, moy, min, max));
+                    lsHole.Reverse();
                 }
                 l.Add(gc, new Tuple<List<Tuple<Hole, float, int, int>>, int>( lsHole,nbFoisJoue));
             }

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GreenSa.ViewController.Option.ImportGolfCourse">
     <ContentPage.Content>
+        <ScrollView >
         <StackLayout Orientation="Vertical">
             <Label Text="Ajout d'un nouveau parcours de golf" FontSize="Large"
                 HorizontalOptions="CenterAndExpand" />
@@ -28,5 +29,6 @@
             <Label Text="" 
             x:Name="format"/>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

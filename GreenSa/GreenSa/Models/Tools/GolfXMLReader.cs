@@ -56,10 +56,10 @@ namespace GreenSa.Models.Tools
                 trous.Add(new Hole(pos, int.Parse(trou.Element("par").Value)));//TODO modif
             }
             GolfCourse gc = new GolfCourse(nodeGolfC.Element("Name").Value, nodeGolfC.Element("NomGolf").Value, trous);
-            foreach (Hole h in trous)
+           /* foreach (Hole h in trous)
             {
                 h.GolfCourse = gc;
-            }
+            }*/
             return gc;
         }
 
