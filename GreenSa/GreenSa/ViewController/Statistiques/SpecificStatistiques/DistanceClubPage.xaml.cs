@@ -43,7 +43,7 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
 
         private void getScores(Func<Club, bool> f)
         {
-            float b3 = 0f;
+            /*float b3 = 0f;
             float b5 = 0f;
             float d = 0f;
             float f3 = 0f;
@@ -56,11 +56,28 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
             float h = 0f;
             float s = 0f;
             float p = 0f;
-
+            */
 
             IEnumerable<Tuple<Club, double>> res = StatistiquesGolf.getAverageDistanceForClubs(f);
 
+            List<Entry> entries = new List<Entry>();
 
+            foreach (Tuple<Club, double> couple in res){
+
+                Entry e = new Entry((float)couple.Item2)
+                {
+                    Label = couple.Item1.Name,
+                    ValueLabel = couple.Item2.ToString() + "m",
+                    Color = SKColor.Parse("#16F50B")
+                };
+                entries.Add(e);
+            }
+
+
+
+
+
+            /*
             foreach (Tuple<Club, double> couple in res)
             {
                 if (couple.Item1.Name.Equals("Bois3")){
@@ -174,8 +191,8 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
                  },
 
             };
-
-            this.chartView.Chart = new PointChart() { Entries = entries };
+            */
+            this.chartView.Chart = new PointChart(){ Entries = entries};
         }
     }
 }
