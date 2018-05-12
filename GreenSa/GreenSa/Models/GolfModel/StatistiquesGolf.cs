@@ -138,7 +138,7 @@ namespace GreenSa.Models.GolfModel
             }
             Dictionary<int, float> res = new Dictionary<int, float>();
 
-            foreach (KeyValuePair<int, float> entry in res)
+            foreach (KeyValuePair<int, float> entry in resTmp)
             {
                 res.Add(entry.Key, entry.Value / counter[entry.Key]);
             }

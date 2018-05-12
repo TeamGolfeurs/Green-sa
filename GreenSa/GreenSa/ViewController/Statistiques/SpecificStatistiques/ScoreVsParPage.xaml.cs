@@ -43,9 +43,9 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
         private void getScores(Func<Club, bool> f)
         {
 
-            float p3= 0f;
-            float p4= 0f;
-            float p5= 0f;
+            //float p3= 0f;
+            //float p4= 0f;
+            //float p5= 0f;
 
             Dictionary<int, float> d = StatistiquesGolf.getScoreForPar();
 
