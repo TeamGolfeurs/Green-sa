@@ -81,7 +81,7 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
             var entries = new[]
              {
 
-                new Entry(eagle)
+                new Entry(albatros)
                  {
                      Label = "Albatros",
                      ValueLabel = albatros.ToString()+"%",

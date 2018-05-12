@@ -49,6 +49,22 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
 
             Dictionary<int, float> d = StatistiquesGolf.getScoreForPar();
 
+            List<Entry> entries = new List<Entry>();
+
+            foreach (KeyValuePair<int, float> k in d){
+
+                Entry e = new Entry(k.Value)
+                {
+                    Label = "PAR"+k.Key.ToString(),
+                    ValueLabel = k.Value.ToString(),
+                    Color = SKColor.Parse("#98FB98")
+                };
+                entries.Add(e);
+            }
+
+
+            /*
+
             foreach(KeyValuePair<int,float> k in d){
                 if (k.Key==3){
                     p3 = k.Value;
@@ -84,7 +100,7 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
                     ValueLabel = p5.ToString(),
                     Color = SKColor.Parse("#98FB98")
                  }
-            };
+            };*/
 
             this.chartView.Chart = new BarChart() { Entries = entries };
 
