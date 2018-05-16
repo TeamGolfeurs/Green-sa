@@ -115,12 +115,12 @@ namespace GreenSa.iOS
                 nativeMap.OverlayRenderer = GetOverlayRendererCircleMax;
 
                 circleOverMax = MKCircle.Circle(new CLLocationCoordinate2D(r[0].Latitude, r[0].Longitude), distanceMoyenneJoueur.Item3);
-                nativeMap.AddOverlay(circleOver);
+                nativeMap.AddOverlay(circleOverMax);
 
-                nativeMap.OverlayRenderer = GetOverlayRendererCircleMax;
+                nativeMap.OverlayRenderer = GetOverlayRendererCircleMin;
 
                 circleOverMin = MKCircle.Circle(new CLLocationCoordinate2D(r[0].Latitude, r[0].Longitude), distanceMoyenneJoueur.Item2);
-                nativeMap.AddOverlay(circleOver);
+                nativeMap.AddOverlay(circleOverMin);
 
             }        
         }
@@ -557,8 +557,8 @@ namespace GreenSa.iOS
             circleRenderer = new MKCircleRenderer(overlay as MKCircle)
             {
                 FillColor = UIColor.FromRGBA(0,0,0,0),
-                StrokeColor = UIColor.FromRGBA(150, 20, 170, 20),
-                
+                StrokeColor = UIColor.FromRGBA(250, 150, 150, 150),
+                LineWidth=5f
 
             };
             //}
@@ -573,9 +573,9 @@ namespace GreenSa.iOS
             var overlay = Runtime.GetNSObject(overlayWrapper.Handle) as IMKOverlay;
             circleRenderer = new MKCircleRenderer(overlay as MKCircle)
             {
-                FillColor = UIColor.FromRGBA(130, 230, 20, 20),
-                StrokeColor = UIColor.FromRGBA(150, 200, 30, 30),
-
+                FillColor = UIColor.Red,
+                StrokeColor = UIColor.FromRGBA(200, 200, 30, 30),
+                Alpha = 0.6f
 
             };
             //}
@@ -591,9 +591,9 @@ namespace GreenSa.iOS
             var overlay = Runtime.GetNSObject(overlayWrapper.Handle) as IMKOverlay;
             circleRenderer = new MKCircleRenderer(overlay as MKCircle)
             {
-                FillColor = UIColor.FromRGBA(130, 0, 255, 0),
-                StrokeColor = UIColor.FromRGBA(150, 20, 170, 20),
-
+                FillColor = UIColor.Green,
+                StrokeColor = UIColor.FromRGBA(230, 20, 170, 20),
+                Alpha=0.5f
 
             };
             //}
