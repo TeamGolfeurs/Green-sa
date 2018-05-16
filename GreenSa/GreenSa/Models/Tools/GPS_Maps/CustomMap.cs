@@ -30,7 +30,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
             {
                 routeCoordinates = value;
                 MessagingCenter.Send<CustomMap>(this, "updateTheMap");
-                MessagingCenter.Send<CustomMap>(this, "updateTheCircle");
+
             }
         }
         public List<CustomPin> CustomPins{
@@ -69,19 +69,19 @@ namespace GreenSa.Models.Tools.GPS_Maps
             {
                 Type = PinType.Place,
                 Position = pos,
-                Label = "Je suis là"
+                Label = "Vous"
             };
             TargetPin = new CustomPin(CustomPin.MOVABLE)
             {
                 Type = PinType.Place,
                 Position = pos,
-                Label = "Je suis là"
+                Label = "Cible"
             };
             HolePin = new CustomPin(CustomPin.HOLE)
             {
                 Type = PinType.Place,
                 Position = pos,
-                Label = "Je suis là"
+                Label = "Trou"
             };
             
         }

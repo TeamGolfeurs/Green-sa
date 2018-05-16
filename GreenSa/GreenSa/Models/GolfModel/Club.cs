@@ -25,7 +25,7 @@ namespace GreenSa.Models.GolfModel
             {
                 IEnumerable<Tuple<Club, double>> listWith1item = StatistiquesGolf.getAverageDistanceForClubs(c => c.Equals(this));
                 if (listWith1item.Count() == 0)
-                    return new Tuple<int, int, int>( DistanceMoyenne, DistanceMoyenne, DistanceMoyenne);
+                    return new Tuple<int, int, int>( DistanceMoyenne, 0, 0);
                Tuple<double, double> minMax = StatistiquesGolf.getMinMaxDistanceForClubs(this);
 
                 return new Tuple<int, int, int>((int)listWith1item.First().Item2, (int)minMax.Item1, (int)minMax.Item2);

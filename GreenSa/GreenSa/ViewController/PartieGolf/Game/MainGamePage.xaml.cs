@@ -85,6 +85,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
                         map.setUserPosition(position);
                         partie.CurrentClub = partie.CurrentClub;//just to update hte circle
 
+
                     }
                     catch (NotAvaibleException e)
                     {
@@ -121,7 +122,6 @@ namespace GreenSa.ViewController.PartieGolf.Game
             MyPosition position = await GpsService.getCurrentPosition();
             localisationState.Text = "";
             mainButton.IsEnabled = true;
-
             return position;
         }
 
@@ -170,6 +170,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
                 partie.addPositionForCurrentHole(start,new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
                 map.setUserPosition(newUserPosition);
                 map.setTargetMovable();
+                partie.updateUICircle();
+
             }
             setNextState();
         }

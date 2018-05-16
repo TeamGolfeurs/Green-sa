@@ -72,6 +72,7 @@ namespace GreenSa.Models.GolfModel
         public void addPositionForCurrentHole(MyPosition start,MyPosition oldTarget, MyPosition userPosition)
         {
             Shots.Add(new Shot(CurrentClub,start, oldTarget, userPosition,DateTime.Now));
+
         }
 
         public void holeFinished(bool saveForStatistics)
@@ -95,6 +96,10 @@ namespace GreenSa.Models.GolfModel
             return itHole.MoveNext();        
         }
 
+        internal void updateUICircle()
+        {
+            MessagingCenter.Send<Partie>(this, "updateTheCircle");
+        }
     }
 
 
