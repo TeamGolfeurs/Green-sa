@@ -31,10 +31,12 @@ namespace GreenSa.ViewController.PartieGolf.Game
          
         private String state;
         private Partie partie;
+        private bool holFini;
 
         public MainGamePage(Partie partie)
         {
             InitializeComponent();
+            holFini = true;
             state = BEGIN_STATE;
             this.partie = partie;
             map.MoveToRegion(
@@ -62,7 +64,10 @@ namespace GreenSa.ViewController.PartieGolf.Game
         async protected override void OnAppearing()
         {
             base.OnAppearing();
+            if (!holFini)
+                return;
 
+            holFini = false;
             if (partie.hasNextHole())
             {
                 Hole nextHole = partie.getNextHole();
@@ -180,6 +185,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
          * **/
         private async void onHoleFinishedButtonClicked(object sender, SelectedItemChangedEventArgs e)
         {
+            holFini = true;
             await Navigation.PushModalAsync(new HoleFinishedPage(partie));
 
         }

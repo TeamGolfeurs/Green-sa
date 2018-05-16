@@ -541,7 +541,7 @@ namespace GreenSa.iOS
                 {
                     FillColor = UIColor.Blue,
                     StrokeColor = UIColor.Red,
-                    LineWidth = 3,
+                    LineWidth = 4f,
                     Alpha = 0.4f
                 };
             //}

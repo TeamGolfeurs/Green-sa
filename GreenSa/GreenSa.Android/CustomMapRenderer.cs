@@ -180,7 +180,8 @@ namespace Greensa.Droid
                 circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
                 circleOptions.InvokeRadius(distanceMoyenneJoueur.Item1);
                 circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(0,0,0,0));
-                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(0, 100, 100, 100));
+                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(190, 100, 100, 100));
+                circleOptions.InvokeStrokeWidth(5f);
 
                 circle = map.AddCircle(circleOptions);
 
@@ -188,8 +189,9 @@ namespace Greensa.Droid
                 circleOptions = new CircleOptions();
                 circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
                 circleOptions.InvokeRadius(distanceMoyenneJoueur.Item3);
-                circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(95, 0, 170, 0));
-                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(120, 20, 220, 20));
+                circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(50, 0, 170, 0));
+                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(190, 40, 220, 40));
+                circleOptions.InvokeStrokeWidth(7f);
 
                 circleMax = map.AddCircle(circleOptions);
 
@@ -198,8 +200,8 @@ namespace Greensa.Droid
                 circleOptions = new CircleOptions();
                 circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
                 circleOptions.InvokeRadius(distanceMoyenneJoueur.Item2);
-                circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(95, 200, 50, 50));
-                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(120, 220, 50, 50));
+                circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(150, 220, 20, 20));
+                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(150, 150, 50, 50));
 
                 circleMin = map.AddCircle(circleOptions);
 

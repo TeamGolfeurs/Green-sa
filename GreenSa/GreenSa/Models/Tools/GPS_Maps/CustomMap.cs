@@ -30,7 +30,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
             {
                 routeCoordinates = value;
                 MessagingCenter.Send<CustomMap>(this, "updateTheMap");
-
+                MessagingCenter.Send<CustomMap>(this, "updateTheCircle");
             }
         }
         public List<CustomPin> CustomPins{
