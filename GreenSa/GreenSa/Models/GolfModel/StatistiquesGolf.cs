@@ -52,6 +52,26 @@ namespace GreenSa.Models.GolfModel
             }
             return res;
         }
+
+        public static Tuple<double, double> getMinMaxDistanceForClubs(Club club)
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            IEnumerable<Shot> shots = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection));
+            shots = shots.Where(s => s.Club.Equals(club));
+            double min = 99999;
+            double max = 0;
+            foreach(Shot s in shots)
+            {
+                if (s.Distance < min)
+                    min = s.Distance;
+                if (s.Distance >max)
+                    max = s.Distance;
+            }
+            return new Tuple<double, double>(min, max);
+        }
+
+
+
         // Terrain, List Tuple<Hole,AverageScore,BestScore,WorstScore>, nbFoisJouée 
         //ordered by nbFoisJouée
         public static Dictionary<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>> getScoreForGolfCourses(Func<GolfCourse, bool> filtre)

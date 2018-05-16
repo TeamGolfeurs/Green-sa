@@ -54,10 +54,12 @@ namespace Greensa.Droid
                 catch (Exception e) { }
             });
         }
-
+        
         GoogleMap map;
         Polyline polyline;//the current polyline
         private Circle circle;
+        private Circle circleMin;
+        private Circle circleMax;
 
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
@@ -159,7 +161,7 @@ namespace Greensa.Droid
          
         }
 
-        public void updateCircle(int radius)
+        public void updateCircle(Tuple<int, int, int> distanceMoyenneJoueur)
         {
             List<Position> r = ((CustomMap)this.Element).RouteCoordinates;
             if (r.Count != 0)
@@ -168,20 +170,47 @@ namespace Greensa.Droid
                 {
                     circle.Remove();
                     circle.Dispose();
+                    circleMin.Remove();
+                    circleMin.Dispose();
+                    circleMax.Remove();
+                    circleMin.Dispose();
                 }
+                //moy
                 CircleOptions circleOptions = new CircleOptions();
                 circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
-                circleOptions.InvokeRadius(radius);
-                circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(95,0,255,0));
-                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(120, 20, 170, 20));
+                circleOptions.InvokeRadius(distanceMoyenneJoueur.Item1);
+                circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(0,0,0,0));
+                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(0, 100, 100, 100));
 
                 circle = map.AddCircle(circleOptions);
+
+                //max
+                circleOptions = new CircleOptions();
+                circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
+                circleOptions.InvokeRadius(distanceMoyenneJoueur.Item3);
+                circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(95, 0, 170, 0));
+                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(120, 20, 220, 20));
+
+                circleMax = map.AddCircle(circleOptions);
+
+
+                //min
+                circleOptions = new CircleOptions();
+                circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
+                circleOptions.InvokeRadius(distanceMoyenneJoueur.Item2);
+                circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(95, 200, 50, 50));
+                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(120, 220, 50, 50));
+
+                circleMin = map.AddCircle(circleOptions);
+
             }
         }
 
         public void setCircleVisible(bool visible)
         {
             circle.Visible = visible;
+            circleMin.Visible = visible;
+            circleMax.Visible = visible;
         }
       }
 }

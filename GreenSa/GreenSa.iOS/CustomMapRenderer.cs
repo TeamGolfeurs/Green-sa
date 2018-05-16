@@ -36,6 +36,8 @@ namespace GreenSa.iOS
         private CustomMap formsMap;
         private MKCircleRenderer circleRenderer;
         private MKCircle circleOver;
+        private MKCircle circleOverMin;
+        private MKCircle circleOverMax;
 
         public CustomMapRenderer( ) : base()
         {
@@ -65,18 +67,30 @@ namespace GreenSa.iOS
                 catch (Exception e) { }
             });
         }
+        
 
         private void setCircleVisible(bool visible)
         {
             var nativeMap = Control as MKMapView;
-            nativeMap.OverlayRenderer = GetOverlayRendererCircle;
-            if(!visible)
+            if (!visible)
+            {
                 nativeMap.RemoveOverlay(circleOver);
+                nativeMap.RemoveOverlay(circleOverMin);
+                nativeMap.RemoveOverlay(circleOverMax);
+
+            }
             else
+            {
+                nativeMap.OverlayRenderer = GetOverlayRendererCircle;
                 nativeMap.AddOverlay(circleOver);
+                nativeMap.OverlayRenderer = GetOverlayRendererCircleMax;
+                nativeMap.AddOverlay(circleOverMax);
+                nativeMap.OverlayRenderer = GetOverlayRendererCircleMin;
+                nativeMap.AddOverlay(circleOverMin);
+            }
         }
 
-        private void updateCircle(int distanceMoyenneJoueur)
+        private void updateCircle(Tuple<int, int, int> distanceMoyenneJoueur)
         {
 
             List<Position> r = ((CustomMap)this.Element).RouteCoordinates;
@@ -85,19 +99,29 @@ namespace GreenSa.iOS
                 var nativeMap = Control as MKMapView;
                 nativeMap.OverlayRenderer = GetOverlayRendererCircle;
 
-                MKCircle mkcircle = null;
+                //MKCircle mkcircle = null;
                 if (nativeMap.Overlays != null)
                 foreach (IMKOverlay elem in nativeMap.Overlays)
                     if (elem is MKCircle)
                     {
-                        mkcircle = elem as MKCircle;
-                        break;
+                        nativeMap.RemoveOverlay(elem as MKCircle);
                     }
 
-                if (mkcircle != null)
-                    nativeMap.RemoveOverlay(mkcircle);
-                 circleOver = MKCircle.Circle(new CLLocationCoordinate2D(r[0].Latitude, r[0].Longitude), distanceMoyenneJoueur);
+                //if (mkcircle != null)
+                   
+                circleOver = MKCircle.Circle(new CLLocationCoordinate2D(r[0].Latitude, r[0].Longitude), distanceMoyenneJoueur.Item1);
                 nativeMap.AddOverlay(circleOver);
+
+                nativeMap.OverlayRenderer = GetOverlayRendererCircleMax;
+
+                circleOverMax = MKCircle.Circle(new CLLocationCoordinate2D(r[0].Latitude, r[0].Longitude), distanceMoyenneJoueur.Item3);
+                nativeMap.AddOverlay(circleOver);
+
+                nativeMap.OverlayRenderer = GetOverlayRendererCircleMax;
+
+                circleOverMin = MKCircle.Circle(new CLLocationCoordinate2D(r[0].Latitude, r[0].Longitude), distanceMoyenneJoueur.Item2);
+                nativeMap.AddOverlay(circleOver);
+
             }        
         }
 
@@ -532,7 +556,7 @@ namespace GreenSa.iOS
             var overlay = Runtime.GetNSObject(overlayWrapper.Handle) as IMKOverlay;
             circleRenderer = new MKCircleRenderer(overlay as MKCircle)
             {
-                FillColor = UIColor.FromRGBA(130,0,255,0),
+                FillColor = UIColor.FromRGBA(0,0,0,0),
                 StrokeColor = UIColor.FromRGBA(150, 20, 170, 20),
                 
 
@@ -541,11 +565,47 @@ namespace GreenSa.iOS
 
             return circleRenderer;
         }
+
+        MKOverlayRenderer GetOverlayRendererCircleMin(MKMapView mapView, IMKOverlay overlayWrapper)
+        {
+            //if (polylineRenderer == null && !Equals(overlayWrapper, null))
+            //{
+            var overlay = Runtime.GetNSObject(overlayWrapper.Handle) as IMKOverlay;
+            circleRenderer = new MKCircleRenderer(overlay as MKCircle)
+            {
+                FillColor = UIColor.FromRGBA(130, 230, 20, 20),
+                StrokeColor = UIColor.FromRGBA(150, 200, 30, 30),
+
+
+            };
+            //}
+
+            return circleRenderer;
+        }
+
+
+        MKOverlayRenderer GetOverlayRendererCircleMax(MKMapView mapView, IMKOverlay overlayWrapper)
+        {
+            //if (polylineRenderer == null && !Equals(overlayWrapper, null))
+            //{
+            var overlay = Runtime.GetNSObject(overlayWrapper.Handle) as IMKOverlay;
+            circleRenderer = new MKCircleRenderer(overlay as MKCircle)
+            {
+                FillColor = UIColor.FromRGBA(130, 0, 255, 0),
+                StrokeColor = UIColor.FromRGBA(150, 20, 170, 20),
+
+
+            };
+            //}
+
+            return circleRenderer;
+        }
+
     }
 
 
 
 
 
-	
+
 }
