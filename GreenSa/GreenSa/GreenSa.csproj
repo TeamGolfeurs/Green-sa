@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -48,6 +48,7 @@
     <Compile Include="Models\Tools\GPS_Maps\CustomMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomPin.cs" />
     <Compile Include="Models\Tools\MyPosition.cs" />
+    <Compile Include="Models\Tools\Services\Class1.cs" />
     <Compile Include="Models\Tools\Services\GpsService.cs" />
     <Compile Include="Models\Tools\Services\NotAvaibleException.cs" />
     <Compile Include="Models\Tools\Services\Service.cs" />
@@ -85,6 +86,9 @@
     </Compile>
     <Compile Include="ViewController\Statistiques\StatistiqueMainTabbedPage.xaml.cs">
       <DependentUpon>StatistiqueMainTabbedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Test\WindService.xaml.cs">
+      <DependentUpon>WindService.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewController\Test\SeeBDContent.xaml.cs">
       <DependentUpon>SeeBDContent.xaml</DependentUpon>
@@ -247,7 +251,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="ViewController\Test\WindService.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Ressources\Clubs\Clubs_Descriptor.xml" />
     <EmbeddedResource Include="Ressources\Clubs\Driver.xml" />
@@ -270,9 +279,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewController\StatistiquesGolfCourse\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.5.0.122203\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.5.0.122203\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

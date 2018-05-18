@@ -74,5 +74,9 @@ namespace GreenSa.ViewController
             await Navigation.PushAsync(new SeeBDContent());
         }
 
+        async private void voirWind(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new WindServicePage());
+        }
     }
 }
