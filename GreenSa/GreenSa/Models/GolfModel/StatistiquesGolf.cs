@@ -165,6 +165,7 @@ namespace GreenSa.Models.GolfModel
 
             return res;
         }
+
         //Hit
         public static float getProportionHit()
         {
@@ -206,7 +207,7 @@ namespace GreenSa.Models.GolfModel
                 used = shots[nbCoupAvantPasserAuGreen].Club;
             }
 
-            int nbCoutNecessairePourHit = (int)3.0 / 5 * par;
+            int nbCoutNecessairePourHit = (int) (3.0 / 5 * par);
 
             return nbCoupAvantPasserAuGreen <= nbCoutNecessairePourHit;
 

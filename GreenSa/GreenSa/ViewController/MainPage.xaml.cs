@@ -65,7 +65,7 @@ namespace GreenSa.ViewController
 
         async private void onOptionsClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ImportGolfCourse());
+            await Navigation.PushAsync(new OptionTabbedPage());
         }
 
         async private void voirBD(object sender, EventArgs e)

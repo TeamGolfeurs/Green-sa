@@ -22,7 +22,7 @@ namespace GreenSa.ViewController.Statistiques
 
         }
 
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             var Page1 = new DistanceClubPage();
             Page1.Title = "Distance Clubs";

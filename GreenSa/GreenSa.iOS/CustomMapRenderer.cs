@@ -550,14 +550,14 @@ namespace GreenSa.iOS
         }
 
         MKOverlayRenderer GetOverlayRendererCircle(MKMapView mapView, IMKOverlay overlayWrapper)
-        {
+        {//MOYENNE
             //if (polylineRenderer == null && !Equals(overlayWrapper, null))
             //{
             var overlay = Runtime.GetNSObject(overlayWrapper.Handle) as IMKOverlay;
             circleRenderer = new MKCircleRenderer(overlay as MKCircle)
             {
                 FillColor = UIColor.FromRGBA(0,0,0,0),
-                StrokeColor = UIColor.FromRGBA(250, 150, 150, 150),
+                StrokeColor = UIColor.FromRGBA(250, 250, 250, 250),
                 LineWidth=5f
 
             };

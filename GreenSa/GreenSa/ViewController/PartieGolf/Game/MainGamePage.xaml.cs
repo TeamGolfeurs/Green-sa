@@ -71,6 +71,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
             if (partie.hasNextHole())
             {
                 Hole nextHole = partie.getNextHole();
+                GestionGolfs.calculAverage(partie.Clubs);
                 map.setHolePosition(nextHole.Position);
                 Title = "Trou " + partie.getIndexHole().Item1 + "/" + partie.getIndexHole().Item2;
 
@@ -87,9 +88,10 @@ namespace GreenSa.ViewController.PartieGolf.Game
 
 
                     }
-                    catch (NotAvaibleException e)
+                    catch (Exception e)
                     {
                         await DisplayAlert("Gps non disponible", "La localisation GPS n'est pas disponible, assurez-vous de l'avoir activé.", "OK");
+                        OnBackButtonPressed();
                     }
                 } while (!success);
                 
@@ -127,8 +129,10 @@ namespace GreenSa.ViewController.PartieGolf.Game
 
         private void updateDistance()
         {
-           distTotal.Text= string.Format("{0:0.0}", map.getDistanceUserHole()) +"m";
-           distSplit.Text = string.Format("{0:0.0}", map.getDistanceUserTarget())  + "m / "+ string.Format("{0:0.0}", map.getDistanceTargetHole())+" m";
+            double dUserTarget = map.getDistanceUserTarget();
+            distTotal.Text= string.Format("{0:0.0}", map.getDistanceUserHole()) +"m";
+           distSplit.Text = string.Format("{0:0.0}", dUserTarget)  + "m / "+ string.Format("{0:0.0}", map.getDistanceTargetHole())+" m";
+            ListClubPartie.SelectedItem = GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs,dUserTarget);
         }
 
         /**
@@ -170,7 +174,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
                 partie.addPositionForCurrentHole(start,new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
                 map.setUserPosition(newUserPosition);
                 map.setTargetMovable();
-                partie.updateUICircle();
+                if(moyenne.IsToggled)
+                    partie.updateUICircle();
 
             }
             setNextState();
@@ -207,6 +212,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
         private void ListClubPartie_SelectedIndexChanged(object sender, EventArgs e)
         {
             partie.CurrentClub =(Club) ListClubPartie.SelectedItem;
+            if (moyenne.IsToggled)
+                partie.updateUICircle();
         }
 
         private void moyenne_Toggled(object sender, ToggledEventArgs e)

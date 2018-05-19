@@ -46,7 +46,7 @@
             </StackLayout>
 
             
-            <local:CustomMap Grid.Row="1" Grid.Column="0" x:Name="map" MapType="Street" WidthRequest="960" HeightRequest="100" VerticalOptions="FillAndExpand" />
+            <local:CustomMap Grid.Row="1" Grid.Column="0" x:Name="map" MapType="Satellite" WidthRequest="960" HeightRequest="100" VerticalOptions="FillAndExpand" />
             <Grid Grid.Row="2" Grid.Column="0"  >
 
                 <Picker 

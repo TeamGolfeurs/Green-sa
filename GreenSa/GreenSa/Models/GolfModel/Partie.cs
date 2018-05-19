@@ -24,7 +24,6 @@ namespace GreenSa.Models.GolfModel
             }
             set{
                 currentClub = value;
-                MessagingCenter.Send<Partie>(this, "updateTheCircle");
             }
         }
         public List<Shot> Shots { get; set; }

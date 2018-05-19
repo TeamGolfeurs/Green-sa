@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace GreenSa.Models.Tools.Services
 {
-    public class WindService : Service
+    public class WindService
     {
         /**
          * Methode allant chercher des infos sur une API web pour retrouver des infos concernant le vent.

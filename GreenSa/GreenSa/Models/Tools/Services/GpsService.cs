@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace GreenSa.Models.Tools.Services
 {
-    class GpsService : Service
+    class GpsService 
     {
         public GpsService()
-        {//STATIC? NOT USE
+        {//STATIC, NOT USE
         }
 
         public static async Task<MyPosition> getCurrentPosition()  
@@ -22,7 +22,6 @@ namespace GreenSa.Models.Tools.Services
             return new MyPosition(position.Latitude, position.Longitude);
         }
 
-          //  throw new NotImplementedException();
         public static bool isAvaible()
         {
           

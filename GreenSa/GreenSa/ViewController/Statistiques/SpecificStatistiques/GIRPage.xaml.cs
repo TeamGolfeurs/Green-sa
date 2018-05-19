@@ -40,8 +40,8 @@ namespace GreenSa.ViewController.Statistiques
         private void getScores(Func<Club, bool> f)
         {
             
-            float hit = StatistiquesGolf.getProportionHit();
-            float missed = 100-hit;
+            int hit = (int)StatistiquesGolf.getProportionHit();
+            int missed = 100-hit;
 
             var entries = new[]
             {

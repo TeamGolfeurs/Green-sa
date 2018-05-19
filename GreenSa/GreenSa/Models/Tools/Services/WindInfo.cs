@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace GreenSa.Models.Tools.Services
 {
-    public class WindInfo : Service
+    public class WindInfo 
     {
 
         //force du vent

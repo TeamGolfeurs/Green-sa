@@ -180,7 +180,7 @@ namespace Greensa.Droid
                 circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
                 circleOptions.InvokeRadius(distanceMoyenneJoueur.Item1);
                 circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(0,0,0,0));
-                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(190, 100, 100, 100));
+                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(240, 250, 250, 250));
                 circleOptions.InvokeStrokeWidth(5f);
 
                 circle = map.AddCircle(circleOptions);
