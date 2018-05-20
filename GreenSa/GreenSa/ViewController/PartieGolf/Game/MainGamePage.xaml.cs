@@ -97,9 +97,11 @@ namespace GreenSa.ViewController.PartieGolf.Game
                 
                 try
                 {
-                    WindInfo windInfo = WindService.getCurrentWindInfo();
+                    WindService service = new WindService();
+                    WindInfo windInfo = await service.getCurrentWindInfo();
                     windImg.Source = windInfo.icon;
                     forceVent.Text = windInfo.strength + " km/h";
+                    await windImg.RotateTo(90 + windInfo.direction);
                 }
                 catch (NotAvaibleException e)
                 {

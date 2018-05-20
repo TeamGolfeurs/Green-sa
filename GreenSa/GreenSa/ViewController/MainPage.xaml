@@ -39,6 +39,11 @@
                     FontSize="Large"
                     Clicked="onStatsGolfsClicked" 
                     />
+                    <Button 
+                    Text="Voir BD"
+                    FontSize="Large"
+                    Clicked="voirBD" 
+                    />
                </StackLayout>
                <StackLayout
                     Grid.Column="3"
@@ -50,16 +55,16 @@
                         Source="{local:EmbeddedImage GreenSa.Ressources.Images.tools.png}" 
                      />
                          <!-- The Event Listener is in the code-behind-->
-                
-                <!--    <Button.Image>
+
+    <!--    <Button.Image>
                             <OnPlatform x:TypeArguments="FileImageSource"
                             iOS="tools.png"
                             Android="tools.png"
                             WinPhone="tools.png"/>
                     </Button.Image> -->
-               </StackLayout>
+    </StackLayout>
 
-            </Grid>
+    </Grid>
 
     </ContentPage.Content>
 </ContentPage>

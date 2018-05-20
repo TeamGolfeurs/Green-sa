@@ -9,17 +9,19 @@ namespace GreenSa.Models.Tools.Services
 {
     public class WindInfo 
     {
-
         //force du vent
-        public int strength;
+        public double strength;
+
+        public double direction;
 
         //le type sera peut-être à changer
         //il s'agit de l'image associé au sens du vent
         public ImageSource icon;
 
-        public WindInfo(int strength, ImageSource icon)
+        public WindInfo(double strength, double direction, ImageSource icon)
         {
             this.strength = strength;
+            this.direction = direction;
             this.icon = icon;
         }
 

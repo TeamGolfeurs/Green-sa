@@ -72,6 +72,5 @@ namespace GreenSa.ViewController
         {
             await Navigation.PushAsync(new SeeBDContent());
         }
-
     }
 }
