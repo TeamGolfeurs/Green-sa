@@ -39,11 +39,11 @@
                     FontSize="Large"
                     Clicked="onStatsGolfsClicked" 
                     />
-                    <Button 
+                 <!--   <Button 
                     Text="Voir BD"
                     FontSize="Large"
                     Clicked="voirBD" 
-                    />
+                    />-->
                </StackLayout>
                <StackLayout
                     Grid.Column="3"

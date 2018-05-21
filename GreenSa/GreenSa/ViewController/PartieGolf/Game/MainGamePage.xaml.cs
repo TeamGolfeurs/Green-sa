@@ -112,7 +112,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
                     });
 
                 }
-                catch (NotAvaibleException e)
+                catch (Exception e)
                 {
                     await DisplayAlert("Vent non disponible", "L'information concernant le vent n'est pas disponible", "OK");
                 }
