@@ -96,10 +96,10 @@ namespace GreenSa.Models.Tools.GPS_Maps
 
         }
 
-        public void setUserPosition(MyPosition pos)
+        public void setUserPosition(MyPosition pos,int nbShot)
         {
             UserPin.Position = new Position(pos.X, pos.Y);
-
+            UserPin.Label = "Vous : Coup " + nbShot;
             TargetPin.Position = calculationNewInterTarget();
             update();
 

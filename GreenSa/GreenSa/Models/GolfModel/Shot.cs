@@ -13,7 +13,7 @@ namespace GreenSa.Models.GolfModel
 
         [ForeignKey(foreignType: typeof(Club))]
         public String ClubId { get; set; }
-        [OneToOne]
+        [OneToOne(CascadeOperations=CascadeOperation.CascadeRead)]
         public Club Club { get; set; }
 
         [ForeignKey(typeof(MyPosition))]

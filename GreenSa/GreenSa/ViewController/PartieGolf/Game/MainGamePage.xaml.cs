@@ -83,7 +83,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
                     {
                         position = await localize();
                         success = true;
-                        map.setUserPosition(position);
+                        map.setUserPosition(position, partie.Shots.Count);
                         partie.CurrentClub = partie.CurrentClub;//just to update hte circle
                         partie.updateUICircle();
 
@@ -196,7 +196,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
                 MyPosition newUserPosition = await localize();
                 MyPosition start = map.getUserPosition();
                 partie.addPositionForCurrentHole(start,new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
-                map.setUserPosition(newUserPosition);
+                map.setUserPosition(newUserPosition,partie.Shots.Count);
                 map.setTargetMovable();
                 if(moyenne.IsToggled)
                     partie.updateUICircle();
@@ -224,7 +224,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
         private async void onRelocalizeAction(object sender, EventArgs e)
         {
             MyPosition newUserPosition = await localize();
-            map.setUserPosition(newUserPosition);
+            map.setUserPosition(newUserPosition, partie.Shots.Count);
         }
         protected override bool OnBackButtonPressed()
         {            

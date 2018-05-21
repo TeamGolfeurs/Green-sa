@@ -15,7 +15,7 @@ namespace GreenSa.Models.GolfModel
         public int Id { get; set; }
         [ForeignKey(typeof(Hole))]
         public string IdHole { get; set; }
-        [OneToOne(CascadeOperations=CascadeOperation.All)]
+        [OneToOne(CascadeOperations=CascadeOperation.CascadeRead)]
         public Hole Hole { get; set; }
         public int Score { get; set; }
         public bool Hit { get; set; }

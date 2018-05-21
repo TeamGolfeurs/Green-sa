@@ -22,6 +22,7 @@ namespace GreenSa.ViewController.Statistiques
         public GIRPage()
         {
             InitializeComponent();
+
         }
         protected override void OnAppearing()
         {
@@ -42,24 +43,27 @@ namespace GreenSa.ViewController.Statistiques
             
             int hit = (int)StatistiquesGolf.getProportionHit();
             int missed = 100-hit;
+            var hitLab = new Entry(hit)
+            {
+                Label = "Hit",
+                ValueLabel = hit.ToString() + "%",
+                Color = SKColor.Parse("#16F50B")
+            };
+            var missedLab = new Entry(missed)
+            {
+                Label = "Missed",
+                ValueLabel = missed.ToString() + "%",
+                Color = SKColor.Parse("#F54B0B")
+
+            };
 
             var entries = new[]
             {
-                new Entry(hit)
-                {
-                    Label = "Hit",
-                    ValueLabel = hit.ToString()+"%",
-                    Color = SKColor.Parse("#16F50B")
-                },
-                new Entry(missed)
-                 {
-                    Label = "Missed",
-                    ValueLabel = missed.ToString()+"%",
-                    Color = SKColor.Parse("#F54B0B")
-                 }
+              hitLab,missedLab
+
             };
 
-            this.chartView.Chart = new DonutChart() { Entries = entries   };
+            this.chartView.Chart = new DonutChart() { Entries = entries  };
 
 
 

@@ -29,9 +29,9 @@ namespace GreenSa.ViewController.PartieGolf.Game
             base.OnAppearing();
         }
 
-        private async void OnGoBackClicked(object sender, SelectedItemChangedEventArgs e)
+        private void OnGoBackClicked(object sender, SelectedItemChangedEventArgs e)
         {
-            Navigation.PopToRootAsync();
+            OnBackButtonPressed();
         }
 
         protected override bool OnBackButtonPressed()

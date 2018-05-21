@@ -41,26 +41,27 @@ namespace GreenSa.ViewController.Statistiques.StatistiquesGolfCourse
 
             //On récupère les Stats du Modele
             Func<GolfCourse, bool> f = (gf => gf.Equals(g));
-            Dictionary<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>> d = StatistiquesGolf.getScoreForGolfCourses(f);
+            Dictionary<GolfCourse, List<Tuple<Hole, float, int, int, int>>> d = StatistiquesGolf.getScoreForGolfCourses(f);
 
             //On parcout tous le dictionnaire
-            foreach (KeyValuePair<GolfCourse, Tuple<List<Tuple<Hole, float, int, int>>, int>> k in d)
+            foreach (KeyValuePair<GolfCourse, List<Tuple<Hole, float, int, int,int>>> k in d)
             {   
                 // Label du nom du golf que l'on ajoute dans le stacklayout au dessus du grid.
                 var la = new Label { Text = k.Key.Name, BackgroundColor = Color.White, FontAttributes = FontAttributes.Bold, HorizontalTextAlignment= TextAlignment.Center,  };
                 layout.Children.Add(la);
 
                 //On récupère la liste des trous du golf
-                Tuple<List<Tuple<Hole, float, int, int>>, int> t = k.Value;
-                List<Tuple<Hole, float, int, int>> list = t.Item1;
+                List<Tuple<Hole, float, int, int,int>> list = k.Value;
                 int nb = 1;
 
                 //Pour chaque trou, on extrait les stats que l'on met dans un label et qu'on ajoute au gridlayout 
-                foreach (Tuple<Hole, float, int, int> t2 in list){
+                foreach (Tuple<Hole, float, int, int,int> t2 in list){
                     var moyvaleur = t2.Item2.ToString();
                     var maxvaleur = t2.Item3.ToString();
                     var minvaleur = t2.Item4.ToString();
-                    if(moyvaleur.Equals("NaN")){
+                    var nbJoue = t2.Item5.ToString();
+
+                    if (moyvaleur.Equals("NaN")){
                         moyvaleur = "N/A";
                     }
                     if (maxvaleur.Equals("99"))
@@ -75,11 +76,13 @@ namespace GreenSa.ViewController.Statistiques.StatistiquesGolfCourse
                     var mo = new Label { Text = moyvaleur, BackgroundColor = Color.White };
                     var ma = new Label { Text = maxvaleur, BackgroundColor = Color.White };
                     var mi = new Label { Text = minvaleur, BackgroundColor = Color.White };
+                    var nbJ = new Label { Text = nbJoue, BackgroundColor = Color.White };
+
                     grid.Children.Add(tr, 0,nb);
                     grid.Children.Add(mo, 1,nb);
                     grid.Children.Add(ma, 2,nb);
                     grid.Children.Add(mi, 3,nb);
-                    grid.Children.Add(new Label { Text = t.Item2.ToString(), BackgroundColor = Color.White }, 4, nb);
+                    grid.Children.Add(nbJ, 4, nb);
 
                     nb++;
                     }
