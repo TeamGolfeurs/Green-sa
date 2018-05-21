@@ -61,15 +61,15 @@ namespace GreenSa.ViewController.Statistiques.StatistiquesGolfCourse
                     var maxvaleur = t2.Item3.ToString();
                     var minvaleur = t2.Item4.ToString();
                     if(moyvaleur.Equals("NaN")){
-                        moyvaleur = "NA";
+                        moyvaleur = "N/A";
                     }
                     if (maxvaleur.Equals("99"))
                     {
-                        maxvaleur = "NA";
+                        maxvaleur = "N/A";
                     }
                     if (minvaleur.Equals("-99"))
                     {
-                        minvaleur = "NA";
+                        minvaleur = "N/A";
                     }
                     var tr = new Label { Text = (nb).ToString(), BackgroundColor = Color.White };
                     var mo = new Label { Text = moyvaleur, BackgroundColor = Color.White };

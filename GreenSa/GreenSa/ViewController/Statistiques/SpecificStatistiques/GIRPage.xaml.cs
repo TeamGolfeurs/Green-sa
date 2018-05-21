@@ -53,13 +53,17 @@ namespace GreenSa.ViewController.Statistiques
                 },
                 new Entry(missed)
                  {
-                     Label = "Missed",
+                    Label = "Missed",
                     ValueLabel = missed.ToString()+"%",
                     Color = SKColor.Parse("#F54B0B")
                  }
             };
 
-            this.chartView.Chart = new DonutChart() { Entries = entries };
+            this.chartView.Chart = new DonutChart() { Entries = entries   };
+
+
+
         }
+
     }
 }

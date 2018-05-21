@@ -60,12 +60,12 @@
                     
                 </Picker>
                 <Button x:Name="mainButton" Text="GO"  Clicked="onMainButtonClicked"    
-                     HorizontalOptions="FillAndExpand"
+                     HorizontalOptions="Center" BackgroundColor="CornflowerBlue"
                     Grid.Column="1"
                     />
-                <Button Text="Trou terminé"   Clicked="onHoleFinishedButtonClicked"
-                         HorizontalOptions="FillAndExpand"
-                    Grid.Column="2"/>
+                <Button Text="Trou terminé"   Clicked="onHoleFinishedButtonClicked" FontSize="Micro"
+                         HorizontalOptions="FillAndExpand"  
+                    Grid.Column="2" BackgroundColor="RosyBrown"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

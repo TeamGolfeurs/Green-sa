@@ -134,7 +134,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
             this.RouteCoordinates = list;
             // });
 
-            this.MoveToRegion(MapSpan.FromCenterAndRadius(TargetPin.Position, Distance.FromMiles(0.45)));
+            this.MoveToRegion(MapSpan.FromCenterAndRadius(TargetPin.Position, Distance.FromMiles(0.12)));
         }
 
 

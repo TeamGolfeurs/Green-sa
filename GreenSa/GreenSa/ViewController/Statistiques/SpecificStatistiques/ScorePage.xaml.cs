@@ -84,48 +84,48 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
                 new Entry(albatros)
                  {
                      Label = "Albatros",
-                     ValueLabel = albatros.ToString()+"%",
+                     ValueLabel = albatros.ToString("n2")+"%",
                     Color = SKColor.Parse("#0BF5A3")
                  },    
                 new Entry(eagle)
                  {
                      Label = "Eagle",
-                    ValueLabel = eagle.ToString()+"%",
+                    ValueLabel = eagle.ToString("n2")+"%",
                     Color = SKColor.Parse("#0BF5A3")
                  },
                 new Entry(birdie)
                  {
                      Label = "Birdie",
-                    ValueLabel = birdie.ToString()+"%",
+                    ValueLabel = birdie.ToString("n2")+"%",
                     Color = SKColor.Parse("#0BF54E")
                  },
                 new Entry(par)
                  {
                      Label = "Par",
-                    ValueLabel = par.ToString()+"%",
+                    ValueLabel = par.ToString("n2")+"%",
                     Color = SKColor.Parse("#44F50B")
                  },
                 new Entry(bogey)
                  {
                      Label = "Bogey",
-                    ValueLabel = bogey.ToString()+"%",
+                    ValueLabel = bogey.ToString("n2")+"%",
                     Color = SKColor.Parse("#C0F50B")
                  },
                 new Entry(dbogey)
                  {
                      Label = "DoubleBogey",
-                    ValueLabel = dbogey.ToString()+"%",
+                    ValueLabel = dbogey.ToString("n2")+"%",
                     Color = SKColor.Parse("#F5A00B")
                  },
                 new Entry(more)
                  {
                      Label = "More",
-                    ValueLabel = more.ToString()+"%",
+                    ValueLabel = more.ToString("n2")+"%",
                     Color = SKColor.Parse("#F5340B")
                  },
             };
 
-            this.chartView.Chart = new BarChart() { Entries = entries };
+            this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize=18, MaxValue=100 };
 
         }
     }
