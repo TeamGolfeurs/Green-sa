@@ -170,11 +170,19 @@ namespace Greensa.Droid
                 {
                     circle.Remove();
                     circle.Dispose();
+                }
+           
+                if (circleMin != null)
+                {
                     circleMin.Remove();
                     circleMin.Dispose();
+                }
+                if (circleMax != null)
+                {
                     circleMax.Remove();
                     circleMin.Dispose();
                 }
+
                 //moy
                 CircleOptions circleOptions = new CircleOptions();
                 circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
@@ -186,24 +194,30 @@ namespace Greensa.Droid
                 circle = map.AddCircle(circleOptions);
 
                 //max
-                circleOptions = new CircleOptions();
-                circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
-                circleOptions.InvokeRadius(distanceMoyenneJoueur.Item3);
-                circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(50, 0, 170, 0));
-                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(190, 40, 220, 40));
-                circleOptions.InvokeStrokeWidth(7f);
+              /*  if(distanceMoyenneJoueur.Item3!=0)
+                {*/
+                    circleOptions = new CircleOptions();
+                    circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
+                    circleOptions.InvokeRadius(distanceMoyenneJoueur.Item3);
+                    circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(50, 0, 170, 0));
+                    circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(190, 40, 220, 40));
+                    circleOptions.InvokeStrokeWidth(7f);
 
-                circleMax = map.AddCircle(circleOptions);
+                    circleMax = map.AddCircle(circleOptions);
+              //  }
 
 
                 //min
-                circleOptions = new CircleOptions();
-                circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
-                circleOptions.InvokeRadius(distanceMoyenneJoueur.Item2);
-                circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(150, 220, 20, 20));
-                circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(150, 150, 50, 50));
+              /*  if (distanceMoyenneJoueur.Item2 != 0)
+                {*/
+                    circleOptions = new CircleOptions();
+                    circleOptions.InvokeCenter(new LatLng(r[0].Latitude, r[0].Longitude));
+                    circleOptions.InvokeRadius(distanceMoyenneJoueur.Item2);
+                    circleOptions.InvokeFillColor(Android.Graphics.Color.Argb(150, 220, 20, 20));
+                    circleOptions.InvokeStrokeColor(Android.Graphics.Color.Argb(150, 150, 50, 50));
 
-                circleMin = map.AddCircle(circleOptions);
+                    circleMin = map.AddCircle(circleOptions);
+              //  }
 
             }
         }

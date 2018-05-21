@@ -149,7 +149,7 @@ namespace GreenSa.Models.GolfModel
                 if (minDiffClub == null)
                 {
                     minDiffClub = clubNotFait;
-                    double distDiff = Math.Abs(dUserTarget - clubNotFait.DistanceMoyenne);
+                    minDiff = Math.Abs(dUserTarget - clubNotFait.DistanceMoyenne);
                 }
                 else
                 {

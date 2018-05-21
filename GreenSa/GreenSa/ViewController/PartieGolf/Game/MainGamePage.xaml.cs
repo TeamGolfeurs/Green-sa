@@ -85,7 +85,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
                         success = true;
                         map.setUserPosition(position);
                         partie.CurrentClub = partie.CurrentClub;//just to update hte circle
-
+                        partie.updateUICircle();
 
                     }
                     catch (Exception e)
