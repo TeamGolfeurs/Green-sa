@@ -43,66 +43,27 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
         private void getScores(Func<Club, bool> f)
         {
 
-            //float p3= 0f;
-            //float p4= 0f;
-            //float p5= 0f;
-
             Dictionary<int, float> d = StatistiquesGolf.getScoreForPar();
 
             List<Entry> entries = new List<Entry>();
 
             foreach (KeyValuePair<int, float> k in d){
 
+                String color = "#F7230C";
+                if(k.Value<0){
+                    color = "#98FB98";
+
+                }
                 Entry e = new Entry(k.Value)
                 {
-                    Label = "PAR"+k.Key.ToString(),
-                    ValueLabel = k.Value.ToString(),
-                    Color = SKColor.Parse("#98FB98")
+                    Label = "PAR" + k.Key.ToString(),
+                    ValueLabel = k.Value.ToString("n2"),
+                    Color = SKColor.Parse(color)
                 };
                 entries.Add(e);
             }
 
-
-            /*
-
-            foreach(KeyValuePair<int,float> k in d){
-                if (k.Key==3){
-                    p3 = k.Value;
-                }
-                if (k.Key == 4)
-                {
-                    p4 = k.Value;
-                }
-                if (k.Key == 5)
-                {
-                    p5 = k.Value;
-                }
-            }
-
-
-            var entries = new[]
-             {
-                 new Entry(p3)
-                 {
-                     Label = "PAR 3",
-                    ValueLabel = p3.ToString(),
-                    Color = SKColor.Parse("#98FB98")
-                 },
-                 new Entry(p4)
-                 {
-                     Label = "PAR 4",
-                    ValueLabel = p4.ToString(),
-                    Color = SKColor.Parse("#98FB98")
-                 },
-                 new Entry(p5)
-                 {
-                     Label = "PAR 5",
-                    ValueLabel = p5.ToString(),
-                    Color = SKColor.Parse("#98FB98")
-                 }
-            };*/
-
-            this.chartView.Chart = new BarChart() { Entries = entries };
+            this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize=25 };
 
         }
     }

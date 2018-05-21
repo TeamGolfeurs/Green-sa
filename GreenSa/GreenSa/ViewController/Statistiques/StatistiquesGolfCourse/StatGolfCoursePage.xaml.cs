@@ -57,11 +57,24 @@ namespace GreenSa.ViewController.Statistiques.StatistiquesGolfCourse
 
                 //Pour chaque trou, on extrait les stats que l'on met dans un label et qu'on ajoute au gridlayout 
                 foreach (Tuple<Hole, float, int, int> t2 in list){
-                    
+                    var moyvaleur = t2.Item2.ToString();
+                    var maxvaleur = t2.Item3.ToString();
+                    var minvaleur = t2.Item4.ToString();
+                    if(moyvaleur.Equals("NaN")){
+                        moyvaleur = "N/A";
+                    }
+                    if (maxvaleur.Equals("99"))
+                    {
+                        maxvaleur = "N/A";
+                    }
+                    if (minvaleur.Equals("-99"))
+                    {
+                        minvaleur = "N/A";
+                    }
                     var tr = new Label { Text = (nb).ToString(), BackgroundColor = Color.White };
-                    var mo = new Label { Text = t2.Item2.ToString(), BackgroundColor = Color.White };
-                    var ma = new Label { Text = t2.Item3.ToString(), BackgroundColor = Color.White };
-                    var mi = new Label { Text = t2.Item4.ToString(), BackgroundColor = Color.White };
+                    var mo = new Label { Text = moyvaleur, BackgroundColor = Color.White };
+                    var ma = new Label { Text = maxvaleur, BackgroundColor = Color.White };
+                    var mi = new Label { Text = minvaleur, BackgroundColor = Color.White };
                     grid.Children.Add(tr, 0,nb);
                     grid.Children.Add(mo, 1,nb);
                     grid.Children.Add(ma, 2,nb);
