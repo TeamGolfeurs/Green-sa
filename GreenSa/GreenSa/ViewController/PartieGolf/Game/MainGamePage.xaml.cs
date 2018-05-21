@@ -94,21 +94,29 @@ namespace GreenSa.ViewController.PartieGolf.Game
                         OnBackButtonPressed();
                     }
                 } while (!success);
-                
+
+                updateDistance();
+
                 try
                 {
                     WindService service = new WindService();
-                    WindInfo windInfo = await service.getCurrentWindInfo();
-                    windImg.Source = windInfo.icon;
-                    forceVent.Text = windInfo.strength + " km/h";
-                    await windImg.RotateTo(90 + windInfo.direction);
+
+                    await Task.Run(async () =>
+                    {
+                        WindInfo windInfo = await service.getCurrentWindInfo(map.getUserPosition());
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            await UpdateWindServiceUI(windInfo);
+                        });
+                        
+                    });
+
                 }
                 catch (NotAvaibleException e)
                 {
                     await DisplayAlert("Vent non disponible", "L'information concernant le vent n'est pas disponible", "OK");
                 }
 
-                updateDistance();
             
             }
             else
@@ -127,6 +135,20 @@ namespace GreenSa.ViewController.PartieGolf.Game
             localisationState.Text = "";
             mainButton.IsEnabled = true;
             return position;
+        }
+
+        public async Task UpdateWindServiceUI(WindInfo windInfo)
+        {
+            try
+            {
+                windImg.Source = windInfo.icon;
+                forceVent.Text = windInfo.strength + " km/h";
+                await windImg.RotateTo(90 + windInfo.direction);
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         private void updateDistance()

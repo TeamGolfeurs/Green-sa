@@ -14,23 +14,21 @@ namespace GreenSa.Models.Tools.Services
 {
     public class WindService
     {
-        public const string latStJacques = "48.067";
-        public const string lonStJacques = "-1.748";
         private const string url = "http://api.openweathermap.org/data/2.5/weather?APPID=";
         private const string appid = "1845b50acc4f9dabca4feb5b3d55fc68";
         private ImageSource img;
         /**
          * Methode allant chercher des infos sur une API web pour retrouver des infos concernant le vent.
-         *
          */
         /*async*/
-        public async Task<WindInfo> getCurrentWindInfo()
+        public async Task<WindInfo> getCurrentWindInfo(MyPosition position)
         {
             if (!isAvaible()) throw new NotAvaibleException();
-            string fullUrl = url + appid + "&lat=" + latStJacques + "&lon=" + lonStJacques;
+            position = await GpsService.getCurrentPosition();
+            string fullUrl = url + appid + "&lat=" + position.X + "&lon=" + position.Y;
 
             img = ImageSource.FromResource("GreenSa.Ressources.Images.left-arrow.png");
-            
+                   
             return await FetchData(fullUrl);
         }
 
