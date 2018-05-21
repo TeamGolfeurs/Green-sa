@@ -13,10 +13,11 @@ namespace GreenSa.ViewController.PartieGolf.Game
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GameFinishedPage : ContentPage
     {
+        private Partie partie;
         public GameFinishedPage(Partie partie)
         {
-
             InitializeComponent();
+            this.partie = partie;
         }
 
         /**
@@ -25,17 +26,18 @@ namespace GreenSa.ViewController.PartieGolf.Game
        * */
         protected override void OnAppearing()
         {
-
             base.OnAppearing();
         }
 
-        /* Méthode qui s'execute au click sur le bouton valider.
-         * met à jour la partie (ou non si c'est bind)
-         * Méthode qui appelle la méthode holeFinished de partie qui se chargera de l'enregistrer pour les stats
-         * **/
-        private async void onValidClicked(object sender, SelectedItemChangedEventArgs e)
+        private async void OnGoBackClicked(object sender, SelectedItemChangedEventArgs e)
         {
+            Navigation.PopToRootAsync();
+        }
 
+        protected override bool OnBackButtonPressed()
+        {
+            Navigation.PopToRootAsync();
+            return true;
         }
     }
 }
