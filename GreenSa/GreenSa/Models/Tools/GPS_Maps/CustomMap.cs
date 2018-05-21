@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GreenSa.Models.GolfModel;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -105,10 +106,10 @@ namespace GreenSa.Models.Tools.GPS_Maps
         }
 
 
-        public void setHolePosition(MyPosition pos)
+        public void setHolePosition(Hole hole)
         {
-            HolePin.Position = new Position(pos.X, pos.Y);
-
+            HolePin.Position = new Position(hole.Position.X, hole.Position.Y);
+            HolePin.Label = "Par "+hole.Par;
         }
 
         public Position calculationNewInterTarget()

@@ -51,6 +51,7 @@
 
                 <Picker 
                     Title="Club"
+                   
                     x:Name="ListClubPartie"
                     ItemDisplayBinding="{Binding Name}"
                     ItemsSource="{Binding Clubs}"
@@ -60,7 +61,7 @@
                     
                 </Picker>
                 <Button x:Name="mainButton" Text="GO"  Clicked="onMainButtonClicked"    
-                     HorizontalOptions="Center" BackgroundColor="CornflowerBlue"
+                     HorizontalOptions="Center" 
                     Grid.Column="1"
                     />
                 <Button Text="Trou terminé"   Clicked="onHoleFinishedButtonClicked" FontSize="Micro"

@@ -72,7 +72,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
             {
                 Hole nextHole = partie.getNextHole();
                 GestionGolfs.calculAverage(partie.Clubs);
-                map.setHolePosition(nextHole.Position);
+                map.setHolePosition(nextHole);
                 Title = "Trou " + partie.getIndexHole().Item1 + "/" + partie.getIndexHole().Item2;
 
                 MyPosition position = new MyPosition(0, 0) ;
