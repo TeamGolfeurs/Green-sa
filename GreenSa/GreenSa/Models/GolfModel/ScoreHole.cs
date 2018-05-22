@@ -11,26 +11,28 @@ namespace GreenSa.Models.GolfModel
 {
     public class ScoreHole
     {
-        [PrimaryKey,AutoIncrement]
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         [ForeignKey(typeof(Hole))]
         public string IdHole { get; set; }
-        [OneToOne(CascadeOperations=CascadeOperation.CascadeRead)]
+        [OneToOne(CascadeOperations = CascadeOperation.CascadeRead)]
         public Hole Hole { get; set; }
         public int Score { get; set; }
         public bool Hit { get; set; }
         public DateTime Date { get; set; }
+        public int NombrePutt{get;set ;}
         public ScoreHole()
         {
 
         }
 
-        public ScoreHole(Hole hole, int score,bool hit,DateTime date)
+        public ScoreHole(Hole hole, int score,bool hit,int nbPutt,DateTime date)
         {
             this.Hole = hole;
             this.Score = score;
             this.Hit = hit;
             Date = date;
+            NombrePutt = nbPutt;
         }
 
         public override string ToString()

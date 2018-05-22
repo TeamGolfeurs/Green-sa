@@ -74,9 +74,9 @@ namespace GreenSa.Models.GolfModel
 
         // Terrain, List Tuple<Hole,AverageScore,BestScore,WorstScore>, nbFoisJouée 
         //ordered by nbFoisJouée
-        public static Dictionary<GolfCourse, List<Tuple<Hole, float, int, int,int>>> getScoreForGolfCourses(Func<GolfCourse, bool> filtre)
+        public static Dictionary<GolfCourse, List<Tuple<Hole, float, int, int,float,int>>> getScoreForGolfCourses(Func<GolfCourse, bool> filtre)
         {
-            Dictionary<GolfCourse, List<Tuple<Hole, float, int, int,int>>> l = new Dictionary<GolfCourse, List<Tuple<Hole, float, int, int,int>>>();
+            Dictionary<GolfCourse, List<Tuple<Hole, float, int, int,float,int>>> l = new Dictionary<GolfCourse, List<Tuple<Hole, float, int, int,float,int>>>();
             // l.Add(new Tuple<GolfCourse, int, int, int, int> (new GolfCourse("StJacques9trousEN DUR","StJac",new List<MyPosition>()), 4,2,1,2));
             //l.Add(new Tuple<GolfCourse, int, int, int, int>(new GolfCourse("StJacques9trous EN DUR", "StJac", new List<MyPosition>()), 8, 5, 1, 2));
 
@@ -87,7 +87,7 @@ namespace GreenSa.Models.GolfModel
             gfcs=gfcs.Where((gf) => filtre(gf));
             foreach (GolfCourse gc in gfcs)
             {
-                List<Tuple<Hole, float, int, int,int>> lsHole = new List<Tuple<Hole, float, int, int,int>>();
+                List<Tuple<Hole, float, int, int,float,int>> lsHole = new List<Tuple<Hole, float, int, int,float,int>>();
 
                 int nbFoisJoue = 0;
                 IEnumerable<ScoreHole> scores = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection, recursive: true);
@@ -95,6 +95,7 @@ namespace GreenSa.Models.GolfModel
                 foreach (Hole h in gc.Holes)
                 {
                     float moy = 0;
+                    float moyPutt = 0;
                     int min = 99;
                     int max = -99;
                     IEnumerable<ScoreHole> scoresTmp = scores.Where((ScoreHole gf) => gf.Hole.Equals(h));
@@ -102,11 +103,13 @@ namespace GreenSa.Models.GolfModel
                     foreach (ScoreHole sh in scoresTmp)
                     {
                         moy += sh.Score;
+                        moyPutt += sh.NombrePutt;
                         min = sh.Score < min ? sh.Score : min;
                         max = sh.Score > max ? sh.Score : max;
                     }
                     moy = moy / nbFoisJoue;
-                    lsHole.Add(new Tuple<Hole, float, int, int,int>(h, moy, min, max,nbFoisJoue));
+                    moyPutt = moyPutt / nbFoisJoue;
+                    lsHole.Add(new Tuple<Hole, float, int, int,float,int>(h, moy, min, max,moyPutt,nbFoisJoue));
                 }
 
                 l.Add(gc, lsHole);
@@ -193,10 +196,22 @@ namespace GreenSa.Models.GolfModel
             //connection.InsertAll(shots);
             connection.CreateTable<ScoreHole>();
 
-            ScoreHole h = new ScoreHole(hole, shots.Count-hole.Par, isHit(shots, hole.Par),DateTime.Now);
+            ScoreHole h = new ScoreHole(hole, shots.Count-hole.Par, isHit(shots, hole.Par),nbCoupPutt(shots),DateTime.Now);
             SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, h, false);
             //connection.Insert(h);
 
+        }
+
+        private static int nbCoupPutt(List<Shot> shots)
+        {
+            int nbCoupAvantPasserAuGreen = 0;
+            Club used = shots[0].Club;
+            while ((!used.Equals(Club.PUTTER)) && nbCoupAvantPasserAuGreen < shots.Count - 1)//2 <4-1, 3 =4-1
+            {
+                nbCoupAvantPasserAuGreen++;
+                used = shots[nbCoupAvantPasserAuGreen].Club;
+            }
+            return shots.Count - nbCoupAvantPasserAuGreen;
         }
 
         private static bool isHit(List<Shot> shots, int par)
