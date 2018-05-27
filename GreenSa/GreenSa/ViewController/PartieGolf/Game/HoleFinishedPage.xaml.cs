@@ -21,6 +21,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
         {
             InitializeComponent();
             this.partie = partie;
+
         }
 
         protected override void OnAppearing()
@@ -33,13 +34,19 @@ namespace GreenSa.ViewController.PartieGolf.Game
 
         private async void validButtonClicked(object sender, EventArgs e)
         {
+          
             if (partie.Shots.Count == 0)
             {
                 await DisplayAlert("0 coups rentrés", "Impossible de valider avec aucun shot", "OK");
                 return;
             }
+            MessagingCenter.Send<HoleFinishedPage, bool>(this, "ReallyFinit", true);
+            validNext.IsEnabled = false;
+            validNext.Text = "En cours";
             partie.holeFinished(save.IsToggled);
             await Navigation.PopModalAsync();
+            validNext.IsEnabled = true;
+            validNext.Text = "Valid";
         }
 
         private void AddShotButtonClicked(object sender, EventArgs e)
@@ -51,6 +58,12 @@ namespace GreenSa.ViewController.PartieGolf.Game
             item.Add(new Tuple<Shot, IEnumerable<Club>>(s, l));
             score.Text = (partie.Shots.Count - partie.getNextHole().Par) + "";
 
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            MessagingCenter.Send<HoleFinishedPage, bool>(this, "ReallyFinit",false);
+            return base.OnBackButtonPressed();
         }
 
     }

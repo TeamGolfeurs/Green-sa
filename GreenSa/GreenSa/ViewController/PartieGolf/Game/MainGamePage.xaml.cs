@@ -51,10 +51,14 @@ namespace GreenSa.ViewController.PartieGolf.Game
             MessagingCenter.Subscribe<CustomPin>(this,CustomPin.UPDATEDMESSAGE, (sender) => {
                 updateDistance();
             });
-           /* if (Navigation.NavigationStack.Count == 3)
-            {*/
-             /*   Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 1]);
-                Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 1]);*/
+
+            MessagingCenter.Subscribe<HoleFinishedPage,bool>(this, "ReallyFinit", (sender,val) => {
+                holFini = val;
+            });
+            /* if (Navigation.NavigationStack.Count == 3)
+             {*/
+            /*   Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 1]);
+               Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 1]);*/
             //}
         }
         /**
@@ -71,7 +75,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
             if (partie.hasNextHole())
             {
                 Hole nextHole = partie.getNextHole();
-                GestionGolfs.calculAverage(partie.Clubs);
+                GestionGolfs.calculAverageAsync(partie.Clubs);
                 map.setHolePosition(nextHole);
                 Title = "Trou " + partie.getIndexHole().Item1 + "/" + partie.getIndexHole().Item2;
 
@@ -131,9 +135,12 @@ namespace GreenSa.ViewController.PartieGolf.Game
         {
             localisationState.Text = "Localisation en cours...";
             mainButton.IsEnabled = false;
+            trouTerm.IsEnabled = false;
             MyPosition position = await GpsService.getCurrentPosition();
             localisationState.Text = "";
             mainButton.IsEnabled = true;
+            trouTerm.IsEnabled = true;
+
             return position;
         }
 
@@ -216,9 +223,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
          * **/
         private async void onHoleFinishedButtonClicked(object sender, SelectedItemChangedEventArgs e)
         {
-            holFini = true;
-            await Navigation.PushModalAsync(new HoleFinishedPage(partie));
-
+            HoleFinishedPage p = new HoleFinishedPage(partie);
+            await Navigation.PushModalAsync(p);
         }
 
         private async void onRelocalizeAction(object sender, EventArgs e)

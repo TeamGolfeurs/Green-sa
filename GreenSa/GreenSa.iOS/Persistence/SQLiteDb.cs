@@ -27,7 +27,14 @@ namespace GreenSa.iOS.Persistence
             var connection = new SQLiteConnection(path);
             return connection;
         }
-        
+
+        public SQLiteAsyncConnection GetConnectionAsync()
+        {
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var path = Path.Combine(documentsPath, "MySQLite.db3");
+            var connection = new SQLiteAsyncConnection(path);
+            return connection;
+        }
     }
 }
 

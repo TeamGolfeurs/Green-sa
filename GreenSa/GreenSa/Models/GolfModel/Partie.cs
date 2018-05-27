@@ -22,18 +22,19 @@ namespace GreenSa.Models.GolfModel
             {
                 return currentClub;
             }
-            set{
+            set {
                 currentClub = value;
             }
         }
         public List<Shot> Shots { get; set; }
-        public List<Club> Clubs { get ; set; }
+        public List<Club> Clubs { get; set; }
         private List<Hole>.Enumerator itHole;
+        public ScorePartie ScoreOfThisPartie { get; set; }
 
         public GolfCourse GolfCourse {
             get
             {
-               return  golfCourse;
+                return golfCourse;
             }
             set {
                 golfCourse = value;
@@ -48,11 +49,12 @@ namespace GreenSa.Models.GolfModel
             CurrentClub = club;
         }
 
-      
+
         public Partie()
         {
             Shots = new List<Shot>();
-           CurrentClub = new Club("Fer3",170);
+            CurrentClub = new Club("Fer3", 170);
+            ScoreOfThisPartie = new ScorePartie();
         }
         /// <summary>
         /// Retourne le (current) trou si il existe sinon retourne null.
@@ -63,14 +65,14 @@ namespace GreenSa.Models.GolfModel
             return itHole.Current;
         }
         //index,nbTotal
-        public Tuple<int,int> getIndexHole()
+        public Tuple<int, int> getIndexHole()
         {
-            return new Tuple<int,int>(golfCourse.Holes.IndexOf( itHole.Current)+1,golfCourse.Holes.Count);
+            return new Tuple<int, int>(golfCourse.Holes.IndexOf(itHole.Current) + 1, golfCourse.Holes.Count);
         }
 
-        public void addPositionForCurrentHole(MyPosition start,MyPosition oldTarget, MyPosition userPosition)
+        public void addPositionForCurrentHole(MyPosition start, MyPosition oldTarget, MyPosition userPosition)
         {
-            Shots.Add(new Shot(CurrentClub,start, oldTarget, userPosition,DateTime.Now));
+            Shots.Add(new Shot(CurrentClub, start, oldTarget, userPosition, DateTime.Now));
 
         }
 
@@ -78,18 +80,28 @@ namespace GreenSa.Models.GolfModel
         {
             if (saveForStatistics)
             {
-                StatistiquesGolf.saveForStats(Shots,itHole.Current);
+                ScoreHole sh = StatistiquesGolf.saveForStats(Shots, itHole.Current);
+                ScoreOfThisPartie.add(sh);
                 Shots.Clear();
-                
             }
 
         }
 
-        /// <summary>
-        /// Vérifie l'existence d'un prochain trou et se decale 
-        /// </summary>
-        /// <returns></returns>
-        public bool hasNextHole()
+        public async Task gameFinished(bool saveForStatistics)
+        {
+            if (saveForStatistics)
+            {
+                ScoreOfThisPartie.DateFin = DateTime.Now;
+                await StatistiquesGolf.saveGameForStats(ScoreOfThisPartie);
+            }
+        }
+
+
+    /// <summary>
+    /// Vérifie l'existence d'un prochain trou et se decale 
+    /// </summary>
+    /// <returns></returns>
+    public bool hasNextHole()
         {
 
             return itHole.MoveNext();        

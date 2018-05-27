@@ -36,9 +36,9 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
         * Méthode déclenchée à l'application du filtre
         * Appel a la classe StatstiquesGolf avec un filtre
         * */
-        async private void onFilterApplied(object sender, EventArgs e)
+         private void onFilterApplied(object sender, EventArgs e)
         {
-            getScores(c => true);
+             getScores(c => true);
         }
 
         private void getScores(Func<Club, bool> f)
@@ -55,7 +55,7 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
 
             foreach(KeyValuePair<Hole.ScorePossible, float> k in d){
                 if (k.Key.Equals(Hole.ScorePossible.ALBATROS)){
-                    albatros = k.Value;
+                    albatros =  k.Value ;
                 }
                 if (k.Key.Equals(Hole.ScorePossible.BIRDIE)){
                     birdie = k.Value;
@@ -84,48 +84,48 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
                 new Entry(albatros)
                  {
                      Label = "Albatros",
-                     ValueLabel = albatros.ToString("n2")+"%",
+                     ValueLabel =float.IsNaN(albatros)?"N/A":(albatros.ToString("n2")   +"%"),
                     Color = SKColor.Parse("#0BF5A3")
                  },    
                 new Entry(eagle)
                  {
                      Label = "Eagle",
-                    ValueLabel = eagle.ToString("n2")+"%",
+                    ValueLabel =float.IsNaN(eagle)?"N/A": (eagle.ToString("n2")+"%"),
                     Color = SKColor.Parse("#0BF5A3")
                  },
                 new Entry(birdie)
                  {
                      Label = "Birdie",
-                    ValueLabel = birdie.ToString("n2")+"%",
+                    ValueLabel = float.IsNaN(birdie)?"N/A":(birdie.ToString("n2")+"%"),
                     Color = SKColor.Parse("#0BF54E")
                  },
                 new Entry(par)
                  {
                      Label = "Par",
-                    ValueLabel = par.ToString("n2")+"%",
+                    ValueLabel = float.IsNaN(par)?"N/A":(par.ToString("n2")+"%"),
                     Color = SKColor.Parse("#44F50B")
                  },
                 new Entry(bogey)
                  {
                      Label = "Bogey",
-                    ValueLabel = bogey.ToString("n2")+"%",
+                    ValueLabel = float.IsNaN(bogey)?"N/A":(bogey.ToString("n2")+"%"),
                     Color = SKColor.Parse("#C0F50B")
                  },
                 new Entry(dbogey)
                  {
                      Label = "DoubleBogey",
-                    ValueLabel = dbogey.ToString("n2")+"%",
+                    ValueLabel = float.IsNaN(dbogey)?"N/A":(dbogey.ToString("n2")+"%"),
                     Color = SKColor.Parse("#F5A00B")
                  },
                 new Entry(more)
                  {
                      Label = "More",
-                    ValueLabel = more.ToString("n2")+"%",
+                    ValueLabel = float.IsNaN(more)?"N/A":(more.ToString("n2")+"%"),
                     Color = SKColor.Parse("#F5340B")
                  },
             };
 
-            this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize=18, MaxValue=100 };
+            this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize=22, MaxValue=100 };
 
         }
     }

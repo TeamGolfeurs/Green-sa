@@ -22,10 +22,8 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
 
         public ClubSelectionPage(Partie partie)
         {
-
             InitializeComponent();
             p = partie;
-            
         }
 
         /**
@@ -33,16 +31,11 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
        * Demande à la classe GestionGolf la liste des clubs
        * et met à jour la listView
        * */
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
-            Func<Club, bool> f = (c => true);
-            //get the list from gestionGolf
-            /*if (listviewclub.ItemsSource != null)
-                Navigation.PopToRootAsync();*/
-           
-
-            listviewclub.ItemsSource = GestionGolfs.getListClubs(f);
             base.OnAppearing();
+            Func<Club, bool> f = (c => true);
+            listviewclub.ItemsSource = await GestionGolfs.getListClubsAsync(f);
         }
 
         /*
@@ -51,6 +44,9 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          * */
         private async void onValidClubSelection(object sender, SelectedItemChangedEventArgs e)
         {
+
+            Btn.IsEnabled = false;
+            Btn.Text = "En cours...";
             List<Club> clubselected = new List<Club>();
             foreach (Club c in listviewclub.ItemsSource){
                 if(c.selected){
@@ -63,7 +59,9 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
                 return;
             }
             p.Clubs = clubselected;
-            await Navigation.PushAsync(new Game.MainGamePage(p));
+            await Navigation.PushAsync(new Game.MainGamePage(p),false);
+            Btn.IsEnabled = true;
+            Btn.Text = "Valider";
         }
     }
 }

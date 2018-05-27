@@ -11,6 +11,7 @@ using GreenSa.ViewController.Statistiques;
 using GreenSa.ViewController.Test;
 using GreenSa.ViewController.Statistiques.StatistiquesGolfCourse;
 using GreenSa.ViewController.Option;
+using GreenSa.ViewController.Statistiques.Partie;
 
 namespace GreenSa.ViewController
 {
@@ -67,6 +68,11 @@ namespace GreenSa.ViewController
         {
             await Navigation.PushAsync(new OptionTabbedPage());
         }
+        async private void onMesPartiesClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ViewPartieListPage());
+        }
+        
 
         async private void voirBD(object sender, EventArgs e)
         {

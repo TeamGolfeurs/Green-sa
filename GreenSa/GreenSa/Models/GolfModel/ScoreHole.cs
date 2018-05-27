@@ -21,6 +21,11 @@ namespace GreenSa.Models.GolfModel
         public bool Hit { get; set; }
         public DateTime Date { get; set; }
         public int NombrePutt{get;set ;}
+
+
+        [ForeignKey(typeof(ScorePartie))]
+        public int idScorePartie { get; set; }
+
         public ScoreHole()
         {
 
