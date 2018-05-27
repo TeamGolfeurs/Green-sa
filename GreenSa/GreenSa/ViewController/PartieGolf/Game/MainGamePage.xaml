@@ -65,7 +65,7 @@
                     Grid.Column="1"
                     />
                 <Button Text="Trou terminé"   Clicked="onHoleFinishedButtonClicked" FontSize="Micro"
-                         HorizontalOptions="FillAndExpand"  
+                         HorizontalOptions="FillAndExpand"  x:Name="trouTerm"
                     Grid.Column="2" BackgroundColor="RosyBrown"/>
             </Grid>
         </Grid>

@@ -25,23 +25,22 @@ namespace GreenSa.Models.GolfModel
 * Donne une liste de golf en fonction d'un filtre
 * le fitre peut être null, dans ce cas tous les golfs seront récupérés.
 * */
-        //NOT IMPLEMENTED YE
-        public static  List<GolfCourse> getListGolfs(Func<GolfCourse, bool> filtre)
+        public static async Task<List<GolfCourse>> getListGolfsAsync(Func<GolfCourse, bool> filtre)
         {
             if (filtre == null)
                 filtre = x => true;
-            SQLite.SQLiteConnection connection =  DependencyService.Get<ISQLiteDb>().GetConnection();          
+            SQLite.SQLiteAsyncConnection connection =  DependencyService.Get<ISQLiteDb>().GetConnectionAsync();          
             
             //récup avec filtre
             //utilise SQLite
             //si la table n'existe pas encore on parse les fichiers XML (/Ressources) et on insert
-            List<GolfCourse> gfcs = new List<GolfCourse>();
-            connection.CreateTable<Hole>();
+             
+            await connection.CreateTableAsync<Hole>();
 
-            connection.CreateTable<MyPosition>();
-            connection.CreateTable<GolfCourse>();
+            await connection.CreateTableAsync <MyPosition>();
+            await connection.CreateTableAsync<GolfCourse>();
 
-            gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection, recursive: true));
+            List<GolfCourse> gfcs = (await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<GolfCourse>(connection, recursive: true));
             if (gfcs.Count==0)/*!existe dans BD*/
             {
                 gfcs = GolfXMLReader.getListGolfCourseFromXMLFiles();
@@ -49,7 +48,7 @@ namespace GreenSa.Models.GolfModel
                 //add in the database
                 //addGolfCoursesInDatabase(connection,gfcs);
                 //connection.InsertAll(gfcs);
-                SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceAllWithChildren(connection,gfcs,true);
+                await SQLiteNetExtensionsAsync.Extensions.WriteOperations.InsertOrReplaceAllWithChildrenAsync(connection,gfcs,true);
 
 
             }
@@ -66,7 +65,7 @@ namespace GreenSa.Models.GolfModel
          * le fitre peut être null, dans ce cas tous les golfs seront récupérés.
          * */
         //NOT IMPLEMENTED YET
-        public static List<Club> getListClubs(Func<Club, bool> filtre)
+        public static async Task<List<Club>> getListClubsAsync(Func<Club, bool> filtre)
         {
             if (filtre == null)
                 filtre = x => true;
@@ -76,15 +75,15 @@ namespace GreenSa.Models.GolfModel
             //si la table n'existe pas encore on parse les fichiers XML et on insert
 
 
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
 
             //récup avec filtre
             //utilise SQLite
             //si la table n'existe pas encore on parse les fichiers XML (/Ressources) et on insert
             List<Club> clubs = new List<Club>();
-            connection.CreateTable<Club>();
+            await connection.CreateTableAsync<Club>();
 
-            clubs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Club>(connection));
+            clubs = (await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<Club>(connection));
             if (clubs.Count == 0)/*!existe dans BD*/
             {
                 clubs = GolfXMLReader.getListClubFromXMLFiles();
@@ -93,14 +92,14 @@ namespace GreenSa.Models.GolfModel
                 //addGolfCoursesInDatabase(connection,gfcs);
                 //connection.InsertAll(gfcs);
                 //SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, clubs, recursive: true);
-                connection.InsertAll(clubs);
+                await connection.InsertAllAsync(clubs);
 
             }
             return clubs;
         }
-        public static void calculAverage(IEnumerable<Club> clubs)
+        public static  void calculAverageAsync(IEnumerable<Club> clubs)
         {
-             listAverage = StatistiquesGolf.getAverageDistanceForClubs(c => clubs.Contains(c));
+             listAverage = StatistiquesGolf.getAverageDistanceForClubsAsync(c => clubs.Contains(c));
         }
 
         public static Club giveMeTheBestClubForThatDistance(List<Club> clubs, double dUserTarget)

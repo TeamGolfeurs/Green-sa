@@ -24,11 +24,11 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
         {
             InitializeComponent();
         }
-        protected override void OnAppearing()
+        protected override  void OnAppearing()
         {
             
             base.OnAppearing();
-            getScores(c => true);
+             getScoresAsync(c => true);
            
 
         }
@@ -38,13 +38,13 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
         * */
         async private void onFilterApplied(object sender, EventArgs e)
         {
-            getScores(c=>true);
+             getScoresAsync(c=>true);
         }
 
-        private void getScores(Func<Club, bool> f)
+        private void getScoresAsync(Func<Club, bool> f)
         {
 
-            IEnumerable<Tuple<Club, double>> res = StatistiquesGolf.getAverageDistanceForClubs(f);
+            IEnumerable<Tuple<Club, double>> res = StatistiquesGolf.getAverageDistanceForClubsAsync(f);
 
             List<Entry> entries = new List<Entry>();
 
@@ -59,7 +59,7 @@ namespace GreenSa.ViewController.Statistiques.SpecificStatistiques
                 entries.Add(e);
             }
 
-            this.chartView.Chart = new PointChart(){ Entries = entries, LabelTextSize=25};
+            this.chartView.Chart = new PointChart(){ Entries = entries, LabelTextSize=29};
         }
     }
 }

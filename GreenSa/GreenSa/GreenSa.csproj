@@ -41,6 +41,7 @@
     </Compile>
     <Compile Include="MarkupExtension\EmbeddedImage.cs" />
     <Compile Include="Models\GolfModel\Club.cs" />
+    <Compile Include="Models\GolfModel\ScorePartie.cs" />
     <Compile Include="Models\GolfModel\ScoreHole.cs" />
     <Compile Include="Models\GolfModel\Shot.cs" />
     <Compile Include="Models\GolfModel\StatistiquesGolf.cs" />
@@ -87,6 +88,12 @@
     </Compile>
     <Compile Include="ViewController\PartieGolf\Game\MainGamePage.xaml.cs">
       <DependentUpon>MainGamePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Statistiques\Partie\DetailsPartiePage.xaml.cs">
+      <DependentUpon>DetailsPartiePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Statistiques\Partie\ViewPartieListPage.xaml.cs">
+      <DependentUpon>ViewPartieListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewController\Statistiques\SpecificStatistiques\DistanceClubPage.xaml.cs">
       <DependentUpon>DistanceClubPage.xaml</DependentUpon>
@@ -168,6 +175,9 @@
     </Reference>
     <Reference Include="SQLiteNetExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SQLiteNetExtensions.2.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\SQLiteNetExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLiteNetExtensionsAsync, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLiteNetExtensions.Async.2.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\SQLiteNetExtensionsAsync.dll</HintPath>
     </Reference>
     <Reference Include="SQLitePCLRaw.batteries_green, Version=1.1.10.86, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SQLitePCLRaw.bundle_green.1.1.10\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_green.dll</HintPath>
@@ -310,6 +320,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Ressources\GolfCourses\SaintJacques_Pitch_and_Putt.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ViewController\Statistiques\Partie\ViewPartieListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ViewController\Statistiques\Partie\DetailsPartiePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

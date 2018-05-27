@@ -15,10 +15,7 @@ namespace GreenSa.ViewController.Option
         public OptionTabbedPage()
         {
             InitializeComponent();
-        }
 
-        protected  override void OnAppearing()
-        {
             var Page1 = new ImportGolfCourse();
             Page1.Title = "Import parcours";
             this.Children.Add(Page1);
@@ -26,6 +23,10 @@ namespace GreenSa.ViewController.Option
             var Page2 = new DatabaseDeletionPage();
             Page2.Title = "Supprimer BD";
             this.Children.Add(Page2);
+        }
+
+        protected  override void OnAppearing()
+        {
 
             base.OnAppearing();
         }

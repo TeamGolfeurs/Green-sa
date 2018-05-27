@@ -19,11 +19,6 @@ namespace GreenSa.ViewController.Statistiques
         public StatistiqueMainTabbedPage()
         {
             InitializeComponent();
-
-        }
-
-        protected override void OnAppearing()
-        {
             var Page1 = new DistanceClubPage();
             Page1.Title = "Distance Clubs";
             this.Children.Add(Page1);
@@ -39,7 +34,10 @@ namespace GreenSa.ViewController.Statistiques
             var Page4 = new GIRPage();
             Page4.Title = "GIR";
             this.Children.Add(Page4);
-            
+        }
+
+        protected override void OnAppearing()
+        {
             base.OnAppearing();
         }
     

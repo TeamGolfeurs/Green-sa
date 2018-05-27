@@ -31,13 +31,12 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-
+            
             //Définition du filtre
             Func<GolfCourse, bool> f = (c => true);
-
             //Recupere la liste des Golfs filtré par la classe GestionGolf
-            ListGolfCourse.ItemsSource = GestionGolfs.getListGolfs(f);
-
+            List<GolfCourse> res = await GestionGolfs.getListGolfsAsync(f);
+            ListGolfCourse.ItemsSource = res; 
         }
 
 
@@ -49,7 +48,7 @@ namespace GreenSa.ViewController.PartieGolf.Configuration
          {
             var g = ListGolfCourse.SelectedItem as GolfCourse;
             p.GolfCourse = g;
-            await Navigation.PushAsync(new ClubSelectionPage(p));
+            await Navigation.PushAsync(new ClubSelectionPage(p),false);
          }
 
 

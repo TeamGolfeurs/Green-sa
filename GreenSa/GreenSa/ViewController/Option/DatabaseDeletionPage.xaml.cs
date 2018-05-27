@@ -35,6 +35,7 @@ namespace GreenSa.ViewController.Option
                 connection.CreateTable<Shot>();
                 connection.CreateTable<Hole>();
                 connection.CreateTable<ScoreHole>();
+                connection.CreateTable<ScorePartie>();
 
                 connection.DropTable<MyPosition>();
                 connection.DropTable<GolfCourse>();
@@ -42,6 +43,8 @@ namespace GreenSa.ViewController.Option
                 connection.DropTable<Shot>();
                 connection.DropTable<Hole>();
                 connection.DropTable<ScoreHole>();
+                connection.DropTable<ScorePartie>();
+
                 lab.Text = "Base de donnée bien supprimée";
 
             }

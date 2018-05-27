@@ -21,7 +21,7 @@ namespace GreenSa.Models.GolfModel
         /**
          * Get the average distance for all clubs
          * */
-        public static IEnumerable<Tuple<Club, double>> getAverageDistanceForClubs(Func<Club,bool> filtre)
+        public static  IEnumerable<Tuple<Club, double>> getAverageDistanceForClubsAsync(Func<Club,bool> filtre)
         {
             IEnumerable<Tuple<Club, double>> res=new List<Tuple<Club, double>>();
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
@@ -30,7 +30,7 @@ namespace GreenSa.Models.GolfModel
 
             try
             {
-                IEnumerable<Shot> shots = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection));
+                IEnumerable<Shot> shots = ( SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection));
                 shots = shots.Where(s => filtre(s.Club) && !s.Club.Equals(Club.PUTTER)); 
                 foreach (Shot s in shots)
                 {
@@ -69,6 +69,8 @@ namespace GreenSa.Models.GolfModel
             }
             return new Tuple<double, double>(min, max);
         }
+
+       
 
 
 
@@ -183,7 +185,7 @@ namespace GreenSa.Models.GolfModel
             return all.Where(sh=> sh.Hit).Count()/(float)nbTotal*100 ;
         }
 
-        public static void saveForStats(List<Shot> shots,Hole hole)
+        public static ScoreHole saveForStats(List<Shot> shots,Hole hole)
         {
             if (shots.Count == 0)
                 throw new Exception("0 shots dans la liste des shots.");
@@ -198,9 +200,44 @@ namespace GreenSa.Models.GolfModel
 
             ScoreHole h = new ScoreHole(hole, shots.Count-hole.Par, isHit(shots, hole.Par),nbCoupPutt(shots),DateTime.Now);
             SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, h, false);
+            string sql = @"select last_insert_rowid()";
+            h.Id = connection.ExecuteScalar<int>(sql);
             //connection.Insert(h);
-
+            return h;
         }
+        public async static Task saveGameForStats(ScorePartie scoreOfThisPartie)
+        {
+            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
+            await connection.CreateTableAsync<ScoreHole>();
+            await connection.CreateTableAsync<ScorePartie>();
+
+            await SQLiteNetExtensionsAsync.Extensions.WriteOperations.InsertWithChildrenAsync(connection, scoreOfThisPartie,false);
+        }
+
+
+        //SCorePartie
+        //
+        public async static Task<IEnumerable<ScorePartie>> getListOfScorePartie()
+        {
+            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
+            await connection.CreateTableAsync<ScoreHole>();
+            await connection.CreateTableAsync<ScorePartie>();
+
+            List<ScorePartie> all = (await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<ScorePartie>(connection, recursive: true));
+
+            return all.OrderByDescending(sp =>sp.DateDebut);
+        }
+
+
+
+
+
+
+
+
+
+
+
 
         private static int nbCoupPutt(List<Shot> shots)
         {

@@ -39,6 +39,12 @@
                     FontSize="Large"
                     Clicked="onStatsGolfsClicked" 
                     />
+                    
+                    <Button 
+                    Text="Mes parties"
+                    FontSize="Large"
+                    Clicked="onMesPartiesClicked" 
+                    />
                  <!--   <Button 
                     Text="Voir BD"
                     FontSize="Large"

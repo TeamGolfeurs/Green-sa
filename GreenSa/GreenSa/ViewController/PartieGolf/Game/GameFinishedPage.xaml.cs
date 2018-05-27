@@ -18,6 +18,11 @@ namespace GreenSa.ViewController.PartieGolf.Game
         {
             InitializeComponent();
             this.partie = partie;
+            if (partie.ScoreOfThisPartie.scoreHoles.Count < partie.GolfCourse.Holes.Count)
+            {
+                save.IsToggled = false;
+                save.IsEnabled = false;
+            }
         }
 
         /**
@@ -29,8 +34,9 @@ namespace GreenSa.ViewController.PartieGolf.Game
             base.OnAppearing();
         }
 
-        private void OnGoBackClicked(object sender, SelectedItemChangedEventArgs e)
+        private async void OnGoBackClicked(object sender, SelectedItemChangedEventArgs e)
         {
+            await partie.gameFinished(save.IsEnabled && save.IsToggled);
             OnBackButtonPressed();
         }
 

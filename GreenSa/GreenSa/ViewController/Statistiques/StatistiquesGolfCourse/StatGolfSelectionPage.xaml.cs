@@ -26,7 +26,7 @@ namespace GreenSa.ViewController.Statistiques.StatistiquesGolfCourse
             Func<GolfCourse, bool> f = (c => true);
 
             //Recupere la liste des Golfs filtré par la classe GestionGolf
-            ListGolfCourse.ItemsSource = GestionGolfs.getListGolfs(f);
+            ListGolfCourse.ItemsSource = await GestionGolfs.getListGolfsAsync(f);
 
 
         }

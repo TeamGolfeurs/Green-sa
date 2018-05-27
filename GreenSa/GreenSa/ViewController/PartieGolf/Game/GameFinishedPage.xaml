@@ -7,11 +7,16 @@
             <Label Text="Vous avez terminé votre partie."
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-       
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Sauvegarder les stats" />
+                <Switch x:Name="save"  IsToggled="true"/>
+            </StackLayout>
             <Button Text="Retour accueil"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand"
                 Clicked="OnGoBackClicked"/>
+         
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
