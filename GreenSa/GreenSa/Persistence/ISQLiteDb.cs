@@ -4,7 +4,9 @@ namespace GreenSa.Persistence
 {
     public interface ISQLiteDb
     {
-        SQLiteAsyncConnection GetConnection();
+        SQLiteConnection GetConnection();
+        SQLiteAsyncConnection GetConnectionAsync();
+
     }
 }
 

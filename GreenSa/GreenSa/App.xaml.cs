@@ -1,4 +1,6 @@
 ﻿using GreenSa.ViewController;
+using GreenSa.ViewController.PartieGolf.Game;
+using GreenSa.ViewController.Statistiques;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +16,7 @@ namespace GreenSa
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()
