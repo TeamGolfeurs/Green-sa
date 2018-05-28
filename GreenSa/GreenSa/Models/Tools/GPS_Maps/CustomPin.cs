@@ -13,6 +13,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
     public class CustomPin : Xamarin.Forms.Maps.Pin
     {
         public static string UPDATEDMESSAGE = "updatePosition";
+        public static string UPDATEDMESSAGE_CIRCLE= "updatePositionWithCircle";
 
 
         public static string LOCKED = "NO_MOVABLE";

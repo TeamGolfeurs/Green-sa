@@ -32,6 +32,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
         private String state;
         private Partie partie;
         private bool holFini;
+        private double dUserTarget;
 
         public MainGamePage(Partie partie)
         {
@@ -48,10 +49,12 @@ namespace GreenSa.ViewController.PartieGolf.Game
             ListClubPartie.SelectedItem = partie.CurrentClub;
             //message which come from the markerListenerDrag,
             //when the target pin is moved =>update the display of the distance
-            MessagingCenter.Subscribe<CustomPin>(this,CustomPin.UPDATEDMESSAGE, (sender) => {
-                updateDistance();
+            MessagingCenter.Subscribe<CustomPin>(this,CustomPin.UPDATEDMESSAGE,  (sender) => {
+                 updateDistance(true);
             });
-
+            MessagingCenter.Subscribe<System.Object>(this, CustomPin.UPDATEDMESSAGE_CIRCLE,  (sender) => {
+                 updateDistance(true);
+            });
             MessagingCenter.Subscribe<HoleFinishedPage,bool>(this, "ReallyFinit", (sender,val) => {
                 holFini = val;
             });
@@ -99,7 +102,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
                     }
                 } while (!success);
 
-                updateDistance();
+                 updateDistance();
 
                 try
                 {
@@ -158,12 +161,18 @@ namespace GreenSa.ViewController.PartieGolf.Game
             }
         }
 
-        private void updateDistance()
+        private  void updateDistance(bool circle=false)
         {
-            double dUserTarget = map.getDistanceUserTarget();
-            distTotal.Text= string.Format("{0:0.0}", map.getDistanceUserHole()) +"m";
-           distSplit.Text = string.Format("{0:0.0}", dUserTarget)  + "m / "+ string.Format("{0:0.0}", map.getDistanceTargetHole())+" m";
-            ListClubPartie.SelectedItem = GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs,dUserTarget);
+                dUserTarget = map.getDistanceUserTarget();
+                distTotal.Text = string.Format("{0:0.0}", map.getDistanceUserHole()) + "m";
+                distSplit.Text = string.Format("{0:0.0}", dUserTarget) + "m / " + string.Format("{0:0.0}", map.getDistanceTargetHole()) + " m";
+                if(circle)
+                {
+                    Club c =  GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs, dUserTarget);
+                    if (!c.Equals(ListClubPartie.SelectedItem))
+                        ListClubPartie.SelectedItem = c;
+                }
+            
         }
 
         /**
@@ -231,6 +240,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
         {
             MyPosition newUserPosition = await localize();
             map.setUserPosition(newUserPosition, partie.Shots.Count);
+            if (moyenne.IsToggled)
+                partie.updateUICircle();
         }
         protected override bool OnBackButtonPressed()
         {            

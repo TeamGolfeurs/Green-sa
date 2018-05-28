@@ -30,7 +30,7 @@
     <AndroidSigningKeyStore>C:\Users\willi\AppData\Local\Xamarin\Mono for Android\Keystore\GreenSa\GreenSa.keystore</AndroidSigningKeyStore>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>false</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
