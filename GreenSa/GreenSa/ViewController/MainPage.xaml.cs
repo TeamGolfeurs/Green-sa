@@ -1,10 +1,17 @@
-﻿using System;
+﻿using GreenSa.Models.GolfModel;
+using GreenSa.ViewController.PartieGolf.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using GreenSa.ViewController.Statistiques;
+using GreenSa.ViewController.Test;
+using GreenSa.ViewController.Statistiques.StatistiquesGolfCourse;
+using GreenSa.ViewController.Option;
+using GreenSa.ViewController.Statistiques.Partie;
 
 namespace GreenSa.ViewController
 {
@@ -22,6 +29,15 @@ namespace GreenSa.ViewController
         public MainPage()
         {
             InitializeComponent();
+            //optionButton = new FileImageSource { File = "GreenSa.Ressources.Images.tools.png" };
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (s, e) => {
+                onOptionsClicked(s, e);
+            };
+            optionButton.GestureRecognizers.Add(tapGestureRecognizer);
+            //optionButton.Source = ImageSource.FromResource("GreenSa.Ressources.Images.tools.png");
+            //optionButton.Image = new FileImageSource { File = "GreenSa.Ressources.Images.tools.png" };
+
         }
 
         /**
@@ -30,7 +46,8 @@ namespace GreenSa.ViewController
          * */
         async private void onPlayClicked(object sender, EventArgs e)
         {
-
+            Partie partie = new Partie();
+            await Navigation.PushAsync(new GolfSelectionPage(partie));
         }
 
         /**
@@ -39,11 +56,27 @@ namespace GreenSa.ViewController
           * */
         async private void onStatsClicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new StatistiqueMainTabbedPage());
         }
 
+        async private void onStatsGolfsClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new StatGolfSelectionPage());
+        }
 
+        async private void onOptionsClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new OptionTabbedPage());
+        }
+        async private void onMesPartiesClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ViewPartieListPage());
+        }
+        
 
-
+        async private void voirBD(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SeeBDContent());
+        }
     }
 }

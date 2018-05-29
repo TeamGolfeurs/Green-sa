@@ -11,11 +11,11 @@ namespace GreenSa.Windows.Persistence
 {
     public class SQLiteDb : ISQLiteDb
     {
-        public SQLiteAsyncConnection GetConnection()
+        SQLite.SQLiteConnection ISQLiteDb.GetConnection()
         {
-			var documentsPath = ApplicationData.Current.LocalFolder.Path;
-        	var path = Path.Combine(documentsPath, "MySQLite.db3");
-        	return new SQLiteAsyncConnection(path);
+            var documentsPath = ApplicationData.Current.LocalFolder.Path;
+            var path = Path.Combine(documentsPath, "MySQLite.db3");
+            return new SQLiteConnection( path);
         }
     }
 }

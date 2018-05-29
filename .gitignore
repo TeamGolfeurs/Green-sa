@@ -20,6 +20,9 @@
 Components/
 
 # Build results
+**/*.Android/bin/
+**/*.Android/obj/
+**/*.UWP/bin/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/

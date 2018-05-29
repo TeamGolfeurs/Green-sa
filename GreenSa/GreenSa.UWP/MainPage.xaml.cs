@@ -20,7 +20,7 @@ namespace GreenSa.UWP
         public MainPage()
         {
             this.InitializeComponent();
-
+            Xamarin.FormsMaps.Init("JNiuoOLXpoPjeXSUVb2P~nLg-m53DPj5cHy6ahqCMjQ~AmDtO279pBQlyX104yC8s0dzUecCaPXMmeRk02ejtYi7BnJKdLuK5_CTT4-8RtGG");
             LoadApplication(new GreenSa.App());
         }
     }

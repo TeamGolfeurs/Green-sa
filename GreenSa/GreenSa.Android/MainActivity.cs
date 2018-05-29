@@ -6,6 +6,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Plugin.Permissions;
+using Android.Locations;
+using Xamarin.Forms;
+using Android.Content;
 
 namespace GreenSa.Droid
 {
@@ -18,9 +22,19 @@ namespace GreenSa.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity = this;
+           /* LocationManager locationManager = (LocationManager)Forms.Context.GetSystemService(Context.LocationService);
 
-            global::Xamarin.Forms.Forms.Init(this, bundle);
+            if (locationManager.IsProviderEnabled(LocationManager.GpsProvider) == false)*/
+
+
+                global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        {
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }
