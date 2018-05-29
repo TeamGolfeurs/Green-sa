@@ -2,7 +2,6 @@
 using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,16 +18,11 @@ namespace GreenSa.Models.GolfModel
         [PrimaryKey]
         public string Name { get; set; }
         public int DistanceMoyenne { get; set; }
-
-        [Ignore]
-        private Tuple<int, int, int> dmoyJoueur { get; set; }
-
         [Ignore]
         public Tuple<int,int,int> DistanceMoyenneJoueur
         {//moy,min,max
              get
             {
-                Debug.WriteLine("get Dmoy of "+Name);
                 IEnumerable<Tuple<Club, double>> listWith1item = StatistiquesGolf.getAverageDistanceForClubsAsync(c => c.Equals(this));
                 if (listWith1item.Count() == 0)
                     return new Tuple<int, int, int>( DistanceMoyenne, 0, 0);

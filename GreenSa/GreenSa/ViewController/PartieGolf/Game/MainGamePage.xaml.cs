@@ -52,9 +52,9 @@ namespace GreenSa.ViewController.PartieGolf.Game
             MessagingCenter.Subscribe<CustomPin>(this,CustomPin.UPDATEDMESSAGE,  (sender) => {
                  updateDistance(true);
             });
-          /*  MessagingCenter.Subscribe<System.Object>(this, CustomPin.UPDATEDMESSAGE_CIRCLE,  (sender) => {
+            MessagingCenter.Subscribe<System.Object>(this, CustomPin.UPDATEDMESSAGE_CIRCLE,  (sender) => {
                  updateDistance(true);
-            });*/
+            });
             MessagingCenter.Subscribe<HoleFinishedPage,bool>(this, "ReallyFinit", (sender,val) => {
                 holFini = val;
             });
@@ -245,10 +245,8 @@ namespace GreenSa.ViewController.PartieGolf.Game
         }
         protected override bool OnBackButtonPressed()
         {            
-            Navigation.PopToRootAsync();
-            MessagingCenter.Unsubscribe<CustomPin>(this, CustomPin.UPDATEDMESSAGE);
-            MessagingCenter.Unsubscribe<HoleFinishedPage,bool>(this, "ReallyFinit");
-            return true;
+                Navigation.PopToRootAsync();
+                return true;
         }
 
 

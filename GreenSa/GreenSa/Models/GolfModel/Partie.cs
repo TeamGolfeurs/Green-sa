@@ -2,7 +2,6 @@
 using GreenSa.Persistence;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -108,7 +107,7 @@ namespace GreenSa.Models.GolfModel
             return itHole.MoveNext();        
         }
 
-        public void updateUICircle()
+        internal void updateUICircle()
         {
             MessagingCenter.Send<Partie>(this, "updateTheCircle");
         }
