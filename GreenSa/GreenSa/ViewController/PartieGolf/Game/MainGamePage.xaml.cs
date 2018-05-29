@@ -246,7 +246,7 @@ namespace GreenSa.ViewController.PartieGolf.Game
         protected override bool OnBackButtonPressed()
         {            
             Navigation.PopToRootAsync();
-            MessagingCenter.Unsubscribe<CustomPin>(this, CustomPin.UPDATEDMESSAGE);
+            MessagingCenter.Unsubscribe<CustomPin>(this, CustomPin.UPDATEDMESSAGE);//else it will stay in memery
             MessagingCenter.Unsubscribe<HoleFinishedPage,bool>(this, "ReallyFinit");
             return true;
         }
