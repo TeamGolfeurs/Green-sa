@@ -20,7 +20,7 @@ using Greensa.Droid;
 using GreenSa.Droid;
 using System.Collections.ObjectModel;
 using GreenSa.Models.GolfModel;
-using GreenSa.ViewController.PartieGolf.Game;
+using GreenSa.ViewController.Play.Game;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace Greensa.Droid

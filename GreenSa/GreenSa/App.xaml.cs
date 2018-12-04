@@ -1,6 +1,5 @@
 ﻿using GreenSa.ViewController;
-using GreenSa.ViewController.PartieGolf.Game;
-using GreenSa.ViewController.Statistiques;
+using GreenSa.ViewController.Play.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
