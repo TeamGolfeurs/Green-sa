@@ -1,17 +1,15 @@
-﻿using GreenSa.Models.GolfModel;
-using GreenSa.ViewController.PartieGolf.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using GreenSa.ViewController.Statistiques;
-using GreenSa.ViewController.Test;
-using GreenSa.ViewController.Statistiques.StatistiquesGolfCourse;
+using GreenSa.ViewController.Play;
 using GreenSa.ViewController.Option;
-using GreenSa.ViewController.Statistiques.Partie;
+using GreenSa.ViewController.MesGolfs;
+using GreenSa.ViewController.Profile;
+using GreenSa.Models.GolfModel;
 
 namespace GreenSa.ViewController
 {
@@ -21,22 +19,35 @@ namespace GreenSa.ViewController
      *          -Bouton option
      *          -Titre
      *          -Bouton Jouer
-     *          -Bouton Stats
-     *      VOIR MAQUETTE 1
+     *          -Bouton Profil
+     *          -Bouton Mes Golfs
      */
     public partial class MainPage : ContentPage
     {
         public MainPage()
         {
             InitializeComponent();
-            //optionButton = new FileImageSource { File = "GreenSa.Ressources.Images.tools.png" };
+
+            cielhaut.BackgroundColor = Color.FromHex("52D0DD");
+            cielbas.BackgroundColor = Color.FromHex("52D0DD");
+
+            nuage.HeightRequest = haut.Height.Value * 100;
+
+            jouer.BackgroundColor = new Color(0, 0, 0, 0.2);
+            jouer.BorderColor = new Color(0, 0, 0, 0.05);
+
+            profil.BackgroundColor = new Color(0, 0, 0, 0.2);
+            profil.BorderColor = new Color(0, 0, 0, 0.05);
+
+            mesgolfs.BackgroundColor = new Color(0, 0, 0, 0.2);
+            mesgolfs.BorderColor = new Color(0, 0, 0, 0.05);
+
             var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (s, e) => {
-                onOptionsClicked(s, e);
+            tapGestureRecognizer.Tapped += (s, e) =>
+            {
+                OnOptionsClicked(s, e);
             };
-            optionButton.GestureRecognizers.Add(tapGestureRecognizer);
-            //optionButton.Source = ImageSource.FromResource("GreenSa.Ressources.Images.tools.png");
-            //optionButton.Image = new FileImageSource { File = "GreenSa.Ressources.Images.tools.png" };
+            engrenage.GestureRecognizers.Add(tapGestureRecognizer);
 
         }
 
@@ -44,39 +55,33 @@ namespace GreenSa.ViewController
          * Méthode déclenchée au click sur le bouton "Jouer"
          * Redirige vers la page "GolfSelection"
          * */
-        async private void onPlayClicked(object sender, EventArgs e)
+        async private void OnPlayClicked(object sender, EventArgs e)
         {
             Partie partie = new Partie();
-            await Navigation.PushAsync(new GolfSelectionPage(partie));
+            await Navigation.PushAsync(new Play.GolfSelectionPage(partie));
         }
-
         /**
-          * Méthode déclenchée au click sur le bouton "Stats"
-          * Redirige vers la page "StatMenu"
-          * */
-        async private void onStatsClicked(object sender, EventArgs e)
+         * Méthode déclenchée au click sur le bouton "Profil"
+         * Redirige vers la page "profil"
+         * */
+        async private void OnProfilClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new StatistiqueMainTabbedPage());
+            await Navigation.PushAsync(new ProfilePage());
         }
-
-        async private void onStatsGolfsClicked(object sender, EventArgs e)
+        /**
+         * Méthode déclenchée au click sur le bouton "MesGolfs"
+         * Redirige vers la page "GolfSelection"
+         * */
+        async private void OnGolfClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new StatGolfSelectionPage());
+            await Navigation.PushAsync(new GolfsManager());
         }
-
-        async private void onOptionsClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new OptionTabbedPage());
-        }
-        async private void onMesPartiesClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ViewPartieListPage());
-        }
-        
-
-        async private void voirBD(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SeeBDContent());
+        /**
+         * Méthode déclenchée au click sur le bouton "Option"
+         * Redirige vers la page "OptionTabbedPage"
+         * */
+        async private void OnOptionsClicked(object sender, EventArgs e){ 
+            await Navigation.PushAsync(new DatabaseDeletionPage());
         }
     }
 }

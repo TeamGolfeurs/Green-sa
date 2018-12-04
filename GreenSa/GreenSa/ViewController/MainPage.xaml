@@ -2,75 +2,53 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GreenSa.MarkupExtension"
-             x:Class="GreenSa.ViewController.MainPage">
+             x:Class="GreenSa.ViewController.MainPage" 
+            NavigationPage.HasNavigationBar="False">
     <!---->
 
     <ContentPage.Content>
-            <Grid>
-                <Label 
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    x:Name="label"
-                    Margin="30"
-                    Text="GREEN'SA"
-                    TextColor="ForestGreen"
-                    FontSize="Large"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Center"
-                   />
-                <StackLayout
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                >
-                <Button 
-                    Text="JOUER"
-                    FontSize="Large"
-                    Clicked="onPlayClicked" 
-                    />
-                <Button 
-                    Text="STATS"
-                    FontSize="Large"
-                    Clicked="onStatsClicked" 
-                    />
-                <Button 
-                    Text="STATS PAR GOLFS"
-                    FontSize="Large"
-                    Clicked="onStatsGolfsClicked" 
-                    />
-                    
-                    <Button 
-                    Text="Mes parties"
-                    FontSize="Large"
-                    Clicked="onMesPartiesClicked" 
-                    />
-                 <!--   <Button 
-                    Text="Voir BD"
-                    FontSize="Large"
-                    Clicked="voirBD" 
-                    />-->
-               </StackLayout>
-               <StackLayout
-                    Grid.Column="3"
-                    >
-                    <Image 
-                        x:Name="optionButton"
-                        VerticalOptions="Center" 
-                        HorizontalOptions="End"
-                        Source="{local:EmbeddedImage GreenSa.Ressources.Images.tools.png}" 
-                     />
-                         <!-- The Event Listener is in the code-behind-->
-
-    <!--    <Button.Image>
-                            <OnPlatform x:TypeArguments="FileImageSource"
-                            iOS="tools.png"
-                            Android="tools.png"
-                            WinPhone="tools.png"/>
-                    </Button.Image> -->
-    </StackLayout>
-
-    </Grid>
-
+            <Grid x:Name="page" RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition x:Name="haut" Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <BoxView x:Name="cielhaut" Grid.Column="0" Grid.Row="0"/>
+                <Image x:Name="nuage" Source="logonuage.png" Grid.Column="0" Grid.Row="0"
+                       VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+                       />
+                <Image x:Name="engrenage" Source="engre_icon.png" 
+                       HorizontalOptions="End" VerticalOptions="Start" 
+                       HeightRequest="25" Margin="5"
+                       />
+                <BoxView x:Name="cielbas" Grid.Column="0" Grid.Row="1"/>
+                <Image x:Name="fond" Grid.Column="0" Grid.Row="1" Source="fond.png" VerticalOptions="EndAndExpand"/>
+                <Grid x:Name="boutons" Grid.Row="1" Grid.Column="0" RowSpacing="8" Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25*" x:Name="r0"/>
+                        <RowDefinition Height="25*" x:Name="r1"/>
+                        <RowDefinition Height="25*" x:Name="r2"/>
+                        <RowDefinition Height="25*" x:Name="r3"/>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="jouer"
+                            Grid.Row="1" 
+                            Text="JOUER" TextColor="White" FontSize="24"
+                            BorderRadius="50" BorderWidth="2"
+                            Clicked="OnPlayClicked">
+                    </Button>
+                    <Button x:Name="profil"
+                            Grid.Row="2" 
+                            Text="PROFIL" TextColor="White" FontSize="24"
+                            BorderRadius="50" BorderWidth="2"
+                            Clicked="OnProfilClicked"/>
+                    <Button x:Name="mesgolfs"
+                            Grid.Row="3" 
+                            Text="MES GOLFS" TextColor="White" FontSize="24"
+                            BorderRadius="50" BorderWidth="2"
+                            Clicked="OnGolfClicked"/>
+                </Grid>
+            </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -58,65 +58,71 @@
     <Compile Include="Models\GolfModel\GestionGolfs.cs" />
     <Compile Include="Models\GolfModel\GolfCourse.cs" />
     <Compile Include="Models\GolfModel\Partie.cs" />
-    <Compile Include="ViewController\Option\DatabaseDeletionPage.xaml.cs">
+    <Compile Include="ViewController\MesGolfs\GolfsManager.xaml.cs">
+      <DependentUpon>GolfsManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Options\DatabaseDeletionPage.xaml.cs">
       <DependentUpon>DatabaseDeletionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Option\ImportGolfCourse.xaml.cs">
+    <Compile Include="ViewController\MesGolfs\AddGolf\ImportGolfCourse.xaml.cs">
       <DependentUpon>ImportGolfCourse.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Option\OptionTabbedPage.xaml.cs">
+    <Compile Include="ViewController\MesGolfs\AddGolf\OptionTabbedPage.xaml.cs">
       <DependentUpon>OptionTabbedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\PartieGolf\Configuration\ClubSelectionPage.xaml.cs">
+    <Compile Include="ViewController\Profile\MyClubs\ClubSelectionPage.xaml.cs">
       <DependentUpon>ClubSelectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\PartieGolf\Configuration\GolfSelectionPage.xaml.cs">
+    <Compile Include="ViewController\Play\GolfSelectionPage.xaml.cs">
       <DependentUpon>GolfSelectionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewController\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewController\PartieGolf\Game\ClubSelectionInGamePage.xaml.cs">
+    <Compile Include="ViewController\Play\ClubSelectionInGamePage.xaml.cs">
       <DependentUpon>ClubSelectionInGamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\PartieGolf\Game\GameFinishedPage.xaml.cs">
+    <Compile Include="ViewController\Play\Game\GameFinishedPage.xaml.cs">
       <DependentUpon>GameFinishedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\PartieGolf\Game\HoleFinishedPage.xaml.cs">
+    <Compile Include="ViewController\Play\Game\HoleFinishedPage.xaml.cs">
       <DependentUpon>HoleFinishedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\PartieGolf\Game\MainGamePage.xaml.cs">
+    <Compile Include="ViewController\Play\Game\MainGamePage.xaml.cs">
       <DependentUpon>MainGamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Statistiques\Partie\DetailsPartiePage.xaml.cs">
+    <Compile Include="ViewController\Profile\MyGames\DetailsPartiePage.xaml.cs">
       <DependentUpon>DetailsPartiePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Statistiques\Partie\ViewPartieListPage.xaml.cs">
+    <Compile Include="ViewController\Profile\MyGames\ViewPartieListPage.xaml.cs">
       <DependentUpon>ViewPartieListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Statistiques\SpecificStatistiques\DistanceClubPage.xaml.cs">
+    <Compile Include="ViewController\Profile\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\DistanceClubPage.xaml.cs">
       <DependentUpon>DistanceClubPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Statistiques\StatistiqueMainTabbedPage.xaml.cs">
+    <Compile Include="ViewController\Profile\Statistiques\StatistiqueMainTabbedPage.xaml.cs">
       <DependentUpon>StatistiqueMainTabbedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewController\Test\SeeBDContent.xaml.cs">
       <DependentUpon>SeeBDContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Statistiques\SpecificStatistiques\ScorePage.xaml.cs">
+    <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\ScorePage.xaml.cs">
       <DependentUpon>ScorePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Statistiques\SpecificStatistiques\ScoreVsParPage.xaml.cs">
+    <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\ScoreVsParPage.xaml.cs">
       <DependentUpon>ScoreVsParPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Statistiques\SpecificStatistiques\GIRPage.xaml.cs">
+    <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\GIRPage.xaml.cs">
       <DependentUpon>GIRPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Statistiques\StatistiquesGolfCourse\StatGolfSelectionPage.xaml.cs">
+    <Compile Include="ViewController\Profile\Statistiques\StatistiquesGolfCourse\StatGolfSelectionPage.xaml.cs">
       <DependentUpon>StatGolfSelectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Statistiques\StatistiquesGolfCourse\StatGolfCoursePage.xaml.cs">
+    <Compile Include="ViewController\Profile\Statistiques\StatistiquesGolfCourse\StatGolfCoursePage.xaml.cs">
       <DependentUpon>StatGolfCoursePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -130,23 +136,23 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Ressources\Clubs\Putter.xml" />
-    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScorePage.xaml">
+    <EmbeddedResource Include="ViewController\Profile\Statistiques\SpecificStatistiques\ScorePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\ScoreVsParPage.xaml">
+    <EmbeddedResource Include="ViewController\Profile\Statistiques\SpecificStatistiques\ScoreVsParPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\GIRPage.xaml">
+    <EmbeddedResource Include="ViewController\Profile\Statistiques\SpecificStatistiques\GIRPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewController\Statistiques\StatistiquesGolfCourse\StatGolfSelectionPage.xaml">
+    <EmbeddedResource Include="ViewController\Profile\Statistiques\StatistiquesGolfCourse\StatGolfSelectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewController\Statistiques\StatistiquesGolfCourse\StatGolfCoursePage.xaml">
+    <EmbeddedResource Include="ViewController\Profile\Statistiques\StatistiquesGolfCourse\StatGolfCoursePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -219,19 +225,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\PartieGolf\Configuration\ClubSelectionPage.xaml">
+    <EmbeddedResource Include="ViewController\Profile\MyClubs\ClubSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\PartieGolf\Configuration\GolfSelectionPage.xaml">
+    <EmbeddedResource Include="ViewController\Play\GolfSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\PartieGolf\Game\MainGamePage.xaml">
+    <EmbeddedResource Include="ViewController\Play\Game\MainGamePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -250,29 +256,29 @@
     <EmbeddedResource Include="Ressources\Images\tools.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Statistiques\StatistiqueMainTabbedPage.xaml">
+    <EmbeddedResource Include="ViewController\Profile\Statistiques\StatistiqueMainTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Statistiques\SpecificStatistiques\DistanceClubPage.xaml">
+    <EmbeddedResource Include="ViewController\Profile\Statistiques\SpecificStatistiques\DistanceClubPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\PartieGolf\Game\GameFinishedPage.xaml">
+    <EmbeddedResource Include="ViewController\Play\Game\GameFinishedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\PartieGolf\Game\ClubSelectionInGamePage.xaml">
+    <EmbeddedResource Include="ViewController\Play\ClubSelectionInGamePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewController\PartieGolf\Game\HoleFinishedPage.xaml">
+    <EmbeddedResource Include="ViewController\Play\Game\HoleFinishedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -300,19 +306,19 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Option\ImportGolfCourse.xaml">
+    <EmbeddedResource Include="ViewController\MesGolfs\AddGolf\ImportGolfCourse.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Option\OptionTabbedPage.xaml">
+    <EmbeddedResource Include="ViewController\MesGolfs\AddGolf\OptionTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Option\DatabaseDeletionPage.xaml">
+    <EmbeddedResource Include="ViewController\Options\DatabaseDeletionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -323,13 +329,26 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Statistiques\Partie\ViewPartieListPage.xaml">
+    <EmbeddedResource Include="ViewController\Profile\MyGames\ViewPartieListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Statistiques\Partie\DetailsPartiePage.xaml">
+    <EmbeddedResource Include="ViewController\Profile\MyGames\DetailsPartiePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ViewController\Profile\ProfilePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="ViewController\MesGolfs\GolfsManager.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

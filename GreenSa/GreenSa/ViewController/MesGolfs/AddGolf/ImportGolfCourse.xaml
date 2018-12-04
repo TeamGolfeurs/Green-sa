@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GreenSa.ViewController.MesGolfs.AddGolf.ImportGolfCourse">
+    <ContentPage.Content>
+        <ScrollView >
+        <StackLayout Orientation="Vertical">
+            <Label Text="Ajout d'un nouveau parcours de golf" FontSize="Large"
+                HorizontalOptions="CenterAndExpand" />
+           
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Code pastebin"
+                HorizontalOptions="Center" />
+                <Switch IsToggled="False" x:Name="isPastebin"
+                 HorizontalOptions="Center" />
+            </StackLayout>
+            <Label Text="URL"
+                HorizontalOptions="Center" />
+            <Entry x:Name="urlText"
+                 HorizontalOptions="FillAndExpand" />
+            
+            <Button Text="Valider" Clicked="Button_Clicked"/>
+            <Label Text=" " x:Name="status" FontSize="Medium"
+                HorizontalOptions="Center" />
+
+            <Label Text="Format attendu : " 
+                HorizontalOptions="CenterAndExpand" />
+
+            <Label Text="" 
+            x:Name="format"/>
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
