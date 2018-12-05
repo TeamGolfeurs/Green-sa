@@ -1,34 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GreenSa.ViewController.MesGolfs.AddGolf.ImportGolfCourse">
+             xmlns:local="clr-namespace:GreenSa.Models.Tools.GPS_Maps"
+             x:Class="GreenSa.ViewController.Option.ImportGolfCourse">
     <ContentPage.Content>
-        <ScrollView >
         <StackLayout Orientation="Vertical">
-            <Label Text="Ajout d'un nouveau parcours de golf" FontSize="Large"
-                HorizontalOptions="CenterAndExpand" />
-           
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Code pastebin"
-                HorizontalOptions="Center" />
-                <Switch IsToggled="False" x:Name="isPastebin"
-                 HorizontalOptions="Center" />
-            </StackLayout>
-            <Label Text="URL"
-                HorizontalOptions="Center" />
-            <Entry x:Name="urlText"
-                 HorizontalOptions="FillAndExpand" />
-            
-            <Button Text="Valider" Clicked="Button_Clicked"/>
-            <Label Text=" " x:Name="status" FontSize="Medium"
-                HorizontalOptions="Center" />
-
-            <Label Text="Format attendu : " 
-                HorizontalOptions="CenterAndExpand" />
-
-            <Label Text="" 
-            x:Name="format"/>
+            <Label Text="Import d'un nouveau golf" FontSize="Large" HorizontalOptions="Center"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Lieu :" x:Name="cityLabel" FontSize="Medium" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0"/>
+                <Entry Text="Savenay" x:Name="cityEntry" Grid.Row="0" Grid.Column="1"/>
+                <Label Text="Nom du golf :" x:Name="golfNameLabel" FontSize="Medium" HorizontalOptions="Start" Grid.Row="1" Grid.Column="0"/>
+                <Entry Text="Golf de Savenay" x:Name="golfNameEntry" Grid.Row="1" Grid.Column="1"/>
+            </Grid>
+            <Label Text="Trou n°1" x:Name="status" FontSize="Medium" HorizontalOptions="Center" />
+            <local:AddGolfMap Grid.Row="1" Grid.Column="0" x:Name="map" MapType="Satellite" WidthRequest="960" HeightRequest="100" VerticalOptions="FillAndExpand" />
+            <Button Text="Valider trou n°1" IsEnabled="False"/>
         </StackLayout>
-        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
