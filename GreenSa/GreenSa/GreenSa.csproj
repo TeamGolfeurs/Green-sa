@@ -47,6 +47,7 @@
     <Compile Include="Models\GolfModel\StatistiquesGolf.cs" />
     <Compile Include="Models\GolfModel\Hole.cs" />
     <Compile Include="Models\Tools\GolfXMLReader.cs" />
+    <Compile Include="Models\Tools\GPS_Maps\AddGolfMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomPin.cs" />
     <Compile Include="Models\Tools\MyPosition.cs" />
@@ -54,6 +55,8 @@
     <Compile Include="Models\Tools\Services\NotAvaibleException.cs" />
     <Compile Include="Models\Tools\Services\WindInfo.cs" />
     <Compile Include="Models\Tools\Services\WindService.cs" />
+    <Compile Include="Models\ViewElements\MyLabel.cs" />
+    <Compile Include="Models\ViewElements\MyButton.cs" />
     <Compile Include="Persistence\ISQLiteDb.cs" />
     <Compile Include="Models\GolfModel\GestionGolfs.cs" />
     <Compile Include="Models\GolfModel\GolfCourse.cs" />

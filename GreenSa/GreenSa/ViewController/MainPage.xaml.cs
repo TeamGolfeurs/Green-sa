@@ -33,15 +33,6 @@ namespace GreenSa.ViewController
 
             nuage.HeightRequest = haut.Height.Value * 100;
 
-            jouer.BackgroundColor = new Color(0, 0, 0, 0.2);
-            jouer.BorderColor = new Color(0, 0, 0, 0.05);
-
-            profil.BackgroundColor = new Color(0, 0, 0, 0.2);
-            profil.BorderColor = new Color(0, 0, 0, 0.05);
-
-            mesgolfs.BackgroundColor = new Color(0, 0, 0, 0.2);
-            mesgolfs.BorderColor = new Color(0, 0, 0, 0.05);
-
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += (s, e) =>
             {
