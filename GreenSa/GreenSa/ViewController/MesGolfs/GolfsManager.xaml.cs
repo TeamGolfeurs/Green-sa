@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GreenSa.ViewController.Option;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,15 @@ namespace GreenSa.ViewController.MesGolfs
         public GolfsManager()
         {
             InitializeComponent();
+        }
+
+        /**
+         * Méthode déclenchée au click sur le bouton "Ajouter un golf"
+         * Redirige vers la page "ImportGolfCourse"
+         * */
+        async private void OnAddGolfClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ImportGolfCourse());
         }
     }
 }

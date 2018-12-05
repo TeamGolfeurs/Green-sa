@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GreenSa.MarkupExtension"
+             xmlns:viewElements="clr-namespace:GreenSa.Models.ViewElements"
              x:Class="GreenSa.ViewController.MainPage" 
             NavigationPage.HasNavigationBar="False">
     <!---->
@@ -32,22 +33,9 @@
                         <RowDefinition Height="25*" x:Name="r2"/>
                         <RowDefinition Height="25*" x:Name="r3"/>
                     </Grid.RowDefinitions>
-                    <Button x:Name="jouer"
-                            Grid.Row="1" 
-                            Text="JOUER" TextColor="White" FontSize="24"
-                            BorderRadius="50" BorderWidth="2"
-                            Clicked="OnPlayClicked">
-                    </Button>
-                    <Button x:Name="profil"
-                            Grid.Row="2" 
-                            Text="PROFIL" TextColor="White" FontSize="24"
-                            BorderRadius="50" BorderWidth="2"
-                            Clicked="OnProfilClicked"/>
-                    <Button x:Name="mesgolfs"
-                            Grid.Row="3" 
-                            Text="MES GOLFS" TextColor="White" FontSize="24"
-                            BorderRadius="50" BorderWidth="2"
-                            Clicked="OnGolfClicked"/>
+                    <viewElements:MyButton x:Name="jouer" Grid.Row="1"  Text="JOUER" FontSize="24" Clicked="OnPlayClicked"/>
+                    <viewElements:MyButton x:Name="profil" Grid.Row="2" Text="PROFIL" FontSize="24" Clicked="OnProfilClicked"/>
+                    <viewElements:MyButton x:Name="mesgolfs" Grid.Row="3" Text="MES GOLFS" FontSize="24" Clicked="OnGolfClicked"/>
                 </Grid>
             </Grid>
     </ContentPage.Content>
