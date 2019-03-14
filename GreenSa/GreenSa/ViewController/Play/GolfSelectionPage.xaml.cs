@@ -42,7 +42,7 @@ namespace GreenSa.ViewController.Play
          * Appelée à la sélection d'un golf
          * doit mettre à jour la partie, et ouvrir la page parametre suivant (ClubSelection)
          * */
-         private async void onGolfSelection(object sender, SelectedItemChangedEventArgs e)
+         private async void onGolfSelection(object sender, EventArgs e)
          {
             var g = ListGolfCourse.SelectedItem as GolfCourse;
             p.GolfCourse = g;

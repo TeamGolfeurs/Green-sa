@@ -42,7 +42,7 @@ namespace GreenSa.ViewController.Profile.MyClubs
          * Appelée à la validation de la selection
          * doit mettre à jour la partie, et ouvrir la page du jeu (MainGamePage)
          * */
-        private async void onValidClubSelection(object sender, SelectedItemChangedEventArgs e)
+        private async void onValidClubSelection(object sender, EventArgs e)
         {
 
             Btn.IsEnabled = false;

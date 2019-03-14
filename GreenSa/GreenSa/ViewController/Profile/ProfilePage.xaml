@@ -1,12 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GreenSa.ViewController.Profile.ProfilePage">
+             x:Class="GreenSa.ViewController.Profile.ProfilePage"
+             xmlns:local="clr-namespace:GreenSa.MarkupExtension"
+             xmlns:viewElements="clr-namespace:GreenSa.Models.ViewElements"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid x:Name="page" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="haut" Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <BoxView x:Name="cielhaut" Grid.Column="0" Grid.Row="0"/>
+            <Image x:Name="nuage" Source="nuage_profil.png" Grid.Column="0" Grid.Row="0"
+                       VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+                       />
+            <Image x:Name="fleche" Source="fleche.png" 
+                       HorizontalOptions="Start" VerticalOptions="Start" 
+                       HeightRequest="25" Margin="10"
+                       />
+            <Image x:Name="engrenage" Source="engre_icon.png" 
+                       HorizontalOptions="End" VerticalOptions="Start" 
+                       HeightRequest="25" Margin="10"
+                       />
+            <BoxView x:Name="cielbas" Grid.Column="0" Grid.Row="1"/>
+            <Image x:Name="fond" Grid.Column="0" Grid.Row="1" Source="fond.png" VerticalOptions="EndAndExpand"/>
+            <Grid x:Name="boutons" Grid.Row="1" Grid.Column="0" RowSpacing="8" Margin="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25*" x:Name="r0"/>
+                    <RowDefinition Height="25*" x:Name="r1"/>
+                    <RowDefinition Height="25*" x:Name="r2"/>
+                    <RowDefinition Height="25*" x:Name="r3"/>
+                </Grid.RowDefinitions>
+                <viewElements:MyButton x:Name="clubs" Grid.Row="1"  Text="CLUBS" FontAttributes="Bold" FontSize="24" Clicked="OnClubsClicked"/>
+                <viewElements:MyButton x:Name="parties" Grid.Row="2" Text="PARTIES" FontAttributes="Bold" FontSize="24" Clicked="OnPartiesClicked"/>
+                <viewElements:MyButton x:Name="stats" Grid.Row="3" Text="STATS" FontAttributes="Bold" FontSize="24" Clicked="OnStatsClicked"/>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

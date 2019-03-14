@@ -38,7 +38,7 @@ namespace GreenSa.ViewController.Play
          * Méthode activée au clic sur un élement de la liste
          * set le currentClub de la Partie à l'élément choisi
          */
-        private async void onClubClicked(object sender, SelectedItemChangedEventArgs e)
+        private async void onClubClicked(object sender, EventArgs e)
         {
             var club = ListClubsPartie.SelectedItem as Club;
             p.setCurrentClub(club);

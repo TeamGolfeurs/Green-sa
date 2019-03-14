@@ -201,7 +201,7 @@ namespace GreenSa.ViewController.Play.Game
 
         /* Méthode qui s'execute au click sur le bouton principal.
         * **/
-        private async void onMainButtonClicked(object sender, SelectedItemChangedEventArgs e)
+        private async void onMainButtonClicked(object sender, EventArgs e)
         {
             if(state==LOCK_STATE)
             {
@@ -223,14 +223,14 @@ namespace GreenSa.ViewController.Play.Game
 
         /* Méthode qui s'execute au click sur le bouton de la selection du club.
         * **/
-        private async void onClubSelectionClicked(object sender, SelectedItemChangedEventArgs e)
+        private async void onClubSelectionClicked(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new ClubSelectionInGamePage(partie));
         }
 
         /* Méthode qui s'execute au click sur le bouton principal.
          * **/
-        private async void onHoleFinishedButtonClicked(object sender, SelectedItemChangedEventArgs e)
+        private async void onHoleFinishedButtonClicked(object sender, EventArgs e)
         {
             HoleFinishedPage p = new HoleFinishedPage(partie);
             await Navigation.PushModalAsync(p);
@@ -257,7 +257,7 @@ namespace GreenSa.ViewController.Play.Game
                 partie.updateUICircle();
         }
 
-        private void moyenne_Toggled(object sender, ToggledEventArgs e)
+        private void moyenne_Toggled(object sender, EventArgs e)
         {
             MessagingCenter.Send<MainGamePage,bool>(this, "updateTheCircleVisbility", moyenne.IsToggled);
         }

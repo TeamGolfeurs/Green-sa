@@ -10,6 +10,7 @@ using GreenSa.ViewController.Option;
 using GreenSa.ViewController.MesGolfs;
 using GreenSa.ViewController.Profile;
 using GreenSa.Models.GolfModel;
+using GreenSa.Models.ViewElements;
 
 namespace GreenSa.ViewController
 {
@@ -27,19 +28,6 @@ namespace GreenSa.ViewController
         public MainPage()
         {
             InitializeComponent();
-
-            cielhaut.BackgroundColor = Color.FromHex("52D0DD");
-            cielbas.BackgroundColor = Color.FromHex("52D0DD");
-
-            nuage.HeightRequest = haut.Height.Value * 100;
-
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (s, e) =>
-            {
-                OnOptionsClicked(s, e);
-            };
-            engrenage.GestureRecognizers.Add(tapGestureRecognizer);
-
         }
 
         /**

@@ -34,7 +34,7 @@ namespace GreenSa.ViewController.Play.Game
             base.OnAppearing();
         }
 
-        private async void OnGoBackClicked(object sender, SelectedItemChangedEventArgs e)
+        private async void OnGoBackClicked(object sender, EventArgs e)
         {
             await partie.gameFinished(save.IsEnabled && save.IsToggled);
             OnBackButtonPressed();
