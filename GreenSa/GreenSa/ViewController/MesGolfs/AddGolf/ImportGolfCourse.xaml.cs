@@ -1,51 +1,67 @@
-﻿using GreenSa.Models.GolfModel;
-using GreenSa.Models.Tools;
-using GreenSa.Persistence;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
+using GreenSa.Models.Tools.GPS_Maps;
 using Xamarin.Forms.Maps;
+using TK.CustomMap;
+using System.Collections.ObjectModel;
+//using Xamarin.Forms.Maps;
+//using Xamarin.Forms.GoogleMaps;
 
 namespace GreenSa.ViewController.Option
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ImportGolfCourse : ContentPage
     {
+       // private Xamarin.Forms.GoogleMaps.Map map;//
+
         public ImportGolfCourse()
         {
             InitializeComponent();
+            golfNameLabel.IsVisible = true;
+            golfNameEntry.IsVisible = false;
+
             map.update();
+
+            /*TKCustomMapPin[] pins = new TKCustomMapPin[20];
+            map.CustomPins = pins;
+
+            TKCustomMapPin pin = new TKCustomMapPin();
+            var position = new Position(47.364765, -1.915990);
+            pin.Position = position;
+            pin.Title = "Hole 1";
+            pin.Subtitle = "b";
+            pin.DefaultPinColor = Color.Blue;
+            pin.ShowCallout = true;
+            pin.IsDraggable = true;
+            pins[0] = pin;*/
+
+            Position clickPos = new Position(47.364765, 1.95990);
+            var holePin = new Pin()
+            {
+                Type = PinType.Place,
+                Position = clickPos,
+                Label = "Trou"
+            };
+            map.addPin(holePin);
+
+            /*map.MapClickedCommand = new Command<Position>(Map_ClickedCommand);
+
+            
+            map.PinSelected += (sender, e) => this.DisplayAlert("test", "testt", "tessts");*/
         }
 
-        private async void Button_Clicked(object sender, EventArgs e)
+        private async void OnLocalizeClick(object sender, EventArgs e)
         {
-            
-            /*SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-
-            try
+            var address = cityEntry.Text;
+            var locations = await Geocoding.GetLocationsAsync(address);
+            var location = locations?.FirstOrDefault();
+            if (location != null)
             {
-                connection.CreateTable<Hole>();
-                connection.CreateTable<MyPosition>();
-                connection.CreateTable<GolfCourse>();
-                connection.BeginTransaction();
-                SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, gc, true);
-                connection.Commit();
-                status.Text = "Parcours bien inséré dans la base de données !";
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromMiles(0.12)));
             }
-            catch(Exception ex)
-            {
-                status.Text = "Problème dans l'insertion dans la base de données (duplication,...)";
-                connection.Rollback();
-            }*/
-
-
         }
     }
 }

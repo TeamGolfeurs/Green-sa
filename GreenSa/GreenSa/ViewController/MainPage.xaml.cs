@@ -27,7 +27,6 @@ namespace GreenSa.ViewController
         public MainPage()
         {
             InitializeComponent();
-
             cielhaut.BackgroundColor = Color.FromHex("52D0DD");
             cielbas.BackgroundColor = Color.FromHex("52D0DD");
 
