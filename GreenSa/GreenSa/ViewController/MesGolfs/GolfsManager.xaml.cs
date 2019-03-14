@@ -1,7 +1,9 @@
 ﻿using GreenSa.ViewController.Option;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,7 +26,13 @@ namespace GreenSa.ViewController.MesGolfs
          * */
         async private void OnAddGolfClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ImportGolfCourse());
+            try
+            {
+                await Navigation.PushAsync(new ImportGolfCourse());
+            } catch (TargetInvocationException exception)
+            {
+                Debug.WriteLine(exception.StackTrace);
+            }
         }
     }
 }
