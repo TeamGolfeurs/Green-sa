@@ -4,39 +4,45 @@
              xmlns:local="clr-namespace:GreenSa.MarkupExtension"
              xmlns:viewElements="clr-namespace:GreenSa.Models.ViewElements"
              x:Class="GreenSa.ViewController.MainPage" 
-            NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False">
     <!---->
 
     <ContentPage.Content>
-            <Grid x:Name="page" RowSpacing="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition x:Name="haut" Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <BoxView x:Name="cielhaut" Grid.Column="0" Grid.Row="0"/>
-                <Image x:Name="nuage" Source="logonuage.png" Grid.Column="0" Grid.Row="0"
-                       VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
-                       />
-                <Image x:Name="engrenage" Source="engre_icon.png" 
+    <Grid x:Name="page">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="haut" Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image x:Name="logo" Source="logo_main_page.png" Grid.Row="0"
+                    HorizontalOptions="CenterAndExpand"
+                    />
+        <Label Grid.Row="0" Text="GREEN'SA" FontAttributes="Bold" FontSize="30" VerticalOptions="End" HorizontalOptions="Center" Margin="50" TextColor="White"/>
+        <ImageButton x:Name="engrenage" Source="engre_icon.png" BackgroundColor="Transparent"
                        HorizontalOptions="End" VerticalOptions="Start" 
-                       HeightRequest="25" Margin="5"
+                       HeightRequest="25" Margin="10" Clicked="OnOptionsClicked"
                        />
-                <BoxView x:Name="cielbas" Grid.Column="0" Grid.Row="1"/>
-                <Image x:Name="fond" Grid.Column="0" Grid.Row="1" Source="fond.png" VerticalOptions="EndAndExpand"/>
-                <Grid x:Name="boutons" Grid.Row="1" Grid.Column="0" RowSpacing="8" Margin="15">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="25*" x:Name="r0"/>
-                        <RowDefinition Height="25*" x:Name="r1"/>
-                        <RowDefinition Height="25*" x:Name="r2"/>
-                        <RowDefinition Height="25*" x:Name="r3"/>
-                    </Grid.RowDefinitions>
-                    <viewElements:MyButton x:Name="jouer" Grid.Row="1"  Text="JOUER" FontSize="24" Clicked="OnPlayClicked"/>
-                    <viewElements:MyButton x:Name="profil" Grid.Row="2" Text="PROFIL" FontSize="24" Clicked="OnProfilClicked"/>
-                    <viewElements:MyButton x:Name="mesgolfs" Grid.Row="3" Text="MES GOLFS" FontSize="24" Clicked="OnGolfClicked"/>
-                </Grid>
+        <Grid x:Name="boutons" Grid.Row="1" RowSpacing="8" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" x:Name="r0"/>
+                <RowDefinition Height="*" x:Name="r1"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="duo" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" x:Name="c0"/>
+                    <ColumnDefinition Width="*" x:Name="c1"/>
+                </Grid.ColumnDefinitions>
+                <ImageButton x:Name="jouer" Source="play.png" Grid.Column="0"
+                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="10" Clicked="OnPlayClicked" BackgroundColor="Transparent"/>
+                <Label Grid.Column="0" Text="JOUER" FontAttributes="Bold" FontSize="20" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
+                <ImageButton x:Name="profil" Source="profil.png" Grid.Column="1"
+                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="10" Clicked="OnProfilClicked" BackgroundColor="Transparent"/>
+                <Label Grid.Column="1" Text="PROFIL" FontAttributes="Bold" FontSize="20" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
             </Grid>
+            <ImageButton x:Name="mesgolfs" Source="golfs.png" Grid.Row="1"
+                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="10" Clicked="OnGolfClicked" BackgroundColor="Transparent"/>
+            <Label Grid.Row="1" Text="MES GOLFS" FontAttributes="Bold" FontSize="20" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
+            
+        </Grid>
+    </Grid>
     </ContentPage.Content>
 </ContentPage>

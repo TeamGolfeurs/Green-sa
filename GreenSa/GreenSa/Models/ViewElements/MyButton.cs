@@ -17,5 +17,14 @@ namespace GreenSa.Models.ViewElements
             this.CornerRadius = 50;
             this.BorderWidth = 2;
         }
+        public MyButton(Color bc, Double opacity) : base()
+        {
+            this.BackgroundColor = bc;
+            this.Opacity = opacity;
+            this.BorderColor = bc;
+            this.TextColor = Color.White;
+            this.CornerRadius = 50;
+            this.BorderWidth = 2;
+        }
     }
 }
