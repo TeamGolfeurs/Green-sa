@@ -7,6 +7,7 @@ using GreenSa.Models.Tools.GPS_Maps;
 using Xamarin.Forms.Maps;
 using TK.CustomMap;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 //using Xamarin.Forms.Maps;
 //using Xamarin.Forms.GoogleMaps;
 
@@ -15,42 +16,46 @@ namespace GreenSa.ViewController.Option
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ImportGolfCourse : ContentPage
     {
-       // private Xamarin.Forms.GoogleMaps.Map map;//
+        // private Xamarin.Forms.GoogleMaps.Map map;//
+        List<Pin> pins;
 
         public ImportGolfCourse()
         {
             InitializeComponent();
-            golfNameLabel.IsVisible = true;
-            golfNameEntry.IsVisible = false;
+            this.SetGolfNameVisibility(false);
+            this.deletePin.IsVisible = false;
 
-            map.update();
+            this.pins = new List<Pin>();
 
-            /*TKCustomMapPin[] pins = new TKCustomMapPin[20];
-            map.CustomPins = pins;
-
-            TKCustomMapPin pin = new TKCustomMapPin();
-            var position = new Position(47.364765, -1.915990);
-            pin.Position = position;
-            pin.Title = "Hole 1";
-            pin.Subtitle = "b";
-            pin.DefaultPinColor = Color.Blue;
-            pin.ShowCallout = true;
-            pin.IsDraggable = true;
-            pins[0] = pin;*/
-
-            Position clickPos = new Position(47.364765, 1.95990);
-            var holePin = new Pin()
+            MessagingCenter.Subscribe<Pin>(this, "pinClicked", (pin) =>
             {
-                Type = PinType.Place,
-                Position = clickPos,
-                Label = "Trou"
-            };
-            map.addPin(holePin);
+                this.deletePin.IsVisible = true;
+            });
+            MessagingCenter.Subscribe<Pin>(this, "getAddGolfMapPins", (pin) => {
+                this.pins.Add(pin);
+                if (this.pins.Count == 18)
+                {
+                    this.SetGolfNameVisibility(true);
+                } else
+                {
+                    if (this.pins.Count == 9)
+                    {
+                        this.SetGolfNameVisibility(true);
+                    }
+                    else
+                    {
+                        this.SetGolfNameVisibility(false);
+                    }
+                }
+                
+            });
+            map.update();
+        }
 
-            /*map.MapClickedCommand = new Command<Position>(Map_ClickedCommand);
-
-            
-            map.PinSelected += (sender, e) => this.DisplayAlert("test", "testt", "tessts");*/
+        private void SetGolfNameVisibility(Boolean isVisible)
+        {
+            golfNameLabel.IsVisible = isVisible;
+            golfNameEntry.IsVisible = isVisible;
         }
 
         private async void OnLocalizeClick(object sender, EventArgs e)
@@ -62,6 +67,32 @@ namespace GreenSa.ViewController.Option
             {
                 map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromMiles(0.12)));
             }
+        }
+
+        private void OnValidateClick(object sender, EventArgs e)
+        {
+            if (this.pins.Count == 9)
+            {
+                this.DisplayAlert("Succès", "Le 9 trous : " + golfNameEntry.Text + " a été créé avec succès", "Continuer");
+            }
+            else if (this.pins.Count == 18)
+            {
+                this.DisplayAlert("Succès", "Le 18 trous : " + golfNameEntry.Text + " a été créé avec succès", "Continuer");
+            }
+            else
+            {
+                this.DisplayAlert("Erreur", "Un parcours ne peut être que de 9 ou 18 trous", "Ok");
+            }
+        }
+
+        private async void OnDeletePinClick(object sender, EventArgs e)
+        {
+            var confirmDelete = await this.DisplayAlert("Suppression d'un trou", "Voulez vous supprimer ce trou ?", "Oui", "Non");
+            if (confirmDelete)
+            {
+                MessagingCenter.Send<Object>(sender, "deleteSelectedPin");
+            }
+            this.deletePin.IsVisible = false;
         }
     }
 }

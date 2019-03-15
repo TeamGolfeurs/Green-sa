@@ -5,7 +5,33 @@
              x:Class="GreenSa.ViewController.MesGolfs.GolfsManager">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Golf list" HorizontalOptions="CenterAndExpand" />
+            <viewElements:MyLabel Text="Liste de vos parcours de golf" FontSize="Large" HorizontalOptions="CenterAndExpand" />
+            <ListView ItemsSource="{Binding GolfCourses}" VerticalOptions="FillAndExpand" CachingStrategy="RecycleElement" RowHeight="60">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10,10,10,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="{Binding Name}" Font="Medium" VerticalTextAlignment="Center" />
+                                <Image Source="croix_suppression.png" Grid.Row="0" Grid.Column="5">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding Name}" Tapped="DeleteGolfCourse"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <viewElements:MyButton Text="Ajouter un parcours" x:Name="addGolf" Clicked="OnAddGolfClicked" VerticalOptions="End"
                     TextColor="White" BorderRadius="50" BorderWidth="2" Margin="10"/>
         </StackLayout>

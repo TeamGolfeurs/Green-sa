@@ -24,9 +24,18 @@
                 <viewelements:MyLabel Text="Nom du golf :" x:Name="golfNameLabel" FontSize="Medium" Grid.Row="1" Grid.Column="0" Margin="10, 5, 0, 0"/>
                 <Entry Text="Golf de Savenay" x:Name="golfNameEntry" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
             </Grid>
-            <viewelements:MyLabel Text="Trou n°1" x:Name="status" FontSize="Medium" HorizontalOptions="Center" />
             <gps_maps:AddGolfMap x:Name="map" MapType="Satellite" WidthRequest="960" HeightRequest="100" VerticalOptions="FillAndExpand" IsVisible="true"/>
-            <viewelements:MyButton x:Name="validHole" Text="Valider trou n°1" Margin="10"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <viewelements:MyButton Grid.Row="0" Grid.Column="0" x:Name="validHole" Font="small" Text="Créer parcours" Margin="10" Clicked="OnValidateClick"/>
+                <viewelements:MyButton Grid.Row="0" Grid.Column="1" x:Name="deletePin" Font="small" Text="Supprimer trou" Margin="10" Clicked="OnDeletePinClick"/>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

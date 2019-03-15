@@ -56,6 +56,8 @@
     <Compile Include="Models\Tools\Services\NotAvaibleException.cs" />
     <Compile Include="Models\Tools\Services\WindInfo.cs" />
     <Compile Include="Models\Tools\Services\WindService.cs" />
+    <Compile Include="Models\ViewElements\BaseViewModel.cs" />
+    <Compile Include="Models\ViewElements\GolfCourseListViewModel.cs" />
     <Compile Include="Models\ViewElements\MyLabel.cs" />
     <Compile Include="Models\ViewElements\MyButton.cs" />
     <Compile Include="Persistence\ISQLiteDb.cs" />
@@ -370,7 +372,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Ressources\Images\croix_suppression.png" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\MesGolfs\GolfsManager.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
