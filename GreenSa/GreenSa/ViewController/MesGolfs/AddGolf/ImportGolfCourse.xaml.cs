@@ -5,7 +5,6 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 using GreenSa.Models.Tools.GPS_Maps;
 using Xamarin.Forms.Maps;
-using TK.CustomMap;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 //using Xamarin.Forms.Maps;
