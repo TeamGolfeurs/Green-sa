@@ -28,14 +28,37 @@ namespace Greensa.Droid
     public class AddGolfMapRenderer : MapRenderer
     {
 
+        GoogleMap map;
+        private List<Marker> Markers;
+
         public AddGolfMapRenderer(Context context) : base(context)
         {
-            this.pinsCount = 0;
+            this.Markers = new List<Marker>();
+
+            //Suscribe to get a notification to delete the last pin
+            MessagingCenter.Subscribe<Object>(this, "deleteLastPin", (obj) =>
+            {
+                if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
+                {
+                    var markerToDelete = this.Markers[this.Markers.Count - 1];
+                    this.Markers.RemoveAt(this.Markers.Count - 1);
+                    markerToDelete.Remove();
+                }
+            });
+            //Suscribe to get a notification to delete the last pin
+            MessagingCenter.Subscribe<Object>(this, "deleteAllPins", (obj) =>
+            {
+                if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
+                {
+                    foreach (Marker markerToDelete in this.Markers)
+                    {
+                        markerToDelete.Remove();
+                    }
+                    this.Markers.Clear();
+                }
+            });
         }
 
-        GoogleMap map;
-        int pinsCount;
-        Marker selectedMarker;
 
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
@@ -57,45 +80,18 @@ namespace Greensa.Droid
                 return;
         }
 
-        private class MyMarkerClickListener : Java.Lang.Object, IOnMarkerClickListener
-        {
-            AddGolfMapRenderer context;
-            public MyMarkerClickListener(AddGolfMapRenderer context)
-            {
-                this.context = context;
-            }
-
-            public bool OnMarkerClick(Marker marker)
-            {
-                this.context.selectedMarker = marker;
-                MessagingCenter.Send<Object>(marker, "pinClicked");
-                return true;
-            }
-        }
 
         protected override void OnMapReady(Android.Gms.Maps.GoogleMap map)
         {
             base.OnMapReady(map);
             this.map = map;
-            MessagingCenter.Subscribe<Object>(this, "deleteSelectedPin", (obj) =>
-            {
-                this.selectedMarker.Remove();
-            });
-            /*map.MarkerClick += (sender, e) =>
-            {
-                this.selectedMarker = sender as Marker;
-                MessagingCenter.Send<Object>(sender, "pinClicked");
-            };*/
-            map.SetOnMarkerClickListener(new MyMarkerClickListener(this));
-            
             map.MapClick += (sender, e) =>
             {
-                if (this.pinsCount < 18)
+                if (this.Markers.Count < 18)
                 {
-                    this.pinsCount++;
                     var pin = new Pin()
                     {
-                        Label = "Trou n°"+this.pinsCount,
+                        Label = "Trou n°"+ (this.Markers.Count+1),
                         Position = new Position(e.Point.Latitude, e.Point.Longitude)
                     };
                     MessagingCenter.Send<Pin>(pin, "getAddGolfMapPins");
@@ -104,6 +100,7 @@ namespace Greensa.Droid
                     BitmapDescriptor ic = BitmapDescriptorFactory.FromResource(Resource.Drawable.flag);
                     marker.SetIcon(ic);
                     var addedMarker = this.map.AddMarker(marker);
+                    this.Markers.Add(addedMarker);
                 }
             };
         }

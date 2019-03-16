@@ -5,7 +5,6 @@
              xmlns:viewElements="clr-namespace:GreenSa.Models.ViewElements"
              x:Class="GreenSa.ViewController.MainPage" 
              NavigationPage.HasNavigationBar="False">
-    <!---->
 
     <ContentPage.Content>
     <Grid x:Name="page">

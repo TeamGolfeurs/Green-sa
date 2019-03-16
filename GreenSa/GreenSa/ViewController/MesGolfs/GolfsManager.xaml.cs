@@ -24,7 +24,6 @@ namespace GreenSa.ViewController.MesGolfs
         public GolfsManager()
         {
             InitializeComponent();
-            
         }
 
         /**
@@ -37,8 +36,8 @@ namespace GreenSa.ViewController.MesGolfs
             List<GolfCourse> res = await GestionGolfs.getListGolfsAsync(null);
             //Met à jour la liste des golfs dans la vue
             gclvm = new GolfCourseListViewModel(res);
-            String str = "";
-            /*foreach (GolfCourse gc in gclvm.GolfCourses)
+            /*String str = "";
+            foreach (GolfCourse gc in gclvm.GolfCourses)
             {
                 str += gc.ToString();
             }
@@ -72,7 +71,6 @@ namespace GreenSa.ViewController.MesGolfs
                 var toDelete = image.BindingContext as GolfCourse;
                 var vm = BindingContext as GolfCourseListViewModel;
                 vm.RemoveGolfCourse.Execute(toDelete);
-                await this.DisplayAlert("Suppression d'un golf", name + " a été supprimé avec succès !", "Ok");
             }
         }
     }
