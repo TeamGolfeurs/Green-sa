@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewelements="clr-namespace:GreenSa.Models.ViewElements"
+             xmlns:tk="clr-namespace:TK.CustomMap;assembly=TK.CustomMap"
+             xmlns:gps_maps="clr-namespace:GreenSa.Models.Tools.GPS_Maps"
+             x:Class="GreenSa.ViewController.Option.ImportGolfCourse">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <viewelements:MyLabel Text="Import d'un nouveau parcours" FontSize="Large" HorizontalOptions="Center"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <viewelements:MyLabel Text="Lieu :" x:Name="cityLabel" FontSize="Medium" Grid.Row="0" Grid.Column="0" Margin="10, 5, 0, 0"/>
+                <Entry Text="Golf de Savenay" x:Name="cityEntry" Grid.Row="0" Grid.Column="1"/>
+                <viewelements:MyButton x:Name="localizeCity" Text="Localiser" Margin="5" Grid.Row="0" Grid.Column="2" Clicked="OnLocalizeClick"/>
+                <viewelements:MyLabel Text="Nom du golf :" x:Name="golfNameLabel" FontSize="Medium" Grid.Row="1" Grid.Column="0" Margin="10, 5, 0, 0"/>
+                <Entry Text="Golf de Savenay" x:Name="golfNameEntry" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
+            </Grid>
+            <gps_maps:AddGolfMap x:Name="map" MapType="Satellite" WidthRequest="960" HeightRequest="100" VerticalOptions="FillAndExpand" IsVisible="true"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <viewelements:MyButton Grid.Row="0" Grid.Column="0" x:Name="validHole" Font="small" Text="Créer parcours" Margin="10" Clicked="OnValidateClick"/>
+                <viewelements:MyButton Grid.Row="0" Grid.Column="1" x:Name="deletePin" Font="small" Text="Supprimer trou" Margin="10" Clicked="OnDeletePinClick"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

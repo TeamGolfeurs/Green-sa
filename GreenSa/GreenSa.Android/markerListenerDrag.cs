@@ -43,14 +43,14 @@ namespace Greensa.Droid
         public void OnMarkerDragEnd(Marker marker)
         {
             cmr.UpdatePolyLinePos(false,marker.Position);
-            marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.shape_circle));
+            marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.Target));
 
         }
 
         public void OnMarkerDragStart(Marker marker)
         {
             cmr.UpdatePolyLinePos(false, marker.Position);
-            marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.funny));
+            marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.BigTarget));
             
         }
 

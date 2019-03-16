@@ -20,7 +20,7 @@ using Greensa.Droid;
 using GreenSa.Droid;
 using System.Collections.ObjectModel;
 using GreenSa.Models.GolfModel;
-using GreenSa.ViewController.PartieGolf.Game;
+using GreenSa.ViewController.Play.Game;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace Greensa.Droid
@@ -56,7 +56,7 @@ namespace Greensa.Droid
         }
         
         GoogleMap map;
-        Polyline polyline;//the current polyline
+        private Polyline polyline;//the current polyline
         private Circle circle;
         private Circle circleMin;
         private Circle circleMax;
@@ -93,7 +93,6 @@ namespace Greensa.Droid
             base.OnMapReady(map);
             this.map = map;
             map.SetOnMarkerDragListener(new markerListenerDrag(this));
-           
             //UpdatePolyLinePos(true);
         }
 
@@ -110,7 +109,7 @@ namespace Greensa.Droid
             {
                 marker.Draggable(true);
                 marker.SetRotation(30.5f);
-                BitmapDescriptor ic = BitmapDescriptorFactory.FromResource(Resource.Drawable.shape_circle);
+                BitmapDescriptor ic = BitmapDescriptorFactory.FromResource(Resource.Drawable.Target);
 
                 marker.SetIcon(ic);
                 marker.Anchor(0.5f, 0.5f);

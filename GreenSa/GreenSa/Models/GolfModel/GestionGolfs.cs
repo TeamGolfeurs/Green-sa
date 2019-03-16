@@ -36,8 +36,7 @@ namespace GreenSa.Models.GolfModel
             //si la table n'existe pas encore on parse les fichiers XML (/Ressources) et on insert
              
             await connection.CreateTableAsync<Hole>();
-
-            await connection.CreateTableAsync <MyPosition>();
+            await connection.CreateTableAsync<MyPosition>();
             await connection.CreateTableAsync<GolfCourse>();
 
             List<GolfCourse> gfcs = (await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<GolfCourse>(connection, recursive: true));
