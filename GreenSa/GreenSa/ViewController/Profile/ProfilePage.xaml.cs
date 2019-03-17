@@ -11,13 +11,20 @@ using GreenSa.ViewController.Option;
 using GreenSa.ViewController.MesGolfs;
 using GreenSa.ViewController.Profile;
 using GreenSa.Models.GolfModel;
+using GreenSa.Models.Profiles;
 using GreenSa.Models.ViewElements;
+using SQLite;
+using System.Collections.ObjectModel;
+using GreenSa.Persistence;
 
 namespace GreenSa.ViewController.Profile
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProfilePage : ContentPage
     {
+        private SQLiteConnection DBconnection;
+        private Profil LocalUser;
+
         public ProfilePage()
         {
             InitializeComponent();
@@ -27,6 +34,44 @@ namespace GreenSa.ViewController.Profile
             golfref.Margin = new Thickness(0, 15, 0, 0);
             index.Margin = new Thickness(0, 15, 0, 0);
             niv.Margin = new Thickness(0, 15, 0, 0);
+
+            this.InitBDD();
+            LocalUser = GetProfile("localUser");
+
+            user.Text = LocalUser.Username;
+            index.Text = LocalUser.Index.ToString();
+            golfref.Text = LocalUser.GolfRef;
+
+            if (LocalUser.Index > 30) { niv.Text = "Debutant"; }
+            else if (LocalUser.Index > 18) { niv.Text = "Moyen"; }
+            else if (LocalUser.Index > 11) { niv.Text = "Confirmé"; }
+            else if (LocalUser.Index >5 ) { niv.Text = "Très bon joueur"; }
+            else { niv.Text = "Compétitif"; }
+
+        }
+
+        public void InitBDD()
+        {
+            DBconnection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            System.Diagnostics.Debug.WriteLine("connection ok");
+            DBconnection.CreateTable<Profil>();
+            System.Diagnostics.Debug.WriteLine("create ok");
+            if (!DBconnection.Table<Profil>().Any())
+            {
+                AddLocalUser();
+            }
+        }
+
+        public void AddLocalUser()
+        {
+            DBconnection.Insert(new Profil());
+            System.Diagnostics.Debug.WriteLine("user added");
+        }
+
+        public Profil GetProfile(string id)
+        {
+            System.Diagnostics.Debug.WriteLine("get ok");
+            return DBconnection.Table<Profil>().FirstOrDefault(pro => pro.Id == id);
         }
 
         /**
