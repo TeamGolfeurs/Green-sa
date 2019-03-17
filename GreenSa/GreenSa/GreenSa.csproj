@@ -57,6 +57,7 @@
     <Compile Include="Models\Tools\Services\WindInfo.cs" />
     <Compile Include="Models\Tools\Services\WindService.cs" />
     <Compile Include="Models\ViewElements\BaseViewModel.cs" />
+    <Compile Include="Models\ViewElements\NumericValidationBehavior.cs" />
     <Compile Include="Models\ViewElements\GolfCourseListViewModel.cs" />
     <Compile Include="Models\ViewElements\MyLabel.cs" />
     <Compile Include="Models\ViewElements\MyButton.cs" />
@@ -218,12 +219,15 @@
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.3.6.0.220655\lib\netstandard1.0\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Maps, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.Maps.2.5.0.122203\lib\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.Maps.dll</HintPath>
-    </Reference>
     <Reference Include="SkiaSharp">
       <HintPath>..\..\packages\SkiaSharp.1.60.0\lib\portable-net45+win8+wpa81+wp8\SkiaSharp.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Maps, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.Maps.3.6.0.220655\lib\netstandard1.0\Xamarin.Forms.Maps.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Maps.Design, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.Maps.3.6.0.220655\lib\netstandard1.0\Xamarin.Forms.Maps.Design.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.3.6.0.220655\lib\netstandard1.0\Xamarin.Forms.Platform.dll</HintPath>

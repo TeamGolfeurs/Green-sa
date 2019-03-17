@@ -30,11 +30,22 @@ namespace Greensa.Droid
 
         GoogleMap map;
         private List<Marker> Markers;
+        private Boolean isParValidate;
 
         public AddGolfMapRenderer(Context context) : base(context)
         {
             this.Markers = new List<Marker>();
-
+            this.isParValidate = true;
+            //Suscribe to get a notification to delete the last pin
+            MessagingCenter.Subscribe<Object>(this, "validPar", (obj) =>
+            {
+                if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
+                {
+                    int par = (int)obj;
+                    this.Markers[this.Markers.Count - 1].Title = this.Markers[this.Markers.Count - 1].Title + " / Par : " + par;
+                }
+                this.isParValidate = true;
+            });
             //Suscribe to get a notification to delete the last pin
             MessagingCenter.Subscribe<Object>(this, "deleteLastPin", (obj) =>
             {
@@ -43,6 +54,7 @@ namespace Greensa.Droid
                     var markerToDelete = this.Markers[this.Markers.Count - 1];
                     this.Markers.RemoveAt(this.Markers.Count - 1);
                     markerToDelete.Remove();
+                    this.isParValidate = true;
                 }
             });
             //Suscribe to get a notification to delete the last pin
@@ -55,6 +67,7 @@ namespace Greensa.Droid
                         markerToDelete.Remove();
                     }
                     this.Markers.Clear();
+                    this.isParValidate = true;
                 }
             });
         }
@@ -87,7 +100,7 @@ namespace Greensa.Droid
             this.map = map;
             map.MapClick += (sender, e) =>
             {
-                if (this.Markers.Count < 18)
+                if (this.Markers.Count < 18 && this.isParValidate)
                 {
                     var pin = new Pin()
                     {
@@ -96,11 +109,12 @@ namespace Greensa.Droid
                     };
                     MessagingCenter.Send<Pin>(pin, "getAddGolfMapPins");
                     var marker = base.CreateMarker(pin);
-                    marker.Draggable(true);
+                    //marker.Draggable(true);
                     BitmapDescriptor ic = BitmapDescriptorFactory.FromResource(Resource.Drawable.flag);
                     marker.SetIcon(ic);
                     var addedMarker = this.map.AddMarker(marker);
                     this.Markers.Add(addedMarker);
+                    this.isParValidate = false;
                 }
             };
         }

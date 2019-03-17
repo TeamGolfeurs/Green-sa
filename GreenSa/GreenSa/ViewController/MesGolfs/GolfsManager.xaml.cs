@@ -1,5 +1,6 @@
 ﻿using GreenSa.Models.GolfModel;
 using GreenSa.Models.ViewElements;
+using GreenSa.Persistence;
 using GreenSa.ViewController.Option;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,9 @@ namespace GreenSa.ViewController.MesGolfs
             }
         }
 
+        /** Deletes a golf course from ListView and from database using name (private key)
+         * 
+         */
         private async void DeleteGolfCourse(object sender, EventArgs e)
         {
             var image = sender as Image;
@@ -68,9 +72,23 @@ namespace GreenSa.ViewController.MesGolfs
             var confirmDelete = await this.DisplayAlert("Suppression d'un golf", "Voulez vous vraiment supprimer le golf : "+ name + " ?", "Oui", "Non");
             if (confirmDelete)
             {
+                //remove golf course cell from ListView
                 var toDelete = image.BindingContext as GolfCourse;
                 var vm = BindingContext as GolfCourseListViewModel;
                 vm.RemoveGolfCourse.Execute(toDelete);
+
+                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+                try
+                {
+                    //remove golf course from database
+                    connection.BeginTransaction();
+                    connection.Delete<GolfCourse>(name);
+                    connection.Commit();
+                } catch (Exception bddException)
+                {
+                    await this.DisplayAlert("Erreur avec la base de donnée", bddException.StackTrace, "Ok");
+                    connection.Rollback();
+                }
             }
         }
     }
