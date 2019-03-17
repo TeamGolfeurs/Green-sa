@@ -22,34 +22,11 @@ namespace GreenSa.ViewController.Profile
         {
             InitializeComponent();
 
-            cielhaut.BackgroundColor = Color.FromHex("52D0DD");
-            cielbas.BackgroundColor = Color.FromHex("52D0DD");
+            boutons.Margin = new Thickness(10, 0, 10, 15);
 
-            nuage.HeightRequest = haut.Height.Value * 120;
-
-            var flecheGestureRecognizer = new TapGestureRecognizer();
-            flecheGestureRecognizer.Tapped += (s, e) =>
-            {
-                OnArrowClicked(s, e);
-            };
-            fleche.GestureRecognizers.Add(flecheGestureRecognizer);
-
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (s, e) =>
-            {
-                OnOptionsClicked(s, e);
-            };
-            engrenage.GestureRecognizers.Add(tapGestureRecognizer);
-
-            //buttons
-            clubs.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
-            clubs.BorderWidth = 0;
-
-            parties.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
-            parties.BorderWidth = 0;
-
-            stats.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
-            stats.BorderWidth = 0;
+            golfref.Margin = new Thickness(0, 15, 0, 0);
+            index.Margin = new Thickness(0, 15, 0, 0);
+            niv.Margin = new Thickness(0, 15, 0, 0);
         }
 
         /**
