@@ -41,7 +41,7 @@ namespace GreenSa.ViewController
         }
         /**
          * Méthode déclenchée au click sur le bouton "Profil"
-         * Redirige vers la page "profil"
+         * Redirige vers la page "pProfil"
          * */
         async private void OnProfilClicked(object sender, EventArgs e)
         {

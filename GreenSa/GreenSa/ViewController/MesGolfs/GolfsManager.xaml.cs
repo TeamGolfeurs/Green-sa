@@ -1,5 +1,6 @@
 ﻿using GreenSa.Models.GolfModel;
 using GreenSa.Models.ViewElements;
+using GreenSa.Persistence;
 using GreenSa.ViewController.Option;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,6 @@ namespace GreenSa.ViewController.MesGolfs
         public GolfsManager()
         {
             InitializeComponent();
-            
         }
 
         /**
@@ -37,8 +37,8 @@ namespace GreenSa.ViewController.MesGolfs
             List<GolfCourse> res = await GestionGolfs.getListGolfsAsync(null);
             //Met à jour la liste des golfs dans la vue
             gclvm = new GolfCourseListViewModel(res);
-            String str = "";
-            /*foreach (GolfCourse gc in gclvm.GolfCourses)
+            /*String str = "";
+            foreach (GolfCourse gc in gclvm.GolfCourses)
             {
                 str += gc.ToString();
             }
@@ -61,6 +61,9 @@ namespace GreenSa.ViewController.MesGolfs
             }
         }
 
+        /** Deletes a golf course from ListView and from database using name (private key)
+         * 
+         */
         private async void DeleteGolfCourse(object sender, EventArgs e)
         {
             var image = sender as Image;
@@ -69,10 +72,23 @@ namespace GreenSa.ViewController.MesGolfs
             var confirmDelete = await this.DisplayAlert("Suppression d'un golf", "Voulez vous vraiment supprimer le golf : "+ name + " ?", "Oui", "Non");
             if (confirmDelete)
             {
+                //remove golf course cell from ListView
                 var toDelete = image.BindingContext as GolfCourse;
                 var vm = BindingContext as GolfCourseListViewModel;
                 vm.RemoveGolfCourse.Execute(toDelete);
-                await this.DisplayAlert("Suppression d'un golf", name + " a été supprimé avec succès !", "Ok");
+
+                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+                try
+                {
+                    //remove golf course from database
+                    connection.BeginTransaction();
+                    connection.Delete<GolfCourse>(name);
+                    connection.Commit();
+                } catch (Exception bddException)
+                {
+                    await this.DisplayAlert("Erreur avec la base de donnée", bddException.StackTrace, "Ok");
+                    connection.Rollback();
+                }
             }
         }
     }
