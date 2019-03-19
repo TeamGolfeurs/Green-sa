@@ -3,9 +3,11 @@ using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 using Xamarin.Forms;
 
 namespace GreenSa.Models.Profiles
@@ -19,6 +21,7 @@ namespace GreenSa.Models.Profiles
         public double Index { get; set; }
         [MaxLength(50)]
         public string GolfRef { get; set; }
+        public int Photo { get; set; }
 
         public Profil()
         {
@@ -27,6 +30,7 @@ namespace GreenSa.Models.Profiles
             //Im = new Image { Source = "basicProfile.png" };
             Index = 53.5;
             GolfRef = "Votre golf favori";
+            Photo = 1;
         }
     }
 }

@@ -41,6 +41,8 @@ namespace GreenSa.ViewController.Profile
             user.Text = LocalUser.Username;
             index.Text = LocalUser.Index.ToString();
             golfref.Text = LocalUser.GolfRef;
+            System.Diagnostics.Debug.WriteLine("user" + LocalUser.Photo.ToString() + ".png");
+            photo.Source = "user" + LocalUser.Photo.ToString() + ".png";
 
             if (LocalUser.Index > 30) { niv.Text = "Debutant"; }
             else if (LocalUser.Index > 18) { niv.Text = "Moyen"; }
@@ -48,6 +50,25 @@ namespace GreenSa.ViewController.Profile
             else if (LocalUser.Index >5 ) { niv.Text = "Très bon joueur"; }
             else { niv.Text = "Compétitif"; }
 
+        }
+
+        protected override void OnAppearing()
+        {
+            LocalUser = GetProfile("localUser");
+
+            user.Text = LocalUser.Username;
+
+            index.Text = LocalUser.Index.ToString();
+
+            golfref.Text = LocalUser.GolfRef;
+
+            photo.Source = "user" + LocalUser.Photo + ".png";
+
+            if (LocalUser.Index > 30) { niv.Text = "Debutant"; }
+            else if (LocalUser.Index > 18) { niv.Text = "Moyen"; }
+            else if (LocalUser.Index > 11) { niv.Text = "Confirmé"; }
+            else if (LocalUser.Index > 5) { niv.Text = "Très bon joueur"; }
+            else { niv.Text = "Compétitif"; }
         }
 
         public void InitBDD()

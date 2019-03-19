@@ -8,31 +8,24 @@
         <Grid x:Name="page" RowSpacing="0">
             
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="haut" Height="*"/>
-                <RowDefinition Height="1549"/>
+                <RowDefinition x:Name="haut" Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
-            <BoxView x:Name="cielhaut" Grid.Row="0"/>
-            
-            <Image x:Name="nuage" Source="nuage_profil.png" Grid.Row="0"
-                       VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"
+            <Image x:Name="logo" Source="fond_profile_page.png" Grid.Row="0"
+                    HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"
+                    />
+            <Image x:Name="photo" Source="user1.png" Grid.Row="0"
+                    HorizontalOptions="Center" VerticalOptions="Start" Margin="30" HeightRequest="150"/>
+            <ImageButton x:Name="modifier" Source="modifier_photo.png" BackgroundColor="Transparent"
+                       HorizontalOptions="Center" VerticalOptions="Start" 
+                       HeightRequest="30" Margin="15" Clicked="OnPhotoClicked"
                        />
-            <Image x:Name="fleche" Source="fleche.png" Grid.Row="0"
+            <ImageButton x:Name="arrow" Source="fleche.png" BackgroundColor="Transparent"
                        HorizontalOptions="Start" VerticalOptions="Start" 
-                       HeightRequest="25" Margin="10"
+                       HeightRequest="25" Margin="10" Clicked="OnArrowClicked"
                        />
-            <Image x:Name="engrenage" Source="engre_icon.png" Grid.Row="0"
-                       HorizontalOptions="End" VerticalOptions="Start" 
-                       HeightRequest="25" Margin="10"
-                       />
-            
-            <BoxView x:Name="cielbas" Grid.Row="1"/>
-            
-            <Image x:Name="fond" Grid.Row="1" Source="fond.png" VerticalOptions="EndAndExpand"/>
-            
-            <Grid x:Name="boutons" Grid.Row="1" Grid.Column="0" RowSpacing="8" Margin="15">
+            <Grid x:Name="boutons" Grid.Row="1" Grid.Column="0" RowSpacing="8">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="6*" x:Name="r0"/>
                     <RowDefinition Height="*" x:Name="t1"/>
                     <RowDefinition Height="2*" x:Name="r1"/>
                     <RowDefinition Height="*" x:Name="t2"/>
@@ -43,36 +36,42 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="1" Grid.Column="0" HorizontalOptions="CenterAndExpand"
-                       Text="Pseudo" FontSize="20" TextColor="White"/>
-                <Entry x:Name="username" Grid.Row="2" Grid.Column="0" VerticalOptions="CenterAndExpand"
+                <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="CenterAndExpand" VerticalOptions="End"
+                       Text="Pseudo" FontSize="20" TextColor="Gray" FontAttributes="Bold"/>
+                <Entry x:Name="username" Grid.Row="1" Grid.Column="0" VerticalOptions="CenterAndExpand"
                        PlaceholderColor="White" MaxLength="15" 
-                       TextColor="White"
+                       TextColor="Black"
                        IsSpellCheckEnabled="False"
                        Completed="OnNameCompleted"
-                       FontSize="40"
-                       HorizontalTextAlignment="Center"/>
+                       FontSize="30"
+                       HorizontalTextAlignment="Center"
+                       BackgroundColor="Transparent"
+                       FontAttributes="Bold"/>
 
-                <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="CenterAndExpand"
-                       Text="Index" FontSize="20" TextColor="White"/>
-                <Entry x:Name="index" Grid.Row="4" Grid.Column="0" VerticalOptions="CenterAndExpand"
+                <Label Grid.Row="2" Grid.Column="0" HorizontalOptions="CenterAndExpand" VerticalOptions="End"
+                       Text="Index" FontSize="20" TextColor="Gray" FontAttributes="Bold"/>
+                <Entry x:Name="index" Grid.Row="3" Grid.Column="0" VerticalOptions="CenterAndExpand"
                        PlaceholderColor="White" MaxLength="15" 
-                       TextColor="White"
+                       TextColor="Black"
                        IsSpellCheckEnabled="False"
                        Completed="OnIndexCompleted"
-                       FontSize="40"
+                       FontSize="30"
                        HorizontalTextAlignment="Center"
-                       Keyboard="Numeric"/>
+                       Keyboard="Numeric"
+                       BackgroundColor="Transparent"
+                       FontAttributes="Bold"/>
 
-                <Label Grid.Row="5" Grid.Column="0" HorizontalOptions="CenterAndExpand"
-                       Text="Golf de Référence" FontSize="20" TextColor="White"/>
-                <Entry x:Name="golfref" Grid.Row="6" Grid.Column="0" VerticalOptions="CenterAndExpand"
-                       PlaceholderColor="White" MaxLength="50" 
-                       TextColor="White"
+                <Label Grid.Row="4" Grid.Column="0" HorizontalOptions="CenterAndExpand" VerticalOptions="End"
+                       Text="Golf de Référence" FontSize="20" TextColor="Gray" FontAttributes="Bold"/>
+                <Entry x:Name="golfref" Grid.Row="5" Grid.Column="0" VerticalOptions="CenterAndExpand"
+                       PlaceholderColor="Black" MaxLength="50" 
+                       TextColor="Black"
                        IsSpellCheckEnabled="False"
                        Completed="OnGolfRefCompleted"
-                       FontSize="40"
-                       HorizontalTextAlignment="Center"/>
+                       FontSize="30"
+                       HorizontalTextAlignment="Center"
+                       BackgroundColor="Transparent"
+                       FontAttributes="Bold"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

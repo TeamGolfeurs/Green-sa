@@ -15,7 +15,7 @@
             <Image x:Name="logo" Source="fond_profile_page.png" Grid.Row="0"
                     HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"
                     />
-            <Image x:Name="photo" Source="profile_default.png" Grid.Row="0"
+            <Image x:Name="photo" Source="user1.png" Grid.Row="0"
                     HorizontalOptions="Center" VerticalOptions="Start" Margin="30" HeightRequest="150"
                     />
             <Label x:Name="user" Grid.Row="0" Text="Username" FontAttributes="Bold" FontSize="25" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>

@@ -31,32 +31,33 @@ namespace GreenSa.ViewController.Profile.Options
         {
             InitializeComponent();
 
-            cielhaut.BackgroundColor = Color.FromHex("52D0DD");
-            cielbas.BackgroundColor = Color.FromHex("52D0DD");
-
-            nuage.HeightRequest = haut.Height.Value * 120;
-
-            var flecheGestureRecognizer = new TapGestureRecognizer();
-            flecheGestureRecognizer.Tapped += (s, e) =>
-            {
-                OnArrowClicked(s, e);
-            };
-            fleche.GestureRecognizers.Add(flecheGestureRecognizer);
-
             //Initialisation de la BDD
             this.InitBDD();
             LocalUser = GetProfile("localUser");
             
             //elements
-            username.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
             username.Text = LocalUser.Username;
 
-            index.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
             index.Text = LocalUser.Index.ToString();
 
-            golfref.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
             golfref.Text = LocalUser.GolfRef;
 
+            photo.Source = "user" + LocalUser.Photo + ".png";
+
+            boutons.Margin = new Thickness(60, 15, 60, 60);
+        }
+
+        protected override void OnAppearing()
+        {
+            LocalUser = GetProfile("localUser");
+
+            username.Text = LocalUser.Username;
+
+            index.Text = LocalUser.Index.ToString();
+
+            golfref.Text = LocalUser.GolfRef;
+
+            photo.Source = "user" + LocalUser.Photo + ".png";
         }
 
         public void InitBDD()
@@ -101,29 +102,16 @@ namespace GreenSa.ViewController.Profile.Options
             DBconnection.Update(LocalUser);
         }
         /**
-            * Méthode déclenchée au click sur le bouton "Profil"
-            * Redirige vers la page "profil"
-            * */
-        async private void OnPartiesClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new MyGames.ViewPartieListPage());
-        }
-        /**
-            * Méthode déclenchée au click sur le bouton "MesGolfs"
-            * Redirige vers la page "GolfSelection"
-            * */
-        async private void OnStatsClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new Statistiques.SpecificStatistiques.DistanceClubPage());
-        }
-
-        /**
             * Méthode déclenchée au click sur le bouton "Back"
             * Redirige vers la page "MainMenu"
             * */
         async private void OnArrowClicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
+        }
+        async private void OnPhotoClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Profile.Options.ChooseAvatar());
         }
     }
 }
