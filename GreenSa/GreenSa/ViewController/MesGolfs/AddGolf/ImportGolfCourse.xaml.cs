@@ -12,6 +12,7 @@ using GreenSa.Models.GolfModel;
 using GreenSa.Models.Tools;
 using GreenSa.Persistence;
 using System.Reflection;
+using SQLite;
 //using Xamarin.Forms.Maps;
 //using Xamarin.Forms.GoogleMaps;
 
@@ -187,9 +188,9 @@ namespace GreenSa.ViewController.Option
                     this.DisplayAlert("Succès", "Le " + this.pins.Count + " trous : " + golfNameEntry.Text + " a été créé avec succès", "Continuer");
                     this.ManageAllPinsDelete();
                 }
-                catch (Exception bddException)
+                catch (SQLiteException bddException)
                 {
-                    this.DisplayAlert("Erreur avec la base de donnée", bddException.StackTrace, "Ok");
+                    this.DisplayAlert("Erreur avec la base de donnée", bddException.Source + " : Ce nom de golf existe déjà ou une autre erreur inattendu s'est produite", "Ok");
                     connection.Rollback();
                 }
             }

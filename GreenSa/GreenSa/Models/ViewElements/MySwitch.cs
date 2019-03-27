@@ -7,11 +7,11 @@ using Xamarin.Forms;
 
 namespace GreenSa.Models.ViewElements
 {
-    public class MyLabel : Label
+    public class MySwitch : Switch
     {
-        public MyLabel() : base()
+        public MySwitch() : base()
         {
-            this.TextColor = Color.FromHex("39B54A");
+            this.OnColor = Color.FromHex("39B54A");
         }
     }
 }

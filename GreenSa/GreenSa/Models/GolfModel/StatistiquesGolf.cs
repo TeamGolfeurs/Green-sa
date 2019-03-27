@@ -198,13 +198,14 @@ namespace GreenSa.Models.GolfModel
             //connection.InsertAll(shots);
             connection.CreateTable<ScoreHole>();
 
-            ScoreHole h = new ScoreHole(hole, shots.Count-hole.Par, isHit(shots, hole.Par),nbCoupPutt(shots),DateTime.Now);
+            ScoreHole h = new ScoreHole(hole, shots.Count-hole.Par, isHit(shots, hole.Par), nbCoupPutt(shots),DateTime.Now);
             SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, h, false);
             string sql = @"select last_insert_rowid()";
             h.Id = connection.ExecuteScalar<int>(sql);
             //connection.Insert(h);
             return h;
         }
+
         public async static Task saveGameForStats(ScorePartie scoreOfThisPartie)
         {
             SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
@@ -229,42 +230,43 @@ namespace GreenSa.Models.GolfModel
         }
 
 
-
-
-
-
-
-
-
-
-
-
-        private static int nbCoupPutt(List<Shot> shots)
+        /** Computes the number of shots before the ball gets onto the green
+         * shots : the list of the shots of a single hole
+         * return : the number of shots before the ball gets onto the green
+         */
+        private static int numberShotsBeforeGreen(List<Shot> shots)
         {
-            int nbCoupAvantPasserAuGreen = 0;
+            int shotsBeforeGreen = 0;
             Club used = shots[0].Club;
-            while ((!used.Equals(Club.PUTTER)) && nbCoupAvantPasserAuGreen < shots.Count - 1)//2 <4-1, 3 =4-1
+            while ((!used.Equals(Club.PUTTER)) && shotsBeforeGreen < shots.Count - 1)//2 <4-1, 3 =4-1
             {
-                nbCoupAvantPasserAuGreen++;
-                used = shots[nbCoupAvantPasserAuGreen].Club;
+                shotsBeforeGreen++;
+                used = shots[shotsBeforeGreen].Club;
             }
-            return shots.Count - nbCoupAvantPasserAuGreen;
+            return shotsBeforeGreen;
         }
 
+        /** Computes the number of putts
+         * shots : the list of the shots of a single hole
+         * return : the number of putts
+         */
+        private static int nbCoupPutt(List<Shot> shots)
+        {
+            int shotsBeforeGreen = numberShotsBeforeGreen(shots);
+            return shots.Count - shotsBeforeGreen;
+        }
+
+        /** Checks if the green was reached in regulation
+         * shots : the list of the shots of a single hole
+         * return : true if the number of shots before the ball gets onto the green is lower or equals to 2 under the par, false otherewise
+         */
         private static bool isHit(List<Shot> shots, int par)
         {
-            Club used = shots[0].Club;
-            int nbCoupAvantPasserAuGreen = 0;
-            while ((!used.Equals(Club.PUTTER)) && nbCoupAvantPasserAuGreen < shots.Count-1)//2 <4-1, 3 =4-1
-            {
-                nbCoupAvantPasserAuGreen++;
-                used = shots[nbCoupAvantPasserAuGreen].Club;
-            }
+            int shotsBeforeGreen = numberShotsBeforeGreen(shots);
+            //int nbCoutNecessairePourHit = (int) (3.0 / 5 * par);
+            int nbCoutNecessairePourHit = par - 2;
 
-            int nbCoutNecessairePourHit = (int) (3.0 / 5 * par);
-
-            return nbCoupAvantPasserAuGreen <= nbCoutNecessairePourHit;
-
+            return shotsBeforeGreen <= nbCoutNecessairePourHit;
         }
 
 

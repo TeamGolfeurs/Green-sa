@@ -57,6 +57,7 @@
     <Compile Include="Models\Tools\Services\WindInfo.cs" />
     <Compile Include="Models\Tools\Services\WindService.cs" />
     <Compile Include="Models\ViewElements\BaseViewModel.cs" />
+    <Compile Include="Models\ViewElements\MySwitch.cs" />
     <Compile Include="Models\ViewElements\NumericValidationBehavior.cs" />
     <Compile Include="Models\ViewElements\GolfCourseListViewModel.cs" />
     <Compile Include="Models\ViewElements\MyLabel.cs" />
