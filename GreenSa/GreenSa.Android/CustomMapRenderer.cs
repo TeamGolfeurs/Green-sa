@@ -37,7 +37,7 @@ namespace Greensa.Droid
                 }catch(Exception e) { }
             });
 
-            MessagingCenter.Subscribe<Partie>(this, "updateTheCircle", (sender) => {
+            /*MessagingCenter.Subscribe<Partie>(this, "updateTheCircle", (sender) => {
                 try
                 {
                     updateCircle(sender.CurrentClub.DistanceMoyenneJoueur);
@@ -52,7 +52,7 @@ namespace Greensa.Droid
                     
                 }
                 catch (Exception e) { }
-            });
+            });*/
         }
         
         GoogleMap map;

@@ -84,7 +84,6 @@ namespace GreenSa.Models.GolfModel
                 ScoreOfThisPartie.add(sh);
                 Shots.Clear();
             }
-
         }
 
         public async Task gameFinished(bool saveForStatistics)

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Diagnostics;
+using GreenSa.Persistence;
 
 namespace GreenSa.ViewController.Profile.MyClubs
 {
@@ -17,13 +18,9 @@ namespace GreenSa.ViewController.Profile.MyClubs
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ClubSelectionPage : ContentPage
     {
-        
-        Partie p;
-
-        public ClubSelectionPage(Partie partie)
+        public ClubSelectionPage()
         {
             InitializeComponent();
-            p = partie;
         }
 
         /**
@@ -47,19 +44,23 @@ namespace GreenSa.ViewController.Profile.MyClubs
 
             Btn.IsEnabled = false;
             Btn.Text = "En cours...";
+            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
+            await connection.CreateTableAsync<Club>();
             List<Club> clubselected = new List<Club>();
+            bool atLeastOneSelected = false;
             foreach (Club c in listviewclub.ItemsSource){
                 if(c.selected){
-                    clubselected.Add(c);
+                    atLeastOneSelected = true;
                 }
+                await SQLiteNetExtensionsAsync.Extensions.WriteOperations.UpdateWithChildrenAsync(connection, c);
             }
-            if (clubselected.Count == 0)
+            if (!atLeastOneSelected)
             {
                 await DisplayAlert("Aucun club selectionné", "Vous devez selectionner au moins un club", "ok");
-                return;
+            } else
+            {
+                await Navigation.PopAsync();
             }
-            p.Clubs = clubselected;
-            await Navigation.PushAsync(new ViewController.Play.Game.MainGamePage(p),false);
             Btn.IsEnabled = true;
             Btn.Text = "Valider";
         }

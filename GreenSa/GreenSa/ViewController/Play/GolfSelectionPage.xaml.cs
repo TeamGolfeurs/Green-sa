@@ -1,6 +1,7 @@
 ﻿using GreenSa.Models;
 using GreenSa.Models.GolfModel;
 using GreenSa.Models.Tools;
+using GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,12 @@ namespace GreenSa.ViewController.Play
             InitializeComponent();
             p = partie;
 
+        }
+
+        public GolfSelectionPage()
+        {
+            InitializeComponent();
+            p = null;
         }
 
         /**
@@ -45,8 +52,24 @@ namespace GreenSa.ViewController.Play
          private async void onGolfSelection(object sender, EventArgs e)
          {
             var g = ListGolfCourse.SelectedItem as GolfCourse;
-            p.GolfCourse = g;
-            await Navigation.PushAsync(new ViewController.Profile.MyClubs.ClubSelectionPage(p),false);
+            if (p == null)
+            {
+                await Navigation.PushAsync(new StatGolfCoursePage(g));
+            } else
+            {
+                p.GolfCourse = g;
+                Func<Club, bool> f = (c => true);
+                List<Club> clubselected = await GestionGolfs.getListClubsAsync(f);
+                clubselected.RemoveAll(c => c.selected == false);
+                if (clubselected.Count == 0)
+                {
+                    await this.DisplayAlert("Erreur", "Vous n'avez aucun club dans votre sac. Veuillez en choisir au moins un dans le page 'Profile'", "ok");
+                } else
+                {
+                    p.Clubs = clubselected;
+                    await Navigation.PushAsync(new ViewController.Play.Game.MainGamePage(p), false);
+                } 
+            }
          }
 
 

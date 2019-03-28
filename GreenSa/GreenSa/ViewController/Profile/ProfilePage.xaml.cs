@@ -82,8 +82,7 @@ namespace GreenSa.ViewController.Profile
          * */
         async private void OnClubsClicked(object sender, EventArgs e)
         {
-            Partie p = new Partie();
-            await Navigation.PushAsync(new MyClubs.ClubSelectionPage(p));
+            await Navigation.PushAsync(new MyClubs.ClubSelectionPage());
         }
         /**
          * Méthode déclenchée au click sur le bouton "Profil"
@@ -99,7 +98,7 @@ namespace GreenSa.ViewController.Profile
          * */
         async private void OnStatsClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Statistiques.SpecificStatistiques.DistanceClubPage());
+            await Navigation.PushAsync(new Statistiques.StatistiqueMainTabbedPage());
         }
         /**
          * Méthode déclenchée au click sur le bouton "Option"

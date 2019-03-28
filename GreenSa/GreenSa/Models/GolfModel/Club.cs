@@ -12,11 +12,12 @@ namespace GreenSa.Models.GolfModel
     {
 
         public static Club PUTTER = new Club("Putter", 0);
-        [Ignore]
-        public bool selected { get; set; }//used for IHM
+
 
         [PrimaryKey]
         public string Name { get; set; }
+
+        public bool selected { get; set; }//used for IHM
         public int DistanceMoyenne { get; set; }
         [Ignore]
         public Tuple<int,int,int> DistanceMoyenneJoueur
