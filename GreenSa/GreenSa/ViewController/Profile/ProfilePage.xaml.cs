@@ -35,7 +35,6 @@ namespace GreenSa.ViewController.Profile
             index.Margin = new Thickness(0, 15, 0, 0);
             niv.Margin = new Thickness(0, 15, 0, 0);
 
-            this.InitBDD();
             LocalUser = GetProfile("localUser");
 
             user.Text = LocalUser.Username;
@@ -71,27 +70,9 @@ namespace GreenSa.ViewController.Profile
             else { niv.Text = "Compétitif"; }
         }
 
-        public void InitBDD()
-        {
-            DBconnection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            System.Diagnostics.Debug.WriteLine("connection ok");
-            DBconnection.CreateTable<Profil>();
-            System.Diagnostics.Debug.WriteLine("create ok");
-            if (!DBconnection.Table<Profil>().Any())
-            {
-                AddLocalUser();
-            }
-        }
-
-        public void AddLocalUser()
-        {
-            DBconnection.Insert(new Profil());
-            System.Diagnostics.Debug.WriteLine("user added");
-        }
-
         public Profil GetProfile(string id)
         {
-            System.Diagnostics.Debug.WriteLine("get ok");
+            DBconnection = DependencyService.Get<ISQLiteDb>().GetConnection();
             return DBconnection.Table<Profil>().FirstOrDefault(pro => pro.Id == id);
         }
 
