@@ -11,6 +11,10 @@ using GreenSa.ViewController.MesGolfs;
 using GreenSa.ViewController.Profile;
 using GreenSa.Models.GolfModel;
 using GreenSa.Models.ViewElements;
+using SQLite;
+using System.Collections.ObjectModel;
+using GreenSa.Persistence;
+using GreenSa.Models.Profiles;
 
 namespace GreenSa.ViewController
 {
@@ -25,9 +29,28 @@ namespace GreenSa.ViewController
      */
     public partial class MainPage : ContentPage
     {
+        private SQLiteConnection DBconnection;
+
         public MainPage()
         {
             InitializeComponent();
+            this.InitBDD();
+        }
+
+        public void InitBDD()
+        {
+            DBconnection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            DBconnection.CreateTable<Profil>();
+            if (!DBconnection.Table<Profil>().Any())
+            {
+                AddLocalUser();
+            }
+        }
+
+        public void AddLocalUser()
+        {
+            DBconnection.Insert(new Profil());
+            System.Diagnostics.Debug.WriteLine("user added");
         }
 
         /**

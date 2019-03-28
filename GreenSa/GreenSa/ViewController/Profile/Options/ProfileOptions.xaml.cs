@@ -32,7 +32,6 @@ namespace GreenSa.ViewController.Profile.Options
             InitializeComponent();
 
             //Initialisation de la BDD
-            this.InitBDD();
             LocalUser = GetProfile("localUser");
             
             //elements
@@ -60,27 +59,9 @@ namespace GreenSa.ViewController.Profile.Options
             photo.Source = "user" + LocalUser.Photo + ".png";
         }
 
-        public void InitBDD()
-        {
-            DBconnection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            System.Diagnostics.Debug.WriteLine("connection ok");
-            DBconnection.CreateTable<Profil>();
-            System.Diagnostics.Debug.WriteLine("create ok");
-            if (!DBconnection.Table<Profil>().Any())
-            {
-                AddLocalUser();
-            }
-        }
-
-        public void AddLocalUser()
-        {
-            DBconnection.Insert(new Profil());
-            System.Diagnostics.Debug.WriteLine("user added");
-        }
-
         public Profil GetProfile(string id)
         {
-            System.Diagnostics.Debug.WriteLine("get ok");
+            DBconnection = DependencyService.Get<ISQLiteDb>().GetConnection();
             return DBconnection.Table<Profil>().FirstOrDefault(pro => pro.Id == id);
         }
 
