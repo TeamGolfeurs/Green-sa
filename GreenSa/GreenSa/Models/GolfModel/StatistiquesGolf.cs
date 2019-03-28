@@ -30,8 +30,27 @@ namespace GreenSa.Models.GolfModel
 
             try
             {
-                IEnumerable<Shot> shots = ( SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection));
-                shots = shots.Where(s => filtre(s.Club) && !s.Club.Equals(Club.PUTTER)); 
+                
+
+                List<Club> clubs = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Club>(connection);
+                System.Diagnostics.Debug.WriteLine("clubs.Count : " + clubs.Count);
+                foreach (Club c in clubs)
+                {
+                    System.Diagnostics.Debug.WriteLine("clubs : " + clubs.ToString());
+                    if (!c.Equals(Club.PUTTER))
+                    {
+                        if (!sommesEachClubs.ContainsKey(c))
+                        {
+                            sommesEachClubs.Add(c, 0);
+                            nombreDeShotParClub.Add(c, 0);
+                        }
+                        sommesEachClubs[c] += (double)c.DistanceMoyenne;
+                        nombreDeShotParClub[c] += 1;
+                    }
+                }
+
+                IEnumerable<Shot> shots = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection);
+                shots = shots.Where(s => filtre(s.Club) && !s.Club.Equals(Club.PUTTER));
                 foreach (Shot s in shots)
                 {
                     if (!sommesEachClubs.ContainsKey(s.Club))
@@ -39,17 +58,16 @@ namespace GreenSa.Models.GolfModel
                         sommesEachClubs.Add(s.Club, 0);
                         nombreDeShotParClub.Add(s.Club, 0);
                     }
-                    sommesEachClubs[s.Club]+= (CustomMap.DistanceTo(s.InitPlace.X, s.InitPlace.Y, s.RealShot.X, s.RealShot.Y, "M"));
+                    sommesEachClubs[s.Club] += (CustomMap.DistanceTo(s.InitPlace.X, s.InitPlace.Y, s.RealShot.X, s.RealShot.Y, "M"));
                     nombreDeShotParClub[s.Club] += 1;
                 }
-
-                 res = sommesEachClubs.Select(k => new Tuple<Club, double>(k.Key, k.Value / nombreDeShotParClub[k.Key]));//petit map pour calculer la moyenne
             }
             catch (Exception ex)
             {
-               // "Table not exist";
+                System.Diagnostics.Debug.WriteLine("Error : " + ex.StackTrace);
 
             }
+            res = sommesEachClubs.Select(k => new Tuple<Club, double>(k.Key, k.Value / nombreDeShotParClub[k.Key]));//petit map pour calculer la moyenne
             return res;
         }
 

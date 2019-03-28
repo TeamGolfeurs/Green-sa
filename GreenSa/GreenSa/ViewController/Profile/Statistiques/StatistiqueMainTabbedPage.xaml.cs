@@ -20,9 +20,9 @@ namespace GreenSa.ViewController.Profile.Statistiques
         {
             InitializeComponent();
             this.BarBackgroundColor = Color.FromHex("39B54A");
-            this.BarTextColor = Color.FromHex("0A7210");
+            this.BarTextColor = Color.White;
 
-            var Page1 = new DistanceClubPage();
+            var Page1 = new GeneralStatPage();
             Page1.Title = "Général";
             this.Children.Add(Page1);
 
@@ -33,10 +33,6 @@ namespace GreenSa.ViewController.Profile.Statistiques
             var Page3 = new ScoreVsParPage();
             Page3.Title = "Par partie";
             this.Children.Add(Page3);
-
-            /*var Page4 = new GIRPage();
-            Page4.Title = "GIR";
-            this.Children.Add(Page4);*/
         }
 
         protected override void OnAppearing()

@@ -221,13 +221,6 @@ namespace GreenSa.ViewController.Play.Game
             setNextState();
         }
 
-        /* Méthode qui s'execute au click sur le bouton de la selection du club.
-        * **/
-        private async void onClubSelectionClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushModalAsync(new ClubSelectionInGamePage(partie));
-        }
-
         /* Méthode qui s'execute au click sur le bouton principal.
          * **/
         private async void onHoleFinishedButtonClicked(object sender, EventArgs e)
