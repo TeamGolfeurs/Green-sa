@@ -66,6 +66,7 @@
     <Compile Include="Models\GolfModel\GestionGolfs.cs" />
     <Compile Include="Models\GolfModel\GolfCourse.cs" />
     <Compile Include="Models\GolfModel\Partie.cs" />
+    <Compile Include="Models\Exceptions\EmptyStringException.cs" />
     <Compile Include="ViewController\MesGolfs\GolfsManager.xaml.cs">
       <DependentUpon>GolfsManager.xaml</DependentUpon>
     </Compile>
