@@ -40,6 +40,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="MarkupExtension\EmbeddedImage.cs" />
+    <Compile Include="Models\GolfModel\TestClassFactory.cs" />
     <Compile Include="Models\GolfModel\Club.cs" />
     <Compile Include="Models\GolfModel\ScorePartie.cs" />
     <Compile Include="Models\GolfModel\ScoreHole.cs" />

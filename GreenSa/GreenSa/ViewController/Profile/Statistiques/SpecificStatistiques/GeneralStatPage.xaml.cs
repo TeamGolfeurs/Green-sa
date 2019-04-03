@@ -24,11 +24,77 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
         {
             InitializeComponent();
             updateMaxDistClubStat();
+            updateLast4Scores();
         }
+
+
+        private void updateLast4Scores()
+        {
+            TestClassFactory.CreateScorePartie();
+            TestClassFactory.CreateScorePartie();
+            TestClassFactory.CreateScorePartie();
+            int index = (int)StatistiquesGolf.getPlayerIndex();
+            int rowCount = last4ScoresGrid.Children.Count / 3;
+            var scores = StatistiquesGolf.getScores();
+            System.Diagnostics.Debug.WriteLine(scores[0].scoreHoles.ToString());
+            int col = 0;
+            int row = 0;
+            foreach (View label in last4ScoresGrid.Children)
+            {
+                if (row > 0)
+                {
+                    if (row <= scores.Count)
+                    {
+                        switch (col)
+                        {
+                            case 0://column golf name
+                                ((Label)label).Text = "Nom du golf";
+                                break;
+
+                            case 1://column date
+                                ((Label)label).Text = "" + scores[row - 1].DateString;
+                                break;
+
+                            case 2://column score
+                                Tuple<int, int> score = scores[row - 1].GetScore();
+                                int perf = (int)((double)(score.Item1)/ (double)score.Item2)*18 - index;
+                                ((Label)label).Text = ((score.Item1 >= 0) ? "+" : "") + score.Item1 + " / " + score.Item2 + " trous";
+                                if (perf == 0)//you played your index
+                                {
+                                    ((Label)label).TextColor = Color.Gray;
+                                } else if (perf < 0)//you played better than your index
+                                {
+                                    ((Label)label).TextColor = Color.Green;
+                                } else if (perf < 10)//you played worse than your index
+                                {
+                                    ((Label)label).TextColor = Color.Orange;
+                                } else//you played than your index
+                                {
+                                    ((Label)label).TextColor = Color.Red;
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                    row++;
+                    if (row == rowCount)
+                    {
+                        row = 0;
+                        col++;
+                    }
+                } else
+                {
+                    row++;
+                }
+            }
+        }
+
 
         private void updateMaxDistClubStat()
         {
-            Tuple<string, int> maxDist = this.getMaxDistClub();
+            Tuple<string, int> maxDist = StatistiquesGolf.getMaxDistClub();
             if (maxDist.Item2 == 0.0)
             {
                 this.maxDistClubLabel.Text = "Votre coup le plus long : ";
@@ -39,25 +105,6 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
                 this.maxDistClubLabel.Text = "Votre coup de " + maxDist.Item1 + " le plus long : ";
                 this.maxDistClub.Text = maxDist.Item2 + " m";
             }
-        }
-
-        private Tuple<string, int> getMaxDistClub()
-        {
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<Shot>();
-            List<Shot> shots = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection);
-            double maxDist = 0.0;
-            string clubName = "";
-            foreach (Shot shot in shots)
-            {
-                double dist = shot.Distance;
-                if (dist > maxDist)
-                {
-                    maxDist = dist;
-                    clubName = shot.Club.Name;
-                }
-            }
-            return new Tuple<string, int>(clubName, (int)maxDist);
         }
 
         /**

@@ -7,43 +7,56 @@
     
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
-            <Grid VerticalOptions="FillAndExpand" Margin="0, 10, 0, 0">
+          <Label HorizontalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="DarkSlateGray" FontSize="17" Grid.Row="0" Grid.Column="0" Margin="0, 15, 0, 0">Score de vos 4 dernières parties : </Label>
+          <Grid VerticalOptions="FillAndExpand" Margin="0, 10, 0, 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="40*" />
                 </Grid.ColumnDefinitions>
 
-                <Label VerticalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="DarkSlateGray" FontSize="17" Grid.Row="0" Grid.Column="0" Margin="15, 0, 0, 0">Score de vos 3 dernières parties : </Label>
-                <Grid VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1">
+                
+                <Grid x:Name="last4ScoresGrid" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="27" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="22*" />
+                        <ColumnDefinition Width="28*" />
                     </Grid.ColumnDefinitions>
-                    <Label TextColor="#39B54A" FontAttributes="Bold" FontSize="20" Grid.Row="0" Grid.Column="0">Date</Label>
-                    <Label VerticalOptions="Center" FontSize="14" Grid.Row="1" Grid.Column="0">15/03/2019</Label>
-                    <Label VerticalOptions="Center" FontSize="14" Grid.Row="2" Grid.Column="0">16/03/2019</Label>
-                    <Label VerticalOptions="Center" FontSize="14" Grid.Row="3" Grid.Column="0">17/03/2019</Label>
-                    <Label VerticalOptions="Center" Margin="10, 0, 0, 0" FontAttributes="Bold" TextColor="#39B54A" FontSize="20" Grid.Row="0" Grid.Column="1">Score</Label>
-                    <Label VerticalOptions="Center" Margin="10, 0, 0, 0" FontSize="17" Grid.Row="1" Grid.Column="1">+25</Label>
-                    <Label VerticalOptions="Center" Margin="10, 0, 0, 0" FontSize="17" Grid.Row="2" Grid.Column="1">+50</Label>
-                    <Label VerticalOptions="Center" Margin="10, 0, 0, 0" FontSize="17" Grid.Row="3" Grid.Column="1">+34</Label>
+                  
+                    <Label TextColor="#39B54A" FontAttributes="Bold" FontSize="20" Grid.Row="0" Grid.Column="0">Golf</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="14" TextColor="Gray" Grid.Row="1" Grid.Column="0">9 trous de Savenay</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="14" TextColor="Gray" Grid.Row="2" Grid.Column="0">9 trous de Savenay</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="14" TextColor="Gray" Grid.Row="3" Grid.Column="0">9 trous de Savenay</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="14" TextColor="Gray" Grid.Row="4" Grid.Column="0">9 trous de Savenay</Label>
+
+                    <Label TextColor="#39B54A" FontAttributes="Bold" FontSize="20" Grid.Row="0" Grid.Column="1">Date</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="14" TextColor="Gray" Grid.Row="1" Grid.Column="1">15/03/19</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="14" TextColor="Gray" Grid.Row="2" Grid.Column="1">16/03/19</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="14" TextColor="Gray" Grid.Row="3" Grid.Column="1">17/03/19</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="14" TextColor="Gray" Grid.Row="4" Grid.Column="1">18/03/19</Label>
+
+                    <Label VerticalOptions="Center" FontAttributes="Bold" TextColor="#39B54A" FontSize="20" Grid.Row="0" Grid.Column="2">Score</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="17" TextColor="Gray" Grid.Row="1" Grid.Column="2">+25</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="17" TextColor="Gray" Grid.Row="2" Grid.Column="2">+50</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="17" TextColor="Gray" Grid.Row="3" Grid.Column="2">+34</Label>
+                    <Label VerticalOptions="Center" FontAttributes="Bold" FontSize="17" TextColor="Gray" Grid.Row="4" Grid.Column="2">+38</Label>
                 </Grid>
 
                 <Label x:Name="maxDistClubLabel" VerticalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="DarkSlateGray" FontSize="17" Grid.Row="1" Grid.Column="0" Margin="15, 0, 0, 0">Votre drive le plus long : </Label>
                 <Label x:Name="maxDistClub"  Margin="15, 0, 0, 0" VerticalOptions="CenterAndExpand" FontFamily="Times New Roman" TextColor="#39B54A" Text="270 m" FontSize="40" Grid.Row="1" Grid.Column="1" />
 
-                <Label VerticalOptions="CenterAndExpand" FontSize="17" FontAttributes="Bold" TextColor="DarkSlateGray" Margin="15, 0, 0, 0" Grid.Row="2" Grid.Column="0">Votre meilleur score : </Label>
+                <Label VerticalOptions="CenterAndExpand" FontSize="17" FontAttributes="Bold" TextColor="DarkSlateGray" Margin="15, 0, 0, 0" Grid.Row="2" Grid.Column="0">Votre nombre de putts moyen par trou : </Label>
             </Grid>
             
             <viewelements:MyButton x:Name="distClubs" Text="Distances moyennes de vos clubs" Margin="10, 5, 10, 10" Clicked="OnDistClubClick"/>

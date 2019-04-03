@@ -1,4 +1,5 @@
-﻿using GreenSa.Models.Tools;
+﻿using GreenSa.Models.Profiles;
+using GreenSa.Models.Tools;
 using GreenSa.Models.Tools.GPS_Maps;
 using GreenSa.Persistence;
 using System;
@@ -88,8 +89,36 @@ namespace GreenSa.Models.GolfModel
             return new Tuple<double, double>(min, max);
         }
 
-       
+        /** Gets a tuple containing the name of the club with which the player did the higher distance and this distance
+         */
+        public static Tuple<string, int> getMaxDistClub()
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<Shot>();
+            List<Shot> shots = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection);
+            double maxDist = 0.0;
+            string clubName = "";
+            foreach (Shot shot in shots)
+            {
+                double dist = shot.Distance;
+                if (dist > maxDist)
+                {
+                    maxDist = dist;
+                    clubName = shot.Club.Name;
+                }
+            }
+            return new Tuple<string, int>(clubName, (int)maxDist);
+        }
 
+        /** Gets the scores of the last 4 golf games
+         */
+        public static List<ScorePartie> getScores()
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<ScorePartie>();
+            List<ScorePartie> scores = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScorePartie>(connection);
+            return scores;
+        }
 
 
         // Terrain, List Tuple<Hole,AverageScore,BestScore,WorstScore>, nbFoisJouée 
@@ -245,6 +274,19 @@ namespace GreenSa.Models.GolfModel
             List<ScorePartie> all = (await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<ScorePartie>(connection, recursive: true));
 
             return all.OrderByDescending(sp =>sp.DateDebut);
+        }
+
+        public static double getPlayerIndex()
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<Profil>();
+            List<Profil> profil = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Profil>(connection);
+            double index = 53.5;
+            if (profil.Count > 0)
+            {
+                index = profil[0].Index;
+            }
+            return index;
         }
 
 
