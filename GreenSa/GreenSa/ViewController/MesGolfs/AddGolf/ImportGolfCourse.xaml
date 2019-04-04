@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewelements="clr-namespace:GreenSa.Models.ViewElements"
-             xmlns:tk="clr-namespace:TK.CustomMap;assembly=TK.CustomMap"
              xmlns:gps_maps="clr-namespace:GreenSa.Models.Tools.GPS_Maps"
              xmlns:viewelements1="http://xamarin.com/schemas/2014/forms"
              x:Class="GreenSa.ViewController.Option.ImportGolfCourse"

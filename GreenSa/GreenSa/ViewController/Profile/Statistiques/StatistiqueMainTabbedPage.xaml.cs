@@ -19,7 +19,7 @@ namespace GreenSa.ViewController.Profile.Statistiques
         public StatistiqueMainTabbedPage()
         {
             InitializeComponent();
-            this.BarBackgroundColor = Color.FromHex("39B54A");
+            this.BarBackgroundColor = Color.FromHex("0A7210");
             this.BarTextColor = Color.White;
 
             var Page1 = new GeneralStatPage();

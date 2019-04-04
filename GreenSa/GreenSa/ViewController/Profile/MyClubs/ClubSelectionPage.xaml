@@ -14,8 +14,8 @@
                     <DataTemplate>
                          <ViewCell>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" FontSize="14" Margin="15, 13, 0, 0"/>
-                                <viewelements:MySwitch IsToggled="{Binding selected}" HorizontalOptions="End" />
+                                <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" TextColor="Black" FontSize="15" Margin="15, 13, 0, 0"/>
+                                <viewelements:MySwitch IsToggled="{Binding selected}" HorizontalOptions="End" Margin="0, 0, 10, 0"/>
                             </StackLayout>
                         </ViewCell> 
                     </DataTemplate>

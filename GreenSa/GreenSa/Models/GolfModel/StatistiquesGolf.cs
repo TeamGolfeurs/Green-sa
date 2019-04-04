@@ -72,6 +72,46 @@ namespace GreenSa.Models.GolfModel
             return res;
         }
 
+        public static double getAveragePars()
+        {
+            double avPars = -1;
+            int sum = 0;
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<ScorePartie>();
+            connection.CreateTable<ScoreHole>();
+            List<ScorePartie> scoresPartie = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScorePartie>(connection);
+            foreach (ScorePartie sp in scoresPartie)
+            {
+                foreach (ScoreHole sh in sp.scoreHoles)
+                {
+                    sum += (sh.Score == 0) ? 1 : 0;
+                }
+            }
+            if (scoresPartie.Count > 0)
+            {
+                avPars = (double)((double)sum / (double)scoresPartie.Count);
+            }
+            return avPars;
+        }
+
+        public static double getAveragePutts()
+        {
+            double avPutts = -1.0;
+            int sum = 0;
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<ScoreHole>();
+            List<ScoreHole> scoresHoles = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection);
+            foreach (ScoreHole sh in scoresHoles)
+            {
+                sum += sh.NombrePutt;
+            }
+            if (scoresHoles.Count > 0)
+            {
+                avPutts = (double)((double)sum / (double)scoresHoles.Count);
+            }
+            return avPutts;
+        }
+
         public static Tuple<double, double> getMinMaxDistanceForClubs(Club club)
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
@@ -118,6 +158,16 @@ namespace GreenSa.Models.GolfModel
             connection.CreateTable<ScorePartie>();
             List<ScorePartie> scores = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScorePartie>(connection);
             return scores;
+        }
+
+        /** Gets the all the golf courses
+         */
+        public static List<GolfCourse> getAllGolfCourses()
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<GolfCourse>();
+            List<GolfCourse> golfCourses = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection);
+            return golfCourses;
         }
 
 
