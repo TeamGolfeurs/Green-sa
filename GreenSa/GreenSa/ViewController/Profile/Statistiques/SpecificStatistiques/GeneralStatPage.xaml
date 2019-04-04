@@ -63,21 +63,21 @@
               <Label x:Name="maxDistClub" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="#39B54A" Text="270 m" FontSize="30" />
             </StackLayout>
          </Frame>
-        <Label x:Name="maxDistClubLabel" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" FontSize="17" Grid.Row="1" Grid.Column="1">Drive le plus long</Label>
+        <Label x:Name="maxDistClubLabel" Margin="0, 0, 10, 0" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" FontSize="17" Grid.Row="1" Grid.Column="1">Drive le plus long</Label>
 
         <Frame Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7">
           <StackLayout>
             <Label x:Name="averagePutts" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" VerticalOptions="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="#39B54A" Text="2.56" FontSize="30"/>
           </StackLayout>
         </Frame>
-        <Label VerticalOptions="Center" FontSize="17" FontAttributes="Bold" TextColor="Black" Grid.Row="2" Grid.Column="1">Nombre de putts moyen / trou</Label>
+        <Label VerticalOptions="Center" Margin="0, 0, 10, 0" FontSize="17" FontAttributes="Bold" TextColor="Black" Grid.Row="2" Grid.Column="1">Nombre de putts moyen / trou</Label>
 
         <Frame Grid.Row="3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="9, 4, 9, 4">
           <StackLayout>
             <Label x:Name="averagePars" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="#39B54A" Text="9" FontSize="30" />
           </StackLayout>
         </Frame>
-        <Label x:Name="averageParsLabel" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" FontSize="17" Grid.Row="3" Grid.Column="1">Nombre de par / parcours</Label>
+        <Label x:Name="averageParsLabel" Margin="0, 0, 10, 0" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" FontSize="17" Grid.Row="3" Grid.Column="1">Nombre de par / parcours</Label>
       </Grid>
 
       <viewelements:MyButton x:Name="distClubs" Text="Distances moyennes de vos clubs" Margin="10, 5, 10, 10" Clicked="OnDistClubClick"/>

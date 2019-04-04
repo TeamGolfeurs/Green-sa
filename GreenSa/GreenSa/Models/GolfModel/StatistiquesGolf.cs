@@ -217,22 +217,23 @@ namespace GreenSa.Models.GolfModel
         }
 
         //get the list
-        public static Dictionary<ScorePossible,float> getProportionScore()
+        public static Dictionary<ScorePossible,float> getProportionScore(GolfCourse golfCourse)
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             connection.CreateTable<ScoreHole>();
             connection.CreateTable<Hole>();
 
             Dictionary<ScorePossible, float> res = new Dictionary<ScorePossible, float>();
-            List<ScoreHole> all = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection,recursive:true);
-            int nbTotal = all.Count;
-            res.Add(ScorePossible.ALBATROS, all.Where<ScoreHole>(sh => (sh.Score <= (int)ScorePossible.ALBATROS)).Count() / (float)nbTotal * 100);
-            res.Add(ScorePossible.EAGLE, all.Where<ScoreHole>(sh => (sh.Score==(int)ScorePossible.EAGLE)).Count()/ (float)nbTotal *100 );
-            res.Add(ScorePossible.BIRDIE, all.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.BIRDIE)).Count() / (float)nbTotal * 100);
-            res.Add(ScorePossible.PAR, all.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.PAR)).Count() / (float)nbTotal * 100);
-            res.Add(ScorePossible.BOGEY, all.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.BOGEY)).Count() / (float)nbTotal * 100);
-            res.Add(ScorePossible.DOUBLE_BOUGEY, all.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.DOUBLE_BOUGEY)).Count() / (float)nbTotal * 100);
-            res.Add(ScorePossible.MORE, all.Where<ScoreHole>(sh => (sh.Score >= (int)ScorePossible.MORE)).Count() / (float)nbTotal * 100);
+            List<ScoreHole> allScoreHoles = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection,recursive:true);
+            List<ScoreHole> allNeededScoreHoles = allScoreHoles.Where(sh => sh.Hole.IdGolfC.Equals(golfCourse.Name)).ToList();
+            int nbTotal = allNeededScoreHoles.Count;
+            res.Add(ScorePossible.ALBATROS, allNeededScoreHoles.Where<ScoreHole>(sh => (sh.Score <= (int)ScorePossible.ALBATROS)).Count() / (float)nbTotal * 100);
+            res.Add(ScorePossible.EAGLE, allNeededScoreHoles.Where<ScoreHole>(sh => (sh.Score==(int)ScorePossible.EAGLE)).Count()/ (float)nbTotal *100 );
+            res.Add(ScorePossible.BIRDIE, allNeededScoreHoles.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.BIRDIE)).Count() / (float)nbTotal * 100);
+            res.Add(ScorePossible.PAR, allNeededScoreHoles.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.PAR)).Count() / (float)nbTotal * 100);
+            res.Add(ScorePossible.BOGEY, allNeededScoreHoles.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.BOGEY)).Count() / (float)nbTotal * 100);
+            res.Add(ScorePossible.DOUBLE_BOUGEY, allNeededScoreHoles.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.DOUBLE_BOUGEY)).Count() / (float)nbTotal * 100);
+            res.Add(ScorePossible.MORE, allNeededScoreHoles.Where<ScoreHole>(sh => (sh.Score >= (int)ScorePossible.MORE)).Count() / (float)nbTotal * 100);
 
             return res;
         }

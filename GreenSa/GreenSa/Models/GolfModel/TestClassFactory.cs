@@ -26,7 +26,7 @@ namespace GreenSa.Models.GolfModel
                 foreach (Hole hole in holes)
                 {
                     int rand = (r.Next() % 4);
-                    ScoreHole sh = new ScoreHole(hole, (r.Next() % 6), rand == 2, rand, DateTime.Now);
+                    ScoreHole sh = new ScoreHole(hole, r.Next()%6, rand == 2, rand, DateTime.Now);
                     sp.add(sh);
                 }
             }

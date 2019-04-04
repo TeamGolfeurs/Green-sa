@@ -1,49 +1,30 @@
-﻿using GreenSa.Models.GolfModel;
-using GreenSa.Models.Tools;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-using Microcharts;
+using GreenSa.Models.GolfModel;
+using GreenSa.Models.Tools;
 using Entry = Microcharts.Entry;
-
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using SkiaSharp;
+using Microcharts;
 
-using Xamarin.Forms;
-
-namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
+namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 {
-    public partial class ScorePage : ContentPage
+    public partial class GolfCourseStatPage : ContentPage
     {
-        public ScorePage()
+
+        private GolfCourse golfCourse;
+
+        public GolfCourseStatPage(GolfCourse g)
         {
             InitializeComponent();
-        }
-        protected override void OnAppearing()
-        {
-
-            base.OnAppearing();
-            getScores(c => true);
-
-
-        }
-        /*
-        * Méthode déclenchée à l'application du filtre
-        * Appel a la classe StatstiquesGolf avec un filtre
-        * */
-         private void onFilterApplied(object sender, EventArgs e)
-        {
-             getScores(c => true);
+            this.golfCourse = g;
+            this.golfCourseName.Text = this.golfCourse.Name;
+            this.updateChart();
         }
 
-        private void getScores(Func<Club, bool> f)
+        private void updateChart()
         {
-            float albatros = 0f;
+            /*float albatros = 0f;*/
             float eagle = 0f;
             float birdie = 0f;
             float par = 0f;
@@ -51,42 +32,50 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
             float dbogey = 0f;
             float more = 0f;
 
-            Dictionary<Hole.ScorePossible, float> d = StatistiquesGolf.getProportionScore(new GolfCourse());
+            Dictionary<Hole.ScorePossible, float> d = StatistiquesGolf.getProportionScore(this.golfCourse);
 
-            foreach(KeyValuePair<Hole.ScorePossible, float> k in d){
-                if (k.Key.Equals(Hole.ScorePossible.ALBATROS)){
-                    albatros =  k.Value ;
-                }
-                if (k.Key.Equals(Hole.ScorePossible.BIRDIE)){
+            foreach (KeyValuePair<Hole.ScorePossible, float> k in d)
+            {
+                /*if (k.Key.Equals(Hole.ScorePossible.ALBATROS))
+                {
+                    albatros = k.Value;
+                }*/
+                if (k.Key.Equals(Hole.ScorePossible.BIRDIE))
+                {
                     birdie = k.Value;
                 }
-                if (k.Key.Equals(Hole.ScorePossible.BOGEY)){
+                if (k.Key.Equals(Hole.ScorePossible.BOGEY))
+                {
                     bogey = k.Value;
                 }
-                if (k.Key.Equals(Hole.ScorePossible.DOUBLE_BOUGEY)){
+                if (k.Key.Equals(Hole.ScorePossible.DOUBLE_BOUGEY))
+                {
                     dbogey = k.Value;
                 }
-                if (k.Key.Equals(Hole.ScorePossible.EAGLE)){
+                if (k.Key.Equals(Hole.ScorePossible.EAGLE))
+                {
                     eagle = k.Value;
                 }
-                if (k.Key.Equals(Hole.ScorePossible.MORE)){
+                if (k.Key.Equals(Hole.ScorePossible.MORE))
+                {
                     more = k.Value;
                 }
-                if (k.Key.Equals(Hole.ScorePossible.PAR)){
+                if (k.Key.Equals(Hole.ScorePossible.PAR))
+                {
                     par = k.Value;
                 }
             }
 
-            
+
             var entries = new[]
              {
 
-                new Entry(albatros)
+                /*new Entry(albatros)
                  {
                      Label = "Albatros",
                      ValueLabel =float.IsNaN(albatros)?"N/A":(albatros.ToString("n2")   +"%"),
                     Color = SKColor.Parse("#0BF5A3")
-                 },    
+                 },*/
                 new Entry(eagle)
                  {
                      Label = "Eagle",
@@ -125,8 +114,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
                  },
             };
 
-            this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize=22, MaxValue=100 };
+            this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize = 22, MaxValue = 100, ValueLabelOrientation = Orientation.Horizontal, LabelOrientation = Orientation.Horizontal};
 
         }
+
     }
 }

@@ -27,17 +27,14 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
         public GeneralStatPage()
         {
             InitializeComponent();
-            updateLast4Scores();
-            updateMaxDistClubStat();
-            updateAveragePutts();
-            updateAveragePar();
+            this.updateLast4Scores();
+            this.updateMaxDistClubStat();
+            this.updateAveragePutts();
+            this.updateAveragePar();
         }
 
         private void updateLast4Scores()
         {
-            TestClassFactory.CreateScorePartie();
-            TestClassFactory.CreateScorePartie();
-            TestClassFactory.CreateScorePartie();
             int index = (int)StatistiquesGolf.getPlayerIndex();
             int rowCount = last4ScoresGrid.Children.Count / 3;
             var allGolfCourses = StatistiquesGolf.getAllGolfCourses();

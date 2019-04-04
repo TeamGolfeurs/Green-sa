@@ -54,7 +54,7 @@ namespace GreenSa.ViewController.Play
             var g = ListGolfCourse.SelectedItem as GolfCourse;
             if (p == null)
             {
-                await Navigation.PushAsync(new StatGolfCoursePage(g));
+                await Navigation.PushAsync(new GolfCourseStatPage(g));
             } else
             {
                 p.GolfCourse = g;
@@ -63,7 +63,7 @@ namespace GreenSa.ViewController.Play
                 clubselected.RemoveAll(c => c.selected == false);
                 if (clubselected.Count == 0)
                 {
-                    await this.DisplayAlert("Erreur", "Vous n'avez aucun club dans votre sac. Veuillez en choisir au moins un dans le page 'Profile'", "ok");
+                    await this.DisplayAlert("Erreur", "Vous n'avez aucun club dans votre sac. Veuillez en choisir au moins un dans le page 'Profil'", "ok");
                 } else
                 {
                     p.Clubs = clubselected;

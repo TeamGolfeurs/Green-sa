@@ -1,4 +1,5 @@
-﻿using GreenSa.ViewController;
+﻿using GreenSa.Models.GolfModel;
+using GreenSa.ViewController;
 using GreenSa.ViewController.Play.Game;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,11 @@ namespace GreenSa
         protected override void OnStart()
         {
             // Handle when your app starts
+            TestClassFactory.CreateScorePartie();
+            TestClassFactory.CreateScorePartie();
+            TestClassFactory.CreateScorePartie();
+            TestClassFactory.CreateScorePartie();
+            TestClassFactory.CreateScorePartie();
         }
 
         protected override void OnSleep()
