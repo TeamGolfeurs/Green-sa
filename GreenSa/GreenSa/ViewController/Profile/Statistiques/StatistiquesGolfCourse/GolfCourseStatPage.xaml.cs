@@ -6,6 +6,7 @@ using Entry = Microcharts.Entry;
 using Xamarin.Forms;
 using SkiaSharp;
 using Microcharts;
+using GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques;
 
 namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 {
@@ -20,6 +21,52 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             this.golfCourse = g;
             this.golfCourseName.Text = this.golfCourse.Name;
             this.updateChart();
+            this.updateGIR();
+            this.updateAveragePutts();
+        }
+
+        private void updateAveragePutts()
+        {
+            double avPutts = StatistiquesGolf.getAveragePutts(StatistiquesGolf.getScoreHoles(this.golfCourse));
+            if (avPutts == -1.0)
+            {
+                this.averagePutts.Text = GeneralStatPage.NO_DATA;
+                this.averagePutts.TextColor = Color.Gray;
+                this.averagePutts.FontSize = 15;
+            }
+            else
+            {
+                this.averagePutts.Text = "" + avPutts.ToString("0.00");
+                this.averagePutts.TextColor = Color.FromHex("#39B54A");
+                this.averagePutts.FontSize = 30;
+            }
+        }
+
+        private void updateGIR()
+        {
+            List<ScorePartie> scoreParties = StatistiquesGolf.getScoreParties(this.golfCourse);
+            double sum = 0.0;
+            foreach (ScorePartie sp in scoreParties)
+            {
+                foreach (ScoreHole sh in sp.scoreHoles)
+                {
+                    sum += (sh.Hit) ? 1.0 : 0.0;
+                }
+            }
+
+            if (scoreParties.Count == 0)
+            {
+                this.averageGIR.Text = GeneralStatPage.NO_DATA;
+                this.averageGIR.TextColor = Color.Gray;
+                this.averageGIR.FontSize = 15;
+            }
+            else
+            {
+                this.averageGIR.Text = "" + (sum/scoreParties.Count).ToString("0.00");
+                this.averageGIR.TextColor = Color.FromHex("#39B54A");
+                this.averageGIR.FontSize = 30;
+            }
+
         }
 
         private void updateChart()
@@ -102,7 +149,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                  },
                 new Entry(dbogey)
                  {
-                     Label = "DoubleBogey",
+                     Label = "Dbl-Bogey",
                     ValueLabel = float.IsNaN(dbogey)?"N/A":(dbogey.ToString("n2")+"%"),
                     Color = SKColor.Parse("#F5A00B")
                  },
@@ -114,7 +161,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                  },
             };
 
-            this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize = 22, MaxValue = 100, ValueLabelOrientation = Orientation.Horizontal, LabelOrientation = Orientation.Horizontal};
+            this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize = 26, MaxValue = 100, ValueLabelOrientation = Orientation.Horizontal, LabelOrientation = Orientation.Horizontal};
 
         }
 

@@ -24,9 +24,11 @@ namespace GreenSa
             // Handle when your app starts
             TestClassFactory.CreateScorePartie();
             TestClassFactory.CreateScorePartie();
+            /*TestClassFactory.CreateScorePartie();
             TestClassFactory.CreateScorePartie();
             TestClassFactory.CreateScorePartie();
             TestClassFactory.CreateScorePartie();
+            TestClassFactory.CreateScorePartie();*/
         }
 
         protected override void OnSleep()

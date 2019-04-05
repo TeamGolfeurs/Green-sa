@@ -38,8 +38,8 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
             int index = (int)StatistiquesGolf.getPlayerIndex();
             int rowCount = last4ScoresGrid.Children.Count / 3;
             var allGolfCourses = StatistiquesGolf.getAllGolfCourses();
-            var notSortedScores = StatistiquesGolf.getScores();
-            var scores = notSortedScores.OrderBy(d => d.DateDebut).ToList();
+            var notSortedScores = StatistiquesGolf.getScoreParties();
+            var scores = notSortedScores.OrderByDescending(d => d.DateDebut).ToList();
             //System.Diagnostics.Debug.WriteLine(scores[0].scoreHoles.ToString());
             int col = 0;
             int row = 0;
@@ -88,7 +88,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
                             if (row <= scores.Count)
                             {
                                 Tuple<int, int> score = scores[row - 1].GetScore();
-                                int perf = (int)(score.Item1 / score.Item2 * 18.0) - index;
+                                int perf = (int)((double)score.Item1 / (double)score.Item2 * 18.0) - index;
                                 ((Label)label).Text = ((score.Item1 >= 0) ? "+" : "") + score.Item1 + " / " + score.Item2 + " trous";
                                 if (perf == 0)//you played your index
                                 {
@@ -150,7 +150,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
 
         private void updateAveragePutts()
         {
-            double avPutts = StatistiquesGolf.getAveragePutts();
+            double avPutts = StatistiquesGolf.getAveragePutts(StatistiquesGolf.getScoreHoles());
             if (avPutts == -1.0)
             {
                 this.averagePutts.Text = NO_DATA;

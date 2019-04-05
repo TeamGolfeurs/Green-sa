@@ -45,6 +45,12 @@ namespace GreenSa.Models.GolfModel
             DateDebut = DateTime.Now;
         }
 
+        public ScorePartie(DateTime date)
+        {
+            scoreHoles = new List<ScoreHole>();
+            DateDebut = date;
+        }
+
         public void add(ScoreHole sh)
         {
             scoreHoles.Add(sh);

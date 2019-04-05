@@ -94,13 +94,10 @@ namespace GreenSa.Models.GolfModel
             return avPars;
         }
 
-        public static double getAveragePutts()
+        public static double getAveragePutts(List<ScoreHole> scoresHoles)
         {
             double avPutts = -1.0;
             int sum = 0;
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<ScoreHole>();
-            List<ScoreHole> scoresHoles = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection);
             foreach (ScoreHole sh in scoresHoles)
             {
                 sum += sh.NombrePutt;
@@ -150,14 +147,23 @@ namespace GreenSa.Models.GolfModel
             return new Tuple<string, int>(clubName, (int)maxDist);
         }
 
-        /** Gets the scores of the last 4 golf games
+        /** Gets all the ScorePartie
          */
-        public static List<ScorePartie> getScores()
+        public static List<ScorePartie> getScoreParties()
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             connection.CreateTable<ScorePartie>();
-            List<ScorePartie> scores = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScorePartie>(connection);
+            List<ScorePartie> scores = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScorePartie>(connection, recursive: true);
             return scores;
+        }
+
+        public static List<ScoreHole> getScoreHoles()
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<ScoreHole>();
+            connection.CreateTable<Hole>();
+            List<ScoreHole> scoresHoles = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection, recursive: true);
+            return scoresHoles;
         }
 
         /** Gets the all the golf courses
@@ -216,17 +222,27 @@ namespace GreenSa.Models.GolfModel
             return l;
         }
 
+        public static List<ScorePartie> getScoreParties(GolfCourse golfCourse)
+        {
+            List<ScorePartie> allScoreParties = getScoreParties();
+            List<ScorePartie> allNeededScoreParties = allScoreParties.Where(sh => sh.scoreHoles[0].Hole.IdGolfC.Equals(golfCourse.Name)).ToList();
+            return allNeededScoreParties;
+        }
+
+        public static List<ScoreHole> getScoreHoles(GolfCourse golfCourse)
+        {
+            List<ScoreHole> allScoreHoles = getScoreHoles();
+            List<ScoreHole> allNeededScoreHoles = allScoreHoles.Where(sh => sh.Hole.IdGolfC.Equals(golfCourse.Name)).ToList();
+            return allNeededScoreHoles;
+        }
+
         //get the list
         public static Dictionary<ScorePossible,float> getProportionScore(GolfCourse golfCourse)
         {
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<ScoreHole>();
-            connection.CreateTable<Hole>();
-
             Dictionary<ScorePossible, float> res = new Dictionary<ScorePossible, float>();
-            List<ScoreHole> allScoreHoles = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection,recursive:true);
-            List<ScoreHole> allNeededScoreHoles = allScoreHoles.Where(sh => sh.Hole.IdGolfC.Equals(golfCourse.Name)).ToList();
+            List<ScoreHole> allNeededScoreHoles = getScoreHoles(golfCourse);
             int nbTotal = allNeededScoreHoles.Count;
+
             res.Add(ScorePossible.ALBATROS, allNeededScoreHoles.Where<ScoreHole>(sh => (sh.Score <= (int)ScorePossible.ALBATROS)).Count() / (float)nbTotal * 100);
             res.Add(ScorePossible.EAGLE, allNeededScoreHoles.Where<ScoreHole>(sh => (sh.Score==(int)ScorePossible.EAGLE)).Count()/ (float)nbTotal *100 );
             res.Add(ScorePossible.BIRDIE, allNeededScoreHoles.Where<ScoreHole>(sh => (sh.Score == (int)ScorePossible.BIRDIE)).Count() / (float)nbTotal * 100);

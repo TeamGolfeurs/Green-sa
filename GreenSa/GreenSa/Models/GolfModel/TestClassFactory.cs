@@ -10,6 +10,7 @@ namespace GreenSa.Models.GolfModel
 {
     class TestClassFactory
     {
+        private static int createdScorePartieCount = 0;
 
         public static ScorePartie CreateScorePartie()
         {
@@ -20,7 +21,8 @@ namespace GreenSa.Models.GolfModel
             List<GolfCourse> golfCourses = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection);
             Random r = new Random();
             var holes = golfCourses[r.Next()%(golfCourses.Count)].Holes;
-            ScorePartie sp = new ScorePartie();
+            DateTime date = new DateTime(2019, DateTime.Now.Month, (TestClassFactory.createdScorePartieCount % 28) + 1);
+            ScorePartie sp = new ScorePartie(date);
             if (holes != null)
             {
                 foreach (Hole hole in holes)
@@ -32,6 +34,7 @@ namespace GreenSa.Models.GolfModel
             }
             SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, sp.scoreHoles, true);
             SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, sp, false);
+            TestClassFactory.createdScorePartieCount++;
             return sp;
         }
 
