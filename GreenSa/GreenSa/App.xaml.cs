@@ -22,9 +22,9 @@ namespace GreenSa
         protected override void OnStart()
         {
             // Handle when your app starts
-            TestClassFactory.CreateScorePartie();
-            TestClassFactory.CreateScorePartie();
             /*TestClassFactory.CreateScorePartie();
+            TestClassFactory.CreateScorePartie();
+            TestClassFactory.CreateScorePartie();
             TestClassFactory.CreateScorePartie();
             TestClassFactory.CreateScorePartie();
             TestClassFactory.CreateScorePartie();

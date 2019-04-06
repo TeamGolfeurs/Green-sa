@@ -30,6 +30,7 @@ namespace GreenSa.ViewController.Option
             InitializeComponent();
             this.pins = new List<Pin>();
 
+            /*Init some content on the view*/
             this.validPar.BorderColor = Color.FromHex("0C5E11");
             this.validPar.BorderWidth = 2;
             this.deletePin.BorderColor = Color.FromHex("0C5E11");
@@ -105,7 +106,7 @@ namespace GreenSa.ViewController.Option
                 var confirmDelete = await this.DisplayAlert("Suppression du dernier trou", "Voulez vous supprimer le trou n°" + this.pins.Count + " ?", "Oui", "Non");
                 if (confirmDelete)
                 {
-                    this.pins.RemoveAt(this.pins.Count - 1);
+                    this.pins.RemoveAt(this.pins.Count - 1);//remove in the common list
                     MessagingCenter.Send<Object>(this, "deleteLastPin");
                     NinePinsCourseNameManagement();
                     this.SetParVisibility(false);
@@ -155,13 +156,14 @@ namespace GreenSa.ViewController.Option
                     this.DisplayAlert("OnValidParClick", exception.InnerException.StackTrace, "ok");
                 }
                 this.SetParVisibility(false);
-                if (this.pins.Count == 18)//if 18 holes on the map
+                if (this.pins.Count == 18)
                 {
+                    this.golfNameEntry.Text = "18 trous de ";
                     this.SetCourseNameVisibility(true);
                 }
                 else
                 {
-                    NinePinsCourseNameManagement();//check if 9 holes on the map
+                    NinePinsCourseNameManagement();
                 }
             }
         }
@@ -181,6 +183,7 @@ namespace GreenSa.ViewController.Option
             }
             else
             {
+                //see Ressources/GolfCourses for a more understandable patern
                 StringBuilder xmlGolfCourse = new StringBuilder("<GolfCourse>");
                 xmlGolfCourse.Append("<Name>" + this.golfNameEntry.Text + "</Name>");
                 xmlGolfCourse.Append("<NbTrous>" + this.pins.Count + "</NbTrous>");
@@ -202,7 +205,7 @@ namespace GreenSa.ViewController.Option
         }
 
         /** Inserts a golf course in the database from an xml string describing the golf course
-         * xmlGolfCourse : the xml string describing teh golf course
+         * xmlGolfCourse : the xml string describing the golf course
          */
         private void InsertGolfCourseBdd(String xmlGolfCourse)
         {
@@ -238,8 +241,8 @@ namespace GreenSa.ViewController.Option
          */
         private void ManageAllPinsDelete()
         {
-            this.pins.Clear();
-            MessagingCenter.Send<Object>(this, "deleteAllPins");
+            this.pins.Clear();//remove all pins in the common list
+            MessagingCenter.Send<Object>(this, "deleteAllPins");//send a message to delete all pins from the map
             this.SetCourseNameVisibility(false);
             this.SetParVisibility(false);
         }
@@ -273,6 +276,7 @@ namespace GreenSa.ViewController.Option
             if (this.pins.Count == 9)
             {
                 this.SetCourseNameVisibility(true);
+                this.golfNameEntry.Text = "9 trous de ";
             }
             else
             {

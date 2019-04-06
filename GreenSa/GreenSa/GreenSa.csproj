@@ -77,9 +77,6 @@
     <Compile Include="ViewController\MesGolfs\AddGolf\ImportGolfCourse.xaml.cs">
       <DependentUpon>ImportGolfCourse.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\MesGolfs\AddGolf\OptionTabbedPage.xaml.cs">
-      <DependentUpon>OptionTabbedPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewController\Profile\MyClubs\ClubSelectionPage.xaml.cs">
       <DependentUpon>ClubSelectionPage.xaml</DependentUpon>
     </Compile>
@@ -331,12 +328,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\MesGolfs\AddGolf\ImportGolfCourse.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ViewController\MesGolfs\AddGolf\OptionTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -75,7 +75,8 @@ namespace GreenSa.Models.GolfModel
         public static double getAveragePars()
         {
             double avPars = -1;
-            int sum = 0;
+            double sum = 0;
+            double nineHolesCount = 0;
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             connection.CreateTable<ScorePartie>();
             connection.CreateTable<ScoreHole>();
@@ -86,10 +87,11 @@ namespace GreenSa.Models.GolfModel
                 {
                     sum += (sh.Score == 0) ? 1 : 0;
                 }
+                nineHolesCount += (sp.scoreHoles.Count == 9) ? 1 : 2;
             }
             if (scoresPartie.Count > 0)
             {
-                avPars = (double)((double)sum / (double)scoresPartie.Count);
+                avPars = sum / nineHolesCount;
             }
             return avPars;
         }
@@ -147,7 +149,7 @@ namespace GreenSa.Models.GolfModel
             return new Tuple<string, int>(clubName, (int)maxDist);
         }
 
-        /** Gets all the ScorePartie
+        /** Gets all the ScorePartie from the database
          */
         public static List<ScorePartie> getScoreParties()
         {
@@ -157,6 +159,8 @@ namespace GreenSa.Models.GolfModel
             return scores;
         }
 
+        /** Gets the all the ScoreHole from the database
+         */
         public static List<ScoreHole> getScoreHoles()
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
@@ -166,14 +170,48 @@ namespace GreenSa.Models.GolfModel
             return scoresHoles;
         }
 
-        /** Gets the all the golf courses
+        /** Gets the all the golf courses from the database
          */
-        public static List<GolfCourse> getAllGolfCourses()
+        public static List<GolfCourse> getGolfCourses()
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             connection.CreateTable<GolfCourse>();
             List<GolfCourse> golfCourses = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection);
             return golfCourses;
+        }
+
+
+        public static int getWorstHole(GolfCourse golfCourse)
+        {
+            int holeNumber = 0;
+            List<ScoreHole> scoreHoles = getScoreHoles(golfCourse);
+            if (scoreHoles.Count > 0)
+            {
+                //Dictionnary<Hole, Tuple<sum, count>> to compute mean
+                Dictionary<Hole, double> sumScorePerHole = new Dictionary<Hole, double>();
+                Dictionary<Hole, double> countScorePerHole = new Dictionary<Hole, double>();
+                foreach (ScoreHole sh in scoreHoles)
+                {
+                    if (!sumScorePerHole.ContainsKey(sh.Hole))
+                    {
+                        sumScorePerHole.Add(sh.Hole, 0.0);
+                        countScorePerHole.Add(sh.Hole, 0.0);
+                    }
+                    sumScorePerHole[sh.Hole] += sh.Score;
+                    countScorePerHole[sh.Hole] += 1.0;
+                }
+                double maxScore = 0.0;
+                foreach (Hole hole in sumScorePerHole.Keys)
+                {
+                    double currentMean = sumScorePerHole[hole] / countScorePerHole[hole];
+                    if (currentMean > maxScore)
+                    {
+                        maxScore = currentMean;
+                        holeNumber = golfCourse.Holes.IndexOf(hole) + 1;
+                    }
+                }
+            }
+            return holeNumber;
         }
 
 

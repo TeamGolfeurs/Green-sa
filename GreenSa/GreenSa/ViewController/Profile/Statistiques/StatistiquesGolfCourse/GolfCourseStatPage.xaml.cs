@@ -23,6 +23,24 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             this.updateChart();
             this.updateGIR();
             this.updateAveragePutts();
+            this.updateWorstHole();
+        }
+
+        private void updateWorstHole()
+        {
+            int worstHoleNumber = StatistiquesGolf.getWorstHole(this.golfCourse);
+            if (worstHoleNumber == 0)
+            {
+                this.worstHole.Text = GeneralStatPage.NO_DATA;
+                this.worstHole.TextColor = Color.Gray;
+                this.worstHole.FontSize = 15;
+            }
+            else
+            {
+                this.worstHole.Text = "" + worstHoleNumber;
+                this.worstHole.TextColor = Color.FromHex("#39B54A");
+                this.worstHole.FontSize = 30;
+            }
         }
 
         private void updateAveragePutts()

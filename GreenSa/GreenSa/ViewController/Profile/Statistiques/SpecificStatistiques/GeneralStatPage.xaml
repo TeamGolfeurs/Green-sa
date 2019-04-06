@@ -77,7 +77,7 @@
             <Label x:Name="averagePars" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="#39B54A" Text="9" FontSize="30" />
           </StackLayout>
         </Frame>
-        <Label x:Name="averageParsLabel" Margin="0, 0, 10, 0" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" FontSize="17" Grid.Row="3" Grid.Column="1">Nombre de par / parcours</Label>
+        <Label x:Name="averageParsLabel" Margin="0, 0, 10, 0" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" FontSize="17" Grid.Row="3" Grid.Column="1">Nombre de par moyen / 9 trous</Label>
       </Grid>
 
       <viewelements:MyButton x:Name="distClubs" Text="Distances moyennes de vos clubs" Margin="10, 5, 10, 10" Clicked="OnDistClubClick"/>

@@ -42,10 +42,10 @@
 
                 <Frame Grid.Row="3" Grid.Column="0" Margin="0, 12, 0, 0" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="9, 4, 9, 4">
                     <StackLayout>
-                        <Label x:Name="worseHole" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="#39B54A" Text="10" FontSize="30" />
+                        <Label x:Name="worstHole" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="#39B54A" Text="10" FontSize="30" />
                     </StackLayout>
                 </Frame>
-                <Label x:Name="worseHoleLabel" Margin="0, 12, 12, 0" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" FontSize="17" Grid.Row="3" Grid.Column="1">N° du trou le moins souvent réussi</Label>
+                <Label x:Name="worstHoleLabel" Margin="0, 12, 12, 0" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" FontSize="17" Grid.Row="3" Grid.Column="1">N° du trou le moins souvent réussi</Label>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

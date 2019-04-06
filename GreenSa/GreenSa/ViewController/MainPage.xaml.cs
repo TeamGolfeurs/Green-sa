@@ -15,6 +15,7 @@ using SQLite;
 using System.Collections.ObjectModel;
 using GreenSa.Persistence;
 using GreenSa.Models.Profiles;
+using GreenSa.ViewController.Test;
 
 namespace GreenSa.ViewController
 {
@@ -83,7 +84,7 @@ namespace GreenSa.ViewController
          * Redirige vers la page "OptionTabbedPage"
          * */
         async private void OnOptionsClicked(object sender, EventArgs e){ 
-            await Navigation.PushAsync(new DatabaseDeletionPage());
+            await Navigation.PushAsync(new SeeBDContent());
         }
     }
 }

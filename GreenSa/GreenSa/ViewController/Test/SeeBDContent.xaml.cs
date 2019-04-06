@@ -114,7 +114,7 @@ namespace GreenSa.ViewController.Test
 
             connection.DropTable<MyPosition>();
             connection.DropTable<GolfCourse>();
-            connection.DropTable<Club>();
+            //connection.DropTable<Club>();
             connection.DropTable<Shot>();
             connection.DropTable<Hole>();
             connection.DropTable<ScoreHole>();

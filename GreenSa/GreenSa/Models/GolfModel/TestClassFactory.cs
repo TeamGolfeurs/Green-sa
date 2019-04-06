@@ -21,17 +21,27 @@ namespace GreenSa.Models.GolfModel
             List<GolfCourse> golfCourses = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection);
             Random r = new Random();
             var holes = golfCourses[r.Next()%(golfCourses.Count)].Holes;
+            //var holes = golfCourses[0].Holes;
             DateTime date = new DateTime(2019, DateTime.Now.Month, (TestClassFactory.createdScorePartieCount % 28) + 1);
             ScorePartie sp = new ScorePartie(date);
+            int i = 0;
             if (holes != null)
             {
                 foreach (Hole hole in holes)
                 {
-                    int rand = (r.Next() % 4);
-                    ScoreHole sh = new ScoreHole(hole, r.Next()%6, rand == 2, rand, DateTime.Now);
+                    int randPutt = r.Next() % 4;
+                    int randScore = r.Next() % 4;
+                    if (i == 7)
+                    {
+                        randScore = 4;
+                    }
+                    System.Diagnostics.Debug.WriteLine("randPutt = " + randPutt+ "randScore = "+ randScore+"\n");
+                    ScoreHole sh = new ScoreHole(hole, randScore, randPutt == 2, randPutt, DateTime.Now);
                     sp.add(sh);
+                    i++;
                 }
             }
+            System.Diagnostics.Debug.WriteLine("\n");
             SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, sp.scoreHoles, true);
             SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, sp, false);
             TestClassFactory.createdScorePartieCount++;
