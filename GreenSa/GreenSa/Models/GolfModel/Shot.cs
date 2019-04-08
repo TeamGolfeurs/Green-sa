@@ -8,6 +8,17 @@ namespace GreenSa.Models.GolfModel
 {
     public class Shot
     {
+
+        public enum ShotCategory
+        {
+            PerfectShot,
+            UnexpectedGoodShot,
+            GoodShot,
+            BadLeftShot,
+            BadRightShot,
+            BadShortShot,
+        }
+
         [PrimaryKey,AutoIncrement]
         public int Id { get; set; }
 
@@ -33,6 +44,8 @@ namespace GreenSa.Models.GolfModel
 
         public DateTime Date { get; set; }
 
+        public ShotCategory ShotType { get; set; }
+
 
         [Ignore]
         public double Distance
@@ -52,12 +65,19 @@ namespace GreenSa.Models.GolfModel
             this.Target = target;
             this.RealShot = realShot;
             this.Date = date;
+            this.ShotType = determineShotCategory();
         }
         
         public Shot()
         {
 
         }
+
+        public ShotCategory determineShotCategory()
+        {
+            return ShotCategory.GoodShot;//temporary
+        }
+
         public override string ToString()
         {
             return "From "+InitPlace+", try "+Target+" but "+RealShot +" with "+Club+" the "+Date.DayOfWeek+" "+Date.Day+" "+Date.Month;

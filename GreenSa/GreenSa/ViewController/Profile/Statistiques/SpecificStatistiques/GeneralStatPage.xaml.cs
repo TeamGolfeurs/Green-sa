@@ -24,26 +24,58 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
         public static string NO_DATA_LIST = "-";
         public static string NO_DATA = "NoData";
 
+        private List<GolfCourse> allGolfCourses;
+        private List<ScorePartie> allScoreParties;
+        private List<Shot> allShots;
+        private List<ScoreHole> allScoreHoles;
+
         public GeneralStatPage()
         {
             InitializeComponent();
+            this.allGolfCourses = null;
+            this.allScoreParties = null;
+            this.allScoreHoles = null;
+            this.allShots = null;
+            /*for (int i = 0; i<20; i++)
+            {
+                TestClassFactory.CreateScorePartie();
+            }
+            /*TestClassFactory.CreateScorePartie();
             TestClassFactory.CreateScorePartie();
-            TestClassFactory.CreateScorePartie();
-            TestClassFactory.CreateScorePartie();
-            this.updateLast4Scores();
-            this.updateMaxDistClubStat();
-            this.updateAveragePutts();
-            this.updateAveragePar();
+            TestClassFactory.CreateScorePartie();*/
+
+        }
+
+        async protected override void OnAppearing()
+        {
+            if (this.allGolfCourses == null)
+            {
+                this.allGolfCourses = await StatistiquesGolf.getGolfCourses();
+            }
+            if (this.allScoreParties == null)
+            {
+                this.allScoreParties = await StatistiquesGolf.getScoreParties();
+            }
+            this.updateLast4Scores(allGolfCourses, allScoreParties);
+            if (this.allShots == null)
+            {
+                this.allShots = await StatistiquesGolf.getShots();
+            }
+            this.updateMaxDistClubStat(allShots);
+            if (this.allScoreHoles == null)
+            {
+                this.allScoreHoles = await StatistiquesGolf.getScoreHoles();
+            }
+            this.updateAveragePutts(allScoreHoles);
+            this.updateAveragePar(allScoreParties);
         }
 
 
-        private void updateLast4Scores()
+            private void updateLast4Scores(List<GolfCourse> allGolfCourses, List<ScorePartie> allScoreParties)
         {
             int index = (int)StatistiquesGolf.getPlayerIndex();
             int rowCount = last4ScoresGrid.Children.Count / 3;
-            var allGolfCourses = StatistiquesGolf.getGolfCourses();
-            var notSortedScores = StatistiquesGolf.getScoreParties();
-            var scores = notSortedScores.OrderByDescending(d => d.DateDebut).ToList();
+            var scores = allScoreParties.OrderByDescending(d => d.DateDebut).ToList();
             //System.Diagnostics.Debug.WriteLine(scores[0].scoreHoles.ToString());
             int col = 0;
             int row = 0;
@@ -135,9 +167,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
         }
 
 
-        private void updateAveragePar()
+        private void updateAveragePar(List<ScorePartie> allScoreParties)
         {
-            double avPars = StatistiquesGolf.getAveragePars();
+            double avPars = StatistiquesGolf.getAveragePars(allScoreParties);
             if (avPars == -1.0)
             {
                 this.averagePars.Text = NO_DATA;
@@ -152,9 +184,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
             }
         }
 
-        private void updateAveragePutts()
+        private void updateAveragePutts(List<ScoreHole> allScoreHoles)
         {
-            double avPutts = StatistiquesGolf.getAveragePutts(StatistiquesGolf.getScoreHoles());
+            double avPutts = StatistiquesGolf.getAveragePutts(allScoreHoles);
             if (avPutts == -1.0)
             {
                 this.averagePutts.Text = NO_DATA;
@@ -171,9 +203,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
 
 
 
-        private void updateMaxDistClubStat()
+        private void updateMaxDistClubStat(List<Shot> allShots)
         {
-            Tuple<string, int> maxDist = StatistiquesGolf.getMaxDistClub();
+            Tuple<string, int> maxDist = StatistiquesGolf.getMaxDistClub(allShots);
             if (maxDist.Item2 == 0.0)
             {
                 this.maxDistClubLabel.Text = "Coup le plus long";

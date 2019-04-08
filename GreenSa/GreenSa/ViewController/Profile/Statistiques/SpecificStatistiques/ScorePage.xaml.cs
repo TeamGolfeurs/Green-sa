@@ -24,14 +24,14 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
         {
             InitializeComponent();
         }
+
         protected override void OnAppearing()
         {
 
             base.OnAppearing();
             getScores(c => true);
-
-
         }
+
         /*
         * Méthode déclenchée à l'application du filtre
         * Appel a la classe StatstiquesGolf avec un filtre
@@ -43,7 +43,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
 
         private void getScores(Func<Club, bool> f)
         {
-            float albatros = 0f;
+            /*float albatros = 0f;
             float eagle = 0f;
             float birdie = 0f;
             float par = 0f;
@@ -51,7 +51,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
             float dbogey = 0f;
             float more = 0f;
 
-            Dictionary<Hole.ScorePossible, float> d = StatistiquesGolf.getProportionScore(new GolfCourse());
+            Dictionary<Hole.ScorePossible, float> d = StatistiquesGolf.getProportionScore(StatistiquesGolf.getScoreHoles(), new GolfCourse());
 
             foreach(KeyValuePair<Hole.ScorePossible, float> k in d){
                 if (k.Key.Equals(Hole.ScorePossible.ALBATROS)){
@@ -126,7 +126,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
             };
 
             this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize=22, MaxValue=100 };
-
+            */
         }
     }
 }

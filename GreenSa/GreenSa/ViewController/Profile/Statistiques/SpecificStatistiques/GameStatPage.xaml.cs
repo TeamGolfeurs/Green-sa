@@ -10,41 +10,30 @@ using GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques;
 
 namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 {
-    public partial class GolfCourseStatPage : ContentPage
+    public partial class GameStatPage : ContentPage
     {
 
         private GolfCourse golfCourse;
 
-        private List<ScoreHole> allScoreHoles;
-        private List<ScorePartie> allScoreParties;
-
-        public GolfCourseStatPage(GolfCourse g)
+        public GameStatPage(GolfCourse g)
         {
             InitializeComponent();
             this.golfCourse = g;
             this.golfCourseName.Text = this.golfCourse.Name;
 
-            this.allScoreParties = null;
-            this.allScoreHoles = null;
         }
 
         async protected override void OnAppearing()
         {
-            if (this.allScoreHoles == null)
-            {
-                this.allScoreHoles = await StatistiquesGolf.getScoreHoles();
-            }
+            List<ScorePartie> allScoreParties = await StatistiquesGolf.getScoreParties();
+            List<ScoreHole> allScoreHoles = await StatistiquesGolf.getScoreHoles();
             this.updateChart(allScoreHoles);
-            if (this.allScoreParties == null)
-            {
-                this.allScoreParties = await StatistiquesGolf.getScoreParties();
-            }
             this.updateGIR(allScoreParties);
             this.updateAveragePutts(allScoreHoles);
             this.updateWorstHole(allScoreHoles);
         }
 
-            private void updateWorstHole(List<ScoreHole> allScoreHoles)
+        private void updateWorstHole(List<ScoreHole> allScoreHoles)
         {
             int worstHoleNumber = StatistiquesGolf.getWorstHole(allScoreHoles, this.golfCourse);
             if (worstHoleNumber == 0)

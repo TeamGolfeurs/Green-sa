@@ -44,6 +44,9 @@ namespace GreenSa.Models.Tools
                 
                 gfcs.Add(getSingleGolfCourseFromText(text));
             }
+
+            System.Diagnostics.Debug.WriteLine(gfcs.ToString());
+
             return gfcs;
         }
 
@@ -73,7 +76,7 @@ namespace GreenSa.Models.Tools
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(App)).Assembly;
             Stream stream = assembly.GetManifestResourceStream("GreenSa.Ressources.Clubs.Clubs_Descriptor.xml");
             string text = "";
-            using (var reader = new System.IO.StreamReader(stream))//lit fichier contenant la liste des golf
+            using (var reader = new System.IO.StreamReader(stream))//lit fichier contenant la liste des clubs
             {
                 text = reader.ReadToEnd();
             }
@@ -100,7 +103,7 @@ namespace GreenSa.Models.Tools
             }
             
 
-            foreach (var node in xDocumentForListOfGolfCoursesFiles.Element("Clubs").Elements("Club"))//for each file golfCourse
+            foreach (var node in xDocumentForListOfGolfCoursesFiles.Element("Clubs").Elements("Club"))//for each file club
             {
                 stream = assembly.GetManifestResourceStream("GreenSa.Ressources.Clubs." + node.Value + ".xml");
                 text = "";
@@ -118,6 +121,9 @@ namespace GreenSa.Models.Tools
                 Club gc = new Club(nodeGolfC.Element("Name").Value, userMoyDistance);
                 clubs.Add(gc);
             }
+
+            System.Diagnostics.Debug.WriteLine(clubs.ToString());
+
             return clubs;
         }
 

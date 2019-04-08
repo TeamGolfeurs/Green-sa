@@ -117,9 +117,8 @@ namespace GreenSa.ViewController.Test
             //connection.DropTable<Club>();
             connection.DropTable<Shot>();
             connection.DropTable<Hole>();
+            connection.DropTable<ScorePartie>();
             connection.DropTable<ScoreHole>();
-
-
         }
 
         private void seeHoles(object sender, EventArgs e)
@@ -160,5 +159,26 @@ namespace GreenSa.ViewController.Test
             }
 
         }
+
+        private void seeParties(object sender, EventArgs e)
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            try
+            {
+                List<ScorePartie> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScorePartie>(connection));
+                label.Text = "";
+                foreach (ScorePartie c in gfcs)
+                {
+                    label.Text += c.ToString() + "\n";
+                }
+            }
+            catch (Exception ex)
+            {
+                label.Text = "" + ex.Message;
+
+            }
+
+        }
+
     }
 }

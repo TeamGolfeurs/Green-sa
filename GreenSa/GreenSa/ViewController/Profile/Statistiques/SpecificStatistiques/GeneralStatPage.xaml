@@ -38,43 +38,43 @@
               </Grid.ColumnDefinitions>
 
               <Label TextColor="#39B54A" FontAttributes="Bold" FontSize="20" Grid.Row="0" Grid.Column="0">Golf</Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="1" Grid.Column="0"></Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="2" Grid.Column="0"></Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="3" Grid.Column="0"></Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="4" Grid.Column="0"></Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="1" Grid.Column="0">-</Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="2" Grid.Column="0">-</Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="3" Grid.Column="0">-</Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="4" Grid.Column="0">-</Label>
 
               <Label TextColor="#39B54A" FontAttributes="Bold" FontSize="20" Grid.Row="0" Grid.Column="1">Date</Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="1" Grid.Column="1"></Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="2" Grid.Column="1"></Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="3" Grid.Column="1"></Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="4" Grid.Column="1"></Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="1" Grid.Column="1">-</Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="2" Grid.Column="1">-</Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="3" Grid.Column="1">-</Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="4" Grid.Column="1">-</Label>
 
               <Label TextColor="#39B54A" FontAttributes="Bold" FontSize="20" Grid.Row="0" Grid.Column="2">Score</Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="1" Grid.Column="2"></Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="2" Grid.Column="2"></Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="3" Grid.Column="2"></Label>
-              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="4" Grid.Column="2"></Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="1" Grid.Column="2">-</Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="2" Grid.Column="2">-</Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="3" Grid.Column="2">-</Label>
+              <Label FontAttributes="Bold" FontSize="13" TextColor="DarkSlateGray" Grid.Row="4" Grid.Column="2">-</Label>
             </Grid>
           </StackLayout>
         </Frame>
 
           <Frame Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7">
             <StackLayout>
-              <Label x:Name="maxDistClub" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="#39B54A" Text="270 m" FontSize="30" />
+              <Label x:Name="maxDistClub" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="Gray" Text="NoData" FontSize="15" />
             </StackLayout>
          </Frame>
         <Label x:Name="maxDistClubLabel" Margin="0, 0, 10, 0" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" FontSize="17" Grid.Row="1" Grid.Column="1">Drive le plus long</Label>
 
         <Frame Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7">
           <StackLayout>
-            <Label x:Name="averagePutts" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" VerticalOptions="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="#39B54A" Text="2.56" FontSize="30"/>
+                        <Label x:Name="averagePutts" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" VerticalOptions="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="Gray" Text="NoData" FontSize="15"/>
           </StackLayout>
         </Frame>
         <Label VerticalOptions="Center" Margin="0, 0, 10, 0" FontSize="17" FontAttributes="Bold" TextColor="Black" Grid.Row="2" Grid.Column="1">Nombre de putts moyen / trou</Label>
 
         <Frame Grid.Row="3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="9, 4, 9, 4">
           <StackLayout>
-            <Label x:Name="averagePars" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="#39B54A" Text="9" FontSize="30" />
+                        <Label x:Name="averagePars" HorizontalOptions="Fill" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="White" FontFamily="Times New Roman" TextColor="Gray" Text="NoData" FontSize="15" />
           </StackLayout>
         </Frame>
         <Label x:Name="averageParsLabel" Margin="0, 0, 10, 0" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" FontSize="17" Grid.Row="3" Grid.Column="1">Nombre de par moyen / 9 trous</Label>

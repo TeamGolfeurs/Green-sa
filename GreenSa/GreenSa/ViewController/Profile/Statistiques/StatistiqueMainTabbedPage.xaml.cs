@@ -16,23 +16,28 @@ namespace GreenSa.ViewController.Profile.Statistiques
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StatistiqueMainTabbedPage : TabbedPage
     {
+
+        private GeneralStatPage generalStatPage;
+        private GolfSelectionPage golfSelectionPage;
+        private ScoreVsParPage scoreVsParPage;
+
         public StatistiqueMainTabbedPage()
         {
             InitializeComponent();
             this.BarBackgroundColor = Color.FromHex("0A7210");
             this.BarTextColor = Color.White;
 
-            var Page1 = new GeneralStatPage();
-            Page1.Title = "Général";
-            this.Children.Add(Page1);
+            this.generalStatPage = new GeneralStatPage();
+            this.generalStatPage.Title = "Général";
+            this.Children.Add(this.generalStatPage);
 
-            var Page2 = new GolfSelectionPage();
-            Page2.Title = "Par parcours";
-            this.Children.Add(Page2);
+            this.golfSelectionPage = new GolfSelectionPage();
+            this.golfSelectionPage.Title = "Par parcours";
+            this.Children.Add(this.golfSelectionPage);
 
-            var Page3 = new ScoreVsParPage();
-            Page3.Title = "Par partie";
-            this.Children.Add(Page3);
+            this.scoreVsParPage = new ScoreVsParPage();
+            this.scoreVsParPage.Title = "Par partie";
+            this.Children.Add(this.scoreVsParPage);
         }
 
         protected override void OnAppearing()

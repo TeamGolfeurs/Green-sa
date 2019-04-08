@@ -72,16 +72,12 @@ namespace GreenSa.Models.GolfModel
             return res;
         }
 
-        public static double getAveragePars()
+        public static double getAveragePars(List<ScorePartie> allScoreParties)
         {
             double avPars = -1;
             double sum = 0;
             double nineHolesCount = 0;
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<ScorePartie>();
-            connection.CreateTable<ScoreHole>();
-            List<ScorePartie> scoresPartie = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScorePartie>(connection);
-            foreach (ScorePartie sp in scoresPartie)
+            foreach (ScorePartie sp in allScoreParties)
             {
                 foreach (ScoreHole sh in sp.scoreHoles)
                 {
@@ -89,7 +85,7 @@ namespace GreenSa.Models.GolfModel
                 }
                 nineHolesCount += (sp.scoreHoles.Count == 9) ? 1 : 2;
             }
-            if (scoresPartie.Count > 0)
+            if (allScoreParties.Count > 0)
             {
                 avPars = sum / nineHolesCount;
             }
@@ -128,16 +124,67 @@ namespace GreenSa.Models.GolfModel
             return new Tuple<double, double>(min, max);
         }
 
+
+        public async static Task<List<Shot>> getShots()
+        {
+            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
+            await connection.CreateTableAsync<Shot>();
+            List<Shot> allShots = await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<Shot>(connection);
+            return allShots;
+        }
+
+        /** Gets all the ScorePartie from the database
+         */
+        public async static Task<List<ScorePartie>> getScoreParties()
+        {
+            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
+            await connection.CreateTableAsync<ScorePartie>();
+            List<ScorePartie> allScoreParties = await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<ScorePartie>(connection, recursive:true);
+            return allScoreParties;
+        }
+
+        /** Gets the all the ScoreHole from the database
+         */
+        public async static Task<List<ScoreHole>> getScoreHoles()
+        {
+            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
+            await connection.CreateTableAsync<ScoreHole>();
+            List<ScoreHole> allScoreHoles = await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<ScoreHole>(connection, recursive: true);
+            return allScoreHoles;
+        }
+
+        /** Gets the all the golf courses from the database
+         */
+        public async static Task<List<GolfCourse>> getGolfCourses()
+        {
+            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
+            await connection.CreateTableAsync<GolfCourse>();
+            List<GolfCourse> golfCourses = await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<GolfCourse>(connection);
+            return golfCourses;
+        }
+
+
+        public static List<ScorePartie> getScoreParties(List<ScorePartie> allScoreParties, GolfCourse golfCourse)
+        {
+            List<ScorePartie> allNeededScoreParties = allScoreParties.Where(sh => sh.scoreHoles[0].Hole.IdGolfC.Equals(golfCourse.Name)).ToList();
+            return allNeededScoreParties;
+        }
+
+        public static List<ScoreHole> getScoreHoles(List<ScoreHole> allScoreHoles, GolfCourse golfCourse)
+        {
+            List<ScoreHole> allNeededScoreHoles = allScoreHoles.Where(sh => sh.Hole.IdGolfC.Equals(golfCourse.Name)).ToList();
+            return allNeededScoreHoles;
+        }
+
+
+
         /** Gets a tuple containing the name of the club with which the player did the higher distance and this distance
          */
-        public static Tuple<string, int> getMaxDistClub()
+        public static Tuple<string, int> getMaxDistClub(List<Shot> allShots)
         {
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<Shot>();
-            List<Shot> shots = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection);
             double maxDist = 0.0;
             string clubName = "";
-            foreach (Shot shot in shots)
+            foreach (Shot shot in allShots)
             {
                 double dist = shot.Distance;
                 if (dist > maxDist)
@@ -149,42 +196,11 @@ namespace GreenSa.Models.GolfModel
             return new Tuple<string, int>(clubName, (int)maxDist);
         }
 
-        /** Gets all the ScorePartie from the database
-         */
-        public static List<ScorePartie> getScoreParties()
-        {
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<ScorePartie>();
-            List<ScorePartie> scores = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScorePartie>(connection, recursive: true);
-            return scores;
-        }
 
-        /** Gets the all the ScoreHole from the database
-         */
-        public static List<ScoreHole> getScoreHoles()
-        {
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<ScoreHole>();
-            connection.CreateTable<Hole>();
-            List<ScoreHole> scoresHoles = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection, recursive: true);
-            return scoresHoles;
-        }
-
-        /** Gets the all the golf courses from the database
-         */
-        public static List<GolfCourse> getGolfCourses()
-        {
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<GolfCourse>();
-            List<GolfCourse> golfCourses = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection);
-            return golfCourses;
-        }
-
-
-        public static int getWorstHole(GolfCourse golfCourse)
+        public static int getWorstHole(List<ScoreHole> allScoreHoles, GolfCourse golfCourse)
         {
             int holeNumber = 0;
-            List<ScoreHole> scoreHoles = getScoreHoles(golfCourse);
+            List<ScoreHole> scoreHoles = getScoreHoles(allScoreHoles, golfCourse);
             if (scoreHoles.Count > 0)
             {
                 //Dictionnary<Hole, Tuple<sum, count>> to compute mean
@@ -260,25 +276,12 @@ namespace GreenSa.Models.GolfModel
             return l;
         }
 
-        public static List<ScorePartie> getScoreParties(GolfCourse golfCourse)
-        {
-            List<ScorePartie> allScoreParties = getScoreParties();
-            List<ScorePartie> allNeededScoreParties = allScoreParties.Where(sh => sh.scoreHoles[0].Hole.IdGolfC.Equals(golfCourse.Name)).ToList();
-            return allNeededScoreParties;
-        }
-
-        public static List<ScoreHole> getScoreHoles(GolfCourse golfCourse)
-        {
-            List<ScoreHole> allScoreHoles = getScoreHoles();
-            List<ScoreHole> allNeededScoreHoles = allScoreHoles.Where(sh => sh.Hole.IdGolfC.Equals(golfCourse.Name)).ToList();
-            return allNeededScoreHoles;
-        }
 
         //get the list
-        public static Dictionary<ScorePossible,float> getProportionScore(GolfCourse golfCourse)
+        public static Dictionary<ScorePossible,float> getProportionScore(List<ScoreHole> allScoreHoles, GolfCourse golfCourse)
         {
             Dictionary<ScorePossible, float> res = new Dictionary<ScorePossible, float>();
-            List<ScoreHole> allNeededScoreHoles = getScoreHoles(golfCourse);
+            List<ScoreHole> allNeededScoreHoles = getScoreHoles(allScoreHoles, golfCourse);
             int nbTotal = allNeededScoreHoles.Count;
 
             res.Add(ScorePossible.ALBATROS, allNeededScoreHoles.Where<ScoreHole>(sh => (sh.Score <= (int)ScorePossible.ALBATROS)).Count() / (float)nbTotal * 100);

@@ -16,17 +16,20 @@ namespace GreenSa.ViewController.Play
     public partial class GolfSelectionPage : ContentPage
     {
         Partie p;
+        private GolfCourseStatPage golfCourseStatPage;
+
         public GolfSelectionPage(Partie partie)
         {
             InitializeComponent();
             p = partie;
-
+            golfCourseStatPage = null;
         }
 
         public GolfSelectionPage()
         {
             InitializeComponent();
             p = null;
+            golfCourseStatPage = null;
         }
 
         /**
@@ -54,7 +57,11 @@ namespace GreenSa.ViewController.Play
             var g = ListGolfCourse.SelectedItem as GolfCourse;
             if (p == null)
             {
-                await Navigation.PushAsync(new GolfCourseStatPage(g));
+                if (this.golfCourseStatPage == null)
+                {
+                    this.golfCourseStatPage = new GolfCourseStatPage(g);
+                }
+                await Navigation.PushAsync(this.golfCourseStatPage);
             } else
             {
                 p.GolfCourse = g;
