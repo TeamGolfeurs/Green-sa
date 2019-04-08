@@ -21,11 +21,15 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
         public GolfCourseStatPage(GolfCourse g)
         {
             InitializeComponent();
-            this.golfCourse = g;
-            this.golfCourseName.Text = this.golfCourse.Name;
-
+            this.changeGolfCourse(g);
             this.allScoreParties = null;
             this.allScoreHoles = null;
+        }
+
+        public void changeGolfCourse(GolfCourse g)
+        {
+            this.golfCourse = g;
+            this.golfCourseName.Text = this.golfCourse.Name;
         }
 
         async protected override void OnAppearing()

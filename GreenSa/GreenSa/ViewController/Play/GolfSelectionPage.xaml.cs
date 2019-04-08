@@ -44,7 +44,7 @@ namespace GreenSa.ViewController.Play
             Func<GolfCourse, bool> f = (c => true);
             //Recupere la liste des Golfs filtré par la classe GestionGolf
             List<GolfCourse> res = await GestionGolfs.getListGolfsAsync(f);
-            ListGolfCourse.ItemsSource = res; 
+            ListGolfCourse.ItemsSource = res;
         }
 
 
@@ -60,6 +60,9 @@ namespace GreenSa.ViewController.Play
                 if (this.golfCourseStatPage == null)
                 {
                     this.golfCourseStatPage = new GolfCourseStatPage(g);
+                } else
+                {
+                    this.golfCourseStatPage.changeGolfCourse(g);
                 }
                 await Navigation.PushAsync(this.golfCourseStatPage);
             } else
