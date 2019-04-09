@@ -10,32 +10,48 @@ using GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques;
 
 namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 {
-    public partial class GameStatPage : ContentPage
+    public partial class PartieStatPage : ContentPage
     {
 
-        private GolfCourse golfCourse;
+        private ScorePartie scorePartie;
 
-        public GameStatPage(GolfCourse g)
+        public PartieStatPage(ScorePartie sp)
         {
             InitializeComponent();
-            this.golfCourse = g;
-            this.golfCourseName.Text = this.golfCourse.Name;
-
+            this.scorePartie = sp;
+            this.legendButton.BorderColor = Color.FromHex("0C5E11");
+            this.legendButton.BorderWidth = 2;
+            //this.golfCourseName.Text = this.scorePartie.Name;
         }
 
         async protected override void OnAppearing()
         {
-            List<ScorePartie> allScoreParties = await StatistiquesGolf.getScoreParties();
-            List<ScoreHole> allScoreHoles = await StatistiquesGolf.getScoreHoles();
-            this.updateChart(allScoreHoles);
-            this.updateGIR(allScoreParties);
-            this.updateAveragePutts(allScoreHoles);
-            this.updateWorstHole(allScoreHoles);
+            
+        }
+
+        /**
+         * Méthode déclenchée au click sur le bouton légende
+         * */
+        private void onLegendClick(object sender, EventArgs e)
+        {
+            Button b = (Button)sender;
+            if (b.Text.Equals("?"))
+            {
+                b.Text = "X";
+                this.legend.IsVisible = true;
+                this.bottomStats.IsVisible = false;
+            }
+            else
+            {
+                b.Text = "?";
+                this.legend.IsVisible = false;
+                this.bottomStats.IsVisible = true;
+            }
         }
 
         private void updateWorstHole(List<ScoreHole> allScoreHoles)
         {
-            int worstHoleNumber = StatistiquesGolf.getWorstHole(allScoreHoles, this.golfCourse);
+            /*int worstHoleNumber = StatistiquesGolf.getWorstHole(allScoreHoles, this.golfCourse);
             if (worstHoleNumber == 0)
             {
                 this.worstHole.Text = GeneralStatPage.NO_DATA;
@@ -47,57 +63,12 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                 this.worstHole.Text = "" + worstHoleNumber;
                 this.worstHole.TextColor = Color.FromHex("#39B54A");
                 this.worstHole.FontSize = 30;
-            }
-        }
-
-        private void updateAveragePutts(List<ScoreHole> allScoreHoles)
-        {
-            double avPutts = StatistiquesGolf.getAveragePutts(StatistiquesGolf.getScoreHoles(allScoreHoles, this.golfCourse));
-            if (avPutts == -1.0)
-            {
-                this.averagePutts.Text = GeneralStatPage.NO_DATA;
-                this.averagePutts.TextColor = Color.Gray;
-                this.averagePutts.FontSize = 15;
-            }
-            else
-            {
-                this.averagePutts.Text = "" + avPutts.ToString("0.00");
-                this.averagePutts.TextColor = Color.FromHex("#39B54A");
-                this.averagePutts.FontSize = 30;
-            }
-        }
-
-        private void updateGIR(List<ScorePartie> allScoreParties)
-        {
-            List<ScorePartie> scoreParties = StatistiquesGolf.getScoreParties(allScoreParties, this.golfCourse);
-            double sum = 0.0;
-            foreach (ScorePartie sp in scoreParties)
-            {
-                foreach (ScoreHole sh in sp.scoreHoles)
-                {
-                    sum += (sh.Hit) ? 1.0 : 0.0;
-                }
-            }
-
-            if (scoreParties.Count == 0)
-            {
-                this.averageGIR.Text = GeneralStatPage.NO_DATA;
-                this.averageGIR.TextColor = Color.Gray;
-                this.averageGIR.FontSize = 15;
-            }
-            else
-            {
-                this.averageGIR.Text = "" + (sum/scoreParties.Count).ToString("0.00");
-                this.averageGIR.TextColor = Color.FromHex("#39B54A");
-                this.averageGIR.FontSize = 30;
-            }
-
+            }*/
         }
 
         private void updateChart(List<ScoreHole> allScoreHoles)
         {
-            /*float albatros = 0f;*/
-            float eagle = 0f;
+            /*float eagle = 0f;
             float birdie = 0f;
             float par = 0f;
             float bogey = 0f;
@@ -108,10 +79,6 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 
             foreach (KeyValuePair<Hole.ScorePossible, float> k in d)
             {
-                /*if (k.Key.Equals(Hole.ScorePossible.ALBATROS))
-                {
-                    albatros = k.Value;
-                }*/
                 if (k.Key.Equals(Hole.ScorePossible.BIRDIE))
                 {
                     birdie = k.Value;
@@ -141,13 +108,6 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 
             var entries = new[]
              {
-
-                /*new Entry(albatros)
-                 {
-                     Label = "Albatros",
-                     ValueLabel =float.IsNaN(albatros)?"N/A":(albatros.ToString("n2")   +"%"),
-                    Color = SKColor.Parse("#0BF5A3")
-                 },*/
                 new Entry(eagle)
                  {
                      Label = "Eagle",
@@ -187,7 +147,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             };
 
             this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize = 26, MaxValue = 100, ValueLabelOrientation = Orientation.Horizontal, LabelOrientation = Orientation.Horizontal};
-
+            */
         }
 
     }

@@ -114,12 +114,14 @@ namespace GreenSa.Models.GolfModel
             shots = shots.Where(s => s.Club.Equals(club));
             double min = 99999;
             double max = 0;
-            foreach(Shot s in shots)
+            double dist = 0.0;
+            foreach (Shot s in shots)
             {
-                if (s.Distance < min)
-                    min = s.Distance;
-                if (s.Distance >max)
-                    max = s.Distance;
+                dist = s.RealShotDist();
+                if (dist < min)
+                    min = dist;
+                if (dist > max)
+                    max = dist;
             }
             return new Tuple<double, double>(min, max);
         }
@@ -186,7 +188,7 @@ namespace GreenSa.Models.GolfModel
             string clubName = "";
             foreach (Shot shot in allShots)
             {
-                double dist = shot.Distance;
+                double dist = shot.RealShotDist();
                 if (dist > maxDist)
                 {
                     maxDist = dist;

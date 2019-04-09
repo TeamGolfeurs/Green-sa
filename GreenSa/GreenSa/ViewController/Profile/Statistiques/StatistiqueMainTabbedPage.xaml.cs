@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Diagnostics;
 using GreenSa.ViewController.Play;
+using GreenSa.ViewController.Profile.MyGames;
 
 namespace GreenSa.ViewController.Profile.Statistiques
 {
@@ -19,7 +20,7 @@ namespace GreenSa.ViewController.Profile.Statistiques
 
         private GeneralStatPage generalStatPage;
         private GolfSelectionPage golfSelectionPage;
-        private ScoreVsParPage scoreVsParPage;
+        private ViewPartieListPage partieSelectionPage;
 
         public StatistiqueMainTabbedPage()
         {
@@ -35,9 +36,9 @@ namespace GreenSa.ViewController.Profile.Statistiques
             this.golfSelectionPage.Title = "Par parcours";
             this.Children.Add(this.golfSelectionPage);
 
-            this.scoreVsParPage = new ScoreVsParPage();
-            this.scoreVsParPage.Title = "Par partie";
-            this.Children.Add(this.scoreVsParPage);
+            this.partieSelectionPage = new ViewPartieListPage(true);
+            this.partieSelectionPage.Title = "Par partie";
+            this.Children.Add(this.partieSelectionPage);
         }
 
         protected override void OnAppearing()

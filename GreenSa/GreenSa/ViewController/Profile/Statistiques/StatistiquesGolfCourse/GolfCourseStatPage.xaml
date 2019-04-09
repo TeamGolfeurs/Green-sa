@@ -23,7 +23,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Frame Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Fill" Margin="10, 0, 10, 0" VerticalOptions="Fill" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="5">
-                    <microcharts:ChartView x:Name="chartView" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                    <microcharts:ChartView HeightRequest="200" x:Name="chartView" VerticalOptions="Fill" HorizontalOptions="Fill"/>
                 </Frame>
 
                 <Frame Grid.Row="1" Grid.Column="0" Margin="0, 20, 0, 0" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7">

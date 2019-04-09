@@ -32,7 +32,7 @@
                         <ViewCell >
                             <StackLayout Orientation="Horizontal">
                                 <Picker 
-                                ItemDisplayBinding="{Binding Name, Path=Item1.Club}"
+                                ItemDisplayBinding="{Binding Item1.ShotCategory}"
                                 HorizontalOptions="CenterAndExpand" 
                                 ItemsSource="{Binding Item2}"
                                 SelectedItem="{Binding Item1.Club}"

@@ -157,6 +157,9 @@ namespace GreenSa.Models.Tools.GPS_Maps
                                 TargetPin.Position.Latitude, TargetPin.Position.Longitude, "M");
         }
 
+
+
+
         public static double DistanceTo(double lat1, double lon1, double lat2, double lon2, string unit)
         {
             var rlat1 = Math.PI * lat1 / 180;
@@ -177,6 +180,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
             if (unit == "N") { dist = dist * 0.8684; }
             return dist;
         }
+
 
         internal void setTargetMovable()
         {

@@ -1,4 +1,5 @@
 ﻿using GreenSa.Models.GolfModel;
+using GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,18 @@ namespace GreenSa.ViewController.Profile.MyGames
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewPartieListPage : ContentPage
     {
+        private bool isInStat;
+
         public ViewPartieListPage()
         {
             InitializeComponent();
+            this.isInStat = false;
+        }
+
+        public ViewPartieListPage(bool isInStat)
+        {
+            InitializeComponent();
+            this.isInStat = isInStat;
         }
 
         async protected override void OnAppearing()
@@ -26,7 +36,13 @@ namespace GreenSa.ViewController.Profile.MyGames
 
         private async void listPartie_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            await Navigation.PushModalAsync(new DetailsPartiePage((ScorePartie)listPartie.SelectedItem));
+            if (!isInStat)
+            {
+                await Navigation.PushModalAsync(new DetailsPartiePage((ScorePartie)listPartie.SelectedItem));
+            } else
+            {
+                await Navigation.PushModalAsync(new PartieStatPage((ScorePartie)listPartie.SelectedItem));
+            }
         }
     }
 }

@@ -64,7 +64,7 @@ namespace GreenSa.ViewController.Play
                 {
                     this.golfCourseStatPage.changeGolfCourse(g);
                 }
-                await Navigation.PushAsync(this.golfCourseStatPage);
+                await Navigation.PushModalAsync(this.golfCourseStatPage, true);
             } else
             {
                 p.GolfCourse = g;

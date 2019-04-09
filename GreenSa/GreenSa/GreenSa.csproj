@@ -117,8 +117,8 @@
     <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\DistanceClubPage.xaml.cs">
       <DependentUpon>DistanceClubPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\GameStatPage.xaml.cs">
-      <DependentUpon>GameStatPage.xaml</DependentUpon>
+    <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\PartieStatPage.xaml.cs">
+      <DependentUpon>PartieStatPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewController\Profile\Statistiques\StatistiqueMainTabbedPage.xaml.cs">
       <DependentUpon>StatistiqueMainTabbedPage.xaml</DependentUpon>
@@ -395,7 +395,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Profile\Statistiques\SpecificStatistiques\GameStatPage.xaml">
+    <EmbeddedResource Include="ViewController\Profile\Statistiques\SpecificStatistiques\PartieStatPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
