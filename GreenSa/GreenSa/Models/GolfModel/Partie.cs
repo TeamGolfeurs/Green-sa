@@ -70,10 +70,11 @@ namespace GreenSa.Models.GolfModel
             return new Tuple<int, int>(golfCourse.Holes.IndexOf(itHole.Current) + 1, golfCourse.Holes.Count);
         }
 
-        public void addPositionForCurrentHole(MyPosition start, MyPosition oldTarget, MyPosition userPosition)
+        public Shot addPositionForCurrentHole(MyPosition start, MyPosition oldTarget, MyPosition userPosition)
         {
-            Shots.Add(new Shot(CurrentClub, start, oldTarget, userPosition, DateTime.Now));
-
+            Shot s = new Shot(CurrentClub, start, oldTarget, userPosition, DateTime.Now);
+            Shots.Add(s);
+            return s;
         }
 
         public void holeFinished(bool saveForStatistics)

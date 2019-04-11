@@ -55,7 +55,7 @@ namespace GreenSa.ViewController.Test
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             try
             {
-                List<Shot> gfcs = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection));
+                List<Shot> gfcs = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection);
                 label.Text = "";
                 foreach (Shot c in gfcs)
                 {

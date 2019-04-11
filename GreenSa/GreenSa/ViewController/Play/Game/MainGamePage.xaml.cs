@@ -211,7 +211,8 @@ namespace GreenSa.ViewController.Play.Game
             {
                 MyPosition newUserPosition = await localize();
                 MyPosition start = map.getUserPosition();
-                partie.addPositionForCurrentHole(start,new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
+                Shot s = partie.addPositionForCurrentHole(start,new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
+                //this.DisplayAlert("", s.ShotType, "ok");
                 map.setUserPosition(newUserPosition,partie.Shots.Count);
                 map.setTargetMovable();
                 if(moyenne.IsToggled)

@@ -22,7 +22,8 @@ namespace GreenSa
         protected override void OnStart()
         {
             // Handle when your app starts
-            for (int i = 0; i < 3; i++)
+            int number = 0;
+            for (int i = 0; i < number; i++)
             {
                 TestClassFactory.CreateScorePartie();
             }

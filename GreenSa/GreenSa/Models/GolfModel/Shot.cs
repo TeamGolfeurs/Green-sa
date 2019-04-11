@@ -12,11 +12,12 @@ namespace GreenSa.Models.GolfModel
         public enum ShotCategory
         {
             PerfectShot,
-            UnexpectedLongGoodShot,
+            UnexpectedLongShot,
             GoodShot,
             NotStraightShot,
             FailedShot,
             TolerableShot,
+            ChipShot,
         }
 
         [PrimaryKey,AutoIncrement]
@@ -65,7 +66,7 @@ namespace GreenSa.Models.GolfModel
             return CustomMap.DistanceTo(Target.X, Target.Y, RealShot.X, RealShot.Y, "M");
         }
 
-        public Shot(Club currentClub, MyPosition initPlace,MyPosition target, MyPosition realShot, DateTime date )
+        public Shot(Club currentClub, MyPosition initPlace, MyPosition target, MyPosition realShot, DateTime date )
         {
             this.Club = currentClub;
             this.InitPlace = initPlace;
@@ -75,12 +76,25 @@ namespace GreenSa.Models.GolfModel
             this.ShotType = determineShotCategory();
         }
         
+        public Shot(Club club, ShotCategory catergory, DateTime date)
+        {
+            this.Club = Club.PUTTER;
+            this.InitPlace = null;
+            this.Target = null;
+            this.RealShot = null;
+            this.Date = date;
+            this.ShotType = catergory;
+        }
+
         public Shot()
         {
 
         }
 
-
+        public bool isPutt()
+        {
+            return this.Club.Name.Equals("Putter");
+        }
 
         private ShotCategory determineShotCategory()
         {
@@ -89,7 +103,7 @@ namespace GreenSa.Models.GolfModel
 
             double psmd = this.getPerfectShotMaxDist(index);
             double gsmd = this.getGoodShotMaxDist(index);
-            double ugsmdg = 10 + this.Club.DistanceMoyenne * 10 / 100;//unexpected good shot min dist gap
+            double ulsmdg = 10 + this.Club.DistanceMoyenne * 10 / 100;//unexpected good shot min dist gap
             double ssd = this.Club.DistanceMoyenne * 2 / 3;//short shot dist
 
             double rstd = this.RealShotTargetDist();
@@ -97,16 +111,18 @@ namespace GreenSa.Models.GolfModel
             double rsd = this.RealShotDist();
             double shotAngle = this.GetShotAngle(rstd, td, rsd, true);
 
-
-            if (rstd <= psmd)//if in the perfect shot circle
+            if (td <= 30.0 && !this.isPutt())//if the player targeted a place with a short distance
+            {
+                sc = ShotCategory.ChipShot;
+            } else if (rstd <= psmd)//if in the perfect shot circle
             {
                 sc = ShotCategory.PerfectShot;
             } else if (rstd <= gsmd)//if in the good shot circle
             {
                 sc = ShotCategory.GoodShot;
-            } else if (rsd - td > ugsmdg && shotAngle < 7)//if player shot much further than he expected and with a small dispertion
+            } else if (rsd - td > ulsmdg && shotAngle < 7)//if player shot much further than he expected and with a small dispertion
             {
-                sc = ShotCategory.UnexpectedLongGoodShot;
+                sc = ShotCategory.UnexpectedLongShot;
             } else//bad shot
             {
                 if (rsd < ssd)//if player failed his shot and his ball traveled a short distance
@@ -120,7 +136,7 @@ namespace GreenSa.Models.GolfModel
                     sc = ShotCategory.TolerableShot;
                 }
             }
-            System.Diagnostics.Debug.WriteLine("\n Category : " + sc + "\n Index : " + index + "\n ugsmdg : " + ugsmdg + "\n DistMoyClub : " + Club.DistanceMoyenne + "\n rstd : " + rstd + "\n td : " + td + "\n rsd : " + rsd + "\n shotAngle : " + shotAngle + "\n psmd : " + psmd + "\n gsmd : " + gsmd);
+            System.Diagnostics.Debug.WriteLine("\n Category : " + sc + "\n Index : " + index + "\n ugsmdg : " + ulsmdg + "\n DistMoyClub : " + Club.DistanceMoyenne + "\n rstd : " + rstd + "\n td : " + td + "\n rsd : " + rsd + "\n shotAngle : " + shotAngle + "\n psmd : " + psmd + "\n gsmd : " + gsmd);
             return sc;
         }
 

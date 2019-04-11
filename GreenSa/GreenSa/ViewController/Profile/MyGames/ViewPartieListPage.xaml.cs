@@ -15,17 +15,20 @@ namespace GreenSa.ViewController.Profile.MyGames
     public partial class ViewPartieListPage : ContentPage
     {
         private bool isInStat;
+        private PartieStatPage partieStatPage;
 
         public ViewPartieListPage()
         {
             InitializeComponent();
             this.isInStat = false;
+            this.partieStatPage = null;
         }
 
         public ViewPartieListPage(bool isInStat)
         {
             InitializeComponent();
             this.isInStat = isInStat;
+            this.partieStatPage = null;
         }
 
         async protected override void OnAppearing()
@@ -41,7 +44,30 @@ namespace GreenSa.ViewController.Profile.MyGames
                 await Navigation.PushModalAsync(new DetailsPartiePage((ScorePartie)listPartie.SelectedItem));
             } else
             {
-                await Navigation.PushModalAsync(new PartieStatPage((ScorePartie)listPartie.SelectedItem));
+                ScorePartie sp = (ScorePartie)listPartie.SelectedItem;
+                if (this.partieStatPage == null)
+                {
+                    this.partieStatPage = new PartieStatPage(sp);
+                }
+                else
+                {
+                    List<GolfCourse> allGolfCourses = await StatistiquesGolf.getGolfCourses();
+                    string courseName = "";
+                    string id = sp.scoreHoles[0].IdHole;
+                    foreach (GolfCourse gc in allGolfCourses)
+                    {
+                        foreach (Hole h in gc.Holes)
+                        {
+                            if (h.Id.Equals(id))
+                            {
+                                courseName = gc.Name;
+                                break;
+                            }
+                        }
+                    }
+                    this.partieStatPage.changePartie(sp, courseName);
+                }
+                await Navigation.PushModalAsync(this.partieStatPage);
             }
         }
     }

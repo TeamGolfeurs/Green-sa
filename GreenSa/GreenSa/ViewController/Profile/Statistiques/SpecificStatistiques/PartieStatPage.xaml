@@ -77,24 +77,26 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="15, 0, 0, 0" VerticalOptions="Center" FontAttributes="Bold" TextColor="Black" FontSize="17">Légende :</Label>
+
+                <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="#0BF5A3" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7"/>
+                <Label Grid.Row="1" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Coups parfaits</Label>
+
+                <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="#44F50B" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7"/>
+                <Label Grid.Row="2" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Bons coups</Label>
+
+                <Frame Grid.Row="3" Grid.Column="0" BackgroundColor="#F5A00B" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7"/>
+                <Label Grid.Row="3" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Coups acceptables</Label>
+
+                <Frame Grid.Row="4" Grid.Column="0" BackgroundColor="#F9E65E" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7"/>
+                <Label Grid.Row="4" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Longs coups innatendus</Label>
+
+                <Frame Grid.Row="5" Grid.Column="0" BackgroundColor="#F5340B" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7"/>
+                <Label Grid.Row="5" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Coups dispersés</Label>
+
+                <Frame Grid.Row="6" Grid.Column="0" BackgroundColor="#6A5B5A" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7"/>
+                <Label Grid.Row="6" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Coups ratés</Label>
+
                 
-                <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="Blue" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7"/>
-                <Label Grid.Row="1" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Bon coups</Label>
-
-                <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="Green" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7"/>
-                <Label Grid.Row="2" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Coups acceptables</Label>
-
-                <Frame Grid.Row="3" Grid.Column="0" BackgroundColor="Yellow" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7"/>
-                <Label Grid.Row="3" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Coups dispersés</Label>
-
-                <Frame Grid.Row="4" Grid.Column="0" BackgroundColor="Orange" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7"/>
-                <Label Grid.Row="4" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Long coups innatendus</Label>
-
-                <Frame Grid.Row="5" Grid.Column="0" BackgroundColor="Purple" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" OutlineColor="DarkSlateGray" Padding="7"/>
-                <Label Grid.Row="5" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Coups ratés</Label>
-
-                <Frame Grid.Row="6" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" CornerRadius="4" BackgroundColor="Red" OutlineColor="DarkSlateGray" Padding="7"/>
-                <Label Grid.Row="6" Grid.Column="1" VerticalOptions="Center" TextColor="DarkSlateGray" FontSize="17">Coups parfait</Label>
 
 
             </Grid>

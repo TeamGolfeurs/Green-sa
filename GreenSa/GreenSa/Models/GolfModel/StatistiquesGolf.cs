@@ -180,6 +180,7 @@ namespace GreenSa.Models.GolfModel
 
 
 
+
         /** Gets a tuple containing the name of the club with which the player did the higher distance and this distance
          */
         public static Tuple<string, int> getMaxDistClub(List<Shot> allShots)
@@ -296,6 +297,26 @@ namespace GreenSa.Models.GolfModel
 
             return res;
         }
+
+
+        public static Dictionary<Shot.ShotCategory, int> getProportionShot(List<Shot> allShots)
+        {
+            Shot.ShotCategory[] shotCategories = {Shot.ShotCategory.PerfectShot, Shot.ShotCategory.GoodShot, Shot.ShotCategory.TolerableShot, Shot.ShotCategory.UnexpectedLongShot, Shot.ShotCategory.NotStraightShot, Shot.ShotCategory.FailedShot};
+            Dictionary<Shot.ShotCategory, int> dico = new Dictionary<Shot.ShotCategory, int>();
+
+            foreach (Shot.ShotCategory sc in shotCategories)
+            {
+                dico[sc] = 0;
+            }
+            foreach (Shot shot in allShots)
+            {
+                dico[shot.ShotType] += 1;
+            }
+            return dico;
+        }
+
+
+
         //Dictionary<Par, Moyenne> 
         public static Dictionary<int,float> getScoreForPar()
         {
