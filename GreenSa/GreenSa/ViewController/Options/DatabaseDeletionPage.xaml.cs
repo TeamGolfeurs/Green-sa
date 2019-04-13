@@ -31,7 +31,7 @@ namespace GreenSa.ViewController.Option
                 SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
                 connection.CreateTable<MyPosition>();
                 connection.CreateTable<GolfCourse>();
-                connection.CreateTable<Club>();
+                //connection.CreateTable<Club>();
                 connection.CreateTable<Shot>();
                 connection.CreateTable<Hole>();
                 connection.CreateTable<ScoreHole>();
@@ -39,7 +39,7 @@ namespace GreenSa.ViewController.Option
 
                 connection.DropTable<MyPosition>();
                 connection.DropTable<GolfCourse>();
-                connection.DropTable<Club>();
+                //connection.DropTable<Club>();
                 connection.DropTable<Shot>();
                 connection.DropTable<Hole>();
                 connection.DropTable<ScoreHole>();

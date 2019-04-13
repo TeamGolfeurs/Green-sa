@@ -7,7 +7,7 @@
             <StackLayout
                 VerticalOptions="Start" >
                 <Grid >
-                 <!--   <Label 
+                    <!--   <Label 
                         FontSize="Medium"
                         Grid.Column="0"
                         Text="Putter"
@@ -27,33 +27,32 @@
 
             <Grid>
                 <ListView x:Name="ListShotPartie" >
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell >
-                            <StackLayout Orientation="Horizontal">
-                                <Picker 
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell >
+                                <StackLayout Orientation="Horizontal">
+                                    <Picker 
                                 ItemDisplayBinding="{Binding Name, Path=Item1.Club}"
                                 HorizontalOptions="CenterAndExpand" 
                                 ItemsSource="{Binding Item2}"
                                 SelectedItem="{Binding Item1.Club}"
                                 Grid.Column="0"/>
-                                
-                                <Label Text="{Binding Item1.Distance, StringFormat='{0:0.00}'}"
+
+                                    <Label Text="{Binding Item1.ShotType}"
                                        Grid.Column="1"
                                        HorizontalOptions="CenterAndExpand"/>
 
                                 </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
 
             <!--  <Label Text="Ajouter un shot"
                    FontSize="Medium"
                    HorizontalOptions="Center"/>
             <StackLayout Orientation="Horizontal" >
-
                 <Picker 
                     Title="Sélectionner un club"
                     x:Name="ListClubPartieNewShot"

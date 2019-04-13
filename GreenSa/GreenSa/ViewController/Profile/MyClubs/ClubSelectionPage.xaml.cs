@@ -41,9 +41,9 @@ namespace GreenSa.ViewController.Profile.MyClubs
          * */
         private async void onValidClubSelection(object sender, EventArgs e)
         {
-
             Btn.IsEnabled = false;
             Btn.Text = "En cours...";
+            Btn.TextColor = Color.White;
             SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
             await connection.CreateTableAsync<Club>();
             List<Club> clubselected = new List<Club>();

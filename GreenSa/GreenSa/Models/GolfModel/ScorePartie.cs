@@ -25,13 +25,30 @@ namespace GreenSa.Models.GolfModel
         {
             get
             {
-                return  DateDebut.DayOfWeek + " " + DateDebut.Day + " " + getMonthStr(DateDebut.Month);
+                return  ((DateDebut.Day < 10) ? "0" : "") + DateDebut.Day + "/" + ((DateDebut.Month < 10) ? "0" : "") + DateDebut.Month + "/" + (DateDebut.Year-2000);
             }
         }
+
+        public Tuple<int, int> GetScore()
+        {
+            int score = 0;
+            foreach (ScoreHole sh in this.scoreHoles)
+            {
+                score += sh.Score;
+            }
+            return new Tuple<int, int>(score, this.scoreHoles.Count);
+        }
+
         public ScorePartie()
         {
             scoreHoles = new List<ScoreHole>();
             DateDebut = DateTime.Now;
+        }
+
+        public ScorePartie(DateTime date)
+        {
+            scoreHoles = new List<ScoreHole>();
+            DateDebut = date;
         }
 
         public void add(ScoreHole sh)

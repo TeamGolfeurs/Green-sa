@@ -13,6 +13,7 @@ using GreenSa.Models.Tools;
 using GreenSa.Persistence;
 using System.Reflection;
 using SQLite;
+using GreenSa.Models.Exceptions;
 //using Xamarin.Forms.Maps;
 //using Xamarin.Forms.GoogleMaps;
 
@@ -29,6 +30,7 @@ namespace GreenSa.ViewController.Option
             InitializeComponent();
             this.pins = new List<Pin>();
 
+            /*Init some content on the view*/
             this.validPar.BorderColor = Color.FromHex("0C5E11");
             this.validPar.BorderWidth = 2;
             this.deletePin.BorderColor = Color.FromHex("0C5E11");
@@ -53,12 +55,18 @@ namespace GreenSa.ViewController.Option
          */
         private async void OnLocalizeClick(object sender, EventArgs e)
         {
-            var address = cityEntry.Text;
-            var locations = await Geocoding.GetLocationsAsync(address);
-            var location = locations?.FirstOrDefault();
-            if (location != null)
+            if ("".Equals(cityEntry.Text))
             {
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromMiles(0.12)));
+                await this.DisplayAlert("Erreur", "Le champ spécifiant le nom du golf ne peut pas être vide", "ok");
+            } else
+            {
+                var address = cityEntry.Text;
+                var locations = await Geocoding.GetLocationsAsync(address);
+                var location = locations?.FirstOrDefault();
+                if (location != null)
+                {
+                    map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromMiles(0.12)));
+                }
             }
         }
 
@@ -72,8 +80,15 @@ namespace GreenSa.ViewController.Option
                 var confirmDelete = await this.DisplayAlert("Création du parcours", "Voulez vous créer ce parcours ?", "Oui", "Non");
                 if (confirmDelete)
                 {
-                    String xmlGolfCourse = this.CreateXmlGolfCourse();
-                    this.InsertGolfCourseBdd(xmlGolfCourse);
+                    try
+                    {
+                        String xmlGolfCourse = this.CreateXmlGolfCourse();
+                        this.InsertGolfCourseBdd(xmlGolfCourse);
+                    } catch (EmptyStringException emptyStrException)
+                    {
+                        await this.DisplayAlert("Erreur", emptyStrException.Message, "ok");
+                    }
+                    
                 }
             }
             else
@@ -91,7 +106,7 @@ namespace GreenSa.ViewController.Option
                 var confirmDelete = await this.DisplayAlert("Suppression du dernier trou", "Voulez vous supprimer le trou n°" + this.pins.Count + " ?", "Oui", "Non");
                 if (confirmDelete)
                 {
-                    this.pins.RemoveAt(this.pins.Count - 1);
+                    this.pins.RemoveAt(this.pins.Count - 1);//remove in the common list
                     MessagingCenter.Send<Object>(this, "deleteLastPin");
                     NinePinsCourseNameManagement();
                     this.SetParVisibility(false);
@@ -124,23 +139,32 @@ namespace GreenSa.ViewController.Option
         */
         private void OnValidParClick(object sender, EventArgs e)
         {
-            int par = Convert.ToInt32(this.golfParEntry.Text);
-            this.pins[this.pins.Count - 1].Id = par;//As the pin ID isn't used, let's use it to store the par
-            try
+            if ("".Equals(this.golfParEntry.Text))
             {
-                MessagingCenter.Send<Object>(par, "validPar");
-            } catch (TargetInvocationException exception)
-            {
-                this.DisplayAlert("OnValidParClick", exception.InnerException.StackTrace, "ok");
-            }
-            this.SetParVisibility(false);
-            if (this.pins.Count == 18)//if 18 holes on the map
-            {
-                this.SetCourseNameVisibility(true);
+                this.DisplayAlert("Erreur", "Le champ spécifiant le par du trou ne peut pas être vide", "ok");
             }
             else
             {
-                NinePinsCourseNameManagement();//check if 9 holes on the map
+                int par = Convert.ToInt32(this.golfParEntry.Text);
+                this.pins[this.pins.Count - 1].Id = par;//As the pin ID isn't used, let's use it to store the par
+                try
+                {
+                    MessagingCenter.Send<Object>(par, "validPar");
+                }
+                catch (TargetInvocationException exception)
+                {
+                    this.DisplayAlert("OnValidParClick", exception.InnerException.StackTrace, "ok");
+                }
+                this.SetParVisibility(false);
+                if (this.pins.Count == 18)
+                {
+                    this.golfNameEntry.Text = "18 trous de ";
+                    this.SetCourseNameVisibility(true);
+                }
+                else
+                {
+                    NinePinsCourseNameManagement();
+                }
             }
         }
 
@@ -149,26 +173,39 @@ namespace GreenSa.ViewController.Option
          */
         private String CreateXmlGolfCourse()
         {
-            StringBuilder xmlGolfCourse = new StringBuilder("<GolfCourse>");
-            xmlGolfCourse.Append("<Name>" + this.golfNameEntry.Text + "</Name>");
-            xmlGolfCourse.Append("<NbTrous>" + this.pins.Count + "</NbTrous>");
-            xmlGolfCourse.Append("<NomGolf>" + this.cityEntry.Text + "</NomGolf>");
-            xmlGolfCourse.Append("<Coordinates>");
-            foreach (Pin hole in this.pins)
+            if ("".Equals(this.cityEntry.Text))
             {
-                xmlGolfCourse.Append("<Trou>");
-                xmlGolfCourse.Append("<par>" + hole.Id + "</par>");//hole.Id is used to store the hole's par
-                xmlGolfCourse.Append("<lat>" + hole.Position.Latitude + "</lat>");
-                xmlGolfCourse.Append("<lng>" + hole.Position.Longitude + "</lng>");
-                xmlGolfCourse.Append("</Trou>");
+                throw new EmptyStringException("Le champ spécifiant le nom du golf ne peut pas être vide");
             }
-            xmlGolfCourse.Append("</Coordinates>");
-            xmlGolfCourse.Append("</GolfCourse>");
-            return xmlGolfCourse.ToString();
+            else if ("".Equals(this.golfNameEntry.Text))
+            {
+                throw new EmptyStringException("Le champ spécifiant le nom de ce parcours ne peut pas être vide");
+            }
+            else
+            {
+                //see Ressources/GolfCourses for a more understandable patern
+                StringBuilder xmlGolfCourse = new StringBuilder("<GolfCourse>");
+                xmlGolfCourse.Append("<Name>" + this.golfNameEntry.Text + "</Name>");
+                xmlGolfCourse.Append("<NbTrous>" + this.pins.Count + "</NbTrous>");
+                xmlGolfCourse.Append("<NomGolf>" + this.cityEntry.Text + "</NomGolf>");
+                xmlGolfCourse.Append("<Coordinates>");
+                foreach (Pin hole in this.pins)
+                {
+                    xmlGolfCourse.Append("<Trou>");
+                    xmlGolfCourse.Append("<par>" + hole.Id + "</par>");//hole.Id is used to store the hole's par
+                    xmlGolfCourse.Append("<lat>" + hole.Position.Latitude + "</lat>");
+                    xmlGolfCourse.Append("<lng>" + hole.Position.Longitude + "</lng>");
+                    xmlGolfCourse.Append("</Trou>");
+                }
+                xmlGolfCourse.Append("</Coordinates>");
+                xmlGolfCourse.Append("</GolfCourse>");
+                return xmlGolfCourse.ToString();
+            }
+
         }
 
         /** Inserts a golf course in the database from an xml string describing the golf course
-         * xmlGolfCourse : the xml string describing teh golf course
+         * xmlGolfCourse : the xml string describing the golf course
          */
         private void InsertGolfCourseBdd(String xmlGolfCourse)
         {
@@ -204,8 +241,8 @@ namespace GreenSa.ViewController.Option
          */
         private void ManageAllPinsDelete()
         {
-            this.pins.Clear();
-            MessagingCenter.Send<Object>(this, "deleteAllPins");
+            this.pins.Clear();//remove all pins in the common list
+            MessagingCenter.Send<Object>(this, "deleteAllPins");//send a message to delete all pins from the map
             this.SetCourseNameVisibility(false);
             this.SetParVisibility(false);
         }
@@ -239,6 +276,7 @@ namespace GreenSa.ViewController.Option
             if (this.pins.Count == 9)
             {
                 this.SetCourseNameVisibility(true);
+                this.golfNameEntry.Text = "9 trous de ";
             }
             else
             {

@@ -16,6 +16,7 @@ using GreenSa.Models.ViewElements;
 using SQLite;
 using System.Collections.ObjectModel;
 using GreenSa.Persistence;
+using GreenSa.ViewController.Profile.Statistiques;
 
 namespace GreenSa.ViewController.Profile
 {
@@ -24,10 +25,12 @@ namespace GreenSa.ViewController.Profile
     {
         private SQLiteConnection DBconnection;
         private Profil LocalUser;
+        private StatistiqueMainTabbedPage statPage;
 
         public ProfilePage()
         {
             InitializeComponent();
+            this.statPage = null;
 
             boutons.Margin = new Thickness(10, 0, 10, 15);
 
@@ -98,7 +101,11 @@ namespace GreenSa.ViewController.Profile
          * */
         async private void OnStatsClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Statistiques.StatistiqueMainTabbedPage());
+            if (this.statPage == null)
+            {
+                this.statPage = new Statistiques.StatistiqueMainTabbedPage();
+            }
+            await Navigation.PushAsync(this.statPage);
         }
         /**
          * Méthode déclenchée au click sur le bouton "Option"

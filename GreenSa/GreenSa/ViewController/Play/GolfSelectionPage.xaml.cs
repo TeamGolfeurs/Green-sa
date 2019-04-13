@@ -16,17 +16,20 @@ namespace GreenSa.ViewController.Play
     public partial class GolfSelectionPage : ContentPage
     {
         Partie p;
+        private GolfCourseStatPage golfCourseStatPage;
+
         public GolfSelectionPage(Partie partie)
         {
             InitializeComponent();
             p = partie;
-
+            golfCourseStatPage = null;
         }
 
         public GolfSelectionPage()
         {
             InitializeComponent();
             p = null;
+            golfCourseStatPage = null;
         }
 
         /**
@@ -41,7 +44,7 @@ namespace GreenSa.ViewController.Play
             Func<GolfCourse, bool> f = (c => true);
             //Recupere la liste des Golfs filtré par la classe GestionGolf
             List<GolfCourse> res = await GestionGolfs.getListGolfsAsync(f);
-            ListGolfCourse.ItemsSource = res; 
+            ListGolfCourse.ItemsSource = res;
         }
 
 
@@ -54,7 +57,14 @@ namespace GreenSa.ViewController.Play
             var g = ListGolfCourse.SelectedItem as GolfCourse;
             if (p == null)
             {
-                await Navigation.PushAsync(new StatGolfCoursePage(g));
+                if (this.golfCourseStatPage == null)
+                {
+                    this.golfCourseStatPage = new GolfCourseStatPage(g);
+                } else
+                {
+                    this.golfCourseStatPage.changeGolfCourse(g);
+                }
+                await Navigation.PushModalAsync(this.golfCourseStatPage, true);
             } else
             {
                 p.GolfCourse = g;
@@ -63,7 +73,7 @@ namespace GreenSa.ViewController.Play
                 clubselected.RemoveAll(c => c.selected == false);
                 if (clubselected.Count == 0)
                 {
-                    await this.DisplayAlert("Erreur", "Vous n'avez aucun club dans votre sac. Veuillez en choisir au moins un dans le page 'Profile'", "ok");
+                    await this.DisplayAlert("Erreur", "Vous n'avez aucun club dans votre sac. Veuillez en choisir au moins un dans le page 'Profil'", "ok");
                 } else
                 {
                     p.Clubs = clubselected;

@@ -146,18 +146,20 @@ namespace Greensa.Droid
             polylineOptions.InvokeColor(0x664444FF);
 
             int i = 0;
-            foreach (var position in ((CustomMap)this.Element).RouteCoordinates)
+            CustomMap customMap = (CustomMap)this.Element;
+            if (customMap != null)
             {
-                if (i == 1 && !init && pos!=null)
-                    polylineOptions.Add(pos);
-                else
-                    polylineOptions.Add(new LatLng(position.Latitude, position.Longitude));
+                foreach (var position in customMap.RouteCoordinates)
+                {
+                    if (i == 1 && !init && pos != null)
+                        polylineOptions.Add(pos);
+                    else
+                        polylineOptions.Add(new LatLng(position.Latitude, position.Longitude));
 
-                i++;
+                    i++;
+                }
+                polyline = map.AddPolyline(polylineOptions);
             }
-            polyline = map.AddPolyline(polylineOptions);
-            
-         
         }
 
         public void updateCircle(Tuple<int, int, int> distanceMoyenneJoueur)

@@ -1,4 +1,6 @@
 ﻿using GreenSa.Models.GolfModel;
+using GreenSa.Models.Profiles;
+using GreenSa.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Xamarin.Forms;
 
 namespace GreenSa.Models.Tools
 {
@@ -41,6 +44,9 @@ namespace GreenSa.Models.Tools
                 
                 gfcs.Add(getSingleGolfCourseFromText(text));
             }
+
+            System.Diagnostics.Debug.WriteLine(gfcs.ToString());
+
             return gfcs;
         }
 
@@ -70,7 +76,7 @@ namespace GreenSa.Models.Tools
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(App)).Assembly;
             Stream stream = assembly.GetManifestResourceStream("GreenSa.Ressources.Clubs.Clubs_Descriptor.xml");
             string text = "";
-            using (var reader = new System.IO.StreamReader(stream))//lit fichier contenant la liste des golf
+            using (var reader = new System.IO.StreamReader(stream))//lit fichier contenant la liste des clubs
             {
                 text = reader.ReadToEnd();
             }
@@ -78,8 +84,26 @@ namespace GreenSa.Models.Tools
             //XDocument xDocumentForListOfGolfCoursesFiles = XDocument.Load("GreenSa/Ressources/GolfCourses/GolfCourses_Descriptor.xml");
             XDocument xDocumentForListOfGolfCoursesFiles = XDocument.Load(GenerateStreamFromString(text));//parsing
 
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            List<Profil> profils = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Profil>(connection);
+            string userIndexScale = "0";
+            if (profils.Count == 0) {
+                int userIndex = (int)profils[0].Index;
+                if (userIndex >= 10 && userIndex < 20) {
+                    userIndexScale = "10";
+                } else if (userIndex >= 20 && userIndex < 30) {
+                    userIndexScale = "20";
+                } else if (userIndex >= 30 && userIndex < 40) {
+                    userIndexScale = "30";
+                } else {
+                    userIndexScale = "40";
+                }
+            } else {
+                userIndexScale = "40";
+            }
+            
 
-            foreach (var node in xDocumentForListOfGolfCoursesFiles.Element("Clubs").Elements("Club"))//for each file golfCourse
+            foreach (var node in xDocumentForListOfGolfCoursesFiles.Element("Clubs").Elements("Club"))//for each file club
             {
                 stream = assembly.GetManifestResourceStream("GreenSa.Ressources.Clubs." + node.Value + ".xml");
                 text = "";
@@ -91,9 +115,15 @@ namespace GreenSa.Models.Tools
                 XDocument golfC = XDocument.Load(GenerateStreamFromString(text));//xmlparser
 
                 var nodeGolfC = golfC.Element("Club");
-                Club gc = new Club(nodeGolfC.Element("Name").Value, int.Parse(nodeGolfC.Element("DistanceMoyenne").Value));
+
+                var userMoyDistance = int.Parse(nodeGolfC.Elements("DistanceMoyenne").First(dist => dist.FirstAttribute.Value.Equals(userIndexScale)).Value);
+
+                Club gc = new Club(nodeGolfC.Element("Name").Value, userMoyDistance);
                 clubs.Add(gc);
             }
+
+            System.Diagnostics.Debug.WriteLine(clubs.ToString());
+
             return clubs;
         }
 

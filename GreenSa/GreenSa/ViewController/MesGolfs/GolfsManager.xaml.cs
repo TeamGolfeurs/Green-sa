@@ -37,12 +37,6 @@ namespace GreenSa.ViewController.MesGolfs
             List<GolfCourse> res = await GestionGolfs.getListGolfsAsync(null);
             //Met à jour la liste des golfs dans la vue
             gclvm = new GolfCourseListViewModel(res);
-            /*String str = "";
-            foreach (GolfCourse gc in gclvm.GolfCourses)
-            {
-                str += gc.ToString();
-            }
-            await this.DisplayAlert("Test", str, "test");*/
             BindingContext = gclvm;
         }
 

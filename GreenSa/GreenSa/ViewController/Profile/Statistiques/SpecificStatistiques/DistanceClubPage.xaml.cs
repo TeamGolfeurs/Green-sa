@@ -24,13 +24,13 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
         {
             InitializeComponent();
         }
+
         protected override  void OnAppearing()
         {
             
             base.OnAppearing();
              getScoresAsync(c => true);
            
-
         }
         /*
         * Méthode déclenchée à l'application du filtre
@@ -54,12 +54,12 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
                 {
                     Label = couple.Item1.Name,
                     ValueLabel = couple.Item2.ToString("n2") + "m",
-                    Color = SKColor.Parse("#16F50B")
+                    Color = SKColor.Parse("#39B54A")
                 };
                 entries.Add(e);
             }
 
-            this.chartView.Chart = new PointChart(){ Entries = entries, LabelTextSize=29};
+            this.chartView.Chart = new PointChart(){ Entries = entries, LabelTextSize=33};
         }
     }
 }

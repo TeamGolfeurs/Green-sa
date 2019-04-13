@@ -13,7 +13,7 @@ namespace GreenSa.Models.GolfModel
     {
         public enum ScorePossible
         {
-            ALBATROS = -3,EAGLE =-2,BIRDIE=-1,PAR=0,BOGEY=1,DOUBLE_BOUGEY=2,MORE=3            
+            ALBATROS = -3,EAGLE =-2,BIRDIE=-1,PAR=0,BOGEY=1,DOUBLE_BOUGEY=2,MORE=3
         }
         [PrimaryKey]
         public string Id
