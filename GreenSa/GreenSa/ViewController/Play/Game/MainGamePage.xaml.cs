@@ -24,12 +24,8 @@ namespace GreenSa.ViewController.Play.Game
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainGamePage : ContentPage
     {
-        
-        public const String BEGIN_STATE = "BEGIN";
-        public const String LOCK_STATE = "LOCK";
-        public const String NEXT_STATE = "NEXT";
          
-        private String state;
+        private int state; //0 pour prêt à taper et 1 pour prêt à localiser
         private Partie partie;
         private bool holFini;
         private double dUserTarget;
@@ -37,8 +33,44 @@ namespace GreenSa.ViewController.Play.Game
         public MainGamePage(Partie partie)
         {
             InitializeComponent();
+
+            forceVent.Margin = new Thickness(35, 10, 0, 0);
+            windImg.Margin = new Thickness(35, 5, 0, 0);
+            windImg.HeightRequest = responsiveDesign(25);
+            ball.HeightRequest = responsiveDesign(91);
+            ball.Margin = responsiveDesign(10);
+            radar.HeightRequest = responsiveDesign(92);
+            radar.Margin = responsiveDesign(10);
+            load.HeightRequest = responsiveDesign(92);
+            load.Margin = responsiveDesign(10);
+            clubs.HeightRequest = responsiveDesign(45);
+            clubs.Margin = new Thickness(responsiveDesign(15), 0, 0, 0);
+            ball_in.HeightRequest = responsiveDesign(45);
+            ball_in.Margin = new Thickness(0, 0, responsiveDesign(14), responsiveDesign(7));
+            numclub.TextColor = Color.FromHex("009245");
+            numclub.Margin = new Thickness(responsiveDesign(34), 0, 0, responsiveDesign(16));
+
+            numcoup.FontSize = responsiveDesign(40);
+            numcoup.Margin = responsiveDesign(-5);
+            parTrou.FontSize = responsiveDesign(15);
+            parTrou.Margin = responsiveDesign(38);
+            distTrou.FontSize = responsiveDesign(17);
+            distTrou.Margin = new Thickness(0, responsiveDesign(10), responsiveDesign(21), 0);
+            forceVent.FontSize = responsiveDesign(12);
+            forceVent.Margin = new Thickness(responsiveDesign(28), responsiveDesign(23), 0, 0);
+            windImg.Margin = new Thickness(responsiveDesign(42), responsiveDesign(8), 0, 0);
+            windImg.HeightRequest = responsiveDesign(15);
+            numclub.IsEnabled = false;
+
+            load.IsEnabled = false;
+            load.IsVisible = false;
+            radar.IsEnabled = false;
+            radar.IsVisible = false;
+            ball.IsEnabled = true;
+            ball.IsVisible = true;
+
             holFini = true;
-            state = BEGIN_STATE;
+            state = 0;
             this.partie = partie;
             map.MoveToRegion(
             MapSpan.FromCenterAndRadius(
@@ -46,7 +78,7 @@ namespace GreenSa.ViewController.Play.Game
 
             BindingContext = partie;
             partie.CurrentClub = partie.Clubs.First();
-            ListClubPartie.SelectedItem = partie.CurrentClub;
+            //ListClubPartie.SelectedItem = partie.CurrentClub;
             //message which come from the markerListenerDrag,
             //when the target pin is moved =>update the display of the distance
             MessagingCenter.Subscribe<CustomPin>(this,CustomPin.UPDATEDMESSAGE,  (sender) => {
@@ -73,15 +105,14 @@ namespace GreenSa.ViewController.Play.Game
             base.OnAppearing();
             if (!holFini)
                 return;
-
+            
             holFini = false;
             if (partie.hasNextHole())
             {
                 Hole nextHole = partie.getNextHole();
                 GestionGolfs.calculAverageAsync(partie.Clubs);
                 map.setHolePosition(nextHole);
-                Title = "Trou " + partie.getIndexHole().Item1 + "/" + partie.getIndexHole().Item2;
-
+                numcoup.Text = partie.getIndexHole().Item1.ToString();
                 MyPosition position = new MyPosition(0, 0) ;
                 bool success = false;
                 do//make sure that the GPS is avaible
@@ -91,7 +122,7 @@ namespace GreenSa.ViewController.Play.Game
                         position = await localize();
                         success = true;
                         map.setUserPosition(position, partie.Shots.Count);
-                        partie.CurrentClub = partie.CurrentClub;//just to update hte circle
+                        partie.CurrentClub = partie.CurrentClub;//just to update the circle
                         partie.updateUICircle();
 
                     }
@@ -134,15 +165,27 @@ namespace GreenSa.ViewController.Play.Game
 
 
         }
+
+        private int responsiveDesign(int pix)
+        {
+            return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
+        }
+
         public async Task<MyPosition> localize()
         {
-            localisationState.Text = "Localisation en cours...";
-            mainButton.IsEnabled = false;
-            trouTerm.IsEnabled = false;
+            load.IsEnabled = true;
+            load.IsVisible = true;
+            radar.IsEnabled = false;
+            radar.IsVisible = false;
+            ball.IsEnabled = false;
+            ball.IsVisible = false;
             MyPosition position = await GpsService.getCurrentPosition();
-            localisationState.Text = "";
-            mainButton.IsEnabled = true;
-            trouTerm.IsEnabled = true;
+            load.IsEnabled = false;
+            load.IsVisible = false;
+            radar.IsEnabled = false;
+            radar.IsVisible = false;
+            ball.IsEnabled = true;
+            ball.IsVisible = true;
 
             return position;
         }
@@ -151,7 +194,6 @@ namespace GreenSa.ViewController.Play.Game
         {
             try
             {
-                windImg.Source = windInfo.icon;
                 forceVent.Text = windInfo.strength + " km/h";
                 await windImg.RotateTo(90 + windInfo.direction);
             }
@@ -164,68 +206,137 @@ namespace GreenSa.ViewController.Play.Game
         private  void updateDistance(bool circle=false)
         {
                 dUserTarget = map.getDistanceUserTarget();
-                distTotal.Text = string.Format("{0:0.0}", map.getDistanceUserHole()) + "m";
-                distSplit.Text = string.Format("{0:0.0}", dUserTarget) + "m / " + string.Format("{0:0.0}", map.getDistanceTargetHole()) + " m";
+                distTrou.Text = string.Format("{0:0.0}", map.getDistanceUserHole()) + "m";
+                //distSplit.Text = string.Format("{0:0.0}", dUserTarget) + "m / " + string.Format("{0:0.0}", map.getDistanceTargetHole()) + " m";
                 if(circle)
                 {
                     Club c =  GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs, dUserTarget);
-                    if (!c.Equals(ListClubPartie.SelectedItem))
-                        ListClubPartie.SelectedItem = c;
+                    //if (!c.Equals(ListClubPartie.SelectedItem))
+                    //    ListClubPartie.SelectedItem = c;
                 }
             
         }
 
         /**
-* Méthode qui met à jour l'état du jeu 
+* Méthode qui met à jour l'état du jeu quand on clique sur le boutton principal
 */
-        private void setNextState()
-        {
-            string newLabel = "";
-            switch (state)
-            {
-                case BEGIN_STATE:
-                case NEXT_STATE:
-                    state = LOCK_STATE;
-                    newLabel = "LOCK";
-                    break;
-                case LOCK_STATE: state = NEXT_STATE;
-                    newLabel = "NEXT";
-                    DisplayAlert("Cible verrouillée", "Tirez puis déplacez-vous au niveau de la balle et appuyez sur le bouton 'NEXT'","OK");
-                    break;
-                default: newLabel = "??";
-                    break;
-            }
-
-            mainButton.Text = newLabel;
-        }
-
-        /* Méthode qui s'execute au click sur le bouton principal.
-        * **/
         private async void onMainButtonClicked(object sender, EventArgs e)
         {
-            if(state==LOCK_STATE)
+            System.Diagnostics.Debug.WriteLine(state);
+            switch (state)
             {
-                map.lockTarget();
-            }
-            else if(state==NEXT_STATE)
-            {
-                MyPosition newUserPosition = await localize();
-                MyPosition start = map.getUserPosition();
-                partie.addPositionForCurrentHole(start,new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
-                map.setUserPosition(newUserPosition,partie.Shots.Count);
-                map.setTargetMovable();
-                if(moyenne.IsToggled)
-                    partie.updateUICircle();
+                case 0:
+                    load.IsEnabled = false;
+                    load.IsVisible = false;
+                    radar.IsEnabled = true;
+                    radar.IsVisible = true;
+                    ball.IsEnabled = false;
+                    ball.IsVisible = false;
+                    map.lockTarget();
+                    state = 1;
+                    break;
 
+                case 1:
+                    MyPosition newUserPosition = await localize();
+                    MyPosition start = map.getUserPosition();
+                    partie.addPositionForCurrentHole(start, new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
+                    map.setUserPosition(newUserPosition, partie.Shots.Count);
+                    map.setTargetMovable();
+                    //if(moyenne.IsToggled)
+                    //partie.updateUICircle();
+                    load.IsEnabled = false;
+                    load.IsVisible = false;
+                    radar.IsEnabled = false;
+                    radar.IsVisible = false;
+                    ball.IsEnabled = true;
+                    ball.IsVisible = true;
+                    state = 0;
+                    break;
+
+                default: //par defaut prêt à taper
+                    load.IsEnabled = false;
+                    load.IsVisible = false;
+                    radar.IsEnabled = false;
+                    radar.IsVisible = false;
+                    ball.IsEnabled = true;
+                    ball.IsVisible = true;
+                    state = 0;
+                    break;
             }
-            setNextState();
         }
+        private void changeClubIcon()
+        {
+            switch (partie.CurrentClub.Name)
+            {
+                case "Bois3":
+                    clubs.Source = "bois.png";
+                    numclub.Text = "3";
+                    break;
+                case "Bois5":
+                    clubs.Source = "bois.png";
+                    numclub.Text = "5";
+                    break;
+                case "Driver":
+                    clubs.Source = "bois.png";
+                    numclub.Text = "D";
+                    break;
+                case "Putter":
+                    clubs.Source = "put.png";
+                    numclub.Text = "";
+                    break;
+                case "Fer3":
+                    clubs.Source = "fer.png";
+                    numclub.Text = "3";
+                    break;
+                case "Fer4":
+                    clubs.Source = "fer.png";
+                    numclub.Text = "4";
+                    break;
+                case "Fer5":
+                    clubs.Source = "fer.png";
+                    numclub.Text = "5";
+                    break;
+                case "Fer6":
+                    clubs.Source = "fer.png";
+                    numclub.Text = "6";
+                    break;
+                case "Fer7":
+                    clubs.Source = "fer.png";
+                    numclub.Text = "7";
+                    break;
+                case "Fer8":
+                    clubs.Source = "fer.png";
+                    numclub.Text = "8";
+                    break;
+                case "Fer9":
+                    clubs.Source = "fer.png";
+                    numclub.Text = "9";
+                    break;
+                case "Hybride":
+                    clubs.Source = "fer.png";
+                    numclub.Text = "H";
+                    break;
+                case "Sandwedge":
+                    clubs.Source = "fer.png";
+                    numclub.Text = "SW";
+                    break;
+                case "Pitching":
+                    clubs.Source = "fer.png";
+                    numclub.Text = "P";
+                    break;
+                default:
+                    clubs.Source = "fer.png";
+                    numclub.Text = "3";
+                    break;
 
+            }
+        }
         /* Méthode qui s'execute au click sur le bouton de la selection du club.
         * **/
         private async void onClubSelectionClicked(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new ClubSelectionInGamePage(partie));
+            changeClubIcon();
         }
 
         /* Méthode qui s'execute au click sur le bouton principal.
@@ -240,8 +351,8 @@ namespace GreenSa.ViewController.Play.Game
         {
             MyPosition newUserPosition = await localize();
             map.setUserPosition(newUserPosition, partie.Shots.Count);
-            if (moyenne.IsToggled)
-                partie.updateUICircle();
+            //if (moyenne.IsToggled)
+            //    partie.updateUICircle();
         }
         protected override bool OnBackButtonPressed()
         {            
@@ -252,14 +363,14 @@ namespace GreenSa.ViewController.Play.Game
 
         private void ListClubPartie_SelectedIndexChanged(object sender, EventArgs e)
         {
-            partie.CurrentClub =(Club) ListClubPartie.SelectedItem;
-            if (moyenne.IsToggled)
-                partie.updateUICircle();
+            //partie.CurrentClub =(Club) ListClubPartie.SelectedItem;
+            //if (moyenne.IsToggled)
+            //    partie.updateUICircle();
         }
 
         private void moyenne_Toggled(object sender, EventArgs e)
         {
-            MessagingCenter.Send<MainGamePage,bool>(this, "updateTheCircleVisbility", moyenne.IsToggled);
+            //MessagingCenter.Send<MainGamePage,bool>(this, "updateTheCircleVisbility", moyenne.IsToggled);
         }
     }
 }

@@ -2,15 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GreenSa.Models.Tools.GPS_Maps"
-              xmlns:local2="clr-namespace:GreenSa.MarkupExtension"
+             xmlns:local2="clr-namespace:GreenSa.MarkupExtension"
              x:Class="GreenSa.ViewController.Play.Game.MainGamePage"
              NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
             >
-    <ContentPage.ToolbarItems>
+    <!--<ContentPage.ToolbarItems>
         <ToolbarItem Text="Relocalize" Clicked="onRelocalizeAction"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <Grid   >
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -69,5 +70,82 @@
                     Grid.Column="2" BackgroundColor="RosyBrown"/>
             </Grid>
         </Grid>
+    </ContentPage.Content>-->
+    <ContentPage.Content>
+        <Grid x:Name="page" Margin="0">
+            
+            <local:CustomMap x:Name="map" MapType="Satellite"
+                             VerticalOptions="FillAndExpand"/>
+            
+            <Image x:Name="top" Source="top_game_page.png"
+                    HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
+            
+            <Image x:Name="bottom" Source="bottom_game_page.png"
+                    HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
+            
+            <Label x:Name="numcoup" Text="1" FontAttributes="Bold"
+                       VerticalOptions="Start" HorizontalOptions="Center" Margin="5" TextColor="White"/>
+            
+            <Label x:Name="parTrou" Text="PAR 4" FontAttributes="Bold" 
+                    VerticalOptions="Start" HorizontalOptions="Center" Margin="10" TextColor="White"/>
+            
+            <Label x:Name="distTrou" Text="435 m" FontAttributes="Bold"
+                    VerticalOptions="Start" HorizontalOptions="End" TextColor="White"/>
+            
+            <Label x:Name="forceVent" Text="5.2 m/s" FontAttributes="Bold" FontSize="17"
+                    VerticalOptions="Start" HorizontalOptions="Start" TextColor="White"/>
+            
+            <Image x:Name="windImg" Source="windImg.png"
+                        HorizontalOptions="Start" VerticalOptions="Start"/>
+            
+            <ImageButton x:Name="ball" Source="ball.png"
+                         HorizontalOptions="Center" VerticalOptions="End" 
+                         Clicked="onMainButtonClicked" BackgroundColor="Transparent"/>
+            <ImageButton x:Name="radar" Source="radarWait.png"
+                         HorizontalOptions="Center" VerticalOptions="End" 
+                         Clicked="onMainButtonClicked" BackgroundColor="Transparent"/>
+            <Image x:Name="load" Source="radar.gif"
+                         HorizontalOptions="Center" VerticalOptions="End" 
+                         BackgroundColor="Transparent"/>
+            
+            <ImageButton x:Name="clubs" Source="fer.png"
+                         HorizontalOptions="Start" VerticalOptions="End"
+                         Clicked="onClubSelectionClicked" BackgroundColor="Transparent"/>
+            
+            <Label x:Name="numclub" Text="4" FontAttributes="Bold" FontSize="20" 
+                   HorizontalOptions="Start" VerticalOptions="End"/>
+
+            <ImageButton x:Name="ball_in" Source="hole_done.png"
+                         HorizontalOptions="End" VerticalOptions="End"
+                         Clicked="onHoleFinishedButtonClicked" BackgroundColor="Transparent"/>
+
+            <!--<Label Grid.Row="0" Text="GREEN'SA" FontAttributes="Bold" FontSize="30" VerticalOptions="End" HorizontalOptions="Center" Margin="50" TextColor="White"/>
+            <ImageButton x:Name="engrenage" Source="engre_icon.png" BackgroundColor="Transparent"
+                       HorizontalOptions="End" VerticalOptions="Start" 
+                       HeightRequest="25" Margin="10" Clicked="OnOptionsClicked"
+                       />
+            <Grid x:Name="boutons" Grid.Row="1" RowSpacing="8" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" x:Name="r0"/>
+                    <RowDefinition Height="*" x:Name="r1"/>
+                </Grid.RowDefinitions>
+                <Grid x:Name="duo" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" x:Name="c0"/>
+                        <ColumnDefinition Width="*" x:Name="c1"/>
+                    </Grid.ColumnDefinitions>
+                    <ImageButton x:Name="jouer" Source="play.png" Grid.Column="0"
+                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="10" Clicked="OnPlayClicked" BackgroundColor="Transparent"/>
+                    <Label Grid.Column="0" Text="JOUER" FontAttributes="Bold" FontSize="20" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
+                    <ImageButton x:Name="profil" Source="profil.png" Grid.Column="1"
+                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="10" Clicked="OnProfilClicked" BackgroundColor="Transparent"/>
+                    <Label Grid.Column="1" Text="PROFIL" FontAttributes="Bold" FontSize="20" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
+                </Grid>
+                <ImageButton x:Name="mesgolfs" Source="golfs.png" Grid.Row="1"
+                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="10" Clicked="OnGolfClicked" BackgroundColor="Transparent"/>
+                <Label Grid.Row="1" Text="MES GOLFS" FontAttributes="Bold" FontSize="20" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
+            </Grid>-->
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
+    
