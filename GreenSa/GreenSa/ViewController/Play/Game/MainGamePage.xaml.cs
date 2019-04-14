@@ -335,7 +335,7 @@ namespace GreenSa.ViewController.Play.Game
         * **/
         private async void onClubSelectionClicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new ClubSelectionInGamePage(partie));
+            //await Navigation.PushModalAsync(new ClubSelectionInGamePage(partie));
             changeClubIcon();
         }
 
