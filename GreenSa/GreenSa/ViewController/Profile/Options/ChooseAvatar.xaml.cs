@@ -33,6 +33,12 @@ namespace GreenSa.ViewController.Profile.Options
         {
             InitializeComponent();
             col = Color.Gray;
+            title.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            ok.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            ok.Margin = responsiveDesign(-15);
+            ok.HeightRequest = responsiveDesign(80);
+            ok.WidthRequest = responsiveDesign(80);
+
             //Initialisation de la BDD
             this.InitBDD();
             LocalUser = GetProfile("localUser");
@@ -81,6 +87,10 @@ namespace GreenSa.ViewController.Profile.Options
             }
         }
 
+        private int responsiveDesign(int pix)
+        {
+            return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
+        }
         public void InitBDD()
         {
             DBconnection = DependencyService.Get<ISQLiteDb>().GetConnection();

@@ -32,11 +32,30 @@ namespace GreenSa.ViewController.Profile
             InitializeComponent();
             this.statPage = null;
 
-            boutons.Margin = new Thickness(10, 0, 10, 15);
+            photo.Margin = responsiveDesign(30);
+            photo.HeightRequest = responsiveDesign(150);
+            user.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            engrenage.Margin = responsiveDesign(10);
+            engrenage.HeightRequest = responsiveDesign(30);
+            arrow.Margin = responsiveDesign(10);
+            arrow.HeightRequest = responsiveDesign(25);
+            golfref.Margin = new Thickness(0, responsiveDesign(15), 0, 0);
+            index.Margin = new Thickness(0, responsiveDesign(15), 0, 0);
+            niv.Margin = new Thickness(0, responsiveDesign(15), 0, 0);
+            clubs.Margin = new Thickness(responsiveDesign(5), 0, responsiveDesign(5), responsiveDesign(10));
+            parties.Margin = new Thickness(responsiveDesign(5), 0, responsiveDesign(5), responsiveDesign(10));
+            stats.Margin = new Thickness(responsiveDesign(5), 0, responsiveDesign(5), responsiveDesign(10));
+            golfref.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            index.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            niv.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            golfreftitle.FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
+            indextitle.FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
+            nivtitle.FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
+            clubstitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            partiestitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            statstitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
 
-            golfref.Margin = new Thickness(0, 15, 0, 0);
-            index.Margin = new Thickness(0, 15, 0, 0);
-            niv.Margin = new Thickness(0, 15, 0, 0);
+            boutons.Margin = new Thickness(10, 0, 10, 15);
 
             LocalUser = GetProfile("localUser");
 
@@ -71,6 +90,11 @@ namespace GreenSa.ViewController.Profile
             else if (LocalUser.Index > 11) { niv.Text = "Confirmé"; }
             else if (LocalUser.Index > 5) { niv.Text = "Très bon joueur"; }
             else { niv.Text = "Compétitif"; }
+        }
+
+        private int responsiveDesign(int pix)
+        {
+            return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
         }
 
         public Profil GetProfile(string id)

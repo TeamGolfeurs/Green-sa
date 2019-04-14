@@ -12,14 +12,14 @@
             <Image x:Name="logo" Source="fond_profile_page.png" Grid.Row="0"
                     HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"
                     />
-            <ImageButton x:Name="arrow" Source="fleche.png" BackgroundColor="Transparent"
-                       HorizontalOptions="Start" VerticalOptions="Start" 
-                       HeightRequest="25" Margin="10" Clicked="OnArrowClicked"
+            <Button x:Name="ok" Text="OK" TextColor="White" FontAttributes="Bold" BackgroundColor="Transparent"
+                       HorizontalOptions="End" VerticalOptions="Start"
+                       Clicked="OnArrowClicked"
                        />
             <Label x:Name="title" Grid.Row="0" Text="Choisissez votre avatar" FontAttributes="Bold" 
-                   FontSize="25" VerticalOptions="Start" HorizontalOptions="Center" 
+                   VerticalOptions="Start" HorizontalOptions="Center" 
                    TextColor="White" HorizontalTextAlignment="Center"/>
-            <Grid x:Name="boutons" Grid.Row="1" Grid.Column="0" RowSpacing="8" Margin="10">
+            <Grid x:Name="boutons" Grid.Row="1" Grid.Column="0" RowSpacing="8" Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
