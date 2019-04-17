@@ -62,15 +62,9 @@ namespace GreenSa.ViewController.Play.Game
             windImg.HeightRequest = responsiveDesign(15);
             numclub.IsEnabled = false;
 
-            load.IsEnabled = false;
-            load.IsVisible = false;
-            radar.IsEnabled = false;
-            radar.IsVisible = false;
-            ball.IsEnabled = true;
-            ball.IsVisible = true;
+            showBall();
 
             holFini = true;
-            state = 0;
             this.partie = partie;
             map.MoveToRegion(
             MapSpan.FromCenterAndRadius(
@@ -173,19 +167,9 @@ namespace GreenSa.ViewController.Play.Game
 
         public async Task<MyPosition> localize()
         {
-            load.IsEnabled = true;
-            load.IsVisible = true;
-            radar.IsEnabled = false;
-            radar.IsVisible = false;
-            ball.IsEnabled = false;
-            ball.IsVisible = false;
+            showLoad();
             MyPosition position = await GpsService.getCurrentPosition();
-            load.IsEnabled = false;
-            load.IsVisible = false;
-            radar.IsEnabled = false;
-            radar.IsVisible = false;
-            ball.IsEnabled = true;
-            ball.IsVisible = true;
+            showBall();
 
             return position;
         }
@@ -226,14 +210,8 @@ namespace GreenSa.ViewController.Play.Game
             switch (state)
             {
                 case 0:
-                    load.IsEnabled = false;
-                    load.IsVisible = false;
-                    radar.IsEnabled = true;
-                    radar.IsVisible = true;
-                    ball.IsEnabled = false;
-                    ball.IsVisible = false;
+                    showRadar();
                     map.lockTarget();
-                    state = 1;
                     break;
 
                 case 1:
@@ -241,26 +219,14 @@ namespace GreenSa.ViewController.Play.Game
                     MyPosition start = map.getUserPosition();
                     partie.addPositionForCurrentHole(start, new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
                     map.setUserPosition(newUserPosition, partie.Shots.Count);
-                    map.setTargetMovable();
+                    //map.setTargetMovable();
                     //if(moyenne.IsToggled)
                     //partie.updateUICircle();
-                    load.IsEnabled = false;
-                    load.IsVisible = false;
-                    radar.IsEnabled = false;
-                    radar.IsVisible = false;
-                    ball.IsEnabled = true;
-                    ball.IsVisible = true;
-                    state = 0;
+                    showBall();
                     break;
 
                 default: //par defaut prêt à taper
-                    load.IsEnabled = false;
-                    load.IsVisible = false;
-                    radar.IsEnabled = false;
-                    radar.IsVisible = false;
-                    ball.IsEnabled = true;
-                    ball.IsVisible = true;
-                    state = 0;
+                    showBall();
                     break;
             }
         }
@@ -331,12 +297,46 @@ namespace GreenSa.ViewController.Play.Game
 
             }
         }
+
+        private void showLoad()
+        {
+            load.IsEnabled = true;
+            load.IsVisible = true;
+            radar.IsEnabled = false;
+            radar.IsVisible = false;
+            ball.IsEnabled = false;
+            ball.IsVisible = false;
+        }
+
+        private void showBall()
+        {
+            state = 0;
+            load.IsEnabled = false;
+            load.IsVisible = false;
+            radar.IsEnabled = false;
+            radar.IsVisible = false;
+            ball.IsEnabled = true;
+            ball.IsVisible = true;
+        }
+
+        private void showRadar()
+        {
+            state = 1;
+            load.IsEnabled = false;
+            load.IsVisible = false;
+            radar.IsEnabled = true;
+            radar.IsVisible = true;
+            ball.IsEnabled = false;
+            ball.IsVisible = false;
+        }
+
+
         /* Méthode qui s'execute au click sur le bouton de la selection du club.
         * **/
         private async void onClubSelectionClicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new ClubSelectionInGamePage(partie));
-            changeClubIcon();
+            //await Navigation.PushModalAsync(new ClubSelectionInGamePage(partie));
+            //changeClubIcon();
         }
 
         /* Méthode qui s'execute au click sur le bouton principal.
@@ -354,10 +354,20 @@ namespace GreenSa.ViewController.Play.Game
             //if (moyenne.IsToggled)
             //    partie.updateUICircle();
         }
+
+
         protected override bool OnBackButtonPressed()
-        {            
-                Navigation.PopToRootAsync();
-                return true;
+        {
+
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                if (await DisplayAlert("Quitter", "Retourner au menu principal ?", "Oui", "Non"))
+                {
+                    base.OnBackButtonPressed();
+                    await Navigation.PopToRootAsync();
+                }
+            });
+            return true;
         }
 
 

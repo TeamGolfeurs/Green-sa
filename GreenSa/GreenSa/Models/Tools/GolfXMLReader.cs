@@ -115,9 +115,14 @@ namespace GreenSa.Models.Tools
                 XDocument golfC = XDocument.Load(GenerateStreamFromString(text));//xmlparser
 
                 var nodeGolfC = golfC.Element("Club");
-
-                var userMoyDistance = int.Parse(nodeGolfC.Elements("DistanceMoyenne").First(dist => dist.FirstAttribute.Value.Equals(userIndexScale)).Value);
-
+                var userMoyDistance = 0;
+                if(node.Value.Equals("Putter"))
+                {
+                   userMoyDistance = int.Parse(nodeGolfC.Elements("DistanceMoyenne").First().Value);
+                } else
+                {
+                    userMoyDistance = int.Parse(nodeGolfC.Elements("DistanceMoyenne").First(dist => dist.FirstAttribute.Value.Equals(userIndexScale)).Value);
+                }
                 Club gc = new Club(nodeGolfC.Element("Name").Value, userMoyDistance);
                 clubs.Add(gc);
             }

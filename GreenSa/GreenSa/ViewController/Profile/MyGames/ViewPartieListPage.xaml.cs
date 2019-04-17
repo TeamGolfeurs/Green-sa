@@ -45,26 +45,26 @@ namespace GreenSa.ViewController.Profile.MyGames
             } else
             {
                 ScorePartie sp = (ScorePartie)listPartie.SelectedItem;
+                List<GolfCourse> allGolfCourses = await StatistiquesGolf.getGolfCourses();
+                string courseName = "";
+                string id = sp.scoreHoles[0].IdHole;
+                foreach (GolfCourse gc in allGolfCourses)
+                {
+                    foreach (Hole h in gc.Holes)
+                    {
+                        if (h.Id.Equals(id))
+                        {
+                            courseName = gc.Name;
+                            break;
+                        }
+                    }
+                }
                 if (this.partieStatPage == null)
                 {
-                    this.partieStatPage = new PartieStatPage(sp);
+                    this.partieStatPage = new PartieStatPage(sp, courseName);
                 }
                 else
                 {
-                    List<GolfCourse> allGolfCourses = await StatistiquesGolf.getGolfCourses();
-                    string courseName = "";
-                    string id = sp.scoreHoles[0].IdHole;
-                    foreach (GolfCourse gc in allGolfCourses)
-                    {
-                        foreach (Hole h in gc.Holes)
-                        {
-                            if (h.Id.Equals(id))
-                            {
-                                courseName = gc.Name;
-                                break;
-                            }
-                        }
-                    }
                     this.partieStatPage.changePartie(sp, courseName);
                 }
                 await Navigation.PushModalAsync(this.partieStatPage);

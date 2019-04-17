@@ -19,10 +19,10 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
         private ScorePartie scorePartie;
         private List<Shot> allShots;
 
-        public PartieStatPage(ScorePartie sp)
+        public PartieStatPage(ScorePartie sp, string golfCourseName)
         {
             InitializeComponent();
-            this.scorePartie = sp;
+            changePartie(sp, golfCourseName);
             this.legendButton.BorderColor = Color.FromHex("0C5E11");
             this.legendButton.BorderWidth = 2;
 
@@ -119,13 +119,31 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             {
                 minScoreCount = 4;
             }
-            //check if there are any relevent enought bad scores
+            //check if there are enought bad scores so that is relevent
             if (notableScores.ContainsKey("More"))
             {
                 if (notableScores["More"] < minScoreCount)
                 {
                     notableScores.Remove("More");
                 }
+            }
+            //check if there are enought pars so that is relevent
+            if (notableScores.ContainsKey("0"))
+            {
+                int courseSizeMult = this.scorePartie.scoreHoles.Count / 9;//constants variate if it's a 9 or 18 holes
+                int parMinCount = this.scorePartie.scoreHoles.Count - averageScorePerHole * 3 * courseSizeMult;
+                if (averageScorePerHole == 0)
+                {
+                    parMinCount = this.scorePartie.scoreHoles.Count - 2 * courseSizeMult;
+                }
+                if (parMinCount >= 1)
+                {
+                    if (notableScores["0"] < parMinCount)
+                    {
+                        notableScores.Remove("0");
+                    }
+                }
+                
             }
             //check if there are enought one putt so that is relevent
             if (notableScores.ContainsKey("onePutt"))
@@ -193,6 +211,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                         } else if (notableScores.ContainsKey("0"))
                         {
                             updateNotableLabel(averageScorePerHole, this.notableScore2, this.notableScore2Label, "0", ulgss, notableScores);
+                        } else
+                        {
+                            updateGIR(this.notableScore2, this.notableScore2Label, girCount);
                         }
                     }
                     
@@ -235,7 +256,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 
                 case "More":
                     notableScore.Text = "" + notableScores[chosenKey];
-                    notableScoreLabel.Text = "Nombre de trous dont le score est supérieur à " + (averageScorePerHole+2);
+                    notableScoreLabel.Text = "Nombre de trous dont le score est supérieur à +" + (averageScorePerHole+1);
                     break;
 
                 default://scores under par
@@ -245,24 +266,27 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             }
         }
 
-
-        private void updateGIR(int girCount)
+        private void updateGIR(Label data, Label dataLabel, int girCount)
         {
-
             if (this.scorePartie.scoreHoles.Count == 0)
             {
-                this.notableScore1.Text = GeneralStatPage.NO_DATA;
-                this.notableScore1.TextColor = Color.Gray;
-                this.notableScore1.FontSize = 15;
+                data.Text = GeneralStatPage.NO_DATA;
+                data.TextColor = Color.Gray;
+                data.FontSize = 15;
             }
             else
             {
-                this.notableScore1.Text = "" + girCount;
-                this.notableScore1Label.Text = "Nombre de greens touchés en régulation";
-                this.notableScore1.TextColor = Color.FromHex("#39B54A");
-                this.notableScore1.FontSize = 30;
+                data.Text = "" + girCount;
+                dataLabel.Text = "Nombre de greens touchés en régulation";
+                data.TextColor = Color.FromHex("#39B54A");
+                data.FontSize = 30;
             }
 
+        }
+
+        private void updateGIR(int girCount)
+        {
+            this.updateGIR(this.notableScore1, this.notableScore1Label, girCount);
         }
 
 
