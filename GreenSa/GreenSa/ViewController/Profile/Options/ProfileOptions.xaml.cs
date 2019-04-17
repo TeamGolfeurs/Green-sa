@@ -30,6 +30,18 @@ namespace GreenSa.ViewController.Profile.Options
         public ProfileOptions()
         {
             InitializeComponent();
+            photo.Margin = responsiveDesign(30);
+            photo.HeightRequest = responsiveDesign(150);
+            arrow.Margin = responsiveDesign(10);
+            arrow.HeightRequest = responsiveDesign(25);
+            modifier.Margin = responsiveDesign(15);
+            modifier.HeightRequest = responsiveDesign(30);
+            golfreftitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            indextitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            usernametitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            golfref.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            index.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            username.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
 
             //Initialisation de la BDD
             LocalUser = GetProfile("localUser");
@@ -43,7 +55,7 @@ namespace GreenSa.ViewController.Profile.Options
 
             photo.Source = "user" + LocalUser.Photo + ".png";
 
-            boutons.Margin = new Thickness(60, 15, 60, 60);
+            boutons.Margin = new Thickness(30, 15, 30, 15);
         }
 
         protected override void OnAppearing()
@@ -57,6 +69,11 @@ namespace GreenSa.ViewController.Profile.Options
             golfref.Text = LocalUser.GolfRef;
 
             photo.Source = "user" + LocalUser.Photo + ".png";
+        }
+
+        private int responsiveDesign(int pix)
+        {
+            return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
         }
 
         public Profil GetProfile(string id)
