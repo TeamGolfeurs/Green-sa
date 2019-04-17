@@ -80,11 +80,11 @@ namespace Greensa.Droid
             if (this.Element == null || this.Control == null)
                 return;
 
-           /* if (e.PropertyName == CustomMap.RouteCoordinatesProperty.PropertyName)
-            {
-                Console.WriteLine("DEBUG---------- - Changed ! ");
-               // UpdatePolyLine();
-            }*/
+            /* if (e.PropertyName == CustomMap.RouteCoordinatesProperty.PropertyName)
+             {
+                 Console.WriteLine("DEBUG---------- - Changed ! ");
+                // UpdatePolyLine();
+             }*/
         }
 
 
@@ -93,6 +93,8 @@ namespace Greensa.Droid
             base.OnMapReady(map);
             this.map = map;
             map.SetOnMarkerDragListener(new markerListenerDrag(this));
+            map.UiSettings.ZoomControlsEnabled = false;
+            map.UiSettings.MyLocationButtonEnabled = false;
             //UpdatePolyLinePos(true);
         }
 

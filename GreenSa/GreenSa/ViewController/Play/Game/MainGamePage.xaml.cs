@@ -123,7 +123,6 @@ namespace GreenSa.ViewController.Play.Game
                     catch (Exception e)
                     {
                         await DisplayAlert("Gps non disponible", "La localisation GPS n'est pas disponible, assurez-vous de l'avoir activé.", "OK");
-                        OnBackButtonPressed();
                     }
                 } while (!success);
 
@@ -219,7 +218,8 @@ namespace GreenSa.ViewController.Play.Game
                     MyPosition start = map.getUserPosition();
                     partie.addPositionForCurrentHole(start, new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
                     map.setUserPosition(newUserPosition, partie.Shots.Count);
-                    //map.setTargetMovable();
+                    map.setTargetMovable();
+                    updateDistance();
                     //if(moyenne.IsToggled)
                     //partie.updateUICircle();
                     showBall();
