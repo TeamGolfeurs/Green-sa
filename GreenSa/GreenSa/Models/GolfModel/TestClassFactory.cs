@@ -42,16 +42,17 @@ namespace GreenSa.Models.GolfModel
             {
                 foreach (Hole hole in holes)
                 {
-                    int randPutt = r.Next() % 4;
-                    int randScore = (r.Next() % 7) - 3;
-                    if (i == 7)
-                    {
-                        randScore = 4;
-                    }
+                    int randPutt = r.Next() % 3 + 1;
+                    int randScore = r.Next() % 4 - 1;
+                    //int randScore = 1;
                     System.Diagnostics.Debug.WriteLine("randPutt = " + randPutt+ " randScore = "+ randScore+"\n");
                     for (int j = 0; j<randScore; ++j)
                     {
                         shots.Add(new Shot(clubs[4], RandomEnumValue<Shot.ShotCategory>(), DateTime.Now));
+                    }
+                    if (i == 7 && r.Next()%3 == 1)
+                    {
+                        randPutt = 0;
                     }
                     ScoreHole sh = new ScoreHole(hole, randScore, randPutt == 2, randPutt, DateTime.Now);
                     sp.add(sh);

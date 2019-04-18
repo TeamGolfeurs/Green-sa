@@ -134,8 +134,15 @@ namespace GreenSa.Models.Tools.GPS_Maps
             list.Add(HolePin.Position);
             this.RouteCoordinates = list;
             // });
-
-            this.MoveToRegion(MapSpan.FromCenterAndRadius(TargetPin.Position, Distance.FromMiles(0.12)));
+            var dist = getDistanceUserHole();
+            /* radius computed by linear regression : 
+               x =  Dist  |  25   |  50   |  100  |  150  |  200  |  250  |  300  |  350  |  400  |  450  |  500  |	
+               y = Radius | 0.020 | 0.030 | 0.055 | 0.073 | 0.095 | 0.105 | 0.123 | 0.128 | 0.140 | 0.145 | 0.150 |
+             */
+            var radius = dist * 0.000278 + 0.0265;
+            Debug.WriteLine("dist : " + dist);
+            Debug.WriteLine("radius : " + radius);
+            this.MoveToRegion(MapSpan.FromCenterAndRadius(TargetPin.Position, Distance.FromMiles(radius)));
         }
 
 

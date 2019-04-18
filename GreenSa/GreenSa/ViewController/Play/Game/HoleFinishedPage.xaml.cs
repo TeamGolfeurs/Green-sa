@@ -34,19 +34,22 @@ namespace GreenSa.ViewController.Play.Game
 
         private async void validButtonClicked(object sender, EventArgs e)
         {
-          
             if (partie.Shots.Count == 0)
             {
                 await DisplayAlert("0 coups rentrés", "Impossible de valider avec aucun shot", "OK");
                 return;
             }
-            MessagingCenter.Send<HoleFinishedPage, bool>(this, "ReallyFinit", true);
-            validNext.IsEnabled = false;
-            validNext.Text = "En cours";
-            partie.holeFinished(save.IsToggled);
-            await Navigation.PopModalAsync();
-            validNext.IsEnabled = true;
-            validNext.Text = "Valid";
+            var confirm = await this.DisplayAlert("Trou sivant", "Passer au trou suivant ?", "Oui", "Non");
+            if (confirm)
+            {
+                MessagingCenter.Send<HoleFinishedPage, bool>(this, "ReallyFinit", true);
+                validNext.IsEnabled = false;
+                validNext.Text = "En cours";
+                partie.holeFinished(save.IsToggled);
+                await Navigation.PopModalAsync();
+                validNext.IsEnabled = true;
+                validNext.Text = "Valid";
+            }
         }
 
         private void AddShotButtonClicked(object sender, EventArgs e)
