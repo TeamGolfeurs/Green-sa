@@ -35,11 +35,16 @@ namespace GreenSa.ViewController
         public MainPage()
         {
             InitializeComponent();
-            titre.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
-            jouertext.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
-            profiltext.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
-            mesgolfstext.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            titre.FontSize = 30;
+            jouertext.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            profiltext.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            mesgolfstext.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
             this.InitBDD();
+        }
+
+        private int responsiveDesign(int pix)
+        {
+            return (int)((pix * 4.1 / 1440.0) * page.Width);
         }
 
         public void InitBDD()

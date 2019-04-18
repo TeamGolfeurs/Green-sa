@@ -36,12 +36,12 @@ namespace GreenSa.ViewController.Profile.Options
             arrow.HeightRequest = responsiveDesign(25);
             modifier.Margin = responsiveDesign(15);
             modifier.HeightRequest = responsiveDesign(30);
-            golfreftitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
-            indextitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
-            usernametitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
-            golfref.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
-            index.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
-            username.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            golfreftitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            indextitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            usernametitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            golfref.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            index.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            username.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
 
             //Initialisation de la BDD
             LocalUser = GetProfile("localUser");

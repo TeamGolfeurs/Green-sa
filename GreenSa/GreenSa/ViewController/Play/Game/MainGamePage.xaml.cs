@@ -24,7 +24,7 @@ namespace GreenSa.ViewController.Play.Game
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainGamePage : ContentPage
     {
-         
+
         private int state; //0 pour prêt à taper et 1 pour prêt à localiser
         private Partie partie;
         private bool holFini;
@@ -33,7 +33,7 @@ namespace GreenSa.ViewController.Play.Game
         public MainGamePage(Partie partie)
         {
             InitializeComponent();
-
+            System.Diagnostics.Debug.WriteLine(partie.CurrentClub.ToString());
             forceVent.Margin = new Thickness(35, 10, 0, 0);
             windImg.Margin = new Thickness(35, 5, 0, 0);
             windImg.HeightRequest = responsiveDesign(25);
@@ -43,12 +43,17 @@ namespace GreenSa.ViewController.Play.Game
             radar.Margin = responsiveDesign(10);
             load.HeightRequest = responsiveDesign(92);
             load.Margin = responsiveDesign(10);
+            backToRadar.HeightRequest = responsiveDesign(30);
+            backToRadar.Margin = new Thickness(responsiveDesign(215), 0, 0, responsiveDesign(10));
+            backToBall.HeightRequest = responsiveDesign(30);
+            backToBall.Margin = new Thickness(responsiveDesign(215), 0, 0, responsiveDesign(10));
             clubs.HeightRequest = responsiveDesign(45);
             clubs.Margin = new Thickness(responsiveDesign(15), 0, 0, 0);
             ball_in.HeightRequest = responsiveDesign(45);
             ball_in.Margin = new Thickness(0, 0, responsiveDesign(14), responsiveDesign(7));
             numclub.TextColor = Color.FromHex("009245");
-            numclub.Margin = new Thickness(responsiveDesign(34), 0, 0, responsiveDesign(16));
+            numclub.Margin = new Thickness(responsiveDesign(34), 0, 0, responsiveDesign(17));
+            numclub.FontSize = responsiveDesign(20);
 
             numcoup.FontSize = responsiveDesign(40);
             numcoup.Margin = responsiveDesign(-5);
@@ -62,12 +67,27 @@ namespace GreenSa.ViewController.Play.Game
             windImg.HeightRequest = responsiveDesign(15);
             numclub.IsEnabled = false;
 
+            clubselection.BackgroundColor = Color.FromRgba(0, 0, 0, 0.6);
+            clubselection.HeightRequest = responsiveDesign(300);
+            clubselection.WidthRequest = responsiveDesign(300);
+            clubselection.CornerRadius = responsiveDesign(25);
+            clubselection.Margin = new Thickness(responsiveDesign(10), 0, 0, responsiveDesign(135));
+            ListClubsPartie.BackgroundColor = Color.Transparent;
+            ListClubsPartie.HeightRequest = responsiveDesign(165);
+            ListClubsPartie.WidthRequest = responsiveDesign(300);
+            ListClubsPartie.Margin = new Thickness(responsiveDesign(10), responsiveDesign(167), responsiveDesign(42), responsiveDesign(135));
+
+            clubselection.IsVisible = false;
+            ListClubsPartie.IsVisible = false;
+
             load.IsEnabled = false;
             load.IsVisible = false;
             radar.IsEnabled = false;
             radar.IsVisible = false;
             ball.IsEnabled = true;
             ball.IsVisible = true;
+            backToRadar.IsVisible = false;
+            backToBall.IsVisible = false;
 
             holFini = true;
             state = 0;
@@ -78,23 +98,18 @@ namespace GreenSa.ViewController.Play.Game
 
             BindingContext = partie;
             partie.CurrentClub = partie.Clubs.First();
-            //ListClubPartie.SelectedItem = partie.CurrentClub;
+            LoadClubIcon(partie.CurrentClub);
             //message which come from the markerListenerDrag,
             //when the target pin is moved =>update the display of the distance
-            MessagingCenter.Subscribe<CustomPin>(this,CustomPin.UPDATEDMESSAGE,  (sender) => {
-                 updateDistance(true);
+            MessagingCenter.Subscribe<CustomPin>(this, CustomPin.UPDATEDMESSAGE, (sender) => {
+                updateDistance(true);
             });
-            MessagingCenter.Subscribe<System.Object>(this, CustomPin.UPDATEDMESSAGE_CIRCLE,  (sender) => {
-                 updateDistance(true);
+            MessagingCenter.Subscribe<System.Object>(this, CustomPin.UPDATEDMESSAGE_CIRCLE, (sender) => {
+                updateDistance(true);
             });
-            MessagingCenter.Subscribe<HoleFinishedPage,bool>(this, "ReallyFinit", (sender,val) => {
+            MessagingCenter.Subscribe<HoleFinishedPage, bool>(this, "ReallyFinit", (sender, val) => {
                 holFini = val;
             });
-            /* if (Navigation.NavigationStack.Count == 3)
-             {*/
-            /*   Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 1]);
-               Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 1]);*/
-            //}
         }
         /**
         * Méthode qui s'execute automatiquement au chargement de la page
@@ -105,7 +120,7 @@ namespace GreenSa.ViewController.Play.Game
             base.OnAppearing();
             if (!holFini)
                 return;
-            
+
             holFini = false;
             if (partie.hasNextHole())
             {
@@ -113,7 +128,7 @@ namespace GreenSa.ViewController.Play.Game
                 GestionGolfs.calculAverageAsync(partie.Clubs);
                 map.setHolePosition(nextHole);
                 numcoup.Text = partie.getIndexHole().Item1.ToString();
-                MyPosition position = new MyPosition(0, 0) ;
+                MyPosition position = new MyPosition(0, 0);
                 bool success = false;
                 do//make sure that the GPS is avaible
                 {
@@ -133,7 +148,7 @@ namespace GreenSa.ViewController.Play.Game
                     }
                 } while (!success);
 
-                 updateDistance();
+                updateDistance();
 
                 try
                 {
@@ -146,7 +161,7 @@ namespace GreenSa.ViewController.Play.Game
                         {
                             await UpdateWindServiceUI(windInfo);
                         });
-                        
+
                     });
 
                 }
@@ -155,7 +170,7 @@ namespace GreenSa.ViewController.Play.Game
                     await DisplayAlert("Vent non disponible", "L'information concernant le vent n'est pas disponible", "OK");
                 }
 
-            
+
             }
             else
             {
@@ -173,6 +188,7 @@ namespace GreenSa.ViewController.Play.Game
 
         public async Task<MyPosition> localize()
         {
+            backToRadar.IsVisible = false;
             load.IsEnabled = true;
             load.IsVisible = true;
             radar.IsEnabled = false;
@@ -186,7 +202,8 @@ namespace GreenSa.ViewController.Play.Game
             radar.IsVisible = false;
             ball.IsEnabled = true;
             ball.IsVisible = true;
-
+            backToRadar.IsVisible = true;
+            System.Diagnostics.Debug.WriteLine(partie.CurrentClub.ToString());
             return position;
         }
 
@@ -203,18 +220,18 @@ namespace GreenSa.ViewController.Play.Game
             }
         }
 
-        private  void updateDistance(bool circle=false)
+        private void updateDistance(bool circle = false)
         {
-                dUserTarget = map.getDistanceUserTarget();
-                distTrou.Text = string.Format("{0:0.0}", map.getDistanceUserHole()) + "m";
-                //distSplit.Text = string.Format("{0:0.0}", dUserTarget) + "m / " + string.Format("{0:0.0}", map.getDistanceTargetHole()) + " m";
-                if(circle)
-                {
-                    Club c =  GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs, dUserTarget);
-                    //if (!c.Equals(ListClubPartie.SelectedItem))
-                    //    ListClubPartie.SelectedItem = c;
-                }
-            
+            dUserTarget = map.getDistanceUserTarget();
+            distTrou.Text = string.Format("{0:0.0}", map.getDistanceUserHole()) + "m";
+            //distSplit.Text = string.Format("{0:0.0}", dUserTarget) + "m / " + string.Format("{0:0.0}", map.getDistanceTargetHole()) + " m";
+            if (circle)
+            {
+                Club c = GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs, dUserTarget);
+                //if (!c.Equals(ListClubPartie.SelectedItem))
+                //    ListClubPartie.SelectedItem = c;
+            }
+
         }
 
         /**
@@ -232,6 +249,8 @@ namespace GreenSa.ViewController.Play.Game
                     radar.IsVisible = true;
                     ball.IsEnabled = false;
                     ball.IsVisible = false;
+                    backToRadar.IsVisible = false;
+                    backToBall.IsVisible = true;
                     map.lockTarget();
                     state = 1;
                     break;
@@ -250,6 +269,8 @@ namespace GreenSa.ViewController.Play.Game
                     radar.IsVisible = false;
                     ball.IsEnabled = true;
                     ball.IsVisible = true;
+                    backToBall.IsVisible = false;
+                    backToRadar.IsVisible = true;
                     state = 0;
                     break;
 
@@ -260,19 +281,62 @@ namespace GreenSa.ViewController.Play.Game
                     radar.IsVisible = false;
                     ball.IsEnabled = true;
                     ball.IsVisible = true;
+                    backToBall.IsVisible = false;
+                    backToRadar.IsVisible = true;
                     state = 0;
                     break;
             }
         }
-        private void changeClubIcon()
+
+        private void onBackToBallClicked(object sender, EventArgs e)
         {
-            switch (partie.CurrentClub.Name)
+            map.setTargetMovable();
+            load.IsEnabled = false;
+            load.IsVisible = false;
+            radar.IsEnabled = false;
+            radar.IsVisible = false;
+            ball.IsEnabled = true;
+            ball.IsVisible = true;
+            backToBall.IsVisible = false;
+            backToRadar.IsVisible = true;
+            state = 0;
+        }
+            
+
+        private void showClubs()
+        {
+            System.Diagnostics.Debug.WriteLine(partie.CurrentClub.ToString());
+            clubselection.IsVisible = true;
+            Func<Club, bool> f = (c => true);
+            ListClubsPartie.ItemsSource = partie.Clubs;
+            ListClubsPartie.IsVisible = true;
+            ListClubsPartie.SelectedItem = partie.CurrentClub;
+            System.Diagnostics.Debug.WriteLine(partie.CurrentClub.Name);
+        }
+        private void hideClubs()
+        {
+            clubselection.IsVisible = false;
+            ListClubsPartie.IsVisible = false;
+        }
+        private void OnClubClicked(object sender, EventArgs e)
+        {
+            var club = ListClubsPartie.SelectedItem as Club;
+            partie.setCurrentClub(club);
+            System.Diagnostics.Debug.WriteLine(club.ToString());
+            LoadClubIcon(club);
+            clubselection.IsVisible = false;
+            ListClubsPartie.IsVisible = false;
+        }
+
+        private void LoadClubIcon(Club club)
+        {
+            switch (club.Name)
             {
-                case "Bois3":
+                case "Bois 3":
                     clubs.Source = "bois.png";
                     numclub.Text = "3";
                     break;
-                case "Bois5":
+                case "Bois 5":
                     clubs.Source = "bois.png";
                     numclub.Text = "5";
                     break;
@@ -284,31 +348,31 @@ namespace GreenSa.ViewController.Play.Game
                     clubs.Source = "put.png";
                     numclub.Text = "";
                     break;
-                case "Fer3":
+                case "Fer 3":
                     clubs.Source = "fer.png";
                     numclub.Text = "3";
                     break;
-                case "Fer4":
+                case "Fer 4":
                     clubs.Source = "fer.png";
                     numclub.Text = "4";
                     break;
-                case "Fer5":
+                case "Fer 5":
                     clubs.Source = "fer.png";
                     numclub.Text = "5";
                     break;
-                case "Fer6":
+                case "Fer 6":
                     clubs.Source = "fer.png";
                     numclub.Text = "6";
                     break;
-                case "Fer7":
+                case "Fer 7":
                     clubs.Source = "fer.png";
                     numclub.Text = "7";
                     break;
-                case "Fer8":
+                case "Fer 8":
                     clubs.Source = "fer.png";
                     numclub.Text = "8";
                     break;
-                case "Fer9":
+                case "Fer 9":
                     clubs.Source = "fer.png";
                     numclub.Text = "9";
                     break;
@@ -318,7 +382,7 @@ namespace GreenSa.ViewController.Play.Game
                     break;
                 case "Sandwedge":
                     clubs.Source = "fer.png";
-                    numclub.Text = "SW";
+                    numclub.Text = "S";
                     break;
                 case "Pitching":
                     clubs.Source = "fer.png";
@@ -328,15 +392,21 @@ namespace GreenSa.ViewController.Play.Game
                     clubs.Source = "fer.png";
                     numclub.Text = "3";
                     break;
-
             }
         }
+
         /* Méthode qui s'execute au click sur le bouton de la selection du club.
         * **/
-        private async void onClubSelectionClicked(object sender, EventArgs e)
+        private void onClubSelectionClicked(object sender, EventArgs e)
         {
-            //await Navigation.PushModalAsync(new ClubSelectionInGamePage(partie));
-            changeClubIcon();
+            if(clubselection.IsVisible == false)
+            {
+                showClubs();
+            }
+            else
+            {
+                hideClubs();
+            }
         }
 
         /* Méthode qui s'execute au click sur le bouton principal.
@@ -355,9 +425,9 @@ namespace GreenSa.ViewController.Play.Game
             //    partie.updateUICircle();
         }
         protected override bool OnBackButtonPressed()
-        {            
-                Navigation.PopToRootAsync();
-                return true;
+        {
+            Navigation.PopToRootAsync();
+            return true;
         }
 
 

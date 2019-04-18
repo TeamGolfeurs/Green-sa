@@ -34,26 +34,26 @@ namespace GreenSa.ViewController.Profile
 
             photo.Margin = responsiveDesign(30);
             photo.HeightRequest = responsiveDesign(150);
-            user.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            user.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
             engrenage.Margin = responsiveDesign(10);
             engrenage.HeightRequest = responsiveDesign(30);
             arrow.Margin = responsiveDesign(10);
             arrow.HeightRequest = responsiveDesign(25);
-            golfref.Margin = new Thickness(0, responsiveDesign(15), 0, 0);
-            index.Margin = new Thickness(0, responsiveDesign(15), 0, 0);
-            niv.Margin = new Thickness(0, responsiveDesign(15), 0, 0);
+            golfref.Margin = new Thickness(0, responsiveDesign(20), 0, 0);
+            index.Margin = new Thickness(0, responsiveDesign(20), 0, 0);
+            niv.Margin = new Thickness(0, responsiveDesign(20), 0, 0);
             clubs.Margin = new Thickness(responsiveDesign(5), 0, responsiveDesign(5), responsiveDesign(10));
             parties.Margin = new Thickness(responsiveDesign(5), 0, responsiveDesign(5), responsiveDesign(10));
             stats.Margin = new Thickness(responsiveDesign(5), 0, responsiveDesign(5), responsiveDesign(10));
-            golfref.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
-            index.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
-            niv.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
-            golfreftitle.FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
-            indextitle.FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
-            nivtitle.FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
-            clubstitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
-            partiestitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
-            statstitle.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            golfref.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            index.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            niv.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            golfreftitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            indextitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            nivtitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
+            clubstitle.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            partiestitle.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            statstitle.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
 
             boutons.Margin = new Thickness(10, 0, 10, 15);
 

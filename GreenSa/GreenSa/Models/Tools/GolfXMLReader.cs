@@ -127,6 +127,58 @@ namespace GreenSa.Models.Tools
             return clubs;
         }
 
+        public static Club getClubFromName(string name)
+        {
+            Club res;
+
+            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(App)).Assembly;
+
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            List<Profil> profils = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Profil>(connection);
+            string userIndexScale = "0";
+            if (profils.Count == 0)
+            {
+                int userIndex = (int)profils[0].Index;
+                if (userIndex >= 10 && userIndex < 20)
+                {
+                    userIndexScale = "10";
+                }
+                else if (userIndex >= 20 && userIndex < 30)
+                {
+                    userIndexScale = "20";
+                }
+                else if (userIndex >= 30 && userIndex < 40)
+                {
+                    userIndexScale = "30";
+                }
+                else
+                {
+                    userIndexScale = "40";
+                }
+            }
+            else
+            {
+                userIndexScale = "40";
+            }
+
+
+            var stream = assembly.GetManifestResourceStream("GreenSa.Ressources.Clubs." + name + ".xml");
+            string text = "";
+            using (var reader = new System.IO.StreamReader(stream))//read the file
+            {
+                text = reader.ReadToEnd();
+            }
+
+            XDocument golfC = XDocument.Load(GenerateStreamFromString(text));//xmlparser
+
+            var nodeGolfC = golfC.Element("Club");
+
+            var userMoyDistance = int.Parse(nodeGolfC.Elements("DistanceMoyenne").First(dist => dist.FirstAttribute.Value.Equals(userIndexScale)).Value);
+            res = new Club(nodeGolfC.Element("Name").Value, userMoyDistance);
+
+            return res;
+        }
+
         public static Stream GenerateStreamFromString(string s)
         {
             var stream = new MemoryStream();

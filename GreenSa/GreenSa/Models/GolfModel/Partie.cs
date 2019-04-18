@@ -53,7 +53,8 @@ namespace GreenSa.Models.GolfModel
         public Partie()
         {
             Shots = new List<Shot>();
-            CurrentClub = new Club("Fer3", 170);
+            CurrentClub = GolfXMLReader.getClubFromName("Fer3");
+            System.Diagnostics.Debug.WriteLine(CurrentClub.ToString());
             ScoreOfThisPartie = new ScorePartie();
         }
         /// <summary>

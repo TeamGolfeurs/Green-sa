@@ -33,8 +33,8 @@ namespace GreenSa.ViewController.Profile.Options
         {
             InitializeComponent();
             col = Color.Gray;
-            title.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
-            ok.FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label));
+            title.FontSize = 30;
+            ok.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
             ok.Margin = responsiveDesign(-15);
             ok.HeightRequest = responsiveDesign(80);
             ok.WidthRequest = responsiveDesign(80);
