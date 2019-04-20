@@ -393,20 +393,6 @@ namespace GreenSa.Models.GolfModel
             await SQLiteNetExtensionsAsync.Extensions.WriteOperations.InsertWithChildrenAsync(connection, scoreOfThisPartie,false);
         }
 
-
-        //SCorePartie
-        //
-        public async static Task<IEnumerable<ScorePartie>> getListOfScorePartie()
-        {
-            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
-            await connection.CreateTableAsync<ScoreHole>();
-            await connection.CreateTableAsync<ScorePartie>();
-
-            List<ScorePartie> all = (await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<ScorePartie>(connection, recursive: true));
-
-            return all.OrderByDescending(sp =>sp.DateDebut);
-        }
-
         public static double getPlayerIndex()
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();

@@ -2,6 +2,7 @@
 using GreenSa.Persistence;
 using SQLite;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,10 +31,10 @@ namespace GreenSa.Models.GolfModel
             connection.CreateTable<MyPosition>();
             List<GolfCourse> golfCourses = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection);
             Random r = new Random();
-            var holes = golfCourses[r.Next()%(golfCourses.Count)].Holes;
-            //var holes = golfCourses[0].Holes;
-           // DateTime date = new DateTime(2019, DateTime.Now.Month, (TestClassFactory.createdScorePartieCount % 28) + 1);
-            DateTime date = DateTime.Now;
+            //var holes = golfCourses[r.Next()%(golfCourses.Count)].Holes;
+            var holes = golfCourses[0].Holes;
+            DateTime date = new DateTime(2019, DateTime.Now.Month, (TestClassFactory.createdScorePartieCount % 28) + 1);
+            //DateTime date = DateTime.Now;
             ScorePartie sp = new ScorePartie(date);
             List<Shot> shots = new List<Shot>();
             List<Club> clubs = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Club>(connection);
@@ -63,9 +64,9 @@ namespace GreenSa.Models.GolfModel
             sp.DateFin = DateTime.Now;
             try
             {
-                SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, shots, true);
+                //SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, shots, true);
                 SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, sp.scoreHoles, true);
-                SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, sp, false);
+                SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, sp, true);
             } catch(SQLiteException sqlex)
             {
                 System.Diagnostics.Debug.WriteLine(sqlex.StackTrace);
