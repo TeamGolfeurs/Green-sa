@@ -48,7 +48,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             this.updateWorstHole(allScoreHoles);
         }
 
-            private void updateWorstHole(List<ScoreHole> allScoreHoles)
+        private void updateWorstHole(List<ScoreHole> allScoreHoles)
         {
             int worstHoleNumber = StatistiquesGolf.getWorstHole(allScoreHoles, this.golfCourse);
             if (worstHoleNumber == 0)

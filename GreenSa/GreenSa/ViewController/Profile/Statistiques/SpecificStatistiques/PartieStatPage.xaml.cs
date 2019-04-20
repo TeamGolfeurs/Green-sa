@@ -256,7 +256,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 
                 case "More":
                     notableScore.Text = "" + notableScores[chosenKey];
-                    notableScoreLabel.Text = "Nombre de trous dont le score est supérieur à +" + (averageScorePerHole+1);
+                    notableScoreLabel.Text = "Nombre de trous dont le score est supérieur à +" + (averageScorePerHole + 1);
                     break;
 
                 default://scores under par
@@ -314,7 +314,10 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             int shotCount = 0;
             foreach (Shot.ShotCategory sc in dico.Keys)
             {
-                shotCount += dico[sc];
+                if (!sc.Equals(Shot.ShotCategory.ChipShot))
+                {
+                    shotCount += dico[sc];
+                }
             }
 
             var entries = new[]
@@ -327,7 +330,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                  },
                 new Entry(dico[Shot.ShotCategory.GoodShot])
                  {
-                     Label = "BC",
+                    Label = "BC",
                     ValueLabel = dico[Shot.ShotCategory.GoodShot].ToString(),
                     Color = SKColor.Parse("#44F50B")
                  },

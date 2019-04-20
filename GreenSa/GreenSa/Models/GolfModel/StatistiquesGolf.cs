@@ -31,13 +31,9 @@ namespace GreenSa.Models.GolfModel
 
             try
             {
-                
-
                 List<Club> clubs = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Club>(connection);
-                System.Diagnostics.Debug.WriteLine("clubs.Count : " + clubs.Count);
                 foreach (Club c in clubs)
                 {
-                    System.Diagnostics.Debug.WriteLine("clubs : " + clubs.ToString());
                     if (!c.Equals(Club.PUTTER))
                     {
                         if (!sommesEachClubs.ContainsKey(c))
@@ -51,7 +47,7 @@ namespace GreenSa.Models.GolfModel
                 }
 
                 IEnumerable<Shot> shots = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection);
-                shots = shots.Where(s => filtre(s.Club) && !s.Club.Equals(Club.PUTTER));
+                shots = shots.Where(s => filtre(s.Club) && !s.Club.Equals(Club.PUTTER) && !s.ShotType.Equals(Shot.ShotCategory.ChipShot) && !s.ShotType.Equals(Shot.ShotCategory.FailedShot));
                 foreach (Shot s in shots)
                 {
                     if (!sommesEachClubs.ContainsKey(s.Club))

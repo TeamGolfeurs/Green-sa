@@ -30,18 +30,18 @@ namespace GreenSa.ViewController.Profile.Options
         public ProfileOptions()
         {
             InitializeComponent();
-            photo.Margin = responsiveDesign(30);
-            photo.HeightRequest = responsiveDesign(150);
+            photo.Margin = new Thickness(0, responsiveDesign(30), 0, responsiveDesign(5));
+            photo.HeightRequest = responsiveDesign(140);
             arrow.Margin = responsiveDesign(10);
             arrow.HeightRequest = responsiveDesign(25);
             modifier.Margin = responsiveDesign(15);
             modifier.HeightRequest = responsiveDesign(30);
-            golfreftitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
-            indextitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
-            usernametitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
-            golfref.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
-            index.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
-            username.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            golfreftitle.FontSize = 25;
+            indextitle.FontSize = 25;
+            usernametitle.FontSize = 25;
+            golfref.FontSize = 20;
+            index.FontSize = 20;
+            username.FontSize = 20;
 
             //Initialisation de la BDD
             LocalUser = GetProfile("localUser");

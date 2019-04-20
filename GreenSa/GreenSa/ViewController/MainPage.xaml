@@ -15,7 +15,7 @@
         <Image x:Name="logo" Source="logo_main_page.png" Grid.Row="0"
                     HorizontalOptions="CenterAndExpand"
                     />
-        <Label x:Name="titre" Grid.Row="0" Text="GREEN'SA" FontAttributes="Bold" VerticalOptions="End" Margin="40" HorizontalOptions="Center" TextColor="White"/>
+        <Label x:Name="titre" Grid.Row="0" FontSize="30" Text="GREEN'SA" FontAttributes="Bold" VerticalOptions="End" Margin="0, 0, 0, 40" HorizontalOptions="Center" TextColor="White"/>
         <ImageButton x:Name="engrenage" Source="engre_icon.png" BackgroundColor="Transparent"
                        HorizontalOptions="End" VerticalOptions="Start" 
                        HeightRequest="25" Margin="10" Clicked="OnOptionsClicked"
@@ -31,15 +31,15 @@
                     <ColumnDefinition Width="*" x:Name="c1"/>
                 </Grid.ColumnDefinitions>
                 <ImageButton x:Name="jouer" Source="play.png" Grid.Column="0"
-                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="5" Clicked="OnPlayClicked" BackgroundColor="Transparent"/>
-                <Label x:Name="jouertext" Grid.Column="0" Text="JOUER" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
+                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="5, 5, 5, 10" Clicked="OnPlayClicked" BackgroundColor="Transparent"/>
+                <Label x:Name="jouertext" FontSize="21"  Grid.Column="0" Text="JOUER" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
                 <ImageButton x:Name="profil" Source="profil.png" Grid.Column="1"
-                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="5" Clicked="OnProfilClicked" BackgroundColor="Transparent"/>
-                <Label x:Name="profiltext" Grid.Column="1" Text="PROFIL" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
+                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="5, 5, 5, 10" Clicked="OnProfilClicked" BackgroundColor="Transparent"/>
+                <Label x:Name="profiltext" FontSize="21"  Grid.Column="1" Text="PROFIL" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
             </Grid>
             <ImageButton x:Name="mesgolfs" Source="golfs.png" Grid.Row="1"
-                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="5" Clicked="OnGolfClicked" BackgroundColor="Transparent"/>
-            <Label x:Name="mesgolfstext" Grid.Row="1" Text="MES GOLFS" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
+                       HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" Margin="5, 5, 5, 10" Clicked="OnGolfClicked" BackgroundColor="Transparent"/>
+            <Label x:Name="mesgolfstext" FontSize="21"  Grid.Row="1" Text="MES GOLFS" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Center" TextColor="Black"/>
             
         </Grid>
     </Grid>
