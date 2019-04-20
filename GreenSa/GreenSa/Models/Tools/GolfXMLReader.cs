@@ -87,15 +87,16 @@ namespace GreenSa.Models.Tools
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             List<Profil> profils = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Profil>(connection);
             string userIndexScale = "0";
-            if (profils.Count == 0) {
+            if (profils.Count != 0) {
                 int userIndex = (int)profils[0].Index;
+                System.Diagnostics.Debug.WriteLine("userIndex : " + userIndex);
                 if (userIndex >= 10 && userIndex < 20) {
                     userIndexScale = "10";
                 } else if (userIndex >= 20 && userIndex < 30) {
                     userIndexScale = "20";
                 } else if (userIndex >= 30 && userIndex < 40) {
                     userIndexScale = "30";
-                } else {
+                } else if (userIndex >= 40) {
                     userIndexScale = "40";
                 }
             } else {

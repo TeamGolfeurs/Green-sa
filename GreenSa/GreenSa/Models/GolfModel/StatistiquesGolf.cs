@@ -22,7 +22,7 @@ namespace GreenSa.Models.GolfModel
         /**
          * Get the average distance for all clubs
          * */
-        public static  IEnumerable<Tuple<Club, double>> getAverageDistanceForClubsAsync(Func<Club,bool> filtre)
+        public async static Task<IEnumerable<Tuple<Club, double>>> getAverageDistanceForClubsAsync(Func<Club,bool> filtre)
         {
             IEnumerable<Tuple<Club, double>> res=new List<Tuple<Club, double>>();
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
@@ -31,7 +31,7 @@ namespace GreenSa.Models.GolfModel
 
             try
             {
-                List<Club> clubs = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Club>(connection);
+                List<Club> clubs = await GestionGolfs.getListClubsAsync(null);
                 foreach (Club c in clubs)
                 {
                     if (!c.Equals(Club.PUTTER))
@@ -160,6 +160,7 @@ namespace GreenSa.Models.GolfModel
             List<GolfCourse> golfCourses = await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<GolfCourse>(connection);
             return golfCourses;
         }
+
 
 
         public static List<ScorePartie> getScoreParties(List<ScorePartie> allScoreParties, GolfCourse golfCourse)

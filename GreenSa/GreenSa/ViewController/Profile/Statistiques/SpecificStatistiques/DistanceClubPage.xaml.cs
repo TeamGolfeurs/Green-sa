@@ -29,7 +29,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
         {
             
             base.OnAppearing();
-             getScoresAsync(c => true);
+            getScoresAsync(c => true);
            
         }
         /*
@@ -41,10 +41,10 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
              getScoresAsync(c=>true);
         }
 
-        private void getScoresAsync(Func<Club, bool> f)
+        private async void getScoresAsync(Func<Club, bool> f)
         {
 
-            IEnumerable<Tuple<Club, double>> res = StatistiquesGolf.getAverageDistanceForClubsAsync(f);
+            IEnumerable<Tuple<Club, double>> res = await StatistiquesGolf.getAverageDistanceForClubsAsync(f);
 
             List<Entry> entries = new List<Entry>();
 

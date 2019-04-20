@@ -19,19 +19,6 @@ namespace GreenSa.Models.GolfModel
 
         public bool selected { get; set; }//used for IHM
         public int DistanceMoyenne { get; set; }
-        [Ignore]
-        public Tuple<int,int,int> DistanceMoyenneJoueur
-        {//moy,min,max
-             get
-            {
-                IEnumerable<Tuple<Club, double>> listWith1item = StatistiquesGolf.getAverageDistanceForClubsAsync(c => c.Equals(this));
-                if (listWith1item.Count() == 0)
-                    return new Tuple<int, int, int>( DistanceMoyenne, 0, 0);
-               Tuple<double, double> minMax = StatistiquesGolf.getMinMaxDistanceForClubs(this);
-
-                return new Tuple<int, int, int>((int)listWith1item.First().Item2, (int)minMax.Item1, (int)minMax.Item2);
-            }
-        }
 
         public Club()
         {

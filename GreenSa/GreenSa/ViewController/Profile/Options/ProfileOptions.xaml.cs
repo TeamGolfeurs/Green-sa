@@ -17,7 +17,7 @@ using GreenSa.Models.Profiles;
 
 using SQLite;
 using System.Collections.ObjectModel;
-
+using GreenSa.Models.Tools;
 
 namespace GreenSa.ViewController.Profile.Options
 {
@@ -94,10 +94,17 @@ namespace GreenSa.ViewController.Profile.Options
             DBconnection.Update(LocalUser);
         }
 
-        private void OnIndexCompleted(object sender, EventArgs e)
+        private async void OnIndexCompleted(object sender, EventArgs e)
         {
             LocalUser.Index = double.Parse(((Entry)sender).Text);
             DBconnection.Update(LocalUser);
+            List<Club> clubs = await GestionGolfs.getListClubsAsync(null);
+            List<Club> xmlClubs = GolfXMLReader.getListClubFromXMLFiles();
+            foreach (Club club in clubs)
+            {
+                club.DistanceMoyenne = xmlClubs.Find(c => c.Name.Equals(club.Name)).DistanceMoyenne;
+            }
+            DBconnection.UpdateAll(clubs);
         }
         /**
             * Méthode déclenchée au click sur le bouton "Back"
