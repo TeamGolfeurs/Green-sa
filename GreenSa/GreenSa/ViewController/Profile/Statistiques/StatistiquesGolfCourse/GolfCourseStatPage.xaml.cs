@@ -201,7 +201,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                  },
             };
 
-            this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize = 26, MaxValue = 100, ValueLabelOrientation = Orientation.Horizontal, LabelOrientation = Orientation.Horizontal};
+            this.chartView.Chart = new BarChart() { Entries = entries, LabelTextSize = 26, MaxValue = this.golfCourse.Holes.Count, ValueLabelOrientation = Orientation.Horizontal, LabelOrientation = Orientation.Horizontal};
 
         }
 

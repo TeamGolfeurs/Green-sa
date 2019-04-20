@@ -307,7 +307,10 @@ namespace GreenSa.Models.GolfModel
             }
             foreach (Shot shot in allShots)
             {
-                dico[shot.ShotType] += 1;
+                if (shotCategories.Contains(shot.ShotType))
+                {
+                    dico[shot.ShotType] += 1;
+                }
             }
             return dico;
         }
