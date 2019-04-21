@@ -77,8 +77,21 @@ namespace GreenSa.ViewController.Play.Game
             ListClubsPartie.WidthRequest = responsiveDesign(300);
             ListClubsPartie.Margin = new Thickness(responsiveDesign(10), responsiveDesign(167), responsiveDesign(42), responsiveDesign(135));
 
-            clubselection.IsVisible = false;
-            ListClubsPartie.IsVisible = false;
+            ListHole.BackgroundColor = Color.Transparent;
+            ListHole.HeightRequest = responsiveDesign(300);
+            ListHole.WidthRequest = responsiveDesign(100);
+            ListHole.Margin = new Thickness(responsiveDesign(225), responsiveDesign(74), responsiveDesign(10), responsiveDesign(120));
+            ListHole.RowHeight = 40;
+
+            cardBackground.HeightRequest = responsiveDesign(50);
+            cardBackground.WidthRequest = responsiveDesign(50);
+            cardBackground.CornerRadius = 100;
+            cardBackground.BackgroundColor = Color.FromRgba(0, 0, 0, 0.5);
+            score.HeightRequest = responsiveDesign(100);
+            score.WidthRequest = responsiveDesign(100);
+
+            hideCard();
+            hideClubs();
             showBall();
             backToRadar.IsVisible = false;
             backToBall.IsVisible = false;
@@ -103,6 +116,8 @@ namespace GreenSa.ViewController.Play.Game
             MessagingCenter.Subscribe<HoleFinishedPage, bool>(this, "ReallyFinit", (sender, val) => {
                 holFini = val;
             });
+            updateScore();
+            loadCard();
         }
         /**
         * Méthode qui s'execute automatiquement au chargement de la page
@@ -117,6 +132,8 @@ namespace GreenSa.ViewController.Play.Game
             holFini = false;
             if (partie.hasNextHole())
             {
+                updateScore();
+                loadCard();
                 Hole nextHole = partie.getNextHole();
                 GestionGolfs.calculAverageAsync(partie.Clubs);
                 map.setHolePosition(nextHole);
@@ -169,8 +186,6 @@ namespace GreenSa.ViewController.Play.Game
                 await Navigation.PushAsync(new GameFinishedPage(partie));
                 return;
             }
-
-
         }
 
         private int responsiveDesign(int pix)
@@ -234,6 +249,7 @@ namespace GreenSa.ViewController.Play.Game
                     MyPosition newUserPosition = await localize();
                     MyPosition start = map.getUserPosition();
                     partie.addPositionForCurrentHole(start, new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
+                    updateScore();
                     map.setUserPosition(newUserPosition, partie.Shots.Count);
                     map.setTargetMovable();
                     updateDistance();
@@ -271,12 +287,62 @@ namespace GreenSa.ViewController.Play.Game
         {
             System.Diagnostics.Debug.WriteLine(partie.CurrentClub.ToString());
             clubselection.IsVisible = true;
-            Func<Club, bool> f = (c => true);
             ListClubsPartie.ItemsSource = partie.Clubs;
             ListClubsPartie.IsVisible = true;
             ListClubsPartie.SelectedItem = partie.CurrentClub;
             System.Diagnostics.Debug.WriteLine(partie.CurrentClub.Name);
         }
+
+        private void updateScore()
+        {
+            System.Diagnostics.Debug.WriteLine("maj score");
+            int coups = 0;
+            foreach(ScoreHole sc in partie.ScoreOfThisPartie.scoreHoles)
+            {
+                coups += sc.Score;
+            }
+            if (coups > 0)
+            {
+                score.Text = "+"+(coups).ToString();
+            }
+            else
+            {
+                score.Text = (coups).ToString();
+            }
+        }
+
+        private void loadCard()
+        {
+            System.Diagnostics.Debug.WriteLine("maj card");
+            List<ScoreHole> scoreHoles = partie.ScoreOfThisPartie.scoreHoles;
+            List<DisplayScoreCard> ScoreCard = new List<DisplayScoreCard>();
+            for (int i = 0; i < scoreHoles.Count; i++)
+            {
+                DisplayScoreCard ds = new DisplayScoreCard(i+1, scoreHoles.ElementAt<ScoreHole>(i));
+                ScoreCard.Add(ds);
+
+            }
+            for(int i=scoreHoles.Count; i < partie.GolfCourse.Holes.Count; i++)
+            {
+                DisplayScoreCard ds = new DisplayScoreCard(i+1, partie.GolfCourse.Holes.ElementAt<Hole>(i).Par);
+                ScoreCard.Add(ds);
+            }
+            ListHole.ItemsSource = ScoreCard;
+        }
+
+        private void showCard()
+        {
+            cardBackground.Margin = new Thickness(0, 0, responsiveDesign(135), responsiveDesign(305));
+            score.Margin = new Thickness(0, 0, responsiveDesign(110), responsiveDesign(280));
+            ListHole.IsVisible = true;
+        }
+        private void hideCard()
+        {
+            ListHole.IsVisible = false;
+            cardBackground.Margin = new Thickness(0, 0, responsiveDesign(10), responsiveDesign(305));
+            score.Margin = new Thickness(0, 0, responsiveDesign(-15), responsiveDesign(280));
+        }
+
         private void hideClubs()
         {
             clubselection.IsVisible = false;
@@ -403,6 +469,18 @@ namespace GreenSa.ViewController.Play.Game
             else
             {
                 hideClubs();
+            }
+        }
+
+        private void OnScoreClicked(object sender, EventArgs e)
+        {
+            if (ListHole.IsVisible == false)
+            {
+                showCard();
+            }
+            else
+            {
+                hideCard();
             }
         }
 

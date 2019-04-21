@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GreenSa.Models.Tools.GPS_Maps"
              xmlns:local2="clr-namespace:GreenSa.MarkupExtension"
+             xmlns:local3="clr-namespace:GreenSa.Models.ViewElements"
              x:Class="GreenSa.ViewController.Play.Game.MainGamePage"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False">
@@ -67,6 +68,20 @@
         <ListView.ItemTemplate>
           <DataTemplate>
             <TextCell TextColor="White" Text="{Binding Name}" Tapped="OnClubClicked"/>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+      <BoxView x:Name="cardBackground" HorizontalOptions="End" VerticalOptions="End"/>
+      <Button x:Name="score" Text="+2"
+              HorizontalOptions="End" VerticalOptions="End"
+              Clicked="OnScoreClicked" BackgroundColor="Transparent"
+              FontAttributes ="Bold" FontSize ="28" TextColor="White"/>
+      
+      <ListView x:Name="ListHole">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <local3:ScoreCardCell/>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
