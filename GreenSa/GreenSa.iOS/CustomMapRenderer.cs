@@ -50,7 +50,7 @@ namespace GreenSa.iOS
                 catch (Exception e) { }
             });
 
-            MessagingCenter.Subscribe<Partie>(this, "updateTheCircle", (sender) => {
+            /*MessagingCenter.Subscribe<Partie>(this, "updateTheCircle", (sender) => {
                 try
                 {
                     updateCircle(sender.CurrentClub.DistanceMoyenneJoueur);
@@ -65,7 +65,7 @@ namespace GreenSa.iOS
 
                 }
                 catch (Exception e) { }
-            });
+            });*/
         }
         
 

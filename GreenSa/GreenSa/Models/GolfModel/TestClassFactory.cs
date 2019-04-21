@@ -64,7 +64,7 @@ namespace GreenSa.Models.GolfModel
             sp.DateFin = DateTime.Now;
             try
             {
-                //SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, shots, true);
+                SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, shots, true);
                 SQLiteNetExtensions.Extensions.WriteOperations.InsertAllWithChildren(connection, sp.scoreHoles, true);
                 SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, sp, true);
             } catch(SQLiteException sqlex)

@@ -48,6 +48,12 @@ namespace GreenSa.ViewController
             }
         }
 
+        async protected override void OnAppearing()
+        {
+            this.titre.Margin = new Thickness(0, 0, 0, 42);
+        }
+
+
         public void AddLocalUser()
         {
             DBconnection.Insert(new Profil());
