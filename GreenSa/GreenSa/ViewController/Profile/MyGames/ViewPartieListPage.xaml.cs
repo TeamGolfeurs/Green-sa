@@ -33,8 +33,31 @@ namespace GreenSa.ViewController.Profile.MyGames
 
         async protected override void OnAppearing()
         {
-            IEnumerable<ScorePartie> list = await StatistiquesGolf.getListOfScorePartie();
-            listPartie.ItemsSource = list;
+            try {
+                IEnumerable<ScorePartie> list = (await StatistiquesGolf.getScoreParties()).OrderByDescending(d => d.DateDebut).ToList();
+                List<GolfCourse> allGolfCourses = await StatistiquesGolf.getGolfCourses();
+                string id = "";
+                foreach (ScorePartie sp in list)
+                {
+                    id = sp.scoreHoles[0].IdHole;
+                    foreach (GolfCourse gc in allGolfCourses)
+                    {
+                        foreach (Hole h in gc.Holes)
+                        {
+                            if (h.Id.Equals(id))
+                            {
+                                sp.GolfName = gc.Name;
+                                break;
+                            }
+                        }
+                    }
+                }
+                listPartie.ItemsSource = list;
+            } catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Error : " + e.StackTrace);
+            }
+            
         }
 
         private async void listPartie_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -45,27 +68,13 @@ namespace GreenSa.ViewController.Profile.MyGames
             } else
             {
                 ScorePartie sp = (ScorePartie)listPartie.SelectedItem;
-                List<GolfCourse> allGolfCourses = await StatistiquesGolf.getGolfCourses();
-                string courseName = "";
-                string id = sp.scoreHoles[0].IdHole;
-                foreach (GolfCourse gc in allGolfCourses)
-                {
-                    foreach (Hole h in gc.Holes)
-                    {
-                        if (h.Id.Equals(id))
-                        {
-                            courseName = gc.Name;
-                            break;
-                        }
-                    }
-                }
                 if (this.partieStatPage == null)
                 {
-                    this.partieStatPage = new PartieStatPage(sp, courseName);
+                    this.partieStatPage = new PartieStatPage(sp, sp.GolfName);
                 }
                 else
                 {
-                    this.partieStatPage.changePartie(sp, courseName);
+                    this.partieStatPage.changePartie(sp, sp.GolfName);
                 }
                 await Navigation.PushModalAsync(this.partieStatPage);
             }

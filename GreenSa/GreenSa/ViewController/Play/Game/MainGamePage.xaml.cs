@@ -106,12 +106,12 @@ namespace GreenSa.ViewController.Play.Game
             partie.CurrentClub = partie.Clubs.First();
             LoadClubIcon(partie.CurrentClub);
             //message which come from the markerListenerDrag,
-            //when the target pin is moved =>update the display of the distance
+            //when the target pin is moved => update the display of the distance
             MessagingCenter.Subscribe<CustomPin>(this, CustomPin.UPDATEDMESSAGE, (sender) => {
-                updateDistance(true);
+                updateDistance();
             });
             MessagingCenter.Subscribe<System.Object>(this, CustomPin.UPDATEDMESSAGE_CIRCLE, (sender) => {
-                updateDistance(true);
+                updateDistance();
             });
             MessagingCenter.Subscribe<HoleFinishedPage, bool>(this, "ReallyFinit", (sender, val) => {
                 holFini = val;
@@ -216,18 +216,13 @@ namespace GreenSa.ViewController.Play.Game
             }
         }
 
-        private void updateDistance(bool circle = false)
+        private void updateDistance()
         {
             dUserTarget = map.getDistanceUserTarget();
             distTrou.Text = string.Format("{0:0.0}", map.getDistanceUserHole()) + "m";
             //distSplit.Text = string.Format("{0:0.0}", dUserTarget) + "m / " + string.Format("{0:0.0}", map.getDistanceTargetHole()) + " m";
-            if (circle)
-            {
-                Club c = GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs, dUserTarget);
-                //if (!c.Equals(ListClubPartie.SelectedItem))
-                //    ListClubPartie.SelectedItem = c;
-            }
-
+            Club c = GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs, dUserTarget);
+            setCurrentClub(c);
         }
 
         /**
@@ -348,14 +343,19 @@ namespace GreenSa.ViewController.Play.Game
             clubselection.IsVisible = false;
             ListClubsPartie.IsVisible = false;
         }
+
         private void OnClubClicked(object sender, EventArgs e)
         {
             var club = ListClubsPartie.SelectedItem as Club;
-            partie.setCurrentClub(club);
-            System.Diagnostics.Debug.WriteLine(club.ToString());
-            LoadClubIcon(club);
+            setCurrentClub(club);
             clubselection.IsVisible = false;
             ListClubsPartie.IsVisible = false;
+        }
+
+        private void setCurrentClub(Club club)
+        {
+            partie.setCurrentClub(club);
+            LoadClubIcon(club);
         }
 
         private void LoadClubIcon(Club club)
@@ -496,8 +496,7 @@ namespace GreenSa.ViewController.Play.Game
         {
             MyPosition newUserPosition = await localize();
             map.setUserPosition(newUserPosition, partie.Shots.Count);
-            //if (moyenne.IsToggled)
-            //    partie.updateUICircle();
+
         }
 
 

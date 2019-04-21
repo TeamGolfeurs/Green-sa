@@ -22,7 +22,7 @@ namespace GreenSa.Models.GolfModel
         /**
          * Get the average distance for all clubs
          * */
-        public static  IEnumerable<Tuple<Club, double>> getAverageDistanceForClubsAsync(Func<Club,bool> filtre)
+        public async static Task<IEnumerable<Tuple<Club, double>>> getAverageDistanceForClubsAsync(Func<Club,bool> filtre)
         {
             IEnumerable<Tuple<Club, double>> res=new List<Tuple<Club, double>>();
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
@@ -31,13 +31,9 @@ namespace GreenSa.Models.GolfModel
 
             try
             {
-                
-
-                List<Club> clubs = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Club>(connection);
-                System.Diagnostics.Debug.WriteLine("clubs.Count : " + clubs.Count);
+                List<Club> clubs = await GestionGolfs.getListClubsAsync(null);
                 foreach (Club c in clubs)
                 {
-                    System.Diagnostics.Debug.WriteLine("clubs : " + clubs.ToString());
                     if (!c.Equals(Club.PUTTER))
                     {
                         if (!sommesEachClubs.ContainsKey(c))
@@ -51,7 +47,7 @@ namespace GreenSa.Models.GolfModel
                 }
 
                 IEnumerable<Shot> shots = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection);
-                shots = shots.Where(s => filtre(s.Club) && !s.Club.Equals(Club.PUTTER));
+                shots = shots.Where(s => filtre(s.Club) && !s.Club.Equals(Club.PUTTER) && !s.ShotType.Equals(Shot.ShotCategory.ChipShot) && !s.ShotType.Equals(Shot.ShotCategory.FailedShot));
                 foreach (Shot s in shots)
                 {
                     if (!sommesEachClubs.ContainsKey(s.Club))
@@ -164,6 +160,7 @@ namespace GreenSa.Models.GolfModel
             List<GolfCourse> golfCourses = await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<GolfCourse>(connection);
             return golfCourses;
         }
+
 
 
         public static List<ScorePartie> getScoreParties(List<ScorePartie> allScoreParties, GolfCourse golfCourse)
@@ -310,7 +307,10 @@ namespace GreenSa.Models.GolfModel
             }
             foreach (Shot shot in allShots)
             {
-                dico[shot.ShotType] += 1;
+                if (shotCategories.Contains(shot.ShotType))
+                {
+                    dico[shot.ShotType] += 1;
+                }
             }
             return dico;
         }
@@ -391,20 +391,6 @@ namespace GreenSa.Models.GolfModel
             await connection.CreateTableAsync<ScorePartie>();
 
             await SQLiteNetExtensionsAsync.Extensions.WriteOperations.InsertWithChildrenAsync(connection, scoreOfThisPartie,false);
-        }
-
-
-        //SCorePartie
-        //
-        public async static Task<IEnumerable<ScorePartie>> getListOfScorePartie()
-        {
-            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
-            await connection.CreateTableAsync<ScoreHole>();
-            await connection.CreateTableAsync<ScorePartie>();
-
-            List<ScorePartie> all = (await SQLiteNetExtensionsAsync.Extensions.ReadOperations.GetAllWithChildrenAsync<ScorePartie>(connection, recursive: true));
-
-            return all.OrderByDescending(sp =>sp.DateDebut);
         }
 
         public static double getPlayerIndex()

@@ -60,8 +60,8 @@ namespace GreenSa.Models.GolfModel
 
 
         /**
-         * Donne une liste de golf en fonction d'un filtre
-         * le fitre peut être null, dans ce cas tous les golfs seront récupérés.
+         * Donne une liste de club en fonction d'un filtre
+         * le fitre peut être null, dans ce cas tous les club seront récupérés.
          * */
         //NOT IMPLEMENTED YET
         public static async Task<List<Club>> getListClubsAsync(Func<Club, bool> filtre)
@@ -96,9 +96,9 @@ namespace GreenSa.Models.GolfModel
             }
             return clubs;
         }
-        public static  void calculAverageAsync(IEnumerable<Club> clubs)
+        public async static void calculAverageAsync(IEnumerable<Club> clubs)
         {
-             listAverage = StatistiquesGolf.getAverageDistanceForClubsAsync(c => clubs.Contains(c));
+             listAverage = await StatistiquesGolf.getAverageDistanceForClubsAsync(c => clubs.Contains(c));
         }
 
         public static Club giveMeTheBestClubForThatDistance(List<Club> clubs, double dUserTarget)

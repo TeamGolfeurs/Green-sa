@@ -17,7 +17,7 @@ using GreenSa.Models.Profiles;
 
 using SQLite;
 using System.Collections.ObjectModel;
-
+using GreenSa.Models.Tools;
 
 namespace GreenSa.ViewController.Profile.Options
 {
@@ -30,18 +30,18 @@ namespace GreenSa.ViewController.Profile.Options
         public ProfileOptions()
         {
             InitializeComponent();
-            photo.Margin = responsiveDesign(30);
-            photo.HeightRequest = responsiveDesign(150);
+            photo.Margin = new Thickness(0, responsiveDesign(30), 0, responsiveDesign(5));
+            photo.HeightRequest = responsiveDesign(140);
             arrow.Margin = responsiveDesign(10);
             arrow.HeightRequest = responsiveDesign(25);
             modifier.Margin = responsiveDesign(15);
             modifier.HeightRequest = responsiveDesign(30);
-            golfreftitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
-            indextitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
-            usernametitle.FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label));
-            golfref.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
-            index.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
-            username.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            golfreftitle.FontSize = 25;
+            indextitle.FontSize = 25;
+            usernametitle.FontSize = 25;
+            golfref.FontSize = 20;
+            index.FontSize = 20;
+            username.FontSize = 20;
 
             //Initialisation de la BDD
             LocalUser = GetProfile("localUser");
@@ -94,10 +94,17 @@ namespace GreenSa.ViewController.Profile.Options
             DBconnection.Update(LocalUser);
         }
 
-        private void OnIndexCompleted(object sender, EventArgs e)
+        private async void OnIndexCompleted(object sender, EventArgs e)
         {
             LocalUser.Index = double.Parse(((Entry)sender).Text);
             DBconnection.Update(LocalUser);
+            List<Club> clubs = await GestionGolfs.getListClubsAsync(null);
+            List<Club> xmlClubs = GolfXMLReader.getListClubFromXMLFiles();
+            foreach (Club club in clubs)
+            {
+                club.DistanceMoyenne = xmlClubs.Find(c => c.Name.Equals(club.Name)).DistanceMoyenne;
+            }
+            DBconnection.UpdateAll(clubs);
         }
         /**
             * Méthode déclenchée au click sur le bouton "Back"

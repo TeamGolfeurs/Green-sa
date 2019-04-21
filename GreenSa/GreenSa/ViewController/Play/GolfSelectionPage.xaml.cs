@@ -39,7 +39,6 @@ namespace GreenSa.ViewController.Play
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            titre.FontSize = 30;
             //Définition du filtre
             Func<GolfCourse, bool> f = (c => true);
             //Recupere la liste des Golfs filtré par la classe GestionGolf

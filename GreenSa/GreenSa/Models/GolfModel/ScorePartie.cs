@@ -29,6 +29,9 @@ namespace GreenSa.Models.GolfModel
             }
         }
 
+        [Ignore]
+        public string GolfName { get; set; }
+
         public Tuple<int, int> GetScore()
         {
             int score = 0;
