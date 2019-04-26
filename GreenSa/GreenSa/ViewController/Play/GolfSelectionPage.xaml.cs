@@ -76,7 +76,7 @@ namespace GreenSa.ViewController.Play
                 } else
                 {
                     p.Clubs = clubselected;
-                    await Navigation.PushAsync(new ViewController.Play.Game.MainGamePage(p), false);
+                    await Navigation.PushAsync(new Game.MainGamePage(p), false);
                 } 
             }
          }

@@ -34,7 +34,10 @@ namespace GreenSa.Models.GolfModel
         }
 
 
-           
+        public Boolean IsPutter()
+        {
+            return this.Equals(Club.PUTTER);
+        }
 
         public override string ToString()
         {

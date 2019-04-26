@@ -35,12 +35,16 @@
                                 ItemDisplayBinding="{Binding Name, Path=Item1.Club}"
                                 HorizontalOptions="CenterAndExpand" 
                                 ItemsSource="{Binding Item2}"
-                                SelectedItem="{Binding Item1.Club}"
-                                Grid.Column="0"/>
+                                SelectedItem="{Binding Item1.Club}" />
 
-                                    <Label Text="{Binding Item1.ShotType}"
-                                       Grid.Column="1"
-                                       HorizontalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding Item1.ShotType}" HorizontalOptions="CenterAndExpand"/>
+
+                                    <Image Source="croix_suppression.png" HorizontalOptions="CenterAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding Item1.Date}" Tapped="OnShotDeletedClicked"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+
 
                                 </StackLayout>
                             </ViewCell>
@@ -66,14 +70,24 @@
             </StackLayout>-->
             <Button Text="Ajouter un coup de putter" Clicked="AddShotButtonClicked" />
 
-            <StackLayout Orientation="Horizontal">
+            <!--<StackLayout Orientation="Horizontal">
                 <Label Text="Sauvegarder les stats" />
                 <Switch x:Name="save"  IsToggled="true"/>
-            </StackLayout>
+            </StackLayout>-->
 
             <Label Text="Score du trou" BackgroundColor="Pink" HorizontalOptions="End"></Label>
             <Label x:Name="score" Text="" HorizontalOptions="End" Margin="5"></Label>
-            <Button Text="Passer au trou suivant" x:Name="validNext"  Clicked="validButtonClicked"/>
+            <Grid Margin="0, 10, 0, 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Row="0" Grid.Column="0" Text="Passer au trou suivant" x:Name="validNext"  Clicked="validButtonClicked"/>
+                <Button Grid.Row="0" Grid.Column="1" Text="Terminer la partie ici" x:Name="stopPartie"  Clicked="stopPartieClicked"/>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

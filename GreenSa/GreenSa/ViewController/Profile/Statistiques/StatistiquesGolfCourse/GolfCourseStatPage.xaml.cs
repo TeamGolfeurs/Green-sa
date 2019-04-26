@@ -166,37 +166,37 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                 new Entry(eagle)
                  {
                      Label = "Eagle",
-                    ValueLabel =float.IsNaN(eagle)?"N/A": (eagle.ToString("n2")+"%"),
+                    ValueLabel =float.IsNaN(eagle)?"N/A": (eagle.ToString("n2")),
                     Color = SKColor.Parse("#0BF5A3")
                  },
                 new Entry(birdie)
                  {
                      Label = "Birdie",
-                    ValueLabel = float.IsNaN(birdie)?"N/A":(birdie.ToString("n2")+"%"),
+                    ValueLabel = float.IsNaN(birdie)?"N/A":(birdie.ToString("n2")),
                     Color = SKColor.Parse("#0BF54E")
                  },
                 new Entry(par)
                  {
                      Label = "Par",
-                    ValueLabel = float.IsNaN(par)?"N/A":(par.ToString("n2")+"%"),
+                    ValueLabel = float.IsNaN(par)?"N/A":(par.ToString("n2")),
                     Color = SKColor.Parse("#44F50B")
                  },
                 new Entry(bogey)
                  {
                      Label = "Bogey",
-                    ValueLabel = float.IsNaN(bogey)?"N/A":(bogey.ToString("n2")+"%"),
+                    ValueLabel = float.IsNaN(bogey)?"N/A":(bogey.ToString("n2")),
                     Color = SKColor.Parse("#C0F50B")
                  },
                 new Entry(dbogey)
                  {
                      Label = "Dbl-Bogey",
-                    ValueLabel = float.IsNaN(dbogey)?"N/A":(dbogey.ToString("n2")+"%"),
+                    ValueLabel = float.IsNaN(dbogey)?"N/A":(dbogey.ToString("n2")),
                     Color = SKColor.Parse("#F5A00B")
                  },
                 new Entry(more)
                  {
                      Label = "More",
-                    ValueLabel = float.IsNaN(more)?"N/A":(more.ToString("n2")+"%"),
+                    ValueLabel = float.IsNaN(more)?"N/A":(more.ToString("n2")),
                     Color = SKColor.Parse("#F5340B")
                  },
             };

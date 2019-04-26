@@ -27,12 +27,15 @@ namespace GreenSa.ViewController.Play.Game
 
         private int state; //0 pour prêt à taper et 1 pour prêt à localiser
         private Partie partie;
-        private bool holFini;
+        private int holFini;
         private double dUserTarget;
+        private double dUserTargetTemp;//used to chose a club when the target moved more than 10 meters
+        private HoleFinishedPage p;
 
         public MainGamePage(Partie partie)
         {
             InitializeComponent();
+            this.p = new HoleFinishedPage(partie);
 
             forceVent.Margin = new Thickness(35, 10, 0, 0);
             windImg.Margin = new Thickness(35, 5, 0, 0);
@@ -90,13 +93,16 @@ namespace GreenSa.ViewController.Play.Game
             score.HeightRequest = responsiveDesign(100);
             score.WidthRequest = responsiveDesign(100);
 
+            GestionGolfs.calculAverageAsync(partie.Clubs);
+
+            dUserTargetTemp = -1;
             hideCard();
             hideClubs();
             showBall();
             backToRadar.IsVisible = false;
             backToBall.IsVisible = false;
 
-            holFini = true;
+            holFini = 1;
             this.partie = partie;
             map.MoveToRegion(
             MapSpan.FromCenterAndRadius(
@@ -113,7 +119,7 @@ namespace GreenSa.ViewController.Play.Game
             MessagingCenter.Subscribe<System.Object>(this, CustomPin.UPDATEDMESSAGE_CIRCLE, (sender) => {
                 updateDistance();
             });
-            MessagingCenter.Subscribe<HoleFinishedPage, bool>(this, "ReallyFinit", (sender, val) => {
+            MessagingCenter.Subscribe<HoleFinishedPage, int>(this, "ReallyFinit", (sender, val) => {
                 holFini = val;
             });
             updateScore();
@@ -126,16 +132,14 @@ namespace GreenSa.ViewController.Play.Game
         async protected override void OnAppearing()
         {
             base.OnAppearing();
-            if (!holFini)
+            if (holFini == 0)
                 return;
 
-            holFini = false;
-            if (partie.hasNextHole())
+            if (partie.hasNextHole() && holFini != 2)//holFini == 2 means the user wants to stop the game before the end
             {
                 updateScore();
                 loadCard();
                 Hole nextHole = partie.getNextHole();
-                GestionGolfs.calculAverageAsync(partie.Clubs);
                 map.setHolePosition(nextHole);
                 numcoup.Text = partie.getIndexHole().Item1.ToString();
                 MyPosition position = new MyPosition(0, 0);
@@ -157,7 +161,7 @@ namespace GreenSa.ViewController.Play.Game
                     }
                 } while (!success);
 
-                updateDistance();
+                updateDistance(true);
 
                 try
                 {
@@ -186,6 +190,7 @@ namespace GreenSa.ViewController.Play.Game
                 await Navigation.PushAsync(new GameFinishedPage(partie));
                 return;
             }
+            holFini = 0;
         }
 
         private int responsiveDesign(int pix)
@@ -216,13 +221,23 @@ namespace GreenSa.ViewController.Play.Game
             }
         }
 
-        private void updateDistance()
+        private void updateDistance(bool OnAppearing = false)
         {
             dUserTarget = map.getDistanceUserTarget();
             distTrou.Text = string.Format("{0:0.0}", map.getDistanceUserHole()) + "m";
             //distSplit.Text = string.Format("{0:0.0}", dUserTarget) + "m / " + string.Format("{0:0.0}", map.getDistanceTargetHole()) + " m";
-            Club c = GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs, dUserTarget);
-            setCurrentClub(c);
+            if (dUserTargetTemp == -1)
+            {
+                dUserTargetTemp = dUserTarget;
+            }
+
+            if (Math.Abs(dUserTarget - dUserTargetTemp) > 10 || OnAppearing)//if the target has moved more than 10 meters or the page was just refreshed
+            {
+                dUserTargetTemp = dUserTarget;
+                Club c = GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs, dUserTarget);
+                Debug.WriteLine("Club chosen : " + c.Name);
+                setCurrentClub(c);
+            }
         }
 
         /**
@@ -488,15 +503,14 @@ namespace GreenSa.ViewController.Play.Game
          * **/
         private async void onHoleFinishedButtonClicked(object sender, EventArgs e)
         {
-            HoleFinishedPage p = new HoleFinishedPage(partie);
-            await Navigation.PushModalAsync(p);
+            await Navigation.PushModalAsync(this.p);
         }
 
         private async void onRelocalizeAction(object sender, EventArgs e)
         {
             MyPosition newUserPosition = await localize();
             map.setUserPosition(newUserPosition, partie.Shots.Count);
-
+            updateDistance();
         }
 
 

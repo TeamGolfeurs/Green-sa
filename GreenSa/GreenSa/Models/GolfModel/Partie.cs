@@ -54,9 +54,9 @@ namespace GreenSa.Models.GolfModel
         {
             Shots = new List<Shot>();
             CurrentClub = GolfXMLReader.getClubFromName("Fer3");
-            System.Diagnostics.Debug.WriteLine(CurrentClub.ToString());
             ScoreOfThisPartie = new ScorePartie();
         }
+
         /// <summary>
         /// Retourne le (current) trou si il existe sinon retourne null.
         /// </summary>

@@ -49,7 +49,8 @@ namespace GreenSa.ViewController.MesGolfs
             try
             {
                 await Navigation.PushAsync(new ImportGolfCourse());
-            } catch (TargetInvocationException exception)
+            }
+            catch (TargetInvocationException exception)
             {
                 Debug.WriteLine(exception.StackTrace);
             }
@@ -63,7 +64,7 @@ namespace GreenSa.ViewController.MesGolfs
             var image = sender as Image;
             var tgr = image.GestureRecognizers[0] as TapGestureRecognizer;
             var name = tgr.CommandParameter.ToString();
-            var confirmDelete = await this.DisplayAlert("Suppression d'un golf", "Voulez vous vraiment supprimer le golf : "+ name + " ?", "Oui", "Non");
+            var confirmDelete = await this.DisplayAlert("Suppression d'un golf", "Voulez vous vraiment supprimer le golf : " + name + " ?", "Oui", "Non");
             if (confirmDelete)
             {
                 //remove golf course cell from ListView
@@ -78,7 +79,8 @@ namespace GreenSa.ViewController.MesGolfs
                     connection.BeginTransaction();
                     connection.Delete<GolfCourse>(name);
                     connection.Commit();
-                } catch (Exception bddException)
+                }
+                catch (Exception bddException)
                 {
                     await this.DisplayAlert("Erreur avec la base de donnée", bddException.StackTrace, "Ok");
                     connection.Rollback();

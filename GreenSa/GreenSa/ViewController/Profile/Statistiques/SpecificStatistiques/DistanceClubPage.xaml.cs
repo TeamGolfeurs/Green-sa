@@ -44,7 +44,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
         private async void getScoresAsync(Func<Club, bool> f)
         {
 
-            IEnumerable<Tuple<Club, double>> res = await StatistiquesGolf.getAverageDistanceForClubsAsync(f);
+            IEnumerable<Tuple<Club, double>> res = await StatistiquesGolf.getAverageDistanceForClubsAsync(f, null);
 
             List<Entry> entries = new List<Entry>();
 

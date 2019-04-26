@@ -1,8 +1,10 @@
 ﻿using GreenSa.Models.GolfModel;
 using GreenSa.Models.Tools;
+using GreenSa.Models.ViewElements;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +19,12 @@ namespace GreenSa.ViewController.Play.Game
     {
         private Partie partie;
         ObservableCollection<Tuple<Shot, IEnumerable<Club>>> item;
+        private int holeFinishedCount;
         public HoleFinishedPage(Partie partie)
         {
             InitializeComponent();
             this.partie = partie;
-
+            this.holeFinishedCount = 0;
         }
 
         protected override void OnAppearing()
@@ -42,15 +45,55 @@ namespace GreenSa.ViewController.Play.Game
             var confirm = await this.DisplayAlert("Trou sivant", "Passer au trou suivant ?", "Oui", "Non");
             if (confirm)
             {
-                MessagingCenter.Send<HoleFinishedPage, bool>(this, "ReallyFinit", true);
+                MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit", 1);
                 validNext.IsEnabled = false;
                 validNext.Text = "En cours";
-                partie.holeFinished(save.IsToggled);
+                partie.holeFinished(true);
+                this.holeFinishedCount++;
                 await Navigation.PopModalAsync();
                 validNext.IsEnabled = true;
-                validNext.Text = "Valid";
+                validNext.Text = "Passer au trou suivant";
             }
         }
+
+        private async void stopPartieClicked(object sender, EventArgs e)
+        {
+            if (this.holeFinishedCount == 0)
+            {
+                await this.DisplayAlert("Erreur", "Vous devez au moins avoir fait 1 trou pour enregistrer une partie", "Ok");
+            } else
+            {
+                var confirm = await this.DisplayAlert("Arrêter la partie", "Voulez vous vraiment arrêter la partie maintenant ? (ce trou ne sera pas compté dans les statistiques)", "Oui", "Non");
+                if (confirm)
+                {
+                    MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit", 2);
+                    await Navigation.PopModalAsync();
+                }
+            }
+            
+        }
+
+
+        private async void OnShotDeletedClicked(object sender, EventArgs e)
+        {
+            var image = sender as Image;
+            var tgr = image.GestureRecognizers[0] as TapGestureRecognizer;
+            var id = (DateTime) tgr.CommandParameter;
+            Shot shot = partie.Shots.Find(s => s.Date.Equals(id));
+            var confirm = true;
+            if(!shot.Club.IsPutter())
+            {
+                confirm = await this.DisplayAlert("Suppression", "Voulez vous vraiment supprimer ce coup ?", "Oui", "Non");
+            }
+            if (confirm)
+            {
+                item.Remove(item.ToList().Find(tuple => tuple.Item1.Equals(shot)));
+
+                partie.Shots.Remove(shot);
+                score.Text = (partie.Shots.Count - partie.getNextHole().Par) + "";
+            }
+        }
+
 
         private void AddShotButtonClicked(object sender, EventArgs e)
         {
@@ -60,14 +103,15 @@ namespace GreenSa.ViewController.Play.Game
             l.Add(Club.PUTTER);
             item.Add(new Tuple<Shot, IEnumerable<Club>>(s, l));
             score.Text = (partie.Shots.Count - partie.getNextHole().Par) + "";
-
         }
 
         protected override bool OnBackButtonPressed()
         {
-            MessagingCenter.Send<HoleFinishedPage, bool>(this, "ReallyFinit",false);
+            MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit",  0);
             return base.OnBackButtonPressed();
         }
+
+        
 
     }
 }

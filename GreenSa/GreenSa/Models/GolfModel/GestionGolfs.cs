@@ -96,70 +96,64 @@ namespace GreenSa.Models.GolfModel
             }
             return clubs;
         }
-        public async static void calculAverageAsync(IEnumerable<Club> clubs)
+        public async static void calculAverageAsync(List<Club> clubs)
         {
-             listAverage = await StatistiquesGolf.getAverageDistanceForClubsAsync(c => clubs.Contains(c));
+            listAverage = await StatistiquesGolf.getAverageDistanceForClubsAsync(c => clubs.Contains(c), clubs);
         }
 
         public static Club giveMeTheBestClubForThatDistance(List<Club> clubs, double dUserTarget)
         {
             /* 
              * VERSION PLUS FACILE MAIS TROP LENTE
-             * Club minDiffClub = clubs.First();
-              int minDiff = (int) Math.Abs(dUserTarget- minDiffClub.DistanceMoyenneJoueur.Item1);
-              foreach (Club c in clubs)
-              {
-                  double dist = Math.Abs(dUserTarget - minDiffClub.DistanceMoyenneJoueur.Item1); 
-                  if (dist <minDiff)
-                  {
-                      minDiff = (int)dist;
-                      minDiffClub = c;
-                  }
-              }
-              return minDiffClub;*/
-            Club minDiffClub = null;
-            double minDiff = -1;
-            foreach(Tuple<Club,double> tuple in listAverage)
+            Club minDiffClub = clubs.First();
+            double minDiff = Math.Abs(dUserTarget - listAverage.ToList().Find(c => c.Item1.Name == minDiffClub.Name).Item2);
+            double dist = -1;
+            foreach (Club c in clubs)
             {
-                if(minDiffClub==null)
+                if (!c.Equals(Club.PUTTER))
                 {
-                    minDiffClub = tuple.Item1;
-                    minDiff = Math.Abs(dUserTarget - tuple.Item2);
+                    dist = Math.Abs(dUserTarget - listAverage.ToList().Find(c1 => c1.Item1.Name.Equals(c.Name)).Item2);
+                    Debug.WriteLine(c.Name + " - dist : " + dist + " - minDiff : " + minDiff);
+                    if (dist < minDiff)
+                    {
+                        minDiff = dist;
+                        minDiffClub = c;
+                    }
                 }
-                else
+            }
+              return minDiffClub;
+            */
+           Club minDiffClub = null;
+            double minDiff = -1;
+            if (dUserTarget < 10)
+            {
+                minDiffClub = Club.PUTTER;
+            } else
+            {
+                foreach (Tuple<Club, double> tuple in listAverage)
                 {
                     Club c = tuple.Item1;
-                    double distanceC = tuple.Item2;
-                    double distDiff = Math.Abs(dUserTarget - distanceC);
-                    if (distDiff<minDiff)
+                    if (!c.Equals(Club.PUTTER))
                     {
-                        minDiffClub = c;
-                        minDiff = distDiff;
+                        if (minDiffClub == null)
+                        {
+                            minDiffClub = c;
+                            minDiff = Math.Abs(dUserTarget - tuple.Item2);
+                        }
+                        else
+                        {
+                            double distanceC = tuple.Item2;
+                            double distDiff = Math.Abs(dUserTarget - distanceC);
+                            if (distDiff < minDiff)
+                            {
+                                minDiffClub = c;
+                                minDiff = distDiff;
+                            }
+                        }
                     }
                 }
             }
-
-            IEnumerable<Club> listeClubFait = listAverage.Select<Tuple<Club, double>, Club>((tuple) => tuple.Item1);
-            IEnumerable<Club> clubsNotFait = clubs.Where((club) => !listeClubFait.Contains(club));
-
-            foreach(Club clubNotFait in clubsNotFait)
-            {
-                if (minDiffClub == null)
-                {
-                    minDiffClub = clubNotFait;
-                    minDiff = Math.Abs(dUserTarget - clubNotFait.DistanceMoyenne);
-                }
-                else
-                {
-                    double distDiff = Math.Abs(dUserTarget - clubNotFait.DistanceMoyenne);
-                    if (distDiff < minDiff)
-                    {
-                        minDiffClub = clubNotFait;
-                        minDiff = distDiff;
-                    }
-                }
-            }
-
+            
             return minDiffClub;
 
         }
