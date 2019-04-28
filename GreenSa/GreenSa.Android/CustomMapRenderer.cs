@@ -21,45 +21,34 @@ using GreenSa.Droid;
 using System.Collections.ObjectModel;
 using GreenSa.Models.GolfModel;
 using GreenSa.ViewController.Play.Game;
+using Geodesy;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace Greensa.Droid
 {
     public class CustomMapRenderer : MapRenderer
     {
-        //public CustomMapRenderer() : base() { }
+
+        GoogleMap map;
+        private Polyline targetLine;//the current polyline
+        private List<Polyline> coneLines;
+        private Circle circle;
+        private Circle circleMin;
+        private Circle circleMax;
+
 
         public CustomMapRenderer(Context context) : base(context){
+            coneLines = new List<Polyline>();
             MessagingCenter.Subscribe<CustomMap>(this, "updateTheMap", (sender) => {
                 try
                 {
                     UpdatePolyLinePos(false);
-                }catch(Exception e) { }
-            });
-
-            /*MessagingCenter.Subscribe<Partie>(this, "updateTheCircle", (sender) => {
-                try
-                {
-                    updateCircle(sender.CurrentClub.DistanceMoyenneJoueur);
+                    UpdateShotCone(Math.PI / 4);
                 }
-                catch (Exception e) { }
+                catch(Exception e) { }
             });
-
-            MessagingCenter.Subscribe<MainGamePage,bool>(this, "updateTheCircleVisbility", (sender,visible) => {
-                try
-                {
-                    setCircleVisible(visible);
-                    
-                }
-                catch (Exception e) { }
-            });*/
         }
         
-        GoogleMap map;
-        private Polyline polyline;//the current polyline
-        private Circle circle;
-        private Circle circleMin;
-        private Circle circleMax;
 
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
@@ -79,12 +68,6 @@ namespace Greensa.Droid
             base.OnElementPropertyChanged(sender, e);
             if (this.Element == null || this.Control == null)
                 return;
-
-            /* if (e.PropertyName == CustomMap.RouteCoordinatesProperty.PropertyName)
-             {
-                 Console.WriteLine("DEBUG---------- - Changed ! ");
-                // UpdatePolyLine();
-             }*/
         }
 
 
@@ -95,7 +78,6 @@ namespace Greensa.Droid
             map.SetOnMarkerDragListener(new markerListenerDrag(this));
             map.UiSettings.ZoomControlsEnabled = false;
             map.UiSettings.MyLocationButtonEnabled = false;
-            //UpdatePolyLinePos(true);
         }
 
 
@@ -133,14 +115,62 @@ namespace Greensa.Droid
 
             return marker;
         }
+
+        public void UpdateShotCone(double angle)
+        {
+            if (coneLines.Count != 0)
+            {
+                foreach (Polyline line in coneLines)
+                {
+                    line.Remove();
+                }
+            }
+
+            CustomMap customMap = (CustomMap)this.Element;
+            GeodeticCalculator geoCalculator = new GeodeticCalculator();
+            double distTarget = 0.0;
+            LatLng userPos = new LatLng(customMap.UserPin.Position.Latitude, customMap.UserPin.Position.Longitude);
+
+            if (customMap != null)
+            {
+                distTarget = customMap.getDistanceUserTarget();
+                addConePolyline(angle, geoCalculator, customMap, userPos, distTarget);
+                addConePolyline(-angle, geoCalculator, customMap, userPos, distTarget);
+            }
+        }
+
+        private void addConePolyline(double angle, GeodeticCalculator geoCalculator, CustomMap customMap, LatLng userPos, double distTarget)
+        {
+            var polylineOptions = new PolylineOptions();
+            polylineOptions.Clickable(true);
+            polylineOptions.InvokeJointType(JointType.Round);
+            polylineOptions.InvokeWidth(10f);
+            polylineOptions.InvokeColor(0x664444FF);
+
+            polylineOptions.Add(userPos);
+            LatLng conePoint = movePoint(angle, customMap.UserPin.Position, customMap.TargetPin.Position);
+            Console.WriteLine("conePoint dist = " + CustomMap.DistanceTo(customMap.UserPin.Position.Latitude, customMap.UserPin.Position.Longitude, conePoint.Latitude, conePoint.Longitude, "M"));
+            polylineOptions.Add(conePoint);
+            coneLines.Add(map.AddPolyline(polylineOptions));
+        }
+
+        private LatLng movePoint(double angle, Position rotationCenter, Position p)
+        {
+            double xU = p.Latitude - rotationCenter.Latitude;
+            double yU = p.Longitude - rotationCenter.Longitude;
+            double xV = Math.Cos(angle) * xU - Math.Sin(angle) * yU;
+            double yV = Math.Sin(angle) * xU + Math.Cos(angle) * yU;
+            LatLng res = new LatLng(rotationCenter.Latitude + xV, rotationCenter.Longitude + yV);
+            return res;    
+        }
+
         public void UpdatePolyLinePos(bool init,LatLng pos=null)
         {
-            if (polyline != null)
+            if (targetLine != null)
             {
-                polyline.Remove();
-                polyline.Dispose();           
+                targetLine.Remove();
+                targetLine.Dispose();           
             }
-            //Console.WriteLine("Mise à jour de la POLYLIGNE !!!! (gg)");
             var polylineOptions = new PolylineOptions();
             polylineOptions.Clickable(true);
             polylineOptions.InvokeJointType(JointType.Round);//don't see the difference
@@ -160,7 +190,7 @@ namespace Greensa.Droid
 
                     i++;
                 }
-                polyline = map.AddPolyline(polylineOptions);
+                targetLine = map.AddPolyline(polylineOptions);
             }
         }
 

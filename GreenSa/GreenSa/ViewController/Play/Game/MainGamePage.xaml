@@ -37,14 +37,14 @@
       <ImageButton x:Name="ball" Source="ball.png"
                    HorizontalOptions="Center" VerticalOptions="End"
                    Clicked="onMainButtonClicked" BackgroundColor="Transparent"/>
-      <ImageButton x:Name="radar" Source="radarWait.png"
+      <ImageButton x:Name="radar" Source="radar.png"
                    HorizontalOptions="Center" VerticalOptions="End"
                    Clicked="onMainButtonClicked" BackgroundColor="Transparent"/>
-      <Image x:Name="load" Source="radar.gif"
+      <Image x:Name="load" Source="radarWait.png"
                    HorizontalOptions="Center" VerticalOptions="End"
                    BackgroundColor="Transparent"/>
 
-      <ImageButton x:Name="backToRadar" Source="radarWait.png"
+      <ImageButton x:Name="backToRadar" Source="radar.png"
                    HorizontalOptions="Start" VerticalOptions="End"
                    Clicked="onRelocalizeAction" BackgroundColor="Transparent"/>
 
