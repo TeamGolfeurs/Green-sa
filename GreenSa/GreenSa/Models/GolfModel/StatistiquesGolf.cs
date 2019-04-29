@@ -91,6 +91,12 @@ namespace GreenSa.Models.GolfModel
             return avPars;
         }
 
+        public static async Task<List<ScorePartie>> getNotFinishedGames(GolfCourse golfCourse)
+        {
+            List<ScorePartie> allNeededScoreParties = (await StatistiquesGolf.getScoreParties()).Where(sp => sp.scoreHoles[0].Hole.IdGolfC.Equals(golfCourse.Name) && sp.scoreHoles.Count != 9 && sp.scoreHoles.Count != 18).ToList();
+            return allNeededScoreParties;
+        }
+
         public static double getAveragePutts(List<ScoreHole> scoresHoles)
         {
             double avPutts = -1.0;
@@ -179,7 +185,10 @@ namespace GreenSa.Models.GolfModel
         }
 
 
-
+        public static List<Shot> getShotsFromPartie(ScorePartie scorePartie, List<Shot> allShots)
+        {
+            return allShots.Where(sh => sh.Date >= scorePartie.DateDebut && sh.Date <= scorePartie.DateFin && !sh.isPutt()).ToList();
+        }
 
         /** Gets a tuple containing the name of the club with which the player did the higher distance and this distance
          */
@@ -393,7 +402,7 @@ namespace GreenSa.Models.GolfModel
             await connection.CreateTableAsync<ScoreHole>();
             await connection.CreateTableAsync<ScorePartie>();
 
-            await SQLiteNetExtensionsAsync.Extensions.WriteOperations.InsertWithChildrenAsync(connection, scoreOfThisPartie,false);
+            await SQLiteNetExtensionsAsync.Extensions.WriteOperations.InsertOrReplaceWithChildrenAsync(connection, scoreOfThisPartie,false);
         }
 
         public static double getPlayerIndex()

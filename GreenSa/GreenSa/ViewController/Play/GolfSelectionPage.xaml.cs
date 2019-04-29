@@ -1,6 +1,7 @@
 ﻿using GreenSa.Models;
 using GreenSa.Models.GolfModel;
 using GreenSa.Models.Tools;
+using GreenSa.ViewController.Profile.MyGames;
 using GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse;
 using System;
 using System.Collections.Generic;
@@ -76,7 +77,22 @@ namespace GreenSa.ViewController.Play
                 } else
                 {
                     p.Clubs = clubselected;
-                    await Navigation.PushAsync(new Game.MainGamePage(p), false);
+                    List<ScorePartie> scoreParties = await StatistiquesGolf.getNotFinishedGames(g);
+                    if (scoreParties.Count > 0)
+                    {
+                        var newGame = await this.DisplayAlert("Lancement d'une partie", "Voulez vous lancer une nouvelle partie ou charger une existante ?", "Nouvelle partie", "Charger une existante");
+                        if (newGame)
+                        {
+                            await Navigation.PushAsync(new Game.MainGamePage(p), false);
+                        }
+                        else
+                        {
+                            await Navigation.PushAsync(new ViewPartieListPage(2, scoreParties, p), false);
+                        }
+                    } else
+                    {
+                        await Navigation.PushAsync(new Game.MainGamePage(p), false);
+                    }
                 } 
             }
          }

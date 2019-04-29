@@ -36,7 +36,7 @@ namespace GreenSa.ViewController.Profile.Statistiques
             this.golfSelectionPage.Title = "Par parcours";
             this.Children.Add(this.golfSelectionPage);
 
-            this.partieSelectionPage = new ViewPartieListPage(true);
+            this.partieSelectionPage = new ViewPartieListPage(1);
             this.partieSelectionPage.Title = "Par partie";
             this.Children.Add(this.partieSelectionPage);
         }

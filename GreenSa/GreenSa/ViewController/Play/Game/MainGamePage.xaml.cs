@@ -62,8 +62,11 @@ namespace GreenSa.ViewController.Play.Game
             numcoup.Margin = responsiveDesign(-5);
             parTrou.FontSize = responsiveDesign(15);
             parTrou.Margin = responsiveDesign(38);
-            distTrou.FontSize = responsiveDesign(17);
-            distTrou.Margin = new Thickness(0, responsiveDesign(10), responsiveDesign(21), 0);
+            distTrou.FontSize = responsiveDesign(13);
+            distTrou.Margin = new Thickness(responsiveDesign(7), 0, 0, 0);
+            distTarget.FontSize = responsiveDesign(10);
+            distTarget.Margin = new Thickness(0, responsiveDesign(-4), 0, 0);
+            distGrid.Margin = new Thickness(0, responsiveDesign(3), responsiveDesign(15), 0);
             forceVent.FontSize = responsiveDesign(12);
             forceVent.Margin = new Thickness(responsiveDesign(28), responsiveDesign(23), 0, 0);
             windImg.Margin = new Thickness(responsiveDesign(42), responsiveDesign(8), 0, 0);
@@ -225,6 +228,9 @@ namespace GreenSa.ViewController.Play.Game
         {
             dUserTarget = map.getDistanceUserTarget();
             distTrou.Text = string.Format("{0:0.0}", map.getDistanceUserHole()) + "m";
+            var distUsertarget = map.getDistanceUserTarget();
+            var distTargetHole = map.getDistanceTargetHole();
+            distTarget.Text = string.Format("{0:0.0}", distUsertarget) + " + " + string.Format("{0:0.0}", distTargetHole) + "m";
             //distSplit.Text = string.Format("{0:0.0}", dUserTarget) + "m / " + string.Format("{0:0.0}", map.getDistanceTargetHole()) + " m";
             if (dUserTargetTemp == -1)
             {
@@ -235,7 +241,6 @@ namespace GreenSa.ViewController.Play.Game
             {
                 dUserTargetTemp = dUserTarget;
                 Club c = GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs, dUserTarget);
-                Debug.WriteLine("Club chosen : " + c.Name);
                 setCurrentClub(c);
             }
         }
@@ -250,8 +255,6 @@ namespace GreenSa.ViewController.Play.Game
             {
                 case 0:
                     showRadar();
-                    backToRadar.IsVisible = false;
-                    backToBall.IsVisible = true;
                     map.lockTarget();
                     break;
 
@@ -266,14 +269,10 @@ namespace GreenSa.ViewController.Play.Game
                     //if(moyenne.IsToggled)
                     //partie.updateUICircle();
                     showBall();
-                    backToBall.IsVisible = false;
-                    backToRadar.IsVisible = true;
                     break;
 
                 default: //par defaut prêt à taper
                     showBall();
-                    backToBall.IsVisible = false;
-                    backToRadar.IsVisible = true;
                     break;
             }
         }
@@ -281,14 +280,7 @@ namespace GreenSa.ViewController.Play.Game
         private void onBackToBallClicked(object sender, EventArgs e)
         {
             map.setTargetMovable();
-            load.IsEnabled = false;
-            load.IsVisible = false;
-            radar.IsEnabled = false;
-            radar.IsVisible = false;
-            ball.IsEnabled = true;
-            ball.IsVisible = true;
-            backToBall.IsVisible = false;
-            backToRadar.IsVisible = true;
+            showBall();
             state = 0;
         }
             
@@ -448,6 +440,8 @@ namespace GreenSa.ViewController.Play.Game
             radar.IsVisible = false;
             ball.IsEnabled = false;
             ball.IsVisible = false;
+            backToBall.IsVisible = false;
+            backToRadar.IsVisible = false;
         }
 
         private void showBall()
@@ -459,6 +453,8 @@ namespace GreenSa.ViewController.Play.Game
             radar.IsVisible = false;
             ball.IsEnabled = true;
             ball.IsVisible = true;
+            backToBall.IsVisible = false;
+            backToRadar.IsVisible = true;
         }
 
         private void showRadar()
@@ -470,6 +466,8 @@ namespace GreenSa.ViewController.Play.Game
             radar.IsVisible = true;
             ball.IsEnabled = false;
             ball.IsVisible = false;
+            backToBall.IsVisible = true;
+            backToRadar.IsVisible = false;
         }
 
 

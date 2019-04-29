@@ -14,30 +14,48 @@ namespace GreenSa.ViewController.Profile.MyGames
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewPartieListPage : ContentPage
     {
-        private bool isInStat;
+        private int state;
         private PartieStatPage partieStatPage;
+        private List<ScorePartie> scoreParties;
+        private Partie partie;
 
         public ViewPartieListPage()
         {
             InitializeComponent();
-            this.isInStat = false;
+            this.state = 0;
             this.partieStatPage = null;
+            this.scoreParties = null;
+            this.partie = null;
         }
 
-        public ViewPartieListPage(bool isInStat)
+        public ViewPartieListPage(int state)
         {
             InitializeComponent();
-            this.isInStat = isInStat;
+            this.state = state;
             this.partieStatPage = null;
+            this.scoreParties = null;
+            this.partie = null;
+        }
+
+        public ViewPartieListPage(int state, List<ScorePartie> scoreParties, Partie partie)
+        {
+            InitializeComponent();
+            this.state = state;
+            this.partieStatPage = null;
+            this.scoreParties = scoreParties;
+            this.partie = partie;
         }
 
         async protected override void OnAppearing()
         {
             try {
-                IEnumerable<ScorePartie> list = (await StatistiquesGolf.getScoreParties()).OrderByDescending(d => d.DateDebut).ToList();
+                if (scoreParties == null)
+                {
+                    scoreParties = (await StatistiquesGolf.getScoreParties()).OrderByDescending(d => d.DateDebut).ToList();
+                }
                 List<GolfCourse> allGolfCourses = await StatistiquesGolf.getGolfCourses();
                 string id = "";
-                foreach (ScorePartie sp in list)
+                foreach (ScorePartie sp in scoreParties)
                 {
                     id = sp.scoreHoles[0].IdHole;
                     foreach (GolfCourse gc in allGolfCourses)
@@ -52,7 +70,7 @@ namespace GreenSa.ViewController.Profile.MyGames
                         }
                     }
                 }
-                listPartie.ItemsSource = list;
+                listPartie.ItemsSource = scoreParties;
             } catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("Error : " + e.StackTrace);
@@ -62,12 +80,12 @@ namespace GreenSa.ViewController.Profile.MyGames
 
         private async void listPartie_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (!isInStat)
+            ScorePartie sp = (ScorePartie)listPartie.SelectedItem;
+            if (state == 0)//in games panel in profil page
             {
                 await Navigation.PushModalAsync(new DetailsPartiePage((ScorePartie)listPartie.SelectedItem));
-            } else
+            } else if (state == 1)//in stats panel in profil page
             {
-                ScorePartie sp = (ScorePartie)listPartie.SelectedItem;
                 if (this.partieStatPage == null)
                 {
                     this.partieStatPage = new PartieStatPage(sp, sp.GolfName);
@@ -77,6 +95,14 @@ namespace GreenSa.ViewController.Profile.MyGames
                     this.partieStatPage.changePartie(sp, sp.GolfName);
                 }
                 await Navigation.PushModalAsync(this.partieStatPage);
+            } else if (state == 2)//when loading an existing and not finished game
+            {
+                partie.ScoreOfThisPartie = sp;
+                foreach (ScoreHole sh in sp.scoreHoles)
+                {
+                    partie.hasNextHole();//skip holes that was already done
+                }
+                await Navigation.PushAsync(new Play.Game.MainGamePage(partie), false);
             }
         }
     }

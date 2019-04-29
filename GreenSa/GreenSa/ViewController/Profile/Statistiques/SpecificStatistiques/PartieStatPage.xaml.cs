@@ -48,11 +48,6 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             this.updateNotableScores();
         }
 
-        private List<Shot> getShotsFromPartie()
-        {
-            return this.allShots.Where(sh => sh.Date >= this.scorePartie.DateDebut && sh.Date <= this.scorePartie.DateFin && !sh.isPutt()).ToList();
-        }
-
         private void incrementDicoKey(Dictionary<string, int> dico, string key)
         {
             if (!dico.ContainsKey(key))
@@ -68,7 +63,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
         private void updateNotableScores()
         {
             Dictionary<string, int> notableScores = new Dictionary<string, int>();
-            List<Shot> ulgss = getShotsFromPartie().Where(sh => sh.ShotType.Equals(Shot.ShotCategory.UnexpectedLongShot)).ToList();
+            List<Shot> ulgss = StatistiquesGolf.getShotsFromPartie(this.scorePartie, this.allShots).Where(sh => sh.ShotType.Equals(Shot.ShotCategory.UnexpectedLongShot)).ToList();
             string key = "UnbelievableUnexpectedShot";
             double max = 0.0;
             double currentDist = 0.0;
@@ -309,7 +304,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 
         private void updateChart()
         {
-            List<Shot> allNeededShots = getShotsFromPartie();
+            List<Shot> allNeededShots = StatistiquesGolf.getShotsFromPartie(this.scorePartie, this.allShots);
             Dictionary<Shot.ShotCategory, int> dico = StatistiquesGolf.getProportionShot(allNeededShots);
             int shotCount = 0;
             foreach (Shot.ShotCategory sc in dico.Keys)
