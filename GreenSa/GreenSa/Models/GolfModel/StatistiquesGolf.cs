@@ -310,7 +310,7 @@ namespace GreenSa.Models.GolfModel
 
         public static Dictionary<Shot.ShotCategory, int> getProportionShot(List<Shot> allShots)
         {
-            Shot.ShotCategory[] shotCategories = {Shot.ShotCategory.PerfectShot, Shot.ShotCategory.GoodShot, Shot.ShotCategory.TolerableShot, Shot.ShotCategory.UnexpectedLongShot, Shot.ShotCategory.NotStraightShot, Shot.ShotCategory.FailedShot};
+            Shot.ShotCategory[] shotCategories = {Shot.ShotCategory.PerfectShot, Shot.ShotCategory.GoodShot, Shot.ShotCategory.TolerableShot, Shot.ShotCategory.UnexpectedLongShot, Shot.ShotCategory.NotStraightShot, Shot.ShotCategory.FailedShot, Shot.ShotCategory.PenalityShot};
             Dictionary<Shot.ShotCategory, int> dico = new Dictionary<Shot.ShotCategory, int>();
 
             foreach (Shot.ShotCategory sc in shotCategories)
@@ -319,9 +319,13 @@ namespace GreenSa.Models.GolfModel
             }
             foreach (Shot shot in allShots)
             {
-                if (shotCategories.Contains(shot.ShotType))
+                if (!shot.isPutt() && shotCategories.Contains(shot.ShotType))
                 {
                     dico[shot.ShotType] += 1;
+                }
+                if (shot.PenalityCount > 0)
+                {
+                    dico[Shot.ShotCategory.PenalityShot] += shot.PenalityCount;
                 }
             }
             return dico;
@@ -375,20 +379,20 @@ namespace GreenSa.Models.GolfModel
             return all.Where(sh=> sh.Hit).Count()/(float)nbTotal*100 ;
         }
 
-        public static ScoreHole saveForStats(List<Shot> shots,Hole hole)
+        public static ScoreHole saveForStats(Partie partie,Hole hole)
         {
-            if (shots.Count == 0)
+            if (partie.Shots.Count == 0)
                 throw new Exception("0 shots dans la liste des shots.");
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             connection.CreateTable<Club>();
             connection.CreateTable<MyPosition>();
             connection.CreateTable<Shot>();
 
-            SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceAllWithChildren(connection, shots, true);
+            SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceAllWithChildren(connection, partie.Shots, true);
             //connection.InsertAll(shots);
             connection.CreateTable<ScoreHole>();
 
-            ScoreHole h = new ScoreHole(hole, shots.Count-hole.Par, isHit(shots, hole.Par), nbCoupPutt(shots),DateTime.Now);
+            ScoreHole h = new ScoreHole(hole, partie.getCurrentScore(), isHit(partie.Shots, hole.Par), nbCoupPutt(partie.Shots),DateTime.Now);
             SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, h, false);
             string sql = @"select last_insert_rowid()";
             h.Id = connection.ExecuteScalar<int>(sql);

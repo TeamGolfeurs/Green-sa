@@ -304,7 +304,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 
         private void updateChart()
         {
-            List<Shot> allNeededShots = StatistiquesGolf.getShotsFromPartie(this.scorePartie, this.allShots);
+            List<Shot> allNeededShots = this.allShots.Where(sh => sh.Date >= scorePartie.DateDebut && sh.Date <= scorePartie.DateFin).ToList();
             Dictionary<Shot.ShotCategory, int> dico = StatistiquesGolf.getProportionShot(allNeededShots);
             int shotCount = 0;
             foreach (Shot.ShotCategory sc in dico.Keys)
@@ -351,7 +351,13 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                  {
                      Label = "CR",
                     ValueLabel = dico[Shot.ShotCategory.FailedShot].ToString(),
-                    Color = SKColor.Parse("#6A5B5A")
+                    Color = SKColor.Parse("#818181")
+                 },
+                new Entry(dico[Shot.ShotCategory.PenalityShot])
+                 {
+                     Label = "CdP",
+                    ValueLabel = dico[Shot.ShotCategory.PenalityShot].ToString(),
+                    Color = SKColor.Parse("#313030")
                  },
             };
 

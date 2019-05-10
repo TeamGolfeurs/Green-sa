@@ -18,6 +18,7 @@ namespace GreenSa.Models.GolfModel
             FailedShot,
             TolerableShot,
             ChipShot,
+            PenalityShot,
         }
 
         [PrimaryKey,AutoIncrement]
@@ -43,10 +44,35 @@ namespace GreenSa.Models.GolfModel
         [OneToOne(foreignKey:"RealShotId",CascadeOperations =CascadeOperation.All)]
         public MyPosition RealShot { get; set; }
 
-        public DateTime Date { get; set; }
-
         public ShotCategory ShotType { get; set; }
 
+        public int PenalityCount { get; set; }
+
+        public DateTime Date { get; set; }
+
+        [Ignore]
+        public string DateString
+        {
+            get
+            {
+                return Date.ToString();
+            }
+        }
+
+        [Ignore]
+        public int[] PossiblePenalities
+        {
+            get
+            {
+                /*if (isPutt())
+                {
+                    return new int[] { 0 };
+                } else
+                {*/
+                    return new int[] { 0, 1, 2, 3 };
+                //}
+            }
+        }
 
         public double RealShotDist()
         {
@@ -66,13 +92,14 @@ namespace GreenSa.Models.GolfModel
             return CustomMap.DistanceTo(Target.X, Target.Y, RealShot.X, RealShot.Y, "M");
         }
 
-        public Shot(Club currentClub, MyPosition initPlace, MyPosition target, MyPosition realShot, DateTime date )
+        public Shot(Club currentClub, MyPosition initPlace, MyPosition target, MyPosition realShot, DateTime date)
         {
             this.Club = currentClub;
             this.InitPlace = initPlace;
             this.Target = target;
             this.RealShot = realShot;
             this.Date = date;
+            this.PenalityCount = 0;
             this.ShotType = determineShotCategory();
         }
         
@@ -84,11 +111,17 @@ namespace GreenSa.Models.GolfModel
             this.RealShot = null;
             this.Date = date;
             this.ShotType = catergory;
+            this.PenalityCount = 0;
         }
 
         public Shot()
         {
 
+        }
+
+        public void SetPenalityCount(int penality)
+        {
+            this.PenalityCount = penality;
         }
 
         public bool isPutt()
@@ -203,7 +236,7 @@ namespace GreenSa.Models.GolfModel
 
         public override string ToString()
         {
-            return "From "+InitPlace+", try "+Target+" but "+RealShot +" with "+Club+" the "+Date.DayOfWeek+" "+Date.Day+" "+Date.Month;
+            return "Penality : "+PenalityCount+" - From "+InitPlace+", try "+Target+" but "+RealShot +" with "+Club+" the "+Date.DayOfWeek+" "+Date.Day+" "+Date.Month;
         }
         
     }
