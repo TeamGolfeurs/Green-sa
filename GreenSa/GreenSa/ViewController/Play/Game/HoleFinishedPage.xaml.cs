@@ -32,7 +32,12 @@ namespace GreenSa.ViewController.Play.Game
             base.OnAppearing();
             item = new ObservableCollection<Tuple<Shot, IEnumerable<Club>>>(partie.Shots.Select(s => new Tuple<Shot, IEnumerable<Club>>(s, partie.Clubs)));
             ListShotPartie.ItemsSource = item;
-            score.Text = (partie.Shots.Count-partie.getNextHole().Par)+"" ;
+            updateScoreText();
+        }
+
+        private void updateScoreText()
+        {
+            score.Text = partie.getCurrentScore() + "";
         }
 
         private async void validButtonClicked(object sender, EventArgs e)
@@ -74,6 +79,25 @@ namespace GreenSa.ViewController.Play.Game
         }
 
 
+        private void OnPenalityCompleted(object sender, EventArgs e)
+        {
+            var picker = sender as Picker;
+            var tgr = picker.GestureRecognizers[0] as TapGestureRecognizer;
+            var id = (DateTime)tgr.CommandParameter;
+            Shot shot = partie.Shots.Find(s => s.Date.Equals(id));
+            int penalityCount = 0;
+            if (picker.SelectedItem != null)
+            {
+                penalityCount = (int) picker.SelectedItem;
+            }
+            if (shot != null)
+            {
+                shot.SetPenalityCount(penalityCount);
+                this.updateScoreText();
+            }
+        }
+
+
         private async void OnShotDeletedClicked(object sender, EventArgs e)
         {
             var image = sender as Image;
@@ -90,7 +114,7 @@ namespace GreenSa.ViewController.Play.Game
                 item.Remove(item.ToList().Find(tuple => tuple.Item1.Equals(shot)));
 
                 partie.Shots.Remove(shot);
-                score.Text = (partie.Shots.Count - partie.getNextHole().Par) + "";
+                updateScoreText();
             }
         }
 
@@ -102,7 +126,7 @@ namespace GreenSa.ViewController.Play.Game
             List<Club> l = new List<Club>();
             l.Add(Club.PUTTER);
             item.Add(new Tuple<Shot, IEnumerable<Club>>(s, l));
-            score.Text = (partie.Shots.Count - partie.getNextHole().Par) + "";
+            updateScoreText();
         }
 
         protected override bool OnBackButtonPressed()

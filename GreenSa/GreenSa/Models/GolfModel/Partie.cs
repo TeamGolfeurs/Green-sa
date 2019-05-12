@@ -57,6 +57,16 @@ namespace GreenSa.Models.GolfModel
             ScoreOfThisPartie = new ScorePartie();
         }
 
+        public int getCurrentScore()
+        {
+            int penalities = 0;
+            foreach (Shot shot in this.Shots)
+            {
+                penalities += shot.PenalityCount;
+            }
+            return penalities + this.Shots.Count - this.getNextHole().Par;
+        }
+
         /// <summary>
         /// Retourne le (current) trou si il existe sinon retourne null.
         /// </summary>
@@ -82,7 +92,11 @@ namespace GreenSa.Models.GolfModel
         {
             if (saveForStatistics)
             {
-                ScoreHole sh = StatistiquesGolf.saveForStats(Shots, itHole.Current);
+                foreach (Shot s in Shots)
+                {
+                    System.Diagnostics.Debug.WriteLine(s.ToString());
+                }
+                ScoreHole sh = StatistiquesGolf.saveForStats(this, itHole.Current);
                 ScoreOfThisPartie.add(sh);
                 Shots.Clear();
             }

@@ -13,15 +13,25 @@
                         Text="Putter"
                     HorizontalOptions="Start" />-->
                     <Label 
-                        FontSize="Medium"
+                        FontSize="12"
                         Grid.Column="0"
                         Text="Club"
-                    HorizontalOptions="CenterAndExpand" />
+                    HorizontalOptions="Center" />
                     <Label 
-                        FontSize="Medium"
+                        FontSize="12"
                         Grid.Column="1"
-                        Text="Distance"
-                    HorizontalOptions="CenterAndExpand" />
+                        Text="ShotType"
+                    HorizontalOptions="Center" />
+                    <Label 
+                        FontSize="12"
+                        Grid.Column="2"
+                        Text="Penalités"
+                    HorizontalOptions="Center" />
+                    <Label 
+                        FontSize="12"
+                        Grid.Column="3"
+                        Text="Suppression"
+                    HorizontalOptions="Center" />
                 </Grid>
             </StackLayout>
 
@@ -29,7 +39,7 @@
                 <ListView x:Name="ListShotPartie" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell >
+                            <ViewCell>
                                 <StackLayout Orientation="Horizontal">
                                     <Picker 
                                 ItemDisplayBinding="{Binding Name, Path=Item1.Club}"
@@ -38,6 +48,13 @@
                                 SelectedItem="{Binding Item1.Club}" />
 
                                     <Label Text="{Binding Item1.ShotType}" HorizontalOptions="CenterAndExpand"/>
+
+
+                                    <Picker SelectedIndex="0" SelectedIndexChanged="OnPenalityCompleted" ItemsSource="{Binding Item1.PossiblePenalities}">
+                                        <Picker.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding Item1.Date}"/>
+                                        </Picker.GestureRecognizers>
+                                    </Picker>
 
                                     <Image Source="croix_suppression.png" HorizontalOptions="CenterAndExpand">
                                         <Image.GestureRecognizers>
