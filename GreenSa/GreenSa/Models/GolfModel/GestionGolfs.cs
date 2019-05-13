@@ -125,7 +125,7 @@ namespace GreenSa.Models.GolfModel
             */
            Club minDiffClub = null;
             double minDiff = -1;
-            if (dUserTarget < 10)
+            if (dUserTarget < 6.0)
             {
                 minDiffClub = Club.PUTTER;
             } else

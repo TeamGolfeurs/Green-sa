@@ -19,12 +19,10 @@ namespace GreenSa.ViewController.Play.Game
     {
         private Partie partie;
         ObservableCollection<Tuple<Shot, IEnumerable<Club>>> item;
-        private int holeFinishedCount;
         public HoleFinishedPage(Partie partie)
         {
             InitializeComponent();
             this.partie = partie;
-            this.holeFinishedCount = 0;
         }
 
         protected override void OnAppearing()
@@ -54,7 +52,6 @@ namespace GreenSa.ViewController.Play.Game
                 validNext.IsEnabled = false;
                 validNext.Text = "En cours";
                 partie.holeFinished(true);
-                this.holeFinishedCount++;
                 await Navigation.PopModalAsync();
                 validNext.IsEnabled = true;
                 validNext.Text = "Passer au trou suivant";
@@ -63,7 +60,7 @@ namespace GreenSa.ViewController.Play.Game
 
         private async void stopPartieClicked(object sender, EventArgs e)
         {
-            if (this.holeFinishedCount == 0)
+            if (this.partie.holeFinishedCount == 0)
             {
                 await this.DisplayAlert("Erreur", "Vous devez au moins avoir fait 1 trou pour enregistrer une partie", "Ok");
             } else

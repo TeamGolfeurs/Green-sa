@@ -86,7 +86,7 @@ namespace GreenSa.ViewController.Option
                         this.InsertGolfCourseBdd(xmlGolfCourse);
                     } catch (EmptyStringException emptyStrException)
                     {
-                        await this.DisplayAlert("Erreur", emptyStrException.Message, "ok");
+                        await this.DisplayAlert("Erreur", "La communication avec la base de données a échoué", "Ok");
                     }
                     
                 }
