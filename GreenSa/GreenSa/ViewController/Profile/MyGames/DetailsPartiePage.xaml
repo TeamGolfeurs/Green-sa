@@ -7,7 +7,7 @@
                 <RowDefinition Height="23*"/>
                 <RowDefinition Height="77*"/>
             </Grid.RowDefinitions>
-            <Image x:Name="logo" Source="scrorecard_top.png" Grid.Row="0" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" />
+            <Image x:Name="logo" Source="scorecard_top.png" Grid.Row="0" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" />
             <Label x:Name="score" Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start" 
                    Text="+4" FontSize="35" FontAttributes="Bold" TextColor="Black"/>
             <Grid x:Name="title" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Start">
