@@ -44,7 +44,7 @@ namespace GreenSa.Models.GolfModel
                 foreach (Hole hole in holes)
                 {
                     int randPutt = r.Next() % 3 + 1;
-                    int randScore = r.Next() % 4 - 1;
+                    int randScore = r.Next() % 5 - 1;
                     //int randScore = 1;
                     System.Diagnostics.Debug.WriteLine("randPutt = " + randPutt+ " randScore = "+ randScore+"\n");
                     for (int j = 0; j<randScore; ++j)
@@ -55,7 +55,7 @@ namespace GreenSa.Models.GolfModel
                     {
                         randPutt = 0;
                     }
-                    ScoreHole sh = new ScoreHole(hole, randScore, randPutt == 2, randPutt, DateTime.Now);
+                    ScoreHole sh = new ScoreHole(hole, 0, randScore, randPutt == 2, randPutt, DateTime.Now);
                     sp.add(sh);
                     i++;
                 }

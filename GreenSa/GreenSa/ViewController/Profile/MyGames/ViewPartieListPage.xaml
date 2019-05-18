@@ -7,7 +7,7 @@
     <ContentPage.Content>
       <StackLayout>
             <viewElements:MyLabel Text="Liste de vos parties" FontAttributes="Bold" Margin="0, 10, 0, 5" FontSize="25" HorizontalOptions="Center" />
-            <ListView x:Name="listPartie" ItemSelected="listPartie_ItemSelected" >
+            <ListView x:Name="listPartie" ItemTapped="listPartie_ItemSelected" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

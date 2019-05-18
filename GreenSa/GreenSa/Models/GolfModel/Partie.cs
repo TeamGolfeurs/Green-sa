@@ -30,6 +30,7 @@ namespace GreenSa.Models.GolfModel
         public List<Club> Clubs { get; set; }
         private List<Hole>.Enumerator itHole;
         public ScorePartie ScoreOfThisPartie { get; set; }
+        public int holeFinishedCount;
 
         public GolfCourse GolfCourse {
             get
@@ -43,27 +44,32 @@ namespace GreenSa.Models.GolfModel
             }
         }
 
+        public Partie()
+        {
+            Shots = new List<Shot>();
+            CurrentClub = GolfXMLReader.getClubFromName("Fer3");
+            ScoreOfThisPartie = new ScorePartie();
+            this.holeFinishedCount = 0;
+        }
 
         public void setCurrentClub(Club club)
         {
             CurrentClub = club;
         }
 
-
-        public Partie()
-        {
-            Shots = new List<Shot>();
-            CurrentClub = GolfXMLReader.getClubFromName("Fer3");
-            ScoreOfThisPartie = new ScorePartie();
-        }
-
-        public int getCurrentScore()
+        public int getPenalityCount()
         {
             int penalities = 0;
             foreach (Shot shot in this.Shots)
             {
                 penalities += shot.PenalityCount;
             }
+            return penalities;
+        }
+
+        public int getCurrentScore()
+        {
+            int penalities = getPenalityCount();
             return penalities + this.Shots.Count - this.getNextHole().Par;
         }
 
@@ -118,7 +124,7 @@ namespace GreenSa.Models.GolfModel
     /// <returns></returns>
     public bool hasNextHole()
         {
-
+            this.holeFinishedCount++;
             return itHole.MoveNext();        
         }
 

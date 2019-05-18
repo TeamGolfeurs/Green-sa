@@ -156,12 +156,11 @@ namespace GreenSa.ViewController.Play.Game
                         success = true;
                         map.setUserPosition(position, partie.Shots.Count);
                         partie.CurrentClub = partie.CurrentClub;//just to update the circle
-                        partie.updateUICircle();
-
                     }
                     catch (Exception e)
                     {
                         await DisplayAlert("Gps non disponible", "La localisation GPS n'est pas disponible, assurez-vous de l'avoir activé.", "OK");
+                        await Navigation.PopToRootAsync();
                     }
                 } while (!success);
 
@@ -227,6 +226,7 @@ namespace GreenSa.ViewController.Play.Game
 
         private void updateDistance(bool OnAppearing = false)
         {
+            partie.updateUICircle();
             dUserTarget = map.getDistanceUserTarget();
             distTrou.Text = string.Format("{0:0.0}", map.getDistanceUserHole()) + "m";
             var distUsertarget = map.getDistanceUserTarget();
@@ -238,7 +238,7 @@ namespace GreenSa.ViewController.Play.Game
                 dUserTargetTemp = dUserTarget;
             }
 
-            if (Math.Abs(dUserTarget - dUserTargetTemp) > 10 || OnAppearing)//if the target has moved more than 10 meters or the page was just refreshed
+            if (Math.Abs(dUserTarget - dUserTargetTemp) > 5 || OnAppearing)//if the target has moved more than 10 meters or the page was just refreshed
             {
                 dUserTargetTemp = dUserTarget;
                 Club c = GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs, dUserTarget);
@@ -518,10 +518,24 @@ namespace GreenSa.ViewController.Play.Game
 
             Device.BeginInvokeOnMainThread(async () =>
             {
-                if (await DisplayAlert("Quitter", "Retourner au menu principal ?", "Oui", "Non"))
+                if (await DisplayAlert("Quitter", "Voulez vous arreter cette partie maintenant ?", "Oui", "Non"))
                 {
-                    base.OnBackButtonPressed();
-                    await Navigation.PopToRootAsync();
+                    if (await DisplayAlert("Sauvegarder", "Voulez vous sauvegarder cette partie ?", "Oui", "Non"))
+                    {
+                        if (this.partie.holeFinishedCount == 0)
+                        {
+                            await this.DisplayAlert("Erreur", "Vous devez au moins avoir fait 1 trou pour enregistrer une partie", "Ok");
+                        }
+                        else
+                        {
+                            await Navigation.PushAsync(new GameFinishedPage(partie));
+                        }
+                    } else
+                    {
+                        base.OnBackButtonPressed();
+                        await Navigation.PopToRootAsync();
+                    }
+                        
                 }
             });
             return true;

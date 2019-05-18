@@ -21,6 +21,7 @@ namespace GreenSa.Models.GolfModel
 
         /**
          * Get the average distance for all clubs
+         * if clubs null then get all clubs
          * */
         public async static Task<IEnumerable<Tuple<Club, double>>> getAverageDistanceForClubsAsync(Func<Club, bool> filtre, List<Club> clubs)
         {
@@ -392,7 +393,7 @@ namespace GreenSa.Models.GolfModel
             //connection.InsertAll(shots);
             connection.CreateTable<ScoreHole>();
 
-            ScoreHole h = new ScoreHole(hole, partie.getCurrentScore(), isHit(partie.Shots, hole.Par), nbCoupPutt(partie.Shots),DateTime.Now);
+            ScoreHole h = new ScoreHole(hole, partie.getPenalityCount(), partie.getCurrentScore(), isHit(partie.Shots, hole.Par), nbCoupPutt(partie.Shots),DateTime.Now);
             SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, h, false);
             string sql = @"select last_insert_rowid()";
             h.Id = connection.ExecuteScalar<int>(sql);
