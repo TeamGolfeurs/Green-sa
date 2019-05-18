@@ -74,6 +74,12 @@ namespace GreenSa.Models.GolfModel
             }
         }
 
+        [Ignore]
+        public string DistanceDone
+        {
+            get { return ((int)(this.RealShotDist())).ToString()+"m"; }
+        }
+
         public double RealShotDist()
         {
             if (InitPlace == null) return 0;

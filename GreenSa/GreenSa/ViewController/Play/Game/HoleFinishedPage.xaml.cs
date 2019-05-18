@@ -25,6 +25,21 @@ namespace GreenSa.ViewController.Play.Game
             InitializeComponent();
             this.partie = partie;
             this.holeFinishedCount = 0;
+            hole_finished.Margin = new Thickness(0, responsiveDesign(10), 0, 0);
+            ListShotPartie.Margin = new Thickness(responsiveDesign(10), responsiveDesign(72), responsiveDesign(10), responsiveDesign(58));
+            club.Margin = new Thickness(responsiveDesign(30), responsiveDesign(45), 0, 0);
+            distance.Margin = new Thickness(responsiveDesign(140), responsiveDesign(45), 0, 0);
+            pen.Margin = new Thickness(responsiveDesign(242), responsiveDesign(45), 0, 0);
+            numero.Margin = new Thickness(responsiveDesign(25), responsiveDesign(25), 0, 0);
+            par.Margin = new Thickness(responsiveDesign(205), responsiveDesign(25), 0, 0);
+            score.Margin = new Thickness(responsiveDesign(265), responsiveDesign(25), 0, 0);
+            parlegende.Margin = new Thickness(responsiveDesign(200), responsiveDesign(5), 0, 0);
+            scorelegende.Margin = new Thickness(responsiveDesign(260), responsiveDesign(5), 0, 0);
+            next.BackgroundColor = Color.FromHex("39B54A");
+            next.Margin = new Thickness(0, responsiveDesign(5), responsiveDesign(5), responsiveDesign(5));
+            stop.Margin = new Thickness(responsiveDesign(5), responsiveDesign(5), 0, responsiveDesign(5));
+            next.WidthRequest = stop.Width;
+            add.Margin = 5;
         }
 
         protected override void OnAppearing()
@@ -32,12 +47,35 @@ namespace GreenSa.ViewController.Play.Game
             base.OnAppearing();
             item = new ObservableCollection<Tuple<Shot, IEnumerable<Club>>>(partie.Shots.Select(s => new Tuple<Shot, IEnumerable<Club>>(s, partie.Clubs)));
             ListShotPartie.ItemsSource = item;
+            numero.Text = "Trou n°" + partie.getIndexHole().Item1.ToString();
+            hole_finished.Text = "TROU N°" + partie.getIndexHole().Item1.ToString() + " TERMINE!";
+            par.Text = partie.getNextHole().Par.ToString();
             updateScoreText();
+            if (!partie.hasNextHole())
+            {
+                next.Text = "Fin de partie";
+            }
+        }
+
+        private int responsiveDesign(int pix)
+        {
+            return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
         }
 
         private void updateScoreText()
         {
-            score.Text = partie.getCurrentScore() + "";
+            if (partie.getCurrentScore() > 0)
+            {
+                score.Text = "+"+partie.getCurrentScore().ToString();
+            }
+            else if (partie.getCurrentScore() == 0)
+            {
+                score.Margin = new Thickness(responsiveDesign(273), responsiveDesign(25), 0, 0);
+            }
+            else
+            {
+                score.Text = partie.getCurrentScore().ToString();
+            }
         }
 
         private async void validButtonClicked(object sender, EventArgs e)
@@ -51,13 +89,11 @@ namespace GreenSa.ViewController.Play.Game
             if (confirm)
             {
                 MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit", 1);
-                validNext.IsEnabled = false;
-                validNext.Text = "En cours";
+                next.IsEnabled = false;
                 partie.holeFinished(true);
                 this.holeFinishedCount++;
                 await Navigation.PopModalAsync();
-                validNext.IsEnabled = true;
-                validNext.Text = "Passer au trou suivant";
+                next.IsEnabled = true;
             }
         }
 
@@ -82,6 +118,7 @@ namespace GreenSa.ViewController.Play.Game
         private void OnPenalityCompleted(object sender, EventArgs e)
         {
             var picker = sender as Picker;
+            picker.TextColor = Color.White;
             var tgr = picker.GestureRecognizers[0] as TapGestureRecognizer;
             var id = (DateTime)tgr.CommandParameter;
             Shot shot = partie.Shots.Find(s => s.Date.Equals(id));
