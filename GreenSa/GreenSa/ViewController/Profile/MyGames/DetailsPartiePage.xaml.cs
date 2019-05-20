@@ -41,8 +41,8 @@ namespace GreenSa.ViewController.Profile.MyGames
                 score.Text = "+" + scoreDelta;
             }
             if (sdAbs >= 100) {
-                score.FontSize = 24;
-                score.Margin = new Thickness(responsiveDesign(32), responsiveDesign(31), 0, 0);
+                score.FontSize = 25;
+                score.Margin = new Thickness(responsiveDesign(32), responsiveDesign(33), 0, 0);
             }
             else if (sdAbs >= 10)
             {

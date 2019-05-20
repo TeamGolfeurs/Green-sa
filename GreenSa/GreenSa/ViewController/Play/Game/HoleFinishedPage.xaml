@@ -14,14 +14,14 @@
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <Image x:Name="top" Source="hole_finished_top.png" Grid.Row="0"
+            <Image x:Name="top" Source="fond_profile_page.png" Grid.Row="0"
                     HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"
-                    />
-            <Label x:Name="hole_finished" Grid.Row="1" Text="TROU N°3 TERMINE !" FontAttributes="Bold" VerticalOptions="Start" HorizontalOptions="Center" TextColor="Black" FontSize="30"/>
+            />
+            <Label x:Name="hole_finished" Grid.Row="0" Text="TROU N°3 TERMINE !" FontAttributes="Bold" VerticalOptions="Start" HorizontalOptions="Center" TextColor="White" FontSize="29"/>
             <Label x:Name="club" Grid.Row="1" Text="Club" FontAttributes="Bold" VerticalOptions="Start" HorizontalOptions="Start" TextColor="Gray" FontSize="20"/>
             <Label x:Name="distance" Grid.Row="1" Text="Distance" FontAttributes="Bold" VerticalOptions="Start" HorizontalOptions="Start" TextColor="Gray" FontSize="20"/>
             <Label x:Name="pen" Grid.Row="1" Text="Pen." FontAttributes="Bold" VerticalOptions="Start" HorizontalOptions="Start" TextColor="Gray" FontSize="20"/>
-            <ListView x:Name="ListShotPartie" Grid.Row="1" RowHeight="60">
+            <ListView x:Name="ListShotPartie" Grid.Row="1" RowHeight="50">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -32,8 +32,8 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <BoxView Grid.Column="1" BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="Center" Margin="5" CornerRadius="5" WidthRequest="80"/>
-                                <BoxView Grid.Column="2" BackgroundColor="Red" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="40" HeightRequest="40" CornerRadius="100"/>
+                                <BoxView Grid.Column="1" BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="Center" Margin="5" CornerRadius="5" HeightRequest="35" WidthRequest="80"/>
+                                <BoxView Grid.Column="2" BackgroundColor="Red" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="35" HeightRequest="35" CornerRadius="100"/>
                                 <Picker Grid.Column="2" Title="0" SelectedIndex="0" SelectedIndexChanged="OnPenalityCompleted" ItemsSource="{Binding Item1.PossiblePenalities}"
                                         BackgroundColor="Transparent" TitleColor="White" FontAttributes="Bold" FontSize="22"
                                         HorizontalOptions="Center" VerticalOptions="Center" Margin="2, 0, 0, 0">
@@ -42,7 +42,7 @@
                                     </Picker.GestureRecognizers>
                                 </Picker>
                                 <Label Grid.Column="1" Text="{Binding Item1.DistanceDone}"
-                                       BackgroundColor="Transparent" TextColor="Black" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                       BackgroundColor="Transparent" TextColor="DarkSlateGray" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
                                 <Picker Grid.Column="0" ItemDisplayBinding="{Binding Name, Path=Item1.Club}" ItemsSource="{Binding Item2}" SelectedItem="{Binding Item1.Club}"
                                         BackgroundColor="Transparent" TitleColor="White" TextColor="White" FontSize="25" WidthRequest="90" FontAttributes="Bold" Margin="10, 0, 0, 0" HorizontalOptions="StartAndExpand"/>
                                 <Image Grid.Column="3" Source="cross_icon.png" HeightRequest="22" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center">
@@ -57,14 +57,14 @@
             </ListView>
             
             <Button x:Name="add" Text="Ajouter un coup de putter" Grid.Row="1" VerticalOptions="End" HorizontalOptions="Center" FontAttributes="Bold"
-                   TextColor="White" FontSize="20" BackgroundColor="LightGray" CornerRadius="30" Clicked="AddShotButtonClicked"/>
+                   TextColor="White" FontSize="18" BackgroundColor="Gray" CornerRadius="30" Clicked="AddShotButtonClicked"/>
             
-            <Label x:Name="numero" Text="Trou n°1" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
-                   TextColor="Black" FontSize="30"/>
+            <Label x:Name="numero" Text="Trou n°1 :" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
+                   TextColor="DarkSlateGray" FontSize="30"/>
             <Label x:Name="par" Text="4" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
-                   TextColor="Black" FontSize="40"/>
+                   TextColor="DarkSlateGray" FontSize="40"/>
             <Label x:Name="score" Text="+0" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
-                   TextColor="Black" FontSize="40"/>
+                   TextColor="DarkSlateGray" FontSize="40"/>
             <Label x:Name="parlegende" Text="Par" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
                    TextColor="Gray" FontSize="20"/>
             <Label x:Name="scorelegende" Text="Score" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
@@ -75,9 +75,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="stop" Text="Arreter partie" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"
-                   TextColor="White" FontSize="18" BackgroundColor="LightGray" CornerRadius="30" Clicked="stopPartieClicked"/>
+                   TextColor="White" FontSize="17" BackgroundColor="Gray" CornerRadius="30" Clicked="stopPartieClicked"/>
                 <Button x:Name="next" Text="Trou suivant" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"
-                   TextColor="White" FontSize="18" CornerRadius="30" Clicked="validButtonClicked"/>
+                   TextColor="White" FontSize="17" CornerRadius="30" Clicked="validButtonClicked"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

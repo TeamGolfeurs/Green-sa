@@ -32,14 +32,14 @@ namespace GreenSa.Models.GolfModel
             putt = sh.NombrePutt.ToString();
             penalities = sh.Penality.ToString();
             score = (sh.Score + sh.Hole.Par).ToString();
-            this.setScoreSymbol(sh.Score);
+            this.setScoreSymbol(sh.Score, sh.Hole.Par);
             secondFrameWidth = firstFrameWidth - 2;
         }
 
-        private void setScoreSymbol(int score)
+        private void setScoreSymbol(int score, int par)
         {
             var frameSize = 26;
-            if (score >= 10)//if 2 digits
+            if (score+par >= 10)//if 2 digits
             {
                 frameSize = 31;
             }
