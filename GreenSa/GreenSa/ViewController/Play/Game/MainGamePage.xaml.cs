@@ -136,7 +136,7 @@ namespace GreenSa.ViewController.Play.Game
             if (holFini == 0)
                 return;
 
-            if (partie.hasNextHole() && holFini != 2)//holFini == 2 means the user wants to stop the game before the end
+            if (partie.nextHole() && holFini != 2)//holFini == 2 means the user wants to stop the game before the end
             {
                 updateScore();
                 loadCard();

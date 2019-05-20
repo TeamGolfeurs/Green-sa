@@ -100,7 +100,7 @@ namespace GreenSa.ViewController.Profile.MyGames
                 partie.ScoreOfThisPartie = sp;
                 foreach (ScoreHole sh in sp.scoreHoles)
                 {
-                    partie.hasNextHole();//skip holes that was already done
+                    partie.nextHole();//skip holes that was already done
                 }
                 await Navigation.PushAsync(new Play.Game.MainGamePage(partie), false);
             }

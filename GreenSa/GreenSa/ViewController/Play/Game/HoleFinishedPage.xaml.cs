@@ -31,9 +31,9 @@ namespace GreenSa.ViewController.Play.Game
             pen.Margin = new Thickness(responsiveDesign(242), responsiveDesign(5), 0, 0);
             numero.Margin = new Thickness(responsiveDesign(25), responsiveDesign(25), 0, 0);
             par.Margin = new Thickness(responsiveDesign(205), responsiveDesign(25), 0, 0);
-            score.Margin = new Thickness(responsiveDesign(270), responsiveDesign(25), 0, 0);
+            score.Margin = new Thickness(responsiveDesign(265), responsiveDesign(25), 0, 0);
             parlegende.Margin = new Thickness(responsiveDesign(200), responsiveDesign(5), 0, 0);
-            scorelegende.Margin = new Thickness(responsiveDesign(260), responsiveDesign(5), 0, 0);
+            scorelegende.Margin = new Thickness(responsiveDesign(26), responsiveDesign(5), 0, 0);
             next.BackgroundColor = Color.FromHex("39B54A");
             next.Margin = new Thickness(0, responsiveDesign(5), responsiveDesign(5), responsiveDesign(5));
             stop.Margin = new Thickness(responsiveDesign(5), responsiveDesign(5), 0, responsiveDesign(5));
@@ -63,13 +63,9 @@ namespace GreenSa.ViewController.Play.Game
 
         private void updateScoreText()
         {
-            if (partie.getCurrentScore() > 0)
+            if (partie.getCurrentScore() >= 0)
             {
                 score.Text = "+"+partie.getCurrentScore().ToString();
-            }
-            else if (partie.getCurrentScore() == 0)
-            {
-                score.Margin = new Thickness(responsiveDesign(273), responsiveDesign(25), 0, 0);
             }
             else
             {

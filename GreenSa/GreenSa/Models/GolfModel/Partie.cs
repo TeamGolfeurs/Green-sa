@@ -29,6 +29,7 @@ namespace GreenSa.Models.GolfModel
         }
         public List<Shot> Shots { get; set; }
         public List<Club> Clubs { get; set; }
+        private List<Hole> Holes;
         private List<Hole>.Enumerator itHole;
         public ScorePartie ScoreOfThisPartie { get; set; }
         public int holeFinishedCount;
@@ -40,8 +41,8 @@ namespace GreenSa.Models.GolfModel
             }
             set {
                 golfCourse = value;
+                Holes = value.Holes;
                 itHole = value.GetHoleEnumerator();
-
             }
         }
 
@@ -82,6 +83,7 @@ namespace GreenSa.Models.GolfModel
         {
             return itHole.Current;
         }
+
         //index,nbTotal
         public Tuple<int, int> getIndexHole()
         {
@@ -126,15 +128,19 @@ namespace GreenSa.Models.GolfModel
 
 
     /// <summary>
-    /// Vérifie l'existence d'un prochain trou et se decale 
+    /// Vérifie l'existence d'un prochain trou
     /// </summary>
     /// <returns></returns>
     public bool hasNextHole()
         {
-            this.holeFinishedCount++;
-            return itHole.MoveNext();        
+            return this.holeFinishedCount < this.Holes.Count-1;        
         }
 
+        public bool nextHole()
+        {
+            this.holeFinishedCount++;
+            return itHole.MoveNext();
+        }
 
 
         internal void updateUICircle()

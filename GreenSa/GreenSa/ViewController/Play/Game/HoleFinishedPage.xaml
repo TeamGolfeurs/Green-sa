@@ -63,7 +63,7 @@
                    TextColor="DarkSlateGray" FontSize="30"/>
             <Label x:Name="par" Text="4" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
                    TextColor="DarkSlateGray" FontSize="40"/>
-            <Label x:Name="score" Text="+0" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
+            <Label x:Name="score" Text="  " Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
                    TextColor="DarkSlateGray" FontSize="40"/>
             <Label x:Name="parlegende" Text="Par" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
                    TextColor="Gray" FontSize="20"/>
