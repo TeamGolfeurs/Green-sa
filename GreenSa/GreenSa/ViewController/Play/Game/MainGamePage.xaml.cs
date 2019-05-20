@@ -143,6 +143,7 @@ namespace GreenSa.ViewController.Play.Game
                 Hole nextHole = partie.getNextHole();
                 map.setHolePosition(nextHole);
                 numcoup.Text = partie.getIndexHole().Item1.ToString();
+                parTrou.Text = "PAR " + partie.getNextHole().Par.ToString();
                 MyPosition position = new MyPosition(0, 0);
                 bool success = false;
                 do//make sure that the GPS is avaible
