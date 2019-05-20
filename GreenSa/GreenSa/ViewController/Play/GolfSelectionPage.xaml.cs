@@ -18,14 +18,12 @@ namespace GreenSa.ViewController.Play
     {
         Partie p;
         private GolfCourseStatPage golfCourseStatPage;
-        private bool BackButtonPressed;
 
         public GolfSelectionPage(Partie partie)
         {
             InitializeComponent();
             p = partie;
             golfCourseStatPage = null;
-            this.BackButtonPressed = false;
         }
 
         public GolfSelectionPage()
@@ -33,7 +31,6 @@ namespace GreenSa.ViewController.Play
             InitializeComponent();
             p = null;
             golfCourseStatPage = null;
-            this.BackButtonPressed = false;
         }
 
         /**
@@ -90,11 +87,7 @@ namespace GreenSa.ViewController.Play
                         }
                         else
                         {
-                            if (!this.BackButtonPressed)
-                            {
-                                await Navigation.PushAsync(new ViewPartieListPage(2, scoreParties, p), false);
-                                this.BackButtonPressed = false;
-                            }
+                            await Navigation.PushAsync(new ViewPartieListPage(2, scoreParties, p), false);
                         }
                     } else
                     {
@@ -103,14 +96,6 @@ namespace GreenSa.ViewController.Play
                 } 
             }
          }
-
-        protected override bool OnBackButtonPressed()
-        {
-            base.OnBackButtonPressed();
-            System.Diagnostics.Debug.WriteLine("OnBackButtonPressed");
-            this.BackButtonPressed = true;
-            return true;
-        }
 
     }
 }

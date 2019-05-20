@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewelements="clr-namespace:GreenSa.Models.ViewElements"
              x:Class="GreenSa.ViewController.Play.Game.HoleFinishedPage">
     <ContentPage.Content>
         <StackLayout>
@@ -41,11 +42,12 @@
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout Orientation="Horizontal">
-                                    <Picker 
-                                ItemDisplayBinding="{Binding Name, Path=Item1.Club}"
+                                    <Picker ItemDisplayBinding="{Binding Name, Path=Item1.Club}"
                                 HorizontalOptions="CenterAndExpand" 
                                 ItemsSource="{Binding Item2}"
-                                SelectedItem="{Binding Item1.Club}" />
+                                SelectedItem="{Binding Item1.Club}">
+
+                                    </Picker>
 
                                     <Label Text="{Binding Item1.ShotType}" HorizontalOptions="CenterAndExpand"/>
 

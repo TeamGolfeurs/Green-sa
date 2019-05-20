@@ -18,7 +18,7 @@ namespace GreenSa.ViewController.Profile.MyGames
             int totPar = 0;
             int totPutt = 0;
             int totPen = 0;
-            int totScore = 0;
+            var totScore = 0;
             foreach (ScoreHole sh in sp.scoreHoles)
             {
                 list.Add(new DisplayScoreCard(i, sh));
@@ -30,7 +30,29 @@ namespace GreenSa.ViewController.Profile.MyGames
             }
             listScore.ItemsSource = list;
 
-            score.Margin = new Thickness(responsiveDesign(39), responsiveDesign(27), 0, 0);
+            var scoreDelta = totScore - totPar;
+            var sdAbs = Math.Abs(scoreDelta);
+            if (scoreDelta < 0)
+            {
+                score.Text = "-" + sdAbs;
+            }
+            else
+            {
+                score.Text = "+" + scoreDelta;
+            }
+            if (sdAbs >= 100) {
+                score.FontSize = 24;
+                score.Margin = new Thickness(responsiveDesign(32), responsiveDesign(31), 0, 0);
+            }
+            else if (sdAbs >= 10)
+            {
+                score.FontSize = 30;
+                score.Margin = new Thickness(responsiveDesign(35), responsiveDesign(29), 0, 0);
+            }
+            else
+            {
+                score.Margin = new Thickness(responsiveDesign(39), responsiveDesign(27), 0, 0);
+            }
             title.Margin = new Thickness(responsiveDesign(65), responsiveDesign(20), 0, 0);
             totalPar.Text = totPar + "";
             totalPutt.Text = totPutt + "";

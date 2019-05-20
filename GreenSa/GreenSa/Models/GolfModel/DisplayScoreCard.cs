@@ -38,6 +38,11 @@ namespace GreenSa.Models.GolfModel
 
         private void setScoreSymbol(int score)
         {
+            var frameSize = 26;
+            if (score >= 10)//if 2 digits
+            {
+                frameSize = 31;
+            }
             switch (score)
             {
                 case -2:
@@ -103,7 +108,7 @@ namespace GreenSa.Models.GolfModel
                     this.firstFrameBorderColor = Color.FromHex("#292727");
                     this.secondFrameBorderColor = Color.FromHex("#292727");
                     this.textColor = Color.White;
-                    this.firstFrameWidth = 26;
+                    this.firstFrameWidth = frameSize;
                     break;
             }
         }

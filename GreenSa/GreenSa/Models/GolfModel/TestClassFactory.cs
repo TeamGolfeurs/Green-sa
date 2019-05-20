@@ -31,8 +31,8 @@ namespace GreenSa.Models.GolfModel
             connection.CreateTable<MyPosition>();
             List<GolfCourse> golfCourses = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection);
             Random r = new Random();
-            //var holes = golfCourses[r.Next()%(golfCourses.Count)].Holes;
-            var holes = golfCourses[0].Holes;
+            var holes = golfCourses[r.Next()%(golfCourses.Count)].Holes;
+            //var holes = golfCourses[0].Holes;
             DateTime date = new DateTime(2019, DateTime.Now.Month, (TestClassFactory.createdScorePartieCount % 28) + 1);
             //DateTime date = DateTime.Now;
             ScorePartie sp = new ScorePartie(date);
@@ -44,12 +44,16 @@ namespace GreenSa.Models.GolfModel
                 foreach (Hole hole in holes)
                 {
                     int randPutt = r.Next() % 3 + 1;
-                    int randScore = r.Next() % 5 - 1;
+                    int randScore = r.Next() % 9 - 3;
+                    if (TestClassFactory.createdScorePartieCount == 0)
+                    {
+                        randScore = 10;
+                    }
                     //int randScore = 1;
                     System.Diagnostics.Debug.WriteLine("randPutt = " + randPutt+ " randScore = "+ randScore+"\n");
                     for (int j = 0; j<randScore; ++j)
                     {
-                        shots.Add(new Shot(clubs[4], RandomEnumValue<Shot.ShotCategory>(), DateTime.Now));
+                        shots.Add(new Shot(clubs[5], RandomEnumValue<Shot.ShotCategory>(), DateTime.Now));
                     }
                     if (i == 7 && r.Next()%3 == 1)
                     {

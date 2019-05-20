@@ -84,14 +84,29 @@ namespace GreenSa.ViewController.Profile.Options
 
         private void OnNameCompleted(object sender, EventArgs e)
         {
-            LocalUser.Username = ((Entry)sender).Text;
-            DBconnection.Update(LocalUser);
+            Entry entry = (Entry) sender;
+            if (entry.Text != "")
+            {
+                LocalUser.Username = entry.Text;
+                DBconnection.Update(LocalUser);
+            } else
+            {
+                entry.Text = LocalUser.Username;
+            }
         }
 
         private void OnGolfRefCompleted(object sender, EventArgs e)
         {
-            LocalUser.GolfRef = ((Entry)sender).Text;
-            DBconnection.Update(LocalUser);
+            Entry entry = (Entry)sender;
+            if (entry.Text != "")
+            {
+                LocalUser.GolfRef = entry.Text;
+                DBconnection.Update(LocalUser);
+            }
+            else
+            {
+                entry.Text = LocalUser.GolfRef;
+            }
         }
 
         private async void OnIndexCompleted(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿using GreenSa.Models.Tools;
 using GreenSa.Persistence;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace GreenSa.Models.GolfModel
             Shots = new List<Shot>();
             CurrentClub = GolfXMLReader.getClubFromName("Fer3");
             ScoreOfThisPartie = new ScorePartie();
-            this.holeFinishedCount = 0;
+            this.holeFinishedCount = -1;
         }
 
         public void setCurrentClub(Club club)
@@ -102,9 +103,15 @@ namespace GreenSa.Models.GolfModel
                 {
                     System.Diagnostics.Debug.WriteLine(s.ToString());
                 }
-                ScoreHole sh = StatistiquesGolf.saveForStats(this, itHole.Current);
-                ScoreOfThisPartie.add(sh);
-                Shots.Clear();
+                try
+                {
+                    ScoreHole sh = StatistiquesGolf.saveForStats(this, itHole.Current);
+                    ScoreOfThisPartie.add(sh);
+                    Shots.Clear();
+                } catch (SQLiteException e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.StackTrace);
+                }
             }
         }
 
@@ -127,6 +134,8 @@ namespace GreenSa.Models.GolfModel
             this.holeFinishedCount++;
             return itHole.MoveNext();        
         }
+
+
 
         internal void updateUICircle()
         {

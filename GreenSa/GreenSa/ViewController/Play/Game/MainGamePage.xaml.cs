@@ -30,12 +30,10 @@ namespace GreenSa.ViewController.Play.Game
         private int holFini;
         private double dUserTarget;
         private double dUserTargetTemp;//used to chose a club when the target moved more than 10 meters
-        private HoleFinishedPage p;
 
         public MainGamePage(Partie partie)
         {
             InitializeComponent();
-            this.p = new HoleFinishedPage(partie);
 
             forceVent.Margin = new Thickness(35, 10, 0, 0);
             windImg.Margin = new Thickness(35, 5, 0, 0);
@@ -501,7 +499,7 @@ namespace GreenSa.ViewController.Play.Game
          * **/
         private async void onHoleFinishedButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(this.p);
+            await Navigation.PushModalAsync(new HoleFinishedPage(partie));
         }
 
         private async void onRelocalizeAction(object sender, EventArgs e)

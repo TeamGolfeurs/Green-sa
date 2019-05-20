@@ -75,12 +75,20 @@ namespace GreenSa.ViewController.Play.Game
             
         }
 
+        /*private void OnClubChanged(object sender, EventArgs e)
+        {
+            var picker = sender as Picker;
+            DateTime id = picker.DateId;
+            Shot shot = partie.Shots.Find(s => s.Date.Equals(id));
+            shot.UpdateShotType();
+        }*/
+
 
         private void OnPenalityCompleted(object sender, EventArgs e)
         {
             var picker = sender as Picker;
             var tgr = picker.GestureRecognizers[0] as TapGestureRecognizer;
-            var id = (DateTime)tgr.CommandParameter;
+            DateTime id = (DateTime)tgr.CommandParameter;
             Shot shot = partie.Shots.Find(s => s.Date.Equals(id));
             int penalityCount = 0;
             if (picker.SelectedItem != null)
@@ -99,7 +107,7 @@ namespace GreenSa.ViewController.Play.Game
         {
             var image = sender as Image;
             var tgr = image.GestureRecognizers[0] as TapGestureRecognizer;
-            var id = (DateTime) tgr.CommandParameter;
+            DateTime id = (DateTime) tgr.CommandParameter;
             Shot shot = partie.Shots.Find(s => s.Date.Equals(id));
             var confirm = true;
             if(!shot.Club.IsPutter())
@@ -125,6 +133,7 @@ namespace GreenSa.ViewController.Play.Game
             item.Add(new Tuple<Shot, IEnumerable<Club>>(s, l));
             updateScoreText();
         }
+
 
         protected override bool OnBackButtonPressed()
         {

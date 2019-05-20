@@ -119,6 +119,11 @@ namespace GreenSa.Models.GolfModel
 
         }
 
+        public void UpdateShotType()
+        {
+            this.ShotType = determineShotCategory();
+        }
+
         public void SetPenalityCount(int penality)
         {
             this.PenalityCount = penality;
