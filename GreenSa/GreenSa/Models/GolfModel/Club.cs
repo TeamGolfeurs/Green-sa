@@ -17,7 +17,7 @@ namespace GreenSa.Models.GolfModel
         [PrimaryKey]
         public string Name { get; set; }
 
-        public bool selected { get; set; }//used for IHM
+        public bool selected { get; set; }
         public int DistanceMoyenne { get; set; }
 
         public Club()

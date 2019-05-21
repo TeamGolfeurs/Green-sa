@@ -22,21 +22,20 @@ namespace GreenSa.ViewController.Play.Game
         }
 
         /**
-       * Méthode qui s'execute automatiquement au chargement de la page
-       * Affiche le résumé de la partie avec possibilité de correction et de ne pas enregistrer cette partie dans les stats
-       * */
+         * This method is executed when the page is loaded
+         * */
         protected override void OnAppearing()
         {
             base.OnAppearing();
         }
 
+        /**
+         * This method is called when the button to go back to main menu is clicked
+         */
         private async void OnGoBackClicked(object sender, EventArgs e)
         {
             Profil profil = StatistiquesGolf.getProfil();
-            if (profil.SaveStats)
-            {
-                await partie.gameFinished(true);
-            }
+            await partie.gameFinished(profil.SaveStats);
             await Navigation.PopToRootAsync();
         }
 

@@ -34,8 +34,7 @@ namespace GreenSa.ViewController.Play
         }
 
         /**
-         * Méthode qui s'execute automatiquement au chargement de la page
-         * Demande à la classe GestionGolf
+         * This method is executed when the page is loaded
          * */
         protected override async void OnAppearing()
         {
@@ -49,13 +48,13 @@ namespace GreenSa.ViewController.Play
 
 
         /*
-         * Appelée à la sélection d'un golf
-         * doit mettre à jour la partie, et ouvrir la page parametre suivant (ClubSelection)
+         * Called when a golf course is picked by the user
+         * This method ask the user whether he wants to load a not ended game or start a new one. Then the game is start
          * */
          private async void onGolfSelection(object sender, EventArgs e)
          {
             var g = ListGolfCourse.SelectedItem as GolfCourse;
-            if (p == null)
+            if (p == null)//if not in game part (if in stat part)
             {
                 if (this.golfCourseStatPage == null)
                 {
@@ -71,6 +70,7 @@ namespace GreenSa.ViewController.Play
                 Func<Club, bool> f = (c => true);
                 List<Club> clubselected = await GestionGolfs.getListClubsAsync(f);
                 clubselected.RemoveAll(c => c.selected == false);
+                //Check if the user has at least one club on his bag
                 if (clubselected.Count == 0)
                 {
                     await this.DisplayAlert("Erreur", "Vous n'avez aucun club dans votre sac. Veuillez en choisir au moins un dans le page 'Profil'", "ok");
@@ -85,11 +85,11 @@ namespace GreenSa.ViewController.Play
                         {
                             await Navigation.PushAsync(new Game.MainGamePage(p), false);
                         }
-                        else
+                        else//if load a not ended game then show the list of not ended games
                         {
                             await Navigation.PushAsync(new ViewPartieListPage(2, scoreParties, p), false);
                         }
-                    } else
+                    } else//if no not ended game then start a new one directly
                     {
                         await Navigation.PushAsync(new Game.MainGamePage(p), false);
                     }

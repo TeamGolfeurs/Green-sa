@@ -24,10 +24,8 @@ namespace GreenSa.ViewController.Profile.MyClubs
         }
 
         /**
-       * Méthode qui s'execute automatiquement au chargement de la page
-       * Demande à la classe GestionGolf la liste des clubs
-       * et met à jour la listView
-       * */
+         * This method is executed when the page is loaded
+         * */
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -35,10 +33,9 @@ namespace GreenSa.ViewController.Profile.MyClubs
             listviewclub.ItemsSource = await GestionGolfs.getListClubsAsync(f);
         }
 
-        /*
-         * Appelée à la validation de la selection
-         * doit mettre à jour la partie, et ouvrir la page du jeu (MainGamePage)
-         * */
+        /**
+         * This method is called when the button to valid the club list is clicked
+         */
         private async void onValidClubSelection(object sender, EventArgs e)
         {
             Btn.IsEnabled = false;
@@ -48,13 +45,13 @@ namespace GreenSa.ViewController.Profile.MyClubs
             await connection.CreateTableAsync<Club>();
             List<Club> clubselected = new List<Club>();
             bool atLeastOneSelected = false;
-            foreach (Club c in listviewclub.ItemsSource){
+            foreach (Club c in listviewclub.ItemsSource) {//updates each club 'selected' attribute in the database
                 if(c.selected){
                     atLeastOneSelected = true;
                 }
                 await SQLiteNetExtensionsAsync.Extensions.WriteOperations.UpdateWithChildrenAsync(connection, c);
             }
-            if (!atLeastOneSelected)
+            if (!atLeastOneSelected)//checks if at least one club is selected
             {
                 await DisplayAlert("Aucun club selectionné", "Vous devez selectionner au moins un club", "ok");
             } else

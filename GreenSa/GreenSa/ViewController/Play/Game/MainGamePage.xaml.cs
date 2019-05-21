@@ -17,16 +17,11 @@ using GreenSa.Models.Profiles;
 
 namespace GreenSa.ViewController.Play.Game
 {
-    /**
-     * Page principale du jeu
-     * Affiche la carte, boutons etc
-     * Voir diagramme "onMainGamePageAppearing"
-     * */
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainGamePage : ContentPage
     {
 
-        private int state; //0 pour prêt à taper et 1 pour prêt à localiser
+        private int state; //0 when ready to shot and 1 when ready to localize
         private Partie partie;
         private int holFini;
         private double dUserTarget;
@@ -95,7 +90,7 @@ namespace GreenSa.ViewController.Play.Game
             score.HeightRequest = responsiveDesign(100);
             score.WidthRequest = responsiveDesign(100);
 
-            GestionGolfs.calculAverageAsync(partie.Clubs);
+            GestionGolfs.calculAverageAsync(partie.Clubs);//Load average club distances
 
             dUserTargetTemp = -1;
             hideCard();
@@ -121,22 +116,24 @@ namespace GreenSa.ViewController.Play.Game
             MessagingCenter.Subscribe<System.Object>(this, CustomPin.UPDATEDMESSAGE_CIRCLE, (sender) => {
                 updateDistance();
             });
+            //this message details the state of the game 0 if hole isn't finished, 1 otherwise and 2 if the game is finished
             MessagingCenter.Subscribe<HoleFinishedPage, int>(this, "ReallyFinit", (sender, val) => {
                 holFini = val;
             });
             updateScore();
             loadCard();
         }
+
         /**
-        * Méthode qui s'execute automatiquement au chargement de la page
-        * Affiche le résumé de la partie avec possibilité de correction et de ne pas enregistrer cette partie dans les stats
-        * */
+         * This method is executed when the page is loaded
+         * */
         async protected override void OnAppearing()
         {
             base.OnAppearing();
             if (holFini == 0)
                 return;
 
+            //if there is still a hole to play
             if (partie.nextHole() && holFini != 2)//holFini == 2 means the user wants to stop the game before the end
             {
                 updateScore();
@@ -146,29 +143,25 @@ namespace GreenSa.ViewController.Play.Game
                 numcoup.Text = partie.getIndexHole().Item1.ToString();
                 parTrou.Text = "PAR " + partie.getNextHole().Par.ToString();
                 MyPosition position = new MyPosition(0, 0);
-                bool success = false;
-                do//make sure that the GPS is avaible
+                //make sure that the GPS is avaible
+                try
                 {
-                    try
-                    {
-                        position = await localize();
-                        success = true;
-                        map.setUserPosition(position, partie.Shots.Count);
-                        partie.CurrentClub = partie.CurrentClub;//just to update the circle
-                    }
-                    catch (Exception e)
-                    {
-                        await DisplayAlert("Gps non disponible", "La localisation GPS n'est pas disponible, assurez-vous de l'avoir activé.", "OK");
-                        await Navigation.PopToRootAsync();
-                    }
-                } while (!success);
+                    position = await localize();
+                    map.setUserPosition(position, partie.Shots.Count);
+                    partie.CurrentClub = partie.CurrentClub;//just to update the circle
+                }
+                catch (Exception e)
+                {
+                    await DisplayAlert("Gps non disponible", "La localisation GPS n'est pas disponible, assurez-vous de l'avoir activé.", "OK");
+                    await Navigation.PopToRootAsync();//come back to root to avoid any problems in the game flow
+                }
 
                 updateDistance(true);
 
+                //manage the wind icon
                 try
                 {
                     WindService service = new WindService();
-
                     await Task.Run(async () =>
                     {
                         WindInfo windInfo = await service.getCurrentWindInfo(map.getUserPosition());
@@ -178,7 +171,6 @@ namespace GreenSa.ViewController.Play.Game
                         });
 
                     });
-
                 }
                 catch (Exception e)
                 {
@@ -186,8 +178,7 @@ namespace GreenSa.ViewController.Play.Game
                 }
 
 
-            }
-            else
+            } else//user wants to stop the game
             {
                 await Navigation.PushAsync(new GameFinishedPage(partie));
                 return;
@@ -200,6 +191,10 @@ namespace GreenSa.ViewController.Play.Game
             return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
         }
 
+        /**
+         * Localizes the user with his GPS
+         * return a MyPosition class wrapping the longitude and latitude of the user current position
+         */
         public async Task<MyPosition> localize()
         {
             backToRadar.IsVisible = false;
@@ -210,6 +205,10 @@ namespace GreenSa.ViewController.Play.Game
             return position;
         }
 
+        /**
+         * Updates the wind icon using the given information
+         * windInfo : information about the wind
+         */
         public async Task UpdateWindServiceUI(WindInfo windInfo)
         {
             try
@@ -223,21 +222,26 @@ namespace GreenSa.ViewController.Play.Game
             }
         }
 
+        /**
+         * Updates the distances on the top right hand corner of the screen
+         * OnAppearing : true if the method is called in the OnAppearing method, false otherwise
+         */
         private void updateDistance(bool OnAppearing = false)
         {
             partie.updateUICircle();
+
             dUserTarget = map.getDistanceUserTarget();
             distTrou.Text = string.Format("{0:0.0}", map.getDistanceUserHole()) + "m";
             var distUsertarget = map.getDistanceUserTarget();
             var distTargetHole = map.getDistanceTargetHole();
             distTarget.Text = string.Format("{0:0.0}", distUsertarget) + " + " + string.Format("{0:0.0}", distTargetHole) + "m";
-            //distSplit.Text = string.Format("{0:0.0}", dUserTarget) + "m / " + string.Format("{0:0.0}", map.getDistanceTargetHole()) + " m";
             if (dUserTargetTemp == -1)
             {
                 dUserTargetTemp = dUserTarget;
             }
 
-            if (Math.Abs(dUserTarget - dUserTargetTemp) > 5 || OnAppearing)//if the target has moved more than 10 meters or the page was just refreshed
+            //if the target has moved more than 5 meters or if the page was just refreshed
+            if (Math.Abs(dUserTarget - dUserTargetTemp) > 5 || OnAppearing)
             {
                 dUserTargetTemp = dUserTarget;
                 Club c = GestionGolfs.giveMeTheBestClubForThatDistance(partie.Clubs, dUserTarget);
@@ -246,84 +250,56 @@ namespace GreenSa.ViewController.Play.Game
         }
 
         /**
-* Méthode qui met à jour l'état du jeu quand on clique sur le boutton principal
-*/
-        private async void onMainButtonClicked(object sender, EventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine(state);
-            switch (state)
-            {
-                case 0:
-                    showRadar();
-                    map.lockTarget();
-                    break;
-
-                case 1:
-                    MyPosition newUserPosition = await localize();
-                    MyPosition start = map.getUserPosition();
-                    partie.addPositionForCurrentHole(start, new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
-                    updateScore();
-                    map.setUserPosition(newUserPosition, partie.Shots.Count);
-                    map.setTargetMovable();
-                    updateDistance();
-                    //if(moyenne.IsToggled)
-                    //partie.updateUICircle();
-                    showBall();
-                    break;
-
-                default: //par defaut prêt à taper
-                    showBall();
-                    break;
-            }
-        }
-
-        private void onBackToBallClicked(object sender, EventArgs e)
-        {
-            map.setTargetMovable();
-            showBall();
-            state = 0;
-        }
-            
-
+         * Shows the list of the available clubs
+         */
         private void showClubs()
         {
-            System.Diagnostics.Debug.WriteLine(partie.CurrentClub.ToString());
             clubselection.IsVisible = true;
             ListClubsPartie.ItemsSource = partie.Clubs;
             ListClubsPartie.IsVisible = true;
             ListClubsPartie.SelectedItem = partie.CurrentClub;
-            System.Diagnostics.Debug.WriteLine(partie.CurrentClub.Name);
         }
 
+        /**
+         * Hides the list of the available clubs
+         */
+        private void hideClubs()
+        {
+            clubselection.IsVisible = false;
+            ListClubsPartie.IsVisible = false;
+        }
+
+        /**
+         * Computes the current score of the user and update the corresponding label
+         */
         private void updateScore()
         {
-            System.Diagnostics.Debug.WriteLine("maj score");
             int coups = 0;
-            foreach(ScoreHole sc in partie.ScoreOfThisPartie.scoreHoles)
-            {
+            foreach(ScoreHole sc in partie.ScoreOfThisPartie.scoreHoles) {
                 coups += sc.Score;
             }
-            if (coups > 0)
-            {
-                score.Text = "+"+(coups).ToString();
-            }
-            else
-            {
-                score.Text = (coups).ToString();
+            if (coups > 0) {
+                score.Text = "+" + coups.ToString();
+            } else {
+                score.Text = coups.ToString();
             }
         }
 
+        /**
+         * Transforms each done holes score in a DisplayScoreCard class used to bind the data in the game card (ListView)
+         */
         private void loadCard()
         {
-            System.Diagnostics.Debug.WriteLine("maj card");
             List<ScoreHole> scoreHoles = partie.ScoreOfThisPartie.scoreHoles;
             List<DisplayScoreCard> ScoreCard = new List<DisplayScoreCard>();
+            //manage done holes scores
             for (int i = 0; i < scoreHoles.Count; i++)
             {
                 DisplayScoreCard ds = new DisplayScoreCard(i+1, scoreHoles.ElementAt<ScoreHole>(i));
                 ScoreCard.Add(ds);
 
             }
+            //manage not done holes scores
             for(int i=scoreHoles.Count; i < partie.GolfCourse.Holes.Count; i++)
             {
                 DisplayScoreCard ds = new DisplayScoreCard(i+1, partie.GolfCourse.Holes.ElementAt<Hole>(i).Par);
@@ -332,12 +308,19 @@ namespace GreenSa.ViewController.Play.Game
             ListHole.ItemsSource = ScoreCard;
         }
 
+        /**
+         * Shows the game card
+         */
         private void showCard()
         {
             cardBackground.Margin = new Thickness(0, 0, responsiveDesign(135), responsiveDesign(305));
             score.Margin = new Thickness(0, 0, responsiveDesign(110), responsiveDesign(280));
             ListHole.IsVisible = true;
         }
+
+        /**
+         * Hides the game card to only display the current score
+         */
         private void hideCard()
         {
             ListHole.IsVisible = false;
@@ -345,28 +328,23 @@ namespace GreenSa.ViewController.Play.Game
             score.Margin = new Thickness(0, 0, responsiveDesign(-15), responsiveDesign(280));
         }
 
-        private void hideClubs()
-        {
-            clubselection.IsVisible = false;
-            ListClubsPartie.IsVisible = false;
-        }
-
-        private void OnClubClicked(object sender, EventArgs e)
-        {
-            var club = ListClubsPartie.SelectedItem as Club;
-            setCurrentClub(club);
-            clubselection.IsVisible = false;
-            ListClubsPartie.IsVisible = false;
-        }
-
+        /**
+         * Sets the current club with the given one
+         * club : the new club
+         */
         private void setCurrentClub(Club club)
         {
             partie.setCurrentClub(club);
             LoadClubIcon(club);
         }
 
+        /**
+         * Load the icon corresponding to the given club
+         * club : the club
+         */
         private void LoadClubIcon(Club club)
         {
+            //clubs is an image describing the club type and numClub a label to describe its numero
             switch (club.Name)
             {
                 case "Bois 3":
@@ -414,7 +392,7 @@ namespace GreenSa.ViewController.Play.Game
                     numclub.Text = "9";
                     break;
                 case "Hybride":
-                    clubs.Source = "fer.png";
+                    clubs.Source = "bois.png";
                     numclub.Text = "H";
                     break;
                 case "Sandwedge":
@@ -432,6 +410,10 @@ namespace GreenSa.ViewController.Play.Game
             }
         }
 
+        /**
+         * This method is used when the position of the user is being loading
+         * Shows the load icon and hides the other ones (no little button when localizing)
+         */
         private void showLoad()
         {
             load.IsEnabled = true;
@@ -444,6 +426,10 @@ namespace GreenSa.ViewController.Play.Game
             backToRadar.IsVisible = false;
         }
 
+        /**
+         * This method is used when the user is ready to chose a target and to shot
+         * Shows the ball icon and hides the other ones (relocalize little button is shown)
+         */
         private void showBall()
         {
             state = 0;
@@ -457,6 +443,10 @@ namespace GreenSa.ViewController.Play.Game
             backToRadar.IsVisible = true;
         }
 
+        /**
+         * This method is used when the user has just shot and is ready to localize it
+         * Shows the radar icon and hides the other ones (cancel lock little button is shown)
+         */
         private void showRadar()
         {
             state = 1;
@@ -470,40 +460,93 @@ namespace GreenSa.ViewController.Play.Game
             backToRadar.IsVisible = false;
         }
 
+        /**
+         * Method executed when clicking on the back arrow when the target is locked to cancel the lock
+         */
+        private void onBackToBallClicked(object sender, EventArgs e)
+        {
+            map.setTargetMovable();
+            showBall();
+            state = 0;
+        }
 
-        /* Méthode qui s'execute au click sur le bouton de la selection du club.
-        * **/
+        /**
+         * This method is called when a club is clicked on the list of available ones
+         */
+        private void OnClubClicked(object sender, EventArgs e)
+        {
+            var club = ListClubsPartie.SelectedItem as Club;
+            setCurrentClub(club);
+            clubselection.IsVisible = false;
+            ListClubsPartie.IsVisible = false;
+        }
+
+        /**
+         * This method is managing the click on the main button of the page
+         */
+        private async void onMainButtonClicked(object sender, EventArgs e)
+        {
+            switch (state)
+            {
+                case 0://ready to shot
+                    showRadar();
+                    map.lockTarget();
+                    break;
+
+                case 1://ready to localize
+                    MyPosition newUserPosition = await localize();
+                    MyPosition start = map.getUserPosition();
+                    partie.addPositionForCurrentHole(start, new MyPosition(map.TargetPin.Position.Latitude, map.TargetPin.Position.Longitude), newUserPosition);
+                    updateScore();
+                    map.setUserPosition(newUserPosition, partie.Shots.Count);
+                    map.setTargetMovable();
+                    updateDistance();
+                    showBall();
+                    break;
+
+                default://the user is ready to shot by default
+                    showBall();
+                    break;
+            }
+        }
+
+        /**
+         * This method is called when clicking on the current club
+         * Shows or hides the list of available clubs
+         */
         private void onClubSelectionClicked(object sender, EventArgs e)
         {
-            if(clubselection.IsVisible == false)
-            {
+            if(clubselection.IsVisible == false) {
                 showClubs();
-            }
-            else
-            {
+            } else {
                 hideClubs();
             }
         }
 
+        /**
+         * This method is called when clicking on the current score
+         * Shows or hides the game card
+         */
         private void OnScoreClicked(object sender, EventArgs e)
         {
-            if (ListHole.IsVisible == false)
-            {
+            if (ListHole.IsVisible == false) {
                 showCard();
-            }
-            else
-            {
+            } else {
                 hideCard();
             }
         }
 
-        /* Méthode qui s'execute au click sur le bouton principal.
-         * **/
+        /**
+         * This method is called when clicking on the bottom right hand corner in order to end the current hole
+         */
         private async void onHoleFinishedButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new HoleFinishedPage(partie));
         }
 
+        /**
+         * This method is called when clicking on the little relocalize button
+         */
         private async void onRelocalizeAction(object sender, EventArgs e)
         {
             MyPosition newUserPosition = await localize();
@@ -511,19 +554,22 @@ namespace GreenSa.ViewController.Play.Game
             updateDistance();
         }
 
-
+        /**
+         * This method is called when clicking on the back button of his phone
+         */
         protected override bool OnBackButtonPressed()
         {
             Profil profil = StatistiquesGolf.getProfil();
             Device.BeginInvokeOnMainThread(async () =>
             {
+                //the user has to confirm his click
                 if (await DisplayAlert("Quitter", "Voulez vous arreter cette partie maintenant ?", "Oui", "Non"))
                 {
-                    if (profil.SaveStats)
+                    if (profil.SaveStats)//check wether the user wants to save his stats or not (a switch in option page manages this choice)
                     {
                         if (await DisplayAlert("Sauvegarder", "Voulez vous sauvegarder cette partie ?", "Oui", "Non"))
                         {
-                            if (this.partie.holeFinishedCount == 0)
+                            if (this.partie.holeFinishedCount == 0)//check if at least one hole was finished
                             {
                                 await this.DisplayAlert("Erreur", "Vous devez au moins avoir fait 1 trou pour enregistrer une partie", "Ok");
                             }
@@ -545,19 +591,6 @@ namespace GreenSa.ViewController.Play.Game
                 }
             });
             return true;
-        }
-
-
-        private void ListClubPartie_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //partie.CurrentClub =(Club) ListClubPartie.SelectedItem;
-            //if (moyenne.IsToggled)
-            //    partie.updateUICircle();
-        }
-
-        private void moyenne_Toggled(object sender, EventArgs e)
-        {
-            //MessagingCenter.Send<MainGamePage,bool>(this, "updateTheCircleVisbility", moyenne.IsToggled);
         }
     }
 }

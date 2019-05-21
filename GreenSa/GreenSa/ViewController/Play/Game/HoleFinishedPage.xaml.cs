@@ -20,6 +20,7 @@ namespace GreenSa.ViewController.Play.Game
     {
         private Partie partie;
         ObservableCollection<Tuple<Shot, IEnumerable<Club>>> item;
+
         public HoleFinishedPage(Partie partie)
         {
             InitializeComponent();
@@ -42,6 +43,9 @@ namespace GreenSa.ViewController.Play.Game
             add.Margin = new Thickness(responsiveDesign(5), responsiveDesign(15), responsiveDesign(5), 0);
         }
 
+        /**
+         * This method is executed when the page is loaded
+         * */
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -62,6 +66,9 @@ namespace GreenSa.ViewController.Play.Game
             return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
         }
 
+        /**
+         * Updates the score label text
+         */
         private void updateScoreText()
         {
             if (partie.getCurrentScore() >= 0)
@@ -74,17 +81,21 @@ namespace GreenSa.ViewController.Play.Game
             }
         }
 
+        /**
+         * This method is called when clicking on the button to valid the current hole and go through the the next one
+         */
         private async void validButtonClicked(object sender, EventArgs e)
         {
-            if (partie.Shots.Count == 0)
+            if (partie.Shots.Count == 0)//checks if at least one shot was performed
             {
                 await DisplayAlert("0 coups rentrés", "Impossible de valider avec aucun shot", "OK");
                 return;
             }
+            //the user has to confirm his click
             var confirm = await this.DisplayAlert("Trou sivant", "Passer au trou suivant ?", "Oui", "Non");
             if (confirm)
             {
-                MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit", 1);
+                MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit", 1);//sends a message : the hole is finished
                 next.IsEnabled = false;
                 Profil profil = StatistiquesGolf.getProfil();
                 partie.holeFinished(profil.SaveStats);
@@ -93,17 +104,22 @@ namespace GreenSa.ViewController.Play.Game
             }
         }
 
+        /**
+         * This method is called when clicking the button to end the game
+         * The current holes is saved before ending the game
+         */
         private async void stopPartieClicked(object sender, EventArgs e)
         {
-            if (partie.Shots.Count == 0)
+            if (partie.Shots.Count == 0)//checks if the current hole was played
             {
                 await this.DisplayAlert("Erreur", "Vous devez avoir joué ce trou pour arrêter la partie ici", "Ok");
             } else
             {
+                //the user has to confirm his click
                 var confirm = await this.DisplayAlert("Arrêter la partie", "Voulez vous vraiment arrêter la partie après ce trou ?", "Oui", "Non");
                 if (confirm)
                 {
-                    MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit", 2);
+                    MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit", 2);//sends a message : the game is finished
                     Profil profil = StatistiquesGolf.getProfil();
                     partie.holeFinished(profil.SaveStats);
                     await Navigation.PopModalAsync();
@@ -112,17 +128,12 @@ namespace GreenSa.ViewController.Play.Game
             
         }
 
-        /*private void OnClubChanged(object sender, EventArgs e)
-        {
-            var picker = sender as Picker;
-            DateTime id = picker.DateId;
-            Shot shot = partie.Shots.Find(s => s.Date.Equals(id));
-            shot.UpdateShotType();
-        }*/
-
-
+        /**
+         * This method is called when a penality count is chosen
+         */
         private void OnPenalityCompleted(object sender, EventArgs e)
         {
+            //gets the shot associated to the picker
             var picker = sender as Picker;
             picker.TextColor = Color.White;
             var tgr = picker.GestureRecognizers[0] as TapGestureRecognizer;
@@ -133,6 +144,7 @@ namespace GreenSa.ViewController.Play.Game
             {
                 penalityCount = (int) picker.SelectedItem;
             }
+            //updates penality count of thhe shot and the corresponding label text
             if (shot != null)
             {
                 shot.SetPenalityCount(penalityCount);
@@ -140,19 +152,22 @@ namespace GreenSa.ViewController.Play.Game
             }
         }
 
-
+        /**
+         * This method is called when clicking on the cross to delete the associated shot
+         */
         private async void OnShotDeletedClicked(object sender, EventArgs e)
         {
+            //gets the shot associated to the image
             var image = sender as Image;
             var tgr = image.GestureRecognizers[0] as TapGestureRecognizer;
             DateTime id = (DateTime) tgr.CommandParameter;
             Shot shot = partie.Shots.Find(s => s.Date.Equals(id));
             var confirm = true;
-            if(!shot.Club.IsPutter())
+            if(!shot.Club.IsPutter())//if not a putter shot then ask a delete confirmation
             {
                 confirm = await this.DisplayAlert("Suppression", "Voulez vous vraiment supprimer ce coup ?", "Oui", "Non");
             }
-            if (confirm)
+            if (confirm)//then remove the shot from list view source and from the game shots list
             {
                 item.Remove(item.ToList().Find(tuple => tuple.Item1.Equals(shot)));
 
@@ -161,7 +176,9 @@ namespace GreenSa.ViewController.Play.Game
             }
         }
 
-
+        /**
+         * This method is called when the button to add a putter shot is clicked
+         */
         private void AddShotButtonClicked(object sender, EventArgs e)
         {
             Shot s = new Shot(Club.PUTTER, null, null, null, DateTime.Now);
@@ -175,11 +192,9 @@ namespace GreenSa.ViewController.Play.Game
 
         protected override bool OnBackButtonPressed()
         {
-            MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit",  0);
+            MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit", 0);
             return base.OnBackButtonPressed();
         }
-
-        
 
     }
 }

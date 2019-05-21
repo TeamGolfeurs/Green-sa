@@ -46,6 +46,9 @@ namespace GreenSa.ViewController.Profile.MyGames
             this.partie = partie;
         }
 
+        /**
+         * This method is executed when the page is loaded
+         * */
         async protected override void OnAppearing()
         {
             try {
