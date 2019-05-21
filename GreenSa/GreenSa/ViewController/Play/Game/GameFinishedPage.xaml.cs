@@ -1,4 +1,5 @@
 ﻿using GreenSa.Models.GolfModel;
+using GreenSa.Models.Profiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,13 +32,16 @@ namespace GreenSa.ViewController.Play.Game
 
         private async void OnGoBackClicked(object sender, EventArgs e)
         {
-            await partie.gameFinished(true);
-            OnBackButtonPressed();
+            Profil profil = StatistiquesGolf.getProfil();
+            if (profil.SaveStats)
+            {
+                await partie.gameFinished(true);
+            }
+            await Navigation.PopToRootAsync();
         }
 
         protected override bool OnBackButtonPressed()
         {
-            Navigation.PopToRootAsync();
             return true;
         }
     }

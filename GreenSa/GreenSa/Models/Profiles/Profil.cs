@@ -22,6 +22,7 @@ namespace GreenSa.Models.Profiles
         [MaxLength(50)]
         public string GolfRef { get; set; }
         public int Photo { get; set; }
+        public Boolean SaveStats { get; set; }
 
         public Profil()
         {
@@ -31,6 +32,7 @@ namespace GreenSa.Models.Profiles
             Index = 53.5;
             GolfRef = "Votre golf favori";
             Photo = 1;
+            SaveStats = true;
         }
     }
 }

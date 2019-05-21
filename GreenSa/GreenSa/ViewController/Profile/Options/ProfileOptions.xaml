@@ -20,7 +20,8 @@
                        HorizontalOptions="Center" VerticalOptions="Start" 
                        Clicked="OnPhotoClicked"
                        />
-            <ImageButton x:Name="arrow" Source="fleche.png" BackgroundColor="Transparent"
+            <Button Text="OK" TextColor="White" FontAttributes="Bold"
+                       x:Name="arrow" BackgroundColor="Transparent"
                        HorizontalOptions="Start" VerticalOptions="Start" 
                        Clicked="OnArrowClicked"
                        />

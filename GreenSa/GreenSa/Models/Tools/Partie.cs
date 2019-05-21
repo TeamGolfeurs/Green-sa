@@ -114,6 +114,9 @@ namespace GreenSa.Models.GolfModel
                 {
                     System.Diagnostics.Debug.WriteLine(e.StackTrace);
                 }
+            } else
+            {
+                Shots.Clear();
             }
         }
 

@@ -410,6 +410,20 @@ namespace GreenSa.Models.GolfModel
             await SQLiteNetExtensionsAsync.Extensions.WriteOperations.InsertOrReplaceWithChildrenAsync(connection, scoreOfThisPartie,false);
         }
 
+        public static Profil getProfil()
+        {
+            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            connection.CreateTable<Profil>();
+            List<Profil> profils = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Profil>(connection);
+            if (profils.Count > 0)
+            {
+                return profils[0];
+            } else
+            {
+                return null;
+            }
+        }
+
         public static double getPlayerIndex()
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
@@ -430,14 +444,8 @@ namespace GreenSa.Models.GolfModel
          */
         private static int numberShotsBeforeGreen(List<Shot> shots)
         {
-            int shotsBeforeGreen = 0;
-            Club used = shots[0].Club;
-            while ((!used.Equals(Club.PUTTER)) && shotsBeforeGreen < shots.Count - 1)//2 <4-1, 3 =4-1
-            {
-                shotsBeforeGreen++;
-                used = shots[shotsBeforeGreen].Club;
-            }
-            return shotsBeforeGreen;
+            int puttCount = StatistiquesGolf.nbCoupPutt(shots);
+            return shots.Count - puttCount;
         }
 
         /** Computes the number of putts
@@ -446,8 +454,15 @@ namespace GreenSa.Models.GolfModel
          */
         private static int nbCoupPutt(List<Shot> shots)
         {
-            int shotsBeforeGreen = numberShotsBeforeGreen(shots);
-            return shots.Count - shotsBeforeGreen;
+            int puttCount = 0;
+            foreach (Shot shot in shots)
+            {
+                if (shot.Club.IsPutter())
+                {
+                    puttCount++;
+                }
+            }
+            return puttCount;
         }
 
         /** Checks if the green was reached in regulation

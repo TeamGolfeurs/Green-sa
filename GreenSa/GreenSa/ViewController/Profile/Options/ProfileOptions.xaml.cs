@@ -32,10 +32,12 @@ namespace GreenSa.ViewController.Profile.Options
             InitializeComponent();
             photo.Margin = new Thickness(0, responsiveDesign(30), 0, responsiveDesign(5));
             photo.HeightRequest = responsiveDesign(140);
-            arrow.Margin = responsiveDesign(10);
-            arrow.HeightRequest = responsiveDesign(25);
             modifier.Margin = responsiveDesign(15);
             modifier.HeightRequest = responsiveDesign(30);
+            arrow.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            arrow.Margin = responsiveDesign(-15);
+            arrow.HeightRequest = responsiveDesign(80);
+            arrow.WidthRequest = responsiveDesign(80);
             golfreftitle.FontSize = 25;
             indextitle.FontSize = 25;
             usernametitle.FontSize = 25;

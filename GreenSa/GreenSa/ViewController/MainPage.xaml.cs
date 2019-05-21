@@ -90,7 +90,7 @@ namespace GreenSa.ViewController
          * Redirige vers la page "OptionTabbedPage"
          * */
         async private void OnOptionsClicked(object sender, EventArgs e){ 
-            await Navigation.PushAsync(new SeeBDContent());
+            await Navigation.PushAsync(new OptionPage());
         }
     }
 }

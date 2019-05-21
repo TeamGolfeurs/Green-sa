@@ -1,4 +1,5 @@
 ﻿using GreenSa.Models.GolfModel;
+using GreenSa.Models.Profiles;
 using GreenSa.Models.Tools;
 using GreenSa.Models.ViewElements;
 using System;
@@ -33,7 +34,7 @@ namespace GreenSa.ViewController.Play.Game
             par.Margin = new Thickness(responsiveDesign(205), responsiveDesign(25), 0, 0);
             score.Margin = new Thickness(responsiveDesign(265), responsiveDesign(25), 0, 0);
             parlegende.Margin = new Thickness(responsiveDesign(200), responsiveDesign(5), 0, 0);
-            scorelegende.Margin = new Thickness(responsiveDesign(26), responsiveDesign(5), 0, 0);
+            scorelegende.Margin = new Thickness(responsiveDesign(260), responsiveDesign(5), 0, 0);
             next.BackgroundColor = Color.FromHex("39B54A");
             next.Margin = new Thickness(0, responsiveDesign(5), responsiveDesign(5), responsiveDesign(5));
             stop.Margin = new Thickness(responsiveDesign(5), responsiveDesign(5), 0, responsiveDesign(5));
@@ -85,7 +86,8 @@ namespace GreenSa.ViewController.Play.Game
             {
                 MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit", 1);
                 next.IsEnabled = false;
-                partie.holeFinished(true);
+                Profil profil = StatistiquesGolf.getProfil();
+                partie.holeFinished(profil.SaveStats);
                 await Navigation.PopModalAsync();
                 next.IsEnabled = true;
             }
@@ -93,15 +95,17 @@ namespace GreenSa.ViewController.Play.Game
 
         private async void stopPartieClicked(object sender, EventArgs e)
         {
-            if (this.partie.holeFinishedCount == 0)
+            if (partie.Shots.Count == 0)
             {
-                await this.DisplayAlert("Erreur", "Vous devez au moins avoir fait 1 trou pour enregistrer une partie", "Ok");
+                await this.DisplayAlert("Erreur", "Vous devez avoir joué ce trou pour arrêter la partie ici", "Ok");
             } else
             {
-                var confirm = await this.DisplayAlert("Arrêter la partie", "Voulez vous vraiment arrêter la partie maintenant ? (ce trou ne sera pas compté dans les statistiques)", "Oui", "Non");
+                var confirm = await this.DisplayAlert("Arrêter la partie", "Voulez vous vraiment arrêter la partie après ce trou ?", "Oui", "Non");
                 if (confirm)
                 {
                     MessagingCenter.Send<HoleFinishedPage, int>(this, "ReallyFinit", 2);
+                    Profil profil = StatistiquesGolf.getProfil();
+                    partie.holeFinished(profil.SaveStats);
                     await Navigation.PopModalAsync();
                 }
             }
