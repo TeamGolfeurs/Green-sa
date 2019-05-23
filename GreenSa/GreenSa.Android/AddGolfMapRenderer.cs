@@ -1,26 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Xamarin.Forms.Maps.Android;
 using Xamarin.Forms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Gms.Maps;
-using static Android.Gms.Maps.GoogleMap;
 using Xamarin.Forms;
 using GreenSa.Models.Tools.GPS_Maps;
 using Greensa.Droid;
 using GreenSa.Droid;
-using System.Collections.ObjectModel;
-using GreenSa.Models.GolfModel;
-using GreenSa.ViewController.Play.Game;
+
 
 [assembly: ExportRenderer(typeof(AddGolfMap), typeof(AddGolfMapRenderer))]
 namespace Greensa.Droid
@@ -94,7 +85,7 @@ namespace Greensa.Droid
         }
 
 
-        protected override void OnMapReady(Android.Gms.Maps.GoogleMap map)
+        protected override void OnMapReady(GoogleMap map)
         {
             base.OnMapReady(map);
             this.map = map;

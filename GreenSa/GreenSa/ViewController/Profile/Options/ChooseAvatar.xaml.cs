@@ -86,9 +86,10 @@ namespace GreenSa.ViewController.Profile.Options
             ImageButton image = (ImageButton) sender;
             this.photos[lastPhotoIndex].BorderWidth = 0;
             this.photos[lastPhotoIndex].BorderColor = Color.Transparent;
-            LocalUser.Photo = this.photos.ToList().IndexOf(image);
+            int index = this.photos.ToList().IndexOf(image);
+            LocalUser.Photo = index + 1;
             DBconnection.Update(LocalUser);
-            lastPhotoIndex = LocalUser.Photo;
+            lastPhotoIndex = index;
             this.photos[lastPhotoIndex].BorderWidth = 3;
             this.photos[lastPhotoIndex].BorderColor = col;
         }

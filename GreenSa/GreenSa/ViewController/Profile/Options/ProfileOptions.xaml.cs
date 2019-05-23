@@ -44,7 +44,7 @@ namespace GreenSa.ViewController.Profile.Options
             golfref.FontSize = 20;
             index.FontSize = 20;
             username.FontSize = 20;
-
+            DBconnection = DependencyService.Get<ISQLiteDb>().GetConnection();
             updateLabels();
             boutons.Margin = new Thickness(30, 15, 30, 15);
         }
