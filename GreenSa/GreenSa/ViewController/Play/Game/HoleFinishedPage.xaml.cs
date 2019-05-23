@@ -137,8 +137,7 @@ namespace GreenSa.ViewController.Play.Game
             var picker = sender as Picker;
             picker.TextColor = Color.White;
             var tgr = picker.GestureRecognizers[0] as TapGestureRecognizer;
-            DateTime id = (DateTime)tgr.CommandParameter;
-            Shot shot = partie.Shots.Find(s => s.Date.Equals(id));
+            Shot shot = (Shot)tgr.CommandParameter;
             int penalityCount = 0;
             if (picker.SelectedItem != null)
             {
@@ -160,8 +159,7 @@ namespace GreenSa.ViewController.Play.Game
             //gets the shot associated to the image
             var image = sender as Image;
             var tgr = image.GestureRecognizers[0] as TapGestureRecognizer;
-            DateTime id = (DateTime) tgr.CommandParameter;
-            Shot shot = partie.Shots.Find(s => s.Date.Equals(id));
+            Shot shot = (Shot)tgr.CommandParameter;
             var confirm = true;
             if(!shot.Club.IsPutter())//if not a putter shot then ask a delete confirmation
             {
@@ -177,15 +175,36 @@ namespace GreenSa.ViewController.Play.Game
         }
 
         /**
+         * This method is called when clicking on a new club for one shot
+         */
+        private void OnClubChanged(object sender, EventArgs e)
+        {
+            //gets the shot associated to the image
+            var picker = sender as Picker;
+            var tgr = picker.GestureRecognizers[0] as TapGestureRecognizer;
+            Shot shot = null;
+            try
+            {
+                shot = (Shot)tgr.CommandParameter;
+                if (shot != null)
+                {
+                    shot.UpdateShotType();
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                Debug.WriteLine("Error : " + ex.StackTrace);
+            }
+        }
+
+        /**
          * This method is called when the button to add a putter shot is clicked
          */
         private void AddShotButtonClicked(object sender, EventArgs e)
         {
             Shot s = new Shot(Club.PUTTER, null, null, null, DateTime.Now);
             partie.Shots.Add(s);
-            List<Club> l = new List<Club>();
-            l.Add(Club.PUTTER);
-            item.Add(new Tuple<Shot, IEnumerable<Club>>(s, l));
+            item.Add(new Tuple<Shot, IEnumerable<Club>>(s, partie.Clubs));
             updateScoreText();
         }
 

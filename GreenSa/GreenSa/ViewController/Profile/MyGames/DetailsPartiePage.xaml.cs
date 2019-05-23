@@ -58,6 +58,9 @@ namespace GreenSa.ViewController.Profile.MyGames
             totalPutt.Text = totPutt + "";
             totalPen.Text = totPen + "";
             totalScore.Text = totScore + "";
+
+            partie.Text = sp.GolfName + " :";
+            date.Text = sp.DateString;
         }
 
         private int responsiveDesign(int pix)

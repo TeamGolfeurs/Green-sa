@@ -80,21 +80,28 @@ namespace GreenSa.Models.GolfModel
             get { return ((int)(this.RealShotDist())).ToString()+"m"; }
         }
 
+        /**
+         * Computes the distance of the real shot 
+         */
         public double RealShotDist()
         {
-            if (InitPlace == null) return 0;
+            if (InitPlace == null || RealShot == null) return 0;
             return CustomMap.DistanceTo(InitPlace.X,InitPlace.Y,RealShot.X,RealShot.Y,"M");
         }
 
+        /**
+         * Computes the distance of the shot the player wanted/expected to perform 
+         */
         public double TargetDist()
         {
-            if (InitPlace == null) return 0;
+            if (InitPlace == null || Target == null) return 0;
             return CustomMap.DistanceTo(InitPlace.X, InitPlace.Y, Target.X, Target.Y, "M");
         }
 
+        
         public double RealShotTargetDist()
         {
-            if (InitPlace == null) return 0;
+            if (Target == null || RealShot == null) return 0;
             return CustomMap.DistanceTo(Target.X, Target.Y, RealShot.X, RealShot.Y, "M");
         }
 
@@ -142,7 +149,11 @@ namespace GreenSa.Models.GolfModel
 
         private ShotCategory determineShotCategory()
         {
-            ShotCategory sc = ShotCategory.GoodShot;
+            ShotCategory sc = ShotCategory.FailedShot;
+            if (Target == null || RealShot == null || InitPlace == null)
+            {
+                return sc;
+            }
             double index = StatistiquesGolf.getPlayerIndex();
 
             double psmd = this.getPerfectShotMaxDist(index);
@@ -184,7 +195,8 @@ namespace GreenSa.Models.GolfModel
             return sc;
         }
 
-        /** Gets the shot angle 
+        /** 
+         * Gets the shot angle 
          * rstd : RealShotTargetDist
          * td : TargetDist
          * rsd : RealShotDist
@@ -201,7 +213,8 @@ namespace GreenSa.Models.GolfModel
             return angle;
         }
 
-        /** Computes the distance maximal to classify a shot as a good (tolerable) one
+        /** 
+         * Computes the distance maximal to classify a shot as a good (tolerable) one
          */
         private double getGoodShotMaxDist(double index)
         {

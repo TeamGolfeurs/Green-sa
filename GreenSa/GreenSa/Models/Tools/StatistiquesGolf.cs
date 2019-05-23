@@ -20,8 +20,8 @@ namespace GreenSa.Models.GolfModel
     {
 
         /**
-         * Get the average distance for all clubs
-         * if clubs null then get all clubs
+         * Gets the average distance for all clubs
+         * if clubs  parameter is null then it deals with all clubs
          * */
         public async static Task<IEnumerable<Tuple<Club, double>>> getAverageDistanceForClubsAsync(Func<Club, bool> filtre, List<Club> clubs)
         {
@@ -59,7 +59,7 @@ namespace GreenSa.Models.GolfModel
                         sommesEachClubs.Add(s.Club, 0);
                         nombreDeShotParClub.Add(s.Club, 0);
                     }
-                    sommesEachClubs[s.Club] += (CustomMap.DistanceTo(s.InitPlace.X, s.InitPlace.Y, s.RealShot.X, s.RealShot.Y, "M"));
+                    sommesEachClubs[s.Club] += s.RealShotDist();
                     nombreDeShotParClub[s.Club] += 1;
                 }
             }
