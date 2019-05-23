@@ -34,7 +34,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <viewElements:MyButton Text="Ajouter un parcours" x:Name="addGolf" Clicked="OnAddGolfClicked" VerticalOptions="End"
-                    TextColor="White" BorderRadius="50" BorderWidth="2" Margin="10"/>
+                    TextColor="White" Font="Large" BorderRadius="50" BorderWidth="2" Margin="10"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

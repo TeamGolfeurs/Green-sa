@@ -315,25 +315,29 @@ namespace GreenSa.Models.GolfModel
          * Saves the data of a hole
          * game : the game
          * hole : the hole to save
+         * save : true to save the hole stats, false otherwise. false returns the ScoreHole anyway
          * return the created ScoreHole
          */
-        public static ScoreHole saveForStats(Partie game, Hole hole)
+        public static ScoreHole saveForStats(Partie game, Hole hole, bool save)
         {
-            if (game.Shots.Count == 0)
-                throw new Exception("0 shots dans la liste des shots.");
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<Club>();
-            connection.CreateTable<MyPosition>();
-            connection.CreateTable<Shot>();
-            //first let's insert in the database all the shots currently stored in the game
-            SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceAllWithChildren(connection, game.Shots, true);
-            connection.CreateTable<ScoreHole>();
-
-            //then creates a ScoreHole object that stores the hole statistics and insert it in the database
             ScoreHole h = new ScoreHole(hole, game.getPenalityCount(), game.getCurrentScore(), isHit(game.Shots, hole.Par), nbCoupPutt(game.Shots),DateTime.Now);
-            SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, h, false);
-            string sql = @"select last_insert_rowid()";
-            h.Id = connection.ExecuteScalar<int>(sql);
+            if (save)
+            {
+                if (game.Shots.Count == 0)
+                    throw new Exception("0 shots dans la liste des shots.");
+                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+                connection.CreateTable<Club>();
+                connection.CreateTable<MyPosition>();
+                connection.CreateTable<Shot>();
+                //first let's insert in the database all the shots currently stored in the game
+                SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceAllWithChildren(connection, game.Shots, true);
+                connection.CreateTable<ScoreHole>();
+
+                //then creates a ScoreHole object that stores the hole statistics and insert it in the database
+                SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, h, false);
+                string sql = @"select last_insert_rowid()";
+                h.Id = connection.ExecuteScalar<int>(sql);
+            }
             return h;
         }
 

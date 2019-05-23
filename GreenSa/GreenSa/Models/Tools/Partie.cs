@@ -99,25 +99,9 @@ namespace GreenSa.Models.GolfModel
 
         public void holeFinished(bool saveForStatistics)
         {
-            if (saveForStatistics)
-            {
-                foreach (Shot s in Shots)
-                {
-                    System.Diagnostics.Debug.WriteLine(s.ToString());
-                }
-                try
-                {
-                    ScoreHole sh = StatistiquesGolf.saveForStats(this, itHole.Current);
-                    ScoreOfThisPartie.add(sh);
-                    Shots.Clear();
-                } catch (SQLiteException e)
-                {
-                    System.Diagnostics.Debug.WriteLine(e.StackTrace);
-                }
-            } else
-            {
-                Shots.Clear();
-            }
+            ScoreHole sh = StatistiquesGolf.saveForStats(this, itHole.Current, saveForStatistics);
+            ScoreOfThisPartie.add(sh);
+            Shots.Clear();
         }
 
         public async Task gameFinished(bool saveForStatistics)
