@@ -54,11 +54,17 @@ namespace GreenSa.Models.GolfModel
             DateDebut = date;
         }
 
+        /**
+         * Adds a ScoreHole in the scoreHole list
+         */
         public void add(ScoreHole sh)
         {
             scoreHoles.Add(sh);
         }
 
+        /**
+         * Converts an integer describing a mounth into its name as a string
+         */
         private string getMonthStr(int month)
         {
             String mont = "";

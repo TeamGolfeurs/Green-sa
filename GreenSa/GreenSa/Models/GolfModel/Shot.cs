@@ -90,7 +90,7 @@ namespace GreenSa.Models.GolfModel
         }
 
         /**
-         * Computes the distance of the shot the player wanted/expected to perform 
+         * Computes the distance of the targeted shot
          */
         public double TargetDist()
         {
@@ -98,7 +98,9 @@ namespace GreenSa.Models.GolfModel
             return CustomMap.DistanceTo(InitPlace.X, InitPlace.Y, Target.X, Target.Y, "M");
         }
 
-        
+        /**
+         * Computes the distance between the real shot and the targeted one 
+         */
         public double RealShotTargetDist()
         {
             if (Target == null || RealShot == null) return 0;
@@ -147,9 +149,13 @@ namespace GreenSa.Models.GolfModel
             return this.Club.Name.Equals("Putter");
         }
 
+        /**
+         * Classify the shot depending on the variation between the targeted shot and the real shot
+         */
         private ShotCategory determineShotCategory()
         {
-            ShotCategory sc = ShotCategory.FailedShot;
+            ShotCategory sc = ShotCategory.ChipShot;
+            //shots added in HoleFinishedPage => not real shots => you don't want to count it in stats
             if (Target == null || RealShot == null || InitPlace == null)
             {
                 return sc;
@@ -200,7 +206,7 @@ namespace GreenSa.Models.GolfModel
          * rstd : RealShotTargetDist
          * td : TargetDist
          * rsd : RealShotDist
-         * degree : true to get the angle in degrees
+         * degree : true to get the angle in degrees, false in radian
          */
         public double GetShotAngle(double rstd, double td, double rsd, Boolean degree = false)
         {
@@ -214,7 +220,8 @@ namespace GreenSa.Models.GolfModel
         }
 
         /** 
-         * Computes the distance maximal to classify a shot as a good (tolerable) one
+         * Computes the maximal distance to classify a shot as a good one
+         * index : the player's index
          */
         private double getGoodShotMaxDist(double index)
         {
@@ -236,7 +243,9 @@ namespace GreenSa.Models.GolfModel
             return psmd;
         }
 
-        /** Computes the distance maximal to classify a shot as a perfect one
+        /** 
+         * Computes the maximal distance to classify a shot as a perfect one
+         * index : the player's index
          */
         private double getPerfectShotMaxDist(double index)
         {
