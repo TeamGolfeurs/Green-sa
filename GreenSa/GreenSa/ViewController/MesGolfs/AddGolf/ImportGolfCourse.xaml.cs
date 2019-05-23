@@ -23,14 +23,15 @@ namespace GreenSa.ViewController.Option
     public partial class ImportGolfCourse : ContentPage
     {
 
-        List<Pin> pins;//list of the current pins placed on the map
+        //list of the current pins placed on the map
+        List<Pin> pins;
 
         public ImportGolfCourse()
         {
             InitializeComponent();
             this.pins = new List<Pin>();
 
-            /*Init some content on the view*/
+            //Init some content on the view
             this.validPar.BorderColor = Color.FromHex("0C5E11");
             this.validPar.BorderWidth = 2;
             this.deletePin.BorderColor = Color.FromHex("0C5E11");
@@ -51,7 +52,8 @@ namespace GreenSa.ViewController.Option
             });
         }
 
-        /** This function is called when the 'Localiser' button is pressed
+        /** 
+         * This method is called when the button to localize on the map is pressed
          */
         private async void OnLocalizeClick(object sender, EventArgs e)
         {
@@ -70,7 +72,8 @@ namespace GreenSa.ViewController.Option
             }
         }
 
-        /** This function is called when the 'Créer le parcours' button is pressed
+        /**
+         * This method is called when the button to create a new golf course is pressed
          */
         private async void OnCreateCourseClick(object sender, EventArgs e)
         {
@@ -97,7 +100,8 @@ namespace GreenSa.ViewController.Option
             }
         }
 
-        /** This function is called when the 'Supprimer le dernier trou' button is pressed
+        /** 
+         * This method is called when the button to delete the last placed hole pin is pressed
          */
         private async void OnDeletePinClick(object sender, EventArgs e)
         {
@@ -117,7 +121,8 @@ namespace GreenSa.ViewController.Option
             }
         }
 
-        /** This function is called when the 'Supprimer tous les trous' button is pressed
+        /** 
+         * This method is called when the button to delete all hole pins is pressed
          */
         private async void OnDeleteAllPinsClick(object sender, EventArgs e)
         {
@@ -135,8 +140,9 @@ namespace GreenSa.ViewController.Option
             }
         }
 
-        /** This function is called when the 'Valider' button is pressed
-        */
+        /** 
+         * This method is called when the button to validate the hole is pressed
+         */
         private void OnValidParClick(object sender, EventArgs e)
         {
             if ("".Equals(this.golfParEntry.Text))
@@ -146,7 +152,7 @@ namespace GreenSa.ViewController.Option
             else
             {
                 int par = Convert.ToInt32(this.golfParEntry.Text);
-                this.pins[this.pins.Count - 1].Id = par;//As the pin ID isn't used, let's use it to store the par
+                this.pins[this.pins.Count - 1].Id = par;//Given that the pin ID isn't used, let's use it to store the par
                 try
                 {
                     MessagingCenter.Send<Object>(par, "validPar");
@@ -168,7 +174,8 @@ namespace GreenSa.ViewController.Option
             }
         }
 
-        /** Creates an xml string describing the golf course whose data are specified in this pane by the user
+        /** 
+         * Creates an xml string describing the golf course whose data are specified in this pane by the user
          * return this xml string
          */
         private String CreateXmlGolfCourse()
@@ -204,7 +211,8 @@ namespace GreenSa.ViewController.Option
 
         }
 
-        /** Inserts a golf course in the database from an xml string describing the golf course
+        /** 
+         * Inserts a golf course in the database from an xml string describing the golf course
          * xmlGolfCourse : the xml string describing the golf course
          */
         private void InsertGolfCourseBdd(String xmlGolfCourse)
@@ -237,18 +245,20 @@ namespace GreenSa.ViewController.Option
             }
         }
 
-        /** Manages the delete of all the pins currently placed on the map
+        /** 
+         * Manages the delete of all the pins currently placed on the map
          */
         private void ManageAllPinsDelete()
         {
-            this.pins.Clear();//remove all pins in the common list
+            this.pins.Clear();
             MessagingCenter.Send<Object>(this, "deleteAllPins");//send a message to delete all pins from the map
             this.SetCourseNameVisibility(false);
             this.SetParVisibility(false);
         }
 
 
-        /** Set the visibility to the golf course name input area
+        /** 
+         * Sets the visibility to the golf course name input area
          * isVisible : true is it has to be visible, false otherwise
          */
         private void SetCourseNameVisibility(Boolean isVisible)
@@ -258,7 +268,8 @@ namespace GreenSa.ViewController.Option
         }
 
 
-        /** Set the visibility to the par validation input area
+        /** 
+         * Sets the visibility to the par validation input area
          * isVisible : true is it has to be visible, false otherwise
          */
         private void SetParVisibility(Boolean isVisible)
@@ -269,7 +280,8 @@ namespace GreenSa.ViewController.Option
             validPar.IsVisible = isVisible;
         }
 
-        /** Set visible the golf course name input area if nine pins are placed on the map, not visible otherwise
+        /** 
+         * Sets visible the golf course name input area if nine pins are placed on the map, not visible otherwise
          */
         private void NinePinsCourseNameManagement()
         {

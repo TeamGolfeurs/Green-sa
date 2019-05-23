@@ -140,7 +140,7 @@ namespace GreenSa.ViewController.Play.Game
                 loadCard();
                 Hole nextHole = partie.getNextHole();
                 map.setHolePosition(nextHole);
-                numcoup.Text = partie.getIndexHole().Item1.ToString();
+                numcoup.Text = partie.getCurrentHoleNumero() + "";
                 parTrou.Text = "PAR " + partie.getNextHole().Par.ToString();
                 MyPosition position = new MyPosition(0, 0);
                 //make sure that the GPS is avaible

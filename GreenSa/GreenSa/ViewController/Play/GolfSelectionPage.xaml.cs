@@ -35,13 +35,11 @@ namespace GreenSa.ViewController.Play
 
         /**
          * This method is executed when the page is loaded
-         * */
+         */
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            //Définition du filtre
             Func<GolfCourse, bool> f = (c => true);
-            //Recupere la liste des Golfs filtré par la classe GestionGolf
             List<GolfCourse> res = await GestionGolfs.getListGolfsAsync(f);
             ListGolfCourse.ItemsSource = res;
         }
@@ -50,7 +48,7 @@ namespace GreenSa.ViewController.Play
         /*
          * Called when a golf course is picked by the user
          * This method ask the user whether he wants to load a not ended game or start a new one. Then the game is start
-         * */
+         */
          private async void onGolfSelection(object sender, EventArgs e)
          {
             var g = ListGolfCourse.SelectedItem as GolfCourse;
@@ -70,7 +68,7 @@ namespace GreenSa.ViewController.Play
                 Func<Club, bool> f = (c => true);
                 List<Club> clubselected = await GestionGolfs.getListClubsAsync(f);
                 clubselected.RemoveAll(c => c.selected == false);
-                //Check if the user has at least one club on his bag
+                //Checks if the user has at least one club on his bag
                 if (clubselected.Count == 0)
                 {
                     await this.DisplayAlert("Erreur", "Vous n'avez aucun club dans votre sac. Veuillez en choisir au moins un dans le page 'Profil'", "ok");

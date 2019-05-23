@@ -39,6 +39,9 @@ namespace GreenSa.ViewController.Play.Game
             await Navigation.PopToRootAsync();
         }
 
+        /**
+         * Cancels the back button default action
+         */
         protected override bool OnBackButtonPressed()
         {
             return true;

@@ -36,7 +36,7 @@ namespace Greensa.Droid
         {
             this.Markers = new List<Marker>();
             this.isParValidate = true;
-            //Suscribe to get a notification to delete the last pin
+            //Suscribes to get a notification to delete the last pin
             MessagingCenter.Subscribe<Object>(this, "validPar", (obj) =>
             {
                 if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
@@ -46,7 +46,7 @@ namespace Greensa.Droid
                 }
                 this.isParValidate = true;
             });
-            //Suscribe to get a notification to delete the last pin
+            //Suscribes to get a notification to delete the last pin
             MessagingCenter.Subscribe<Object>(this, "deleteLastPin", (obj) =>
             {
                 if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
@@ -57,7 +57,7 @@ namespace Greensa.Droid
                     this.isParValidate = true;
                 }
             });
-            //Suscribe to get a notification to delete the last pin
+            //Suscribes to get a notification to delete the last pin
             MessagingCenter.Subscribe<Object>(this, "deleteAllPins", (obj) =>
             {
                 if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
@@ -109,7 +109,6 @@ namespace Greensa.Droid
                     };
                     MessagingCenter.Send<Pin>(pin, "getAddGolfMapPins");
                     var marker = base.CreateMarker(pin);
-                    //marker.Draggable(true);
                     BitmapDescriptor ic = BitmapDescriptorFactory.FromResource(Resource.Drawable.flag);
                     marker.SetIcon(ic);
                     var addedMarker = this.map.AddMarker(marker);

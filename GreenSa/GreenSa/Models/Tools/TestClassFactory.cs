@@ -21,6 +21,10 @@ namespace GreenSa.Models.GolfModel
             return (T)v.GetValue(new Random().Next(v.Length));
         }
 
+        /**
+         * Creates a filled ScorePartie and insert it recursivly in the database. 
+         * Values used to create the statistics have not necessarily any sense
+         */
         public static ScorePartie CreateScorePartie()
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();

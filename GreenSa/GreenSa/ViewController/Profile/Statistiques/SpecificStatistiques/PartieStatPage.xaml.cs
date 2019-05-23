@@ -30,6 +30,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             
         }
 
+        /**
+         * Changes the game and some concerned labels
+         */
         public void changePartie(ScorePartie sp, string golfCourseName)
         {
             this.scorePartie = sp;
@@ -48,6 +51,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             this.updateNotableScores();
         }
 
+        /**
+         * Initializes the value of the given key in the dictionnary or increments it if already exists
+         */
         private void incrementDicoKey(Dictionary<string, int> dico, string key)
         {
             if (!dico.ContainsKey(key))
@@ -60,6 +66,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             }
         }
 
+        /**
+         * Updates notable scores
+         */
         private void updateNotableScores()
         {
             Dictionary<string, int> notableScores = new Dictionary<string, int>();
@@ -71,7 +80,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             int girCount = 0;
             double index = StatistiquesGolf.getPlayerIndex();
             int averageScorePerHole = (int)Math.Round(index / 18.0);
-            //fill the dictionnary of relevent scores
+            //fills the dictionnary of relevent scores
             foreach (Shot shot in ulgss)//manages unbelievable unexpected shot index
             {
                 currentDist = shot.RealShotDist();
@@ -114,7 +123,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             {
                 minScoreCount = 4;
             }
-            //check if there are enought bad scores so that is relevent
+            //checks if there are enought bad scores so that is relevent
             if (notableScores.ContainsKey("More"))
             {
                 if (notableScores["More"] < minScoreCount)
@@ -122,7 +131,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                     notableScores.Remove("More");
                 }
             }
-            //check if there are enought pars so that is relevent
+            //checks if there are enought pars so that is relevent
             if (notableScores.ContainsKey("0"))
             {
                 int courseSizeMult = this.scorePartie.scoreHoles.Count / 9;//constants variate if it's a 9 or 18 holes
@@ -140,7 +149,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                 }
                 
             }
-            //check if there are enought one putt so that is relevent
+            //checks if there are enought one putt so that is relevent
             if (notableScores.ContainsKey("onePutt"))
             {
                 if (notableScores["onePutt"] < minScoreCount)
@@ -157,7 +166,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                 this.notableScore2Frame.IsVisible = true;
                 this.notableScore2Label.IsVisible = true;
 
-                for (int j = -3; j<0; ++j)//chose between albatros eagle and birdie
+                for (int j = -3; j<0; ++j)//choses between albatros eagle and birdie
                 {
                     if (notableScores.ContainsKey("" + j))//albatros
                     {
@@ -173,7 +182,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
                     notForScore = this.notableScore2;
                     notForScoreLabel = this.notableScore2Label;
                 }
-                //chose one between the ones left
+                //choses one between the ones left
                 if (notableScores.ContainsKey("approachIn"))
                 {
                     updateNotableLabel(averageScorePerHole, notForScore, notForScoreLabel, "approachIn", ulgss, notableScores);
@@ -191,7 +200,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 
                 if (chosenCount < 2)
                 {
-                    if (chosenCount == 0)//par and More are left -> display GIR on the first labels
+                    if (chosenCount == 0)//if par and more are left -> display GIR on the first labels
                     {
                         this.updateGIR(girCount);
                         if (notableScores.ContainsKey("More"))
@@ -229,6 +238,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             }
         }
 
+        /**
+         * Updates a statistic on the view
+         */
         private void updateNotableLabel(int averageScorePerHole, Label notableScore, Label notableScoreLabel, string chosenKey, List<Shot> ulgss, Dictionary<string, int> notableScores)
         {
             switch (chosenKey)
@@ -261,6 +273,12 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             }
         }
 
+        /**
+         * Updates some labels to display green in regulation stats
+         * data : the label that will contain the data
+         * dataLabel : the label that will contain the description
+         * girCount : the green in regulation count
+         */
         private void updateGIR(Label data, Label dataLabel, int girCount)
         {
             if (this.scorePartie.scoreHoles.Count == 0)
@@ -279,12 +297,18 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 
         }
 
+        /**
+         * Updates the first notable label with green in regulation stat
+         * girCount : the green in regulation count
+         */
         private void updateGIR(int girCount)
         {
             this.updateGIR(this.notableScore1, this.notableScore1Label, girCount);
         }
 
-
+        /**
+         * Updates the labels to display average putts count statistic
+         */
         private void updateAveragePutts()
         {
             double averagePutts = StatistiquesGolf.getAveragePutts(this.scorePartie.scoreHoles);
@@ -302,6 +326,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             }
         }
 
+        /**
+         * Updates the chart
+         */
         private void updateChart()
         {
             List<Shot> allNeededShots = this.allShots.Where(sh => sh.Date >= scorePartie.DateDebut && sh.Date <= scorePartie.DateFin).ToList();
@@ -366,8 +393,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 
 
         /**
-         * Méthode déclenchée au click sur le bouton légende
-         * */
+         * This method is called when clicking on the legend button
+         * Hides the legend and display the stats or vice versa
+         */
         private void onLegendClick(object sender, EventArgs e)
         {
             Button b = (Button)sender;

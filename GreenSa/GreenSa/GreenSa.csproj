@@ -53,7 +53,7 @@
     <Compile Include="Models\Tools\GPS_Maps\CustomMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomPin.cs" />
     <Compile Include="Models\Tools\MyPosition.cs" />
-    <Compile Include="Models\Profiles\Profil.cs" />
+    <Compile Include="Models\GolfModel\Profil.cs" />
     <Compile Include="Models\Tools\Services\GpsService.cs" />
     <Compile Include="Models\Tools\Services\NotAvaibleException.cs" />
     <Compile Include="Models\Tools\Services\WindInfo.cs" />

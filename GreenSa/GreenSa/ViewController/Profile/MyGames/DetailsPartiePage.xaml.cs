@@ -19,6 +19,7 @@ namespace GreenSa.ViewController.Profile.MyGames
             int totPutt = 0;
             int totPen = 0;
             var totScore = 0;
+            //computes the total number of pars, putts, penality shots and shots of this game and creates a list of DisplayScoreCard (one by hole)
             foreach (ScoreHole sh in sp.scoreHoles)
             {
                 list.Add(new DisplayScoreCard(i, sh));
@@ -30,6 +31,7 @@ namespace GreenSa.ViewController.Profile.MyGames
             }
             listScore.ItemsSource = list;
 
+            //manages the number of shots that the user did over the par of the golf course (top right hand corner of the view)
             var scoreDelta = totScore - totPar;
             var sdAbs = Math.Abs(scoreDelta);
             if (scoreDelta < 0)
@@ -42,18 +44,18 @@ namespace GreenSa.ViewController.Profile.MyGames
             }
             if (sdAbs >= 100) {
                 score.FontSize = 25;
-                score.Margin = new Thickness(responsiveDesign(32), responsiveDesign(33), 0, 0);
+                score.Margin = new Thickness(MainPage.responsiveDesign(32), MainPage.responsiveDesign(33), 0, 0);
             }
             else if (sdAbs >= 10)
             {
                 score.FontSize = 30;
-                score.Margin = new Thickness(responsiveDesign(35), responsiveDesign(29), 0, 0);
+                score.Margin = new Thickness(MainPage.responsiveDesign(35), MainPage.responsiveDesign(29), 0, 0);
             }
             else
             {
-                score.Margin = new Thickness(responsiveDesign(39), responsiveDesign(27), 0, 0);
+                score.Margin = new Thickness(MainPage.responsiveDesign(39), MainPage.responsiveDesign(27), 0, 0);
             }
-            title.Margin = new Thickness(responsiveDesign(65), responsiveDesign(20), 0, 0);
+            title.Margin = new Thickness(MainPage.responsiveDesign(65), MainPage.responsiveDesign(20), 0, 0);
             totalPar.Text = totPar + "";
             totalPutt.Text = totPutt + "";
             totalPen.Text = totPen + "";
@@ -62,11 +64,6 @@ namespace GreenSa.ViewController.Profile.MyGames
             partie.Text = sp.GolfName + " :";
             date.Text = sp.DateString;
         }
-
-        private int responsiveDesign(int pix)
-        {
-            return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
-        }
-
+    
     }
 }

@@ -25,23 +25,16 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
             InitializeComponent();
         }
 
-        protected override  void OnAppearing()
+        protected override void OnAppearing()
         {
-            
             base.OnAppearing();
-            getScoresAsync(c => true);
-           
-        }
-        /*
-        * Méthode déclenchée à l'application du filtre
-        * Appel a la classe StatstiquesGolf avec un filtre
-        * */
-        async private void onFilterApplied(object sender, EventArgs e)
-        {
-             getScoresAsync(c=>true);
+            updateChart(c => true);
         }
 
-        private async void getScoresAsync(Func<Club, bool> f)
+        /**
+         * Updates the chart of the average distance of each club
+         */
+        private async void updateChart(Func<Club, bool> f)
         {
 
             IEnumerable<Tuple<Club, double>> res = await StatistiquesGolf.getAverageDistanceForClubsAsync(f, null);
@@ -49,7 +42,6 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
             List<Entry> entries = new List<Entry>();
 
             foreach (Tuple<Club, double> couple in res){
-
                 Entry e = new Entry((float)couple.Item2)
                 {
                     Label = couple.Item1.Name,
@@ -59,7 +51,7 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
                 entries.Add(e);
             }
 
-            this.chartView.Chart = new PointChart(){ Entries = entries, LabelTextSize=33};
+            this.chartView.Chart = new PointChart(){ Entries = entries, LabelTextSize = 33};
         }
     }
 }

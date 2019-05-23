@@ -75,6 +75,7 @@ namespace GreenSa.Models.GolfModel
         /**
          * Gets the average amount of par of the games given in parameters
          * allScoreParties : a list of ScorePartie
+         * return -1.0 if there isn't any game saved in the database
          */
         public static double getAveragePars(List<ScorePartie> allScoreParties)
         {
@@ -109,6 +110,7 @@ namespace GreenSa.Models.GolfModel
         /**
          * Gets the average amount of putts in scores of holes
          * scoresHoles : the list of scores of holes
+         * return -1.0 if there isn't any putt in the database
          */
         public static double getAveragePutts(List<ScoreHole> scoresHoles)
         {

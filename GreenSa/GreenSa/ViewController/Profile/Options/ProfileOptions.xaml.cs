@@ -30,14 +30,14 @@ namespace GreenSa.ViewController.Profile.Options
         public ProfileOptions()
         {
             InitializeComponent();
-            photo.Margin = new Thickness(0, responsiveDesign(30), 0, responsiveDesign(5));
-            photo.HeightRequest = responsiveDesign(140);
-            modifier.Margin = responsiveDesign(15);
-            modifier.HeightRequest = responsiveDesign(30);
+            photo.Margin = new Thickness(0, MainPage.responsiveDesign(30), 0, MainPage.responsiveDesign(5));
+            photo.HeightRequest = MainPage.responsiveDesign(140);
+            modifier.Margin = MainPage.responsiveDesign(15);
+            modifier.HeightRequest = MainPage.responsiveDesign(30);
             arrow.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
-            arrow.Margin = responsiveDesign(-15);
-            arrow.HeightRequest = responsiveDesign(80);
-            arrow.WidthRequest = responsiveDesign(80);
+            arrow.Margin = MainPage.responsiveDesign(-15);
+            arrow.HeightRequest = MainPage.responsiveDesign(80);
+            arrow.WidthRequest = MainPage.responsiveDesign(80);
             golfreftitle.FontSize = 25;
             indextitle.FontSize = 25;
             usernametitle.FontSize = 25;
@@ -45,45 +45,30 @@ namespace GreenSa.ViewController.Profile.Options
             index.FontSize = 20;
             username.FontSize = 20;
 
-            //Initialisation de la BDD
-            LocalUser = GetProfile("localUser");
-            
-            //elements
-            username.Text = LocalUser.Username;
-
-            index.Text = LocalUser.Index.ToString();
-
-            golfref.Text = LocalUser.GolfRef;
-
-            photo.Source = "user" + LocalUser.Photo + ".png";
-
+            updateLabels();
             boutons.Margin = new Thickness(30, 15, 30, 15);
         }
 
         protected override void OnAppearing()
         {
-            LocalUser = GetProfile("localUser");
+            updateLabels();
+        }
 
+        /**
+         * Updates different labels of the view
+         */
+        private void updateLabels()
+        {
+            LocalUser = StatistiquesGolf.getProfil();
             username.Text = LocalUser.Username;
-
             index.Text = LocalUser.Index.ToString();
-
             golfref.Text = LocalUser.GolfRef;
-
             photo.Source = "user" + LocalUser.Photo + ".png";
         }
 
-        private int responsiveDesign(int pix)
-        {
-            return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
-        }
-
-        public Profil GetProfile(string id)
-        {
-            DBconnection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            return DBconnection.Table<Profil>().FirstOrDefault(pro => pro.Id == id);
-        }
-
+        /**
+         * When the name is completed by the user, update the profile in the database
+         */
         private void OnNameCompleted(object sender, EventArgs e)
         {
             Entry entry = (Entry) sender;
@@ -97,6 +82,9 @@ namespace GreenSa.ViewController.Profile.Options
             }
         }
 
+        /**
+         * When the reference golf is completed by the user, update the profile in the database
+         */
         private void OnGolfRefCompleted(object sender, EventArgs e)
         {
             Entry entry = (Entry)sender;
@@ -111,6 +99,9 @@ namespace GreenSa.ViewController.Profile.Options
             }
         }
 
+        /**
+         * When the index is completed by the user, update the profile in the database and the average distance of each club
+         */
         private async void OnIndexCompleted(object sender, EventArgs e)
         {
             LocalUser.Index = double.Parse(((Entry)sender).Text);
@@ -123,17 +114,15 @@ namespace GreenSa.ViewController.Profile.Options
             }
             DBconnection.UpdateAll(clubs);
         }
-        /**
-            * Méthode déclenchée au click sur le bouton "Back"
-            * Redirige vers la page "MainMenu"
-            * */
+
         async private void OnArrowClicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
         }
+
         async private void OnPhotoClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Profile.Options.ChooseAvatar());
+            await Navigation.PushAsync(new ChooseAvatar());
         }
     }
 }

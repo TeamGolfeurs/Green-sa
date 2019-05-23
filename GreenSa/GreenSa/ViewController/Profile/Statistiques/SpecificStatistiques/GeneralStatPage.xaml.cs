@@ -24,6 +24,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
         public static string NO_DATA_LIST = "-";
         public static string NO_DATA = "NoData";
 
+        /* Theses lists are working as a cache to not select items from the database each time the user come into a page.
+         * That way, lists are filled only once and the display of statistics is faster
+         */
         private List<GolfCourse> allGolfCourses;
         private List<ScorePartie> allScoreParties;
         private List<Shot> allShots;
@@ -36,14 +39,6 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
             this.allScoreParties = null;
             this.allScoreHoles = null;
             this.allShots = null;
-            /*for (int i = 0; i<20; i++)
-            {
-                TestClassFactory.CreateScorePartie();
-            }
-            /*TestClassFactory.CreateScorePartie();
-            TestClassFactory.CreateScorePartie();
-            TestClassFactory.CreateScorePartie();*/
-
         }
 
         async protected override void OnAppearing()
@@ -76,7 +71,6 @@ namespace GreenSa.ViewController.Profile.Statistiques.SpecificStatistiques
             int index = (int)StatistiquesGolf.getPlayerIndex();
             int rowCount = last4ScoresGrid.Children.Count / 3;
             var scores = allScoreParties.OrderByDescending(d => d.DateDebut).ToList();
-            //System.Diagnostics.Debug.WriteLine(scores[0].scoreHoles.ToString());
             int col = 0;
             int row = 0;
             foreach (View label in last4ScoresGrid.Children)

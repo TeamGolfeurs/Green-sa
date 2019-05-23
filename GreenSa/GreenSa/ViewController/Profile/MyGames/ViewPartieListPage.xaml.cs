@@ -54,10 +54,12 @@ namespace GreenSa.ViewController.Profile.MyGames
             try {
                 if (scoreParties == null)
                 {
+                    //Sort in descending order of games date
                     scoreParties = (await StatistiquesGolf.getScoreParties()).OrderByDescending(d => d.DateDebut).ToList();
                 }
                 List<GolfCourse> allGolfCourses = await StatistiquesGolf.getGolfCourses();
                 string id = "";
+                //initializes the name of the golf course of each game 
                 foreach (ScorePartie sp in scoreParties)
                 {
                     id = sp.scoreHoles[0].IdHole;
@@ -81,13 +83,16 @@ namespace GreenSa.ViewController.Profile.MyGames
             
         }
 
+        /** 
+         * This method is called when an item is tapped in the list view of games
+         */
         private async void listPartie_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             ScorePartie sp = (ScorePartie)listPartie.SelectedItem;
-            if (state == 0)//in games panel in profil page
+            if (state == 0)//if in games panel in profil page
             {
                 await Navigation.PushModalAsync(new DetailsPartiePage((ScorePartie)listPartie.SelectedItem));
-            } else if (state == 1)//in stats panel in profil page
+            } else if (state == 1)//if in stats panel in profil page
             {
                 if (this.partieStatPage == null)
                 {
@@ -105,7 +110,7 @@ namespace GreenSa.ViewController.Profile.MyGames
                 {
                     partie.nextHole();//skip holes that was already done
                 }
-                partie.holeFinishedCount++;//because this attibute is initialized to -1
+                partie.holeFinishedCount++;//needs to increment because this attibute is initialized to -1 for some reasons
                 await Navigation.PushAsync(new Play.Game.MainGamePage(partie), false);
             }
         }

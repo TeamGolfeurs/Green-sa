@@ -51,8 +51,8 @@ namespace GreenSa.ViewController.Play.Game
             base.OnAppearing();
             item = new ObservableCollection<Tuple<Shot, IEnumerable<Club>>>(partie.Shots.Select(s => new Tuple<Shot, IEnumerable<Club>>(s, partie.Clubs)));
             ListShotPartie.ItemsSource = item;
-            numero.Text = "Trou n°" + partie.getIndexHole().Item1.ToString() + " :";
-            hole_finished.Text = "TROU N°" + partie.getIndexHole().Item1.ToString() + " TERMINE !";
+            numero.Text = "Trou n°" + partie.getCurrentHoleNumero() + " :";
+            hole_finished.Text = "TROU N°" + partie.getCurrentHoleNumero() + " TERMINE !";
             par.Text = partie.getNextHole().Par.ToString();
             updateScoreText();
             if (!partie.hasNextHole())
