@@ -48,6 +48,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             this.updateWorstHole(allScoreHoles);
         }
 
+        /**
+         * Updates the worst hole label
+         */
         private void updateWorstHole(List<ScoreHole> allScoreHoles)
         {
             int worstHoleNumber = StatistiquesGolf.getWorstHole(allScoreHoles, this.golfCourse);
@@ -65,6 +68,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             }
         }
 
+        /**
+         * Updates the average putts count labels
+         */
         private void updateAveragePutts(List<ScoreHole> allScoreHoles)
         {
             double avPutts = StatistiquesGolf.getAveragePutts(StatistiquesGolf.getScoreHoles(allScoreHoles, this.golfCourse));
@@ -82,6 +88,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
             }
         }
 
+        /**
+         * Updates the green in regulation stat labels
+         */
         private void updateGIR(List<ScorePartie> allScoreParties)
         {
             List<ScorePartie> scoreParties = StatistiquesGolf.getScoreParties(allScoreParties, this.golfCourse);
@@ -109,6 +118,9 @@ namespace GreenSa.ViewController.Profile.Statistiques.StatistiquesGolfCourse
 
         }
 
+        /**
+         * Updates the chart
+         */
         private void updateChart(List<ScoreHole> allScoreHoles)
         {
             /*float albatros = 0f;*/

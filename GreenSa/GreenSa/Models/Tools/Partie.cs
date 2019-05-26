@@ -10,20 +10,20 @@ using Xamarin.Forms;
 
 namespace GreenSa.Models.GolfModel
 {
-    /**
-     * Contient toutes les infos nécessaire à la partie
-     * */
     public class Partie
     {
 
         private GolfCourse golfCourse;
         private Club currentClub;
 
-        public Club CurrentClub { get
+        public Club CurrentClub
+        {
+            get
             {
                 return currentClub;
             }
-            set {
+            set
+            {
                 currentClub = value;
             }
         }
@@ -34,12 +34,14 @@ namespace GreenSa.Models.GolfModel
         public ScorePartie ScoreOfThisPartie { get; set; }
         public int holeFinishedCount;
 
-        public GolfCourse GolfCourse {
+        public GolfCourse GolfCourse
+        {
             get
             {
                 return golfCourse;
             }
-            set {
+            set
+            {
                 golfCourse = value;
                 Holes = value.Holes;
                 itHole = value.GetHoleEnumerator();
@@ -59,6 +61,9 @@ namespace GreenSa.Models.GolfModel
             CurrentClub = club;
         }
 
+        /**
+         * Computes the number of penality shots done during the game
+         */
         public int getPenalityCount()
         {
             int penalities = 0;
@@ -69,58 +74,61 @@ namespace GreenSa.Models.GolfModel
             return penalities;
         }
 
+        /**
+         * Gets the current number of shots the user played over the par of the current game
+         */
         public int getCurrentScore()
         {
             int penalities = getPenalityCount();
             return penalities + this.Shots.Count - this.getNextHole().Par;
         }
 
-        /// <summary>
-        /// Retourne le (current) trou si il existe sinon retourne null.
-        /// </summary>
-        /// <returns>La position du trou.</returns>
+
+        /**
+         * Gets the next hole
+         */
         public Hole getNextHole()
         {
             return itHole.Current;
         }
 
-        //index,nbTotal
-        public Tuple<int, int> getIndexHole()
+        /**
+         * Gets the numero of the current hole
+         */
+        public int getCurrentHoleNumero()
         {
-            return new Tuple<int, int>(golfCourse.Holes.IndexOf(itHole.Current) + 1, golfCourse.Holes.Count);
+            return golfCourse.Holes.IndexOf(itHole.Current) + 1;
         }
 
-        public Shot addPositionForCurrentHole(MyPosition start, MyPosition oldTarget, MyPosition userPosition)
+        /**
+         * Adds a shot in the shots list using positions in parameters to create it
+         * start : the position where the shot was performed
+         * target : the position of the target on the map
+         * userPosition : the current position of the user (the position where the ball was shot)
+         * return the created Shot object
+         */
+        public Shot addPositionForCurrentHole(MyPosition start, MyPosition target, MyPosition userPosition)
         {
-            Shot s = new Shot(CurrentClub, start, oldTarget, userPosition, DateTime.Now);
+            Shot s = new Shot(CurrentClub, start, target, userPosition, DateTime.Now);
             Shots.Add(s);
             return s;
         }
 
+        /**
+         * Manages the end of the current hole
+         * saveForStatistics : true to save the stats of the current hole, false to not save them
+         */
         public void holeFinished(bool saveForStatistics)
         {
-            if (saveForStatistics)
-            {
-                foreach (Shot s in Shots)
-                {
-                    System.Diagnostics.Debug.WriteLine(s.ToString());
-                }
-                try
-                {
-                    ScoreHole sh = StatistiquesGolf.saveForStats(this, itHole.Current);
-                    ScoreOfThisPartie.add(sh);
-                    Shots.Clear();
-                    System.Diagnostics.Debug.WriteLine("okok");
-                } catch (SQLiteException e)
-                {
-                    System.Diagnostics.Debug.WriteLine(e.StackTrace);
-                }
-            } else
-            {
-                Shots.Clear();
-            }
+            ScoreHole sh = StatistiquesGolf.saveForStats(this, itHole.Current, saveForStatistics);
+            ScoreOfThisPartie.add(sh);
+            Shots.Clear();
         }
 
+        /**
+         * Manages the end of this game
+         * saveForStatistics : true to save the stats of this game, false to not save them
+         */
         public async Task gameFinished(bool saveForStatistics)
         {
             if (saveForStatistics)
@@ -131,22 +139,28 @@ namespace GreenSa.Models.GolfModel
         }
 
 
-    /// <summary>
-    /// Vérifie l'existence d'un prochain trou
-    /// </summary>
-    /// <returns></returns>
-    public bool hasNextHole()
+        /**
+         * Checks if there is any hole left to play
+         * return true if there is any hole left to play, false otherwise
+         */
+        public bool hasNextHole()
         {
-            return this.holeFinishedCount < this.Holes.Count-1;        
+            return this.holeFinishedCount < this.Holes.Count - 1;
         }
 
+        /**
+         * Moves to the next hole if one exists
+         * return true if there is any hole left to play, false otherwise
+         */
         public bool nextHole()
         {
             this.holeFinishedCount++;
             return itHole.MoveNext();
         }
 
-
+        /**
+         * Updates the circle of the targeted shot on the map
+         */
         internal void updateUICircle()
         {
             MessagingCenter.Send<Partie>(this, "updateTheCircle");

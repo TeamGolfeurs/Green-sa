@@ -10,10 +10,10 @@ namespace GreenSa.Models.GolfModel
 {
     public class GolfCourse
     {
-        public string NameCourse { get; set; }
+        public string NameGolf { get; set; }//Name of the golf (can have several courses in one golf)
 
         [PrimaryKey]
-        public string Name { get; set; }
+        public string Name { get; set; }//Name of the course
 
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]
@@ -23,11 +23,12 @@ namespace GreenSa.Models.GolfModel
         public GolfCourse()
         {
         }
-        public GolfCourse(string name,string nameCourse,List<Hole> holes)
+
+        public GolfCourse(string name, string nameGolf, List<Hole> holes)
         {
             this.Name = name;
             this.Holes = holes;
-            this.NameCourse = nameCourse;
+            this.NameGolf = nameGolf;
         }
 
         public List<Hole>.Enumerator GetHoleEnumerator()
@@ -37,12 +38,13 @@ namespace GreenSa.Models.GolfModel
 
         public override string ToString()
         {
-            String str= Name+", "+ NameCourse + " { "+Holes.Count+"\n";
+            String str= Name+", "+ NameGolf + " { "+Holes.Count+"\n";
             foreach (Hole m in Holes)
                 str += m.ToString() + " \n";
             str += "}";
             return str;
         }
+
         public override bool Equals(object obj)
         {
             return obj is GolfCourse &&  (obj as GolfCourse).Name.Equals(Name);

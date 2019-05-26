@@ -31,22 +31,22 @@
                 </Grid.ColumnDefinitions>
                 <ImageButton x:Name="photo1" Source="user1.png" Grid.Row="0" Grid.Column="0"
                              HorizontalOptions="Center" VerticalOptions="Center" Margin="5"
-                             Clicked="OnPhoto1Selected" CornerRadius="200" BackgroundColor="Transparent"/>
+                             Clicked="OnPhotoSelected" CornerRadius="200" BackgroundColor="Transparent"/>
                 <ImageButton x:Name="photo2" Source="user2.png" Grid.Row="0" Grid.Column="1"
                              HorizontalOptions="Center" VerticalOptions="Center" Margin="5"
-                             Clicked="OnPhoto2Selected" CornerRadius="200" BackgroundColor="Transparent"/>
+                             Clicked="OnPhotoSelected" CornerRadius="200" BackgroundColor="Transparent"/>
                 <ImageButton x:Name="photo3" Source="user3.png" Grid.Row="1" Grid.Column="0"
                              HorizontalOptions="Center" VerticalOptions="Center" Margin="5"
-                             Clicked="OnPhoto3Selected" CornerRadius="200" BackgroundColor="Transparent"/>
+                             Clicked="OnPhotoSelected" CornerRadius="200" BackgroundColor="Transparent"/>
                 <ImageButton x:Name="photo4" Source="user4.png" Grid.Row="1" Grid.Column="1"
                              HorizontalOptions="Center" VerticalOptions="Center" Margin="5"
-                             Clicked="OnPhoto4Selected" CornerRadius="200" BackgroundColor="Transparent"/>
+                             Clicked="OnPhotoSelected" CornerRadius="200" BackgroundColor="Transparent"/>
                 <ImageButton x:Name="photo5" Source="user5.png" Grid.Row="2" Grid.Column="0"
                              HorizontalOptions="Center" VerticalOptions="Center" Margin="5"
-                             Clicked="OnPhoto5Selected" CornerRadius="200" BackgroundColor="Transparent"/>
+                             Clicked="OnPhotoSelected" CornerRadius="200" BackgroundColor="Transparent"/>
                 <ImageButton x:Name="photo6" Source="user6.png" Grid.Row="2" Grid.Column="1"
                              HorizontalOptions="Center" VerticalOptions="Center" Margin="5"
-                             Clicked="OnPhoto6Selected" CornerRadius="200" BackgroundColor="Transparent"/>
+                             Clicked="OnPhotoSelected" CornerRadius="200" BackgroundColor="Transparent"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

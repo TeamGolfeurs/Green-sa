@@ -36,8 +36,9 @@ namespace GreenSa.ViewController.Option
             UpdateSwitchLabel();
         }
 
-
-
+        /** 
+         * This method is called when the button to delete all stats is clicked
+         */
         private async void dropStats(object sender, EventArgs e)
         {
            bool delete = await DisplayAlert("Avertissement", "Attention, supprimer les statistiques est une manoeuvre irréversible !", "Continuer", "Annuler");
@@ -46,27 +47,25 @@ namespace GreenSa.ViewController.Option
             try
             {
                 SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-                connection.CreateTable<MyPosition>();
-                connection.CreateTable<Shot>();
-                connection.CreateTable<ScoreHole>();
-                connection.CreateTable<ScorePartie>();
-                //connection.CreateTable<GolfCourse>();
-                //connection.CreateTable<Club>();
-                //connection.CreateTable<Hole>();
-
                 connection.DropTable<MyPosition>();
                 connection.DropTable<Shot>();
                 connection.DropTable<ScoreHole>();
                 connection.DropTable<ScorePartie>();
-                //connection.DropTable<Club>();
-                //connection.DropTable<GolfCourse>();
-                //connection.DropTable<Hole>();
+
+                connection.CreateTable<MyPosition>();
+                connection.CreateTable<Shot>();
+                connection.CreateTable<ScoreHole>();
+                connection.CreateTable<ScorePartie>();
             }
-            catch (Exception )
+            catch (Exception)
             {
             }
         }
 
+        /**
+         * This method is called when the switch is toggled
+         * Updates the On/Off label and update the profile in the database 
+         */
         private void Switch_Toggled(object sender, ToggledEventArgs e)
         {
             this.UpdateSwitchLabel();

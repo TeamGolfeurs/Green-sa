@@ -21,8 +21,7 @@ namespace GreenSa
 
         protected override void OnStart()
         {
-            // Handle when your app starts
-            //create some data
+            //Create some data to test some features
             int number = 0;
             for (int i = 0; i < number; i++)
             {

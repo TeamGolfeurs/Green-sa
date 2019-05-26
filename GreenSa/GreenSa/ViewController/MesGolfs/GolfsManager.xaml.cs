@@ -27,23 +27,18 @@ namespace GreenSa.ViewController.MesGolfs
             InitializeComponent();
         }
 
-        /**
-         * Méthode qui s'execute automatiquement au chargement de la page GolfsManager
-         * */
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            //Recupere la liste des golfs
             List<GolfCourse> res = await GestionGolfs.getListGolfsAsync(null);
-            //Met à jour la liste des golfs dans la vue
+            //Update the list of golf courses
             gclvm = new GolfCourseListViewModel(res);
             BindingContext = gclvm;
         }
 
         /**
-         * Méthode déclenchée au click sur le bouton "Ajouter un golf"
-         * Redirige vers la page "ImportGolfCourse"
-         * */
+         * This method is called when tho button to add a new golf course is clicked
+         */
         async private void OnAddGolfClicked(object sender, EventArgs e)
         {
             try
@@ -56,14 +51,15 @@ namespace GreenSa.ViewController.MesGolfs
             }
         }
 
-        /** Deletes a golf course from ListView and from database using name (private key)
-         * 
+        /** 
+         * Deletes a golf course from the ListView and from the database
          */
         private async void DeleteGolfCourse(object sender, EventArgs e)
         {
             var image = sender as Image;
             var tgr = image.GestureRecognizers[0] as TapGestureRecognizer;
-            var name = tgr.CommandParameter.ToString();
+            //for each line, the golf course name is stored in the cross image CommandParameter attribute to be able to identify an image to its golf course
+            var name = tgr.CommandParameter.ToString(); 
             var confirmDelete = await this.DisplayAlert("Suppression d'un golf", "Voulez vous vraiment supprimer le golf : " + name + " ?", "Oui", "Non");
             if (confirmDelete)
             {

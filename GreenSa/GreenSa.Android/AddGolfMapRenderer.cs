@@ -1,26 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Xamarin.Forms.Maps.Android;
 using Xamarin.Forms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Gms.Maps;
-using static Android.Gms.Maps.GoogleMap;
 using Xamarin.Forms;
 using GreenSa.Models.Tools.GPS_Maps;
 using Greensa.Droid;
 using GreenSa.Droid;
-using System.Collections.ObjectModel;
-using GreenSa.Models.GolfModel;
-using GreenSa.ViewController.Play.Game;
+
 
 [assembly: ExportRenderer(typeof(AddGolfMap), typeof(AddGolfMapRenderer))]
 namespace Greensa.Droid
@@ -36,7 +27,7 @@ namespace Greensa.Droid
         {
             this.Markers = new List<Marker>();
             this.isParValidate = true;
-            //Suscribe to get a notification to delete the last pin
+            //Suscribes to get a notification to delete the last pin
             MessagingCenter.Subscribe<Object>(this, "validPar", (obj) =>
             {
                 if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
@@ -46,7 +37,7 @@ namespace Greensa.Droid
                 }
                 this.isParValidate = true;
             });
-            //Suscribe to get a notification to delete the last pin
+            //Suscribes to get a notification to delete the last pin
             MessagingCenter.Subscribe<Object>(this, "deleteLastPin", (obj) =>
             {
                 if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
@@ -57,7 +48,7 @@ namespace Greensa.Droid
                     this.isParValidate = true;
                 }
             });
-            //Suscribe to get a notification to delete the last pin
+            //Suscribes to get a notification to delete the last pin
             MessagingCenter.Subscribe<Object>(this, "deleteAllPins", (obj) =>
             {
                 if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
@@ -94,7 +85,7 @@ namespace Greensa.Droid
         }
 
 
-        protected override void OnMapReady(Android.Gms.Maps.GoogleMap map)
+        protected override void OnMapReady(GoogleMap map)
         {
             base.OnMapReady(map);
             this.map = map;
@@ -109,7 +100,6 @@ namespace Greensa.Droid
                     };
                     MessagingCenter.Send<Pin>(pin, "getAddGolfMapPins");
                     var marker = base.CreateMarker(pin);
-                    //marker.Draggable(true);
                     BitmapDescriptor ic = BitmapDescriptorFactory.FromResource(Resource.Drawable.flag);
                     marker.SetIcon(ic);
                     var addedMarker = this.map.AddMarker(marker);

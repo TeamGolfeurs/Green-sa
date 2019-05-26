@@ -20,8 +20,8 @@ namespace GreenSa.Models.GolfModel
     {
 
         /**
-         * Get the average distance for all clubs
-         * if clubs null then get all clubs
+         * Gets the average distance for all clubs
+         * if clubs  parameter is null then it deals with all clubs
          * */
         public async static Task<IEnumerable<Tuple<Club, double>>> getAverageDistanceForClubsAsync(Func<Club, bool> filtre, List<Club> clubs)
         {
@@ -59,7 +59,7 @@ namespace GreenSa.Models.GolfModel
                         sommesEachClubs.Add(s.Club, 0);
                         nombreDeShotParClub.Add(s.Club, 0);
                     }
-                    sommesEachClubs[s.Club] += (CustomMap.DistanceTo(s.InitPlace.X, s.InitPlace.Y, s.RealShot.X, s.RealShot.Y, "M"));
+                    sommesEachClubs[s.Club] += s.RealShotDist();
                     nombreDeShotParClub[s.Club] += 1;
                 }
             }
@@ -72,6 +72,11 @@ namespace GreenSa.Models.GolfModel
             return res;
         }
 
+        /**
+         * Gets the average amount of par of the games given in parameters
+         * allScoreParties : a list of ScorePartie
+         * return -1.0 if there isn't any game saved in the database
+         */
         public static double getAveragePars(List<ScorePartie> allScoreParties)
         {
             double avPars = -1;
@@ -92,12 +97,21 @@ namespace GreenSa.Models.GolfModel
             return avPars;
         }
 
+        /**
+         * Gets the games that wasn't finished yet on a specific golf course
+         * golfCourse : the specific golf course
+         */
         public static async Task<List<ScorePartie>> getNotFinishedGames(GolfCourse golfCourse)
         {
             List<ScorePartie> allNeededScoreParties = (await StatistiquesGolf.getScoreParties()).Where(sp => sp.scoreHoles[0].Hole.IdGolfC.Equals(golfCourse.Name) && sp.scoreHoles.Count != 9 && sp.scoreHoles.Count != 18).ToList();
             return allNeededScoreParties;
         }
 
+        /**
+         * Gets the average amount of putts in scores of holes
+         * scoresHoles : the list of scores of holes
+         * return -1.0 if there isn't any putt in the database
+         */
         public static double getAveragePutts(List<ScoreHole> scoresHoles)
         {
             double avPutts = -1.0;
@@ -113,26 +127,9 @@ namespace GreenSa.Models.GolfModel
             return avPutts;
         }
 
-        public static Tuple<double, double> getMinMaxDistanceForClubs(Club club)
-        {
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            IEnumerable<Shot> shots = (SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection));
-            shots = shots.Where(s => s.Club.Equals(club));
-            double min = 99999;
-            double max = 0;
-            double dist = 0.0;
-            foreach (Shot s in shots)
-            {
-                dist = s.RealShotDist();
-                if (dist < min)
-                    min = dist;
-                if (dist > max)
-                    max = dist;
-            }
-            return new Tuple<double, double>(min, max);
-        }
-
-
+        /**
+         * Gets all the shots in the database
+         */
         public async static Task<List<Shot>> getShots()
         {
             SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
@@ -141,7 +138,8 @@ namespace GreenSa.Models.GolfModel
             return allShots;
         }
 
-        /** Gets all the ScorePartie from the database
+        /**
+         * Gets all the ScorePartie from the database
          */
         public async static Task<List<ScorePartie>> getScoreParties()
         {
@@ -151,7 +149,8 @@ namespace GreenSa.Models.GolfModel
             return allScoreParties;
         }
 
-        /** Gets the all the ScoreHole from the database
+        /**
+         * Gets all the ScoreHole from the database
          */
         public async static Task<List<ScoreHole>> getScoreHoles()
         {
@@ -161,7 +160,8 @@ namespace GreenSa.Models.GolfModel
             return allScoreHoles;
         }
 
-        /** Gets the all the golf courses from the database
+        /**
+         * Gets all the golf courses from the database
          */
         public async static Task<List<GolfCourse>> getGolfCourses()
         {
@@ -171,27 +171,40 @@ namespace GreenSa.Models.GolfModel
             return golfCourses;
         }
 
-
-
+        /**
+         * Filters the ScorePartie in the given list that took place in the given golf course 
+         * allScoreParties : the initial list of ScorePartie
+         * golfCourse : the golf course filter
+         */
         public static List<ScorePartie> getScoreParties(List<ScorePartie> allScoreParties, GolfCourse golfCourse)
         {
             List<ScorePartie> allNeededScoreParties = allScoreParties.Where(sh => sh.scoreHoles[0].Hole.IdGolfC.Equals(golfCourse.Name)).ToList();
             return allNeededScoreParties;
         }
 
+        /**
+         * Filters the ScoreHole in the given list that took place in the given golf course 
+         * allScoreHoles : the initial list of ScoreHole
+         * golfCourse : the golf course filter
+         */
         public static List<ScoreHole> getScoreHoles(List<ScoreHole> allScoreHoles, GolfCourse golfCourse)
         {
             List<ScoreHole> allNeededScoreHoles = allScoreHoles.Where(sh => sh.Hole.IdGolfC.Equals(golfCourse.Name)).ToList();
             return allNeededScoreHoles;
         }
-
-
+        
+        /**
+         * Filters the given shot list keeping only the ones that was done during a game using the starting and ending date of the game
+         * scorePartie : the game score
+         * allShots : the list of shot to filter
+         */
         public static List<Shot> getShotsFromPartie(ScorePartie scorePartie, List<Shot> allShots)
         {
             return allShots.Where(sh => sh.Date >= scorePartie.DateDebut && sh.Date <= scorePartie.DateFin && !sh.isPutt()).ToList();
         }
 
-        /** Gets a tuple containing the name of the club with which the player did the higher distance and this distance
+        /** 
+         * Gets a tuple containing the name of the club with which the player did the higher distance and this distance
          */
         public static Tuple<string, int> getMaxDistClub(List<Shot> allShots)
         {
@@ -209,7 +222,12 @@ namespace GreenSa.Models.GolfModel
             return new Tuple<string, int>(clubName, (int)maxDist);
         }
 
-
+        /**
+         * Gets the hole where the player plays the worst in a specific golf course
+         * allScoreHoles : a list of ScoreHole
+         * golfCourse : the concerned golf course
+         * return the numero of the worst hole
+         */
         public static int getWorstHole(List<ScoreHole> allScoreHoles, GolfCourse golfCourse)
         {
             int holeNumber = 0;
@@ -244,53 +262,12 @@ namespace GreenSa.Models.GolfModel
         }
 
 
-        // Terrain, List Tuple<Hole,AverageScore,BestScore,WorstScore>, nbFoisJouée 
-        //ordered by nbFoisJouée
-        public static Dictionary<GolfCourse, List<Tuple<Hole, float, int, int,float,int>>> getScoreForGolfCourses(Func<GolfCourse, bool> filtre)
-        {
-            Dictionary<GolfCourse, List<Tuple<Hole, float, int, int,float,int>>> l = new Dictionary<GolfCourse, List<Tuple<Hole, float, int, int,float,int>>>();
-            // l.Add(new Tuple<GolfCourse, int, int, int, int> (new GolfCourse("StJacques9trousEN DUR","StJac",new List<MyPosition>()), 4,2,1,2));
-            //l.Add(new Tuple<GolfCourse, int, int, int, int>(new GolfCourse("StJacques9trous EN DUR", "StJac", new List<MyPosition>()), 8, 5, 1, 2));
-
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<GolfCourse>();
-            connection.CreateTable<ScoreHole>();
-            IEnumerable<GolfCourse> gfcs = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection, recursive: true);
-            gfcs=gfcs.Where((gf) => filtre(gf));
-            foreach (GolfCourse gc in gfcs)
-            {
-                List<Tuple<Hole, float, int, int,float,int>> lsHole = new List<Tuple<Hole, float, int, int,float,int>>();
-
-                int nbFoisJoue = 0;
-                IEnumerable<ScoreHole> scores = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection, recursive: true);
-
-                foreach (Hole h in gc.Holes)
-                {
-                    float moy = 0;
-                    float moyPutt = 0;
-                    int min = 99;
-                    int max = -99;
-                    IEnumerable<ScoreHole> scoresTmp = scores.Where((ScoreHole gf) => gf.Hole.Equals(h));
-                    nbFoisJoue = scoresTmp.Count();
-                    foreach (ScoreHole sh in scoresTmp)
-                    {
-                        moy += sh.Score;
-                        moyPutt += sh.NombrePutt;
-                        min = sh.Score < min ? sh.Score : min;
-                        max = sh.Score > max ? sh.Score : max;
-                    }
-                    moy = moy / nbFoisJoue;
-                    moyPutt = moyPutt / nbFoisJoue;
-                    lsHole.Add(new Tuple<Hole, float, int, int,float,int>(h, moy, min, max,moyPutt,nbFoisJoue));
-                }
-
-                l.Add(gc, lsHole);
-            }
-            return l;
-        }
-
-
-        //get the list
+        /**
+         * Gets the proportion of each score done in a golf course
+         * allScoreHoles : a list a ScoreHole
+         * golfCourse : the concerned golf course
+         * return a dictionnary where each possible score entry gives its proportion (it's not a percentage but it's over the number of holes ofgolf course)
+         */
         public static Dictionary<ScorePossible,float> getProportionScore(List<ScoreHole> allScoreHoles, GolfCourse golfCourse)
         {
             Dictionary<ScorePossible, float> res = new Dictionary<ScorePossible, float>();
@@ -308,8 +285,12 @@ namespace GreenSa.Models.GolfModel
             return res;
         }
 
-
-        public static Dictionary<Shot.ShotCategory, int> getProportionShot(List<Shot> allShots)
+        /**
+         * Gets the amount of each shot category but chipShot in the given list of shot
+         * shots : a list a shots
+         * return a dictionnary where each shot category entry gives its amount in the given list of shot
+         */
+        public static Dictionary<Shot.ShotCategory, int> getProportionShot(List<Shot> shots)
         {
             Shot.ShotCategory[] shotCategories = {Shot.ShotCategory.PerfectShot, Shot.ShotCategory.GoodShot, Shot.ShotCategory.TolerableShot, Shot.ShotCategory.UnexpectedLongShot, Shot.ShotCategory.NotStraightShot, Shot.ShotCategory.FailedShot, Shot.ShotCategory.PenalityShot};
             Dictionary<Shot.ShotCategory, int> dico = new Dictionary<Shot.ShotCategory, int>();
@@ -318,7 +299,7 @@ namespace GreenSa.Models.GolfModel
             {
                 dico[sc] = 0;
             }
-            foreach (Shot shot in allShots)
+            foreach (Shot shot in shots)
             {
                 if (!shot.isPutt() && shotCategories.Contains(shot.ShotType))
                 {
@@ -332,75 +313,40 @@ namespace GreenSa.Models.GolfModel
             return dico;
         }
 
-
-
-        //Dictionary<Par, Moyenne> 
-        public static Dictionary<int,float> getScoreForPar()
+        /**
+         * Saves the data of a hole
+         * game : the game
+         * hole : the hole to save
+         * save : true to save the hole stats, false otherwise. false returns the ScoreHole anyway
+         * return the created ScoreHole
+         */
+        public static ScoreHole saveForStats(Partie game, Hole hole, bool save)
         {
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<ScoreHole>();
-            connection.CreateTable<Hole>();
-
-            Dictionary<int, float> resTmp = new Dictionary<int, float>();
-            Dictionary<int, int> counter = new Dictionary<int, int>();
-
-            List<ScoreHole> all = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection,recursive:true);
-            int nbTotal = all.Count;
-            foreach( ScoreHole h in all)
+            ScoreHole h = new ScoreHole(hole, game.getPenalityCount(), game.getCurrentScore(), isHit(game.Shots, hole.Par), nbCoupPutt(game.Shots),DateTime.Now);
+            if (save)
             {
-                int par = h.Hole.Par;
-                if (!resTmp.ContainsKey(par))
-                {
-                    resTmp.Add(par, 0);
-                    counter.Add(par, 0);
-                }
-                resTmp[par]+= h.Score;
-                counter[par] +=1;
+                if (game.Shots.Count == 0)
+                    throw new Exception("0 shots dans la liste des shots.");
+                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+                connection.CreateTable<Club>();
+                connection.CreateTable<MyPosition>();
+                connection.CreateTable<Shot>();
+                //first let's insert in the database all the shots currently stored in the game
+                SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceAllWithChildren(connection, game.Shots, true);
+                connection.CreateTable<ScoreHole>();
+
+                //then creates a ScoreHole object that stores the hole statistics and insert it in the database
+                SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, h, false);
+                string sql = @"select last_insert_rowid()";
+                h.Id = connection.ExecuteScalar<int>(sql);
             }
-            Dictionary<int, float> res = new Dictionary<int, float>();
-
-            foreach (KeyValuePair<int, float> entry in resTmp)
-            {
-                res.Add(entry.Key, entry.Value / counter[entry.Key]);
-            }
-
-            return res;
-        }
-
-        //Hit
-        public static float getProportionHit()
-        {
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<ScoreHole>();
-            connection.CreateTable<Hole>();
-
-            List<ScoreHole> all = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<ScoreHole>(connection, recursive: true);
-            int nbTotal = all.Count;
-          
-            return all.Where(sh=> sh.Hit).Count()/(float)nbTotal*100 ;
-        }
-
-        public static ScoreHole saveForStats(Partie partie,Hole hole)
-        {
-            if (partie.Shots.Count == 0)
-                throw new Exception("0 shots dans la liste des shots.");
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<Club>();
-            connection.CreateTable<MyPosition>();
-            connection.CreateTable<Shot>();
-
-            SQLiteNetExtensions.Extensions.WriteOperations.InsertOrReplaceAllWithChildren(connection, partie.Shots, true);
-            //connection.InsertAll(shots);
-            connection.CreateTable<ScoreHole>();
-
-            ScoreHole h = new ScoreHole(hole, partie.getPenalityCount(), partie.getCurrentScore(), isHit(partie.Shots, hole.Par), nbCoupPutt(partie.Shots),DateTime.Now);
-            SQLiteNetExtensions.Extensions.WriteOperations.InsertWithChildren(connection, h, false);
-            string sql = @"select last_insert_rowid()";
-            h.Id = connection.ExecuteScalar<int>(sql);
-            //connection.Insert(h);
             return h;
         }
 
+        /**
+         * Saves the given game
+         * scoreOfThisPartie : the game statistics
+         */
         public async static Task saveGameForStats(ScorePartie scoreOfThisPartie)
         {
             SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
@@ -410,6 +356,10 @@ namespace GreenSa.Models.GolfModel
             await SQLiteNetExtensionsAsync.Extensions.WriteOperations.InsertOrReplaceWithChildrenAsync(connection, scoreOfThisPartie,false);
         }
 
+        /**
+         * Gets the profil of the user 
+         * the user profile is supposed to be describe as one line in the Profil table in the database, so the first line of the table is returned
+         */
         public static Profil getProfil()
         {
             SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
@@ -424,21 +374,17 @@ namespace GreenSa.Models.GolfModel
             }
         }
 
+        /**
+         * Gets the player index
+         */
         public static double getPlayerIndex()
         {
-            SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            connection.CreateTable<Profil>();
-            List<Profil> profil = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Profil>(connection);
-            double index = 53.5;
-            if (profil.Count > 0)
-            {
-                index = profil[0].Index;
-            }
-            return index;
+            return getProfil().Index;
         }
 
 
-        /** Computes the number of shots before the ball gets onto the green
+        /** 
+         * Computes the number of shots before the ball gets onto the green
          * shots : the list of the shots of a single hole
          * return : the number of shots before the ball gets onto the green
          */
@@ -448,7 +394,8 @@ namespace GreenSa.Models.GolfModel
             return shots.Count - puttCount;
         }
 
-        /** Computes the number of putts
+        /** 
+         * Computes the number of putts
          * shots : the list of the shots of a single hole
          * return : the number of putts
          */
@@ -465,7 +412,8 @@ namespace GreenSa.Models.GolfModel
             return puttCount;
         }
 
-        /** Checks if the green was reached in regulation
+        /** 
+         * Checks if the green was reached in regulation
          * shots : the list of the shots of a single hole
          * return : true if the number of shots before the ball gets onto the green is lower or equals to 2 under the par, false otherewise
          */
