@@ -37,8 +37,8 @@ namespace GreenSa.Models.GolfModel
             Random r = new Random();
             var holes = golfCourses[r.Next()%(golfCourses.Count)].Holes;
             //var holes = golfCourses[0].Holes;
-            DateTime date = new DateTime(2019, DateTime.Now.Month, (TestClassFactory.createdScorePartieCount % 28) + 1);
-            //DateTime date = DateTime.Now;
+            //DateTime date = new DateTime(2019, DateTime.Now.Month, (TestClassFactory.createdScorePartieCount % 28) + 1);
+            DateTime date = DateTime.Now;
             ScorePartie sp = new ScorePartie(date);
             List<Shot> shots = new List<Shot>();
             List<Club> clubs = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Club>(connection);
@@ -57,7 +57,7 @@ namespace GreenSa.Models.GolfModel
                     System.Diagnostics.Debug.WriteLine("randPutt = " + randPutt+ " randScore = "+ randScore+"\n");
                     for (int j = 0; j<randScore; ++j)
                     {
-                        shots.Add(new Shot(clubs[5], RandomEnumValue<Shot.ShotCategory>(), DateTime.Now));
+                        shots.Add(new Shot(clubs[2], RandomEnumValue<Shot.ShotCategory>(), DateTime.Now));
                     }
                     if (i == 7 && r.Next()%3 == 1)
                     {
@@ -79,7 +79,10 @@ namespace GreenSa.Models.GolfModel
             {
                 System.Diagnostics.Debug.WriteLine(sqlex.StackTrace);
             }
-            
+
+            List<Shot> shotss = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<Shot>(connection);
+            System.Diagnostics.Debug.WriteLine(shotss.Count);
+
             TestClassFactory.createdScorePartieCount++;
             return sp;
         }

@@ -120,7 +120,7 @@ namespace GreenSa.Models.GolfModel
         
         public Shot(Club club, ShotCategory catergory, DateTime date)
         {
-            this.Club = Club.PUTTER;
+            this.Club = club;
             this.InitPlace = null;
             this.Target = null;
             this.RealShot = null;
