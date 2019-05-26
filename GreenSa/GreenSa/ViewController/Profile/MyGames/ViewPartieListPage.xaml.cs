@@ -57,24 +57,6 @@ namespace GreenSa.ViewController.Profile.MyGames
                     //Sort in descending order of games date
                     scoreParties = (await StatistiquesGolf.getScoreParties()).OrderByDescending(d => d.DateDebut).ToList();
                 }
-                List<GolfCourse> allGolfCourses = await StatistiquesGolf.getGolfCourses();
-                string id = "";
-                //initializes the name of the golf course of each game 
-                foreach (ScorePartie sp in scoreParties)
-                {
-                    id = sp.scoreHoles[0].IdHole;
-                    foreach (GolfCourse gc in allGolfCourses)
-                    {
-                        foreach (Hole h in gc.Holes)
-                        {
-                            if (h.Id.Equals(id))
-                            {
-                                sp.GolfName = gc.Name;
-                                break;
-                            }
-                        }
-                    }
-                }
                 listPartie.ItemsSource = scoreParties;
             } catch (Exception e)
             {

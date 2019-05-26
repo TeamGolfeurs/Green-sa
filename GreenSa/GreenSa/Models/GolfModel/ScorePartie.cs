@@ -1,4 +1,5 @@
 ﻿using GreenSa.Models.Tools;
+using GreenSa.Persistence;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace GreenSa.Models.GolfModel
 {
@@ -29,7 +31,6 @@ namespace GreenSa.Models.GolfModel
             }
         }
 
-        [Ignore]
         public string GolfName { get; set; }
 
         public Tuple<int, int> GetScore()
@@ -42,10 +43,8 @@ namespace GreenSa.Models.GolfModel
             return new Tuple<int, int>(score, this.scoreHoles.Count);
         }
 
-        public ScorePartie()
+        public ScorePartie() : this(DateTime.Now)
         {
-            scoreHoles = new List<ScoreHole>();
-            DateDebut = DateTime.Now;
         }
 
         public ScorePartie(DateTime date)
@@ -60,6 +59,26 @@ namespace GreenSa.Models.GolfModel
         public void add(ScoreHole sh)
         {
             scoreHoles.Add(sh);
+            if (scoreHoles.Count == 1)//if first element added then init GolfName
+            {
+                var id = this.scoreHoles[0].Hole.Id;
+                System.Diagnostics.Debug.WriteLine("before");
+                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+                connection.CreateTable<GolfCourse>();
+                List<GolfCourse> allGolfCourses = SQLiteNetExtensions.Extensions.ReadOperations.GetAllWithChildren<GolfCourse>(connection);
+                foreach (GolfCourse gc in allGolfCourses)
+                {
+                    foreach (Hole h in gc.Holes)
+                    {
+                        if (h.Id.Equals(id))
+                        {
+                            this.GolfName = gc.Name;
+                            break;
+                        }
+                    }
+                }
+                System.Diagnostics.Debug.WriteLine("after");
+            }
         }
 
         /**
