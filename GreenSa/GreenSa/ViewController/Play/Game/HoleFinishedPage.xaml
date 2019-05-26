@@ -60,11 +60,11 @@
                    TextColor="White" FontSize="18" BackgroundColor="Gray" CornerRadius="30" Clicked="AddShotButtonClicked"/>
             
             <Label x:Name="numero" Text="Trou n°1 :" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
-                   TextColor="DarkSlateGray" FontSize="30"/>
+                   TextColor="Black" FontSize="30"/>
             <Label x:Name="par" Text="4" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
-                   TextColor="DarkSlateGray" FontSize="40"/>
+                   TextColor="Black" FontSize="40"/>
             <Label x:Name="score" Text="  " Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
-                   TextColor="DarkSlateGray" FontSize="40"/>
+                   TextColor="Black" FontSize="40"/>
             <Label x:Name="parlegende" Text="Par" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"
                    TextColor="Gray" FontSize="20"/>
             <Label x:Name="scorelegende" Text="Score" Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Start" FontAttributes="Bold"

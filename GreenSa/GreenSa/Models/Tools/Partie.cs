@@ -29,7 +29,7 @@ namespace GreenSa.Models.GolfModel
         }
         public List<Shot> Shots { get; set; }
         public List<Club> Clubs { get; set; }
-        private List<Hole> Holes;
+        public List<Hole> Holes;
         private List<Hole>.Enumerator itHole;
         public ScorePartie ScoreOfThisPartie { get; set; }
         public int holeFinishedCount;
@@ -110,6 +110,7 @@ namespace GreenSa.Models.GolfModel
                     ScoreHole sh = StatistiquesGolf.saveForStats(this, itHole.Current);
                     ScoreOfThisPartie.add(sh);
                     Shots.Clear();
+                    System.Diagnostics.Debug.WriteLine("okok");
                 } catch (SQLiteException e)
                 {
                     System.Diagnostics.Debug.WriteLine(e.StackTrace);
