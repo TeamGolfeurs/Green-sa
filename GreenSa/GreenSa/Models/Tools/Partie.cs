@@ -29,7 +29,7 @@ namespace GreenSa.Models.GolfModel
         }
         public List<Shot> Shots { get; set; }
         public List<Club> Clubs { get; set; }
-        private List<Hole> Holes;
+        public List<Hole> Holes;
         private List<Hole>.Enumerator itHole;
         public ScorePartie ScoreOfThisPartie { get; set; }
         public int holeFinishedCount;

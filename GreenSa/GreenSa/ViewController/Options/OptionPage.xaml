@@ -22,7 +22,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" FontSize="18" TextColor="DarkSlateGray" Margin="15, 0, 10, 0" Text="Mes statistiques seront sauvegardées lors d'une partie :" FontAttributes="Bold"></Label>
                     <Label x:Name="OnOffLabel" Grid.Row="0" Grid.Column="1" FontSize="21" TextColor="DarkSlateGray"  HorizontalOptions="End" Margin="0, 0, 55, 0" Text="Oui" VerticalOptions="Center"></Label>
-                    <Switch x:Name="OnOff" Toggled="Switch_Toggled" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End" Margin="0, 0, 5, 0"></Switch>
+                    <Switch x:Name="OnOff" IsToggled="True" Toggled="Switch_Toggled" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End" Margin="0, 0, 5, 0"></Switch>
                 </Grid>
                 <Button Margin="10, 0, 10, 0" Grid.Row="2" VerticalOptions="End" Clicked="dropStats" Text="Supprimer les statistiques" CornerRadius="15" BackgroundColor="#fa4b4b"/>
                 <Image Grid.Row="3" Source="fond_option_bot.png" VerticalOptions="End" HorizontalOptions="End"></Image>
