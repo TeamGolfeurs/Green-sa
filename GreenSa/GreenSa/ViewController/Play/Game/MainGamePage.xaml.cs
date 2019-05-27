@@ -33,62 +33,62 @@ namespace GreenSa.ViewController.Play.Game
 
             forceVent.Margin = new Thickness(35, 10, 0, 0);
             windImg.Margin = new Thickness(35, 5, 0, 0);
-            windImg.HeightRequest = responsiveDesign(25);
-            ball.HeightRequest = responsiveDesign(91);
-            ball.Margin = responsiveDesign(10);
-            radar.HeightRequest = responsiveDesign(92);
-            radar.Margin = responsiveDesign(10);
-            load.HeightRequest = responsiveDesign(92);
-            load.Margin = responsiveDesign(10);
-            backToRadar.HeightRequest = responsiveDesign(30);
-            backToRadar.Margin = new Thickness(responsiveDesign(215), 0, 0, responsiveDesign(10));
-            backToBall.HeightRequest = responsiveDesign(30);
-            backToBall.Margin = new Thickness(responsiveDesign(215), 0, 0, responsiveDesign(10));
-            clubs.HeightRequest = responsiveDesign(45);
-            clubs.Margin = new Thickness(responsiveDesign(15), 0, 0, 0);
-            ball_in.HeightRequest = responsiveDesign(45);
-            ball_in.Margin = new Thickness(0, 0, responsiveDesign(14), responsiveDesign(7));
+            windImg.HeightRequest = MainPage.responsiveDesign(25);
+            ball.HeightRequest = MainPage.responsiveDesign(91);
+            ball.Margin = MainPage.responsiveDesign(10);
+            radar.HeightRequest = MainPage.responsiveDesign(92);
+            radar.Margin = MainPage.responsiveDesign(10);
+            load.HeightRequest = MainPage.responsiveDesign(92);
+            load.Margin = MainPage.responsiveDesign(10);
+            backToRadar.HeightRequest = MainPage.responsiveDesign(30);
+            backToRadar.Margin = new Thickness(MainPage.responsiveDesign(215), 0, 0, MainPage.responsiveDesign(10));
+            backToBall.HeightRequest = MainPage.responsiveDesign(30);
+            backToBall.Margin = new Thickness(MainPage.responsiveDesign(215), 0, 0, MainPage.responsiveDesign(10));
+            clubs.HeightRequest = MainPage.responsiveDesign(45);
+            clubs.Margin = new Thickness(MainPage.responsiveDesign(15), 0, 0, 0);
+            ball_in.HeightRequest = MainPage.responsiveDesign(45);
+            ball_in.Margin = new Thickness(0, 0, MainPage.responsiveDesign(14), MainPage.responsiveDesign(7));
             numclub.TextColor = Color.FromHex("009245");
-            numclub.Margin = new Thickness(responsiveDesign(34), 0, 0, responsiveDesign(17));
-            numclub.FontSize = responsiveDesign(20);
+            numclub.Margin = new Thickness(MainPage.responsiveDesign(34), 0, 0, MainPage.responsiveDesign(17));
+            numclub.FontSize = MainPage.responsiveDesign(20);
 
-            numcoup.FontSize = responsiveDesign(40);
-            numcoup.Margin = responsiveDesign(-5);
-            parTrou.FontSize = responsiveDesign(15);
-            parTrou.Margin = responsiveDesign(38);
-            distTrou.FontSize = responsiveDesign(13);
-            distTrou.Margin = new Thickness(responsiveDesign(7), 0, 0, 0);
-            distTarget.FontSize = responsiveDesign(10);
-            distTarget.Margin = new Thickness(0, responsiveDesign(-4), 0, 0);
-            distGrid.Margin = new Thickness(0, responsiveDesign(3), responsiveDesign(15), 0);
-            forceVent.FontSize = responsiveDesign(12);
-            forceVent.Margin = new Thickness(responsiveDesign(28), responsiveDesign(23), 0, 0);
-            windImg.Margin = new Thickness(responsiveDesign(42), responsiveDesign(8), 0, 0);
-            windImg.HeightRequest = responsiveDesign(15);
+            numcoup.FontSize = MainPage.responsiveDesign(40);
+            numcoup.Margin = MainPage.responsiveDesign(-5);
+            parTrou.FontSize = MainPage.responsiveDesign(15);
+            parTrou.Margin = MainPage.responsiveDesign(38);
+            distTrou.FontSize = MainPage.responsiveDesign(13);
+            distTrou.Margin = new Thickness(MainPage.responsiveDesign(7), 0, 0, 0);
+            distTarget.FontSize = MainPage.responsiveDesign(10);
+            distTarget.Margin = new Thickness(0, MainPage.responsiveDesign(-4), 0, 0);
+            distGrid.Margin = new Thickness(0, MainPage.responsiveDesign(3), MainPage.responsiveDesign(15), 0);
+            forceVent.FontSize = MainPage.responsiveDesign(12);
+            forceVent.Margin = new Thickness(MainPage.responsiveDesign(28), MainPage.responsiveDesign(23), 0, 0);
+            windImg.Margin = new Thickness(MainPage.responsiveDesign(42), MainPage.responsiveDesign(8), 0, 0);
+            windImg.HeightRequest = MainPage.responsiveDesign(15);
             numclub.IsEnabled = false;
 
             clubselection.BackgroundColor = Color.FromRgba(0, 0, 0, 0.6);
-            clubselection.HeightRequest = responsiveDesign(300);
-            clubselection.WidthRequest = responsiveDesign(300);
-            clubselection.CornerRadius = responsiveDesign(25);
-            clubselection.Margin = new Thickness(responsiveDesign(10), 0, 0, responsiveDesign(135));
+            clubselection.HeightRequest = MainPage.responsiveDesign(300);
+            clubselection.WidthRequest = MainPage.responsiveDesign(300);
+            clubselection.CornerRadius = MainPage.responsiveDesign(25);
+            clubselection.Margin = new Thickness(MainPage.responsiveDesign(10), 0, 0, MainPage.responsiveDesign(135));
             ListClubsPartie.BackgroundColor = Color.Transparent;
-            ListClubsPartie.HeightRequest = responsiveDesign(165);
-            ListClubsPartie.WidthRequest = responsiveDesign(300);
-            ListClubsPartie.Margin = new Thickness(responsiveDesign(10), responsiveDesign(167), responsiveDesign(42), responsiveDesign(135));
+            ListClubsPartie.HeightRequest = MainPage.responsiveDesign(165);
+            ListClubsPartie.WidthRequest = MainPage.responsiveDesign(300);
+            ListClubsPartie.Margin = new Thickness(MainPage.responsiveDesign(10), MainPage.responsiveDesign(167), MainPage.responsiveDesign(42), MainPage.responsiveDesign(135));
 
             ListHole.BackgroundColor = Color.Transparent;
-            ListHole.HeightRequest = responsiveDesign(300);
-            ListHole.WidthRequest = responsiveDesign(100);
-            ListHole.Margin = new Thickness(responsiveDesign(225), responsiveDesign(74), responsiveDesign(10), responsiveDesign(120));
+            ListHole.HeightRequest = MainPage.responsiveDesign(300);
+            ListHole.WidthRequest = MainPage.responsiveDesign(100);
+            ListHole.Margin = new Thickness(MainPage.responsiveDesign(225), MainPage.responsiveDesign(74), MainPage.responsiveDesign(10), MainPage.responsiveDesign(120));
             ListHole.RowHeight = 40;
 
-            cardBackground.HeightRequest = responsiveDesign(50);
-            cardBackground.WidthRequest = responsiveDesign(50);
+            cardBackground.HeightRequest = MainPage.responsiveDesign(50);
+            cardBackground.WidthRequest = MainPage.responsiveDesign(50);
             cardBackground.CornerRadius = 100;
             cardBackground.BackgroundColor = Color.FromRgba(0, 0, 0, 0.5);
-            score.HeightRequest = responsiveDesign(100);
-            score.WidthRequest = responsiveDesign(100);
+            score.HeightRequest = MainPage.responsiveDesign(100);
+            score.WidthRequest = MainPage.responsiveDesign(100);
 
             GestionGolfs.calculAverageAsync(partie.Clubs);//Load average club distances
 
@@ -186,10 +186,6 @@ namespace GreenSa.ViewController.Play.Game
             holFini = 0;
         }
 
-        private int responsiveDesign(int pix)
-        {
-            return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
-        }
 
         /**
          * Localizes the user with his GPS
@@ -313,8 +309,8 @@ namespace GreenSa.ViewController.Play.Game
          */
         private void showCard()
         {
-            cardBackground.Margin = new Thickness(0, 0, responsiveDesign(135), responsiveDesign(305));
-            score.Margin = new Thickness(0, 0, responsiveDesign(110), responsiveDesign(280));
+            cardBackground.Margin = new Thickness(0, 0, MainPage.responsiveDesign(135), MainPage.responsiveDesign(305));
+            score.Margin = new Thickness(0, 0, MainPage.responsiveDesign(110), MainPage.responsiveDesign(280));
             ListHole.IsVisible = true;
         }
 
@@ -324,8 +320,8 @@ namespace GreenSa.ViewController.Play.Game
         private void hideCard()
         {
             ListHole.IsVisible = false;
-            cardBackground.Margin = new Thickness(0, 0, responsiveDesign(10), responsiveDesign(305));
-            score.Margin = new Thickness(0, 0, responsiveDesign(-15), responsiveDesign(280));
+            cardBackground.Margin = new Thickness(0, 0, MainPage.responsiveDesign(10), MainPage.responsiveDesign(305));
+            score.Margin = new Thickness(0, 0, MainPage.responsiveDesign(-15), MainPage.responsiveDesign(280));
         }
 
         /**

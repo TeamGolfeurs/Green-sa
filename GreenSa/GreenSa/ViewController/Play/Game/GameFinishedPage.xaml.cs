@@ -20,13 +20,13 @@ namespace GreenSa.ViewController.Play.Game
         {
             InitializeComponent();
             this.partie = partie;
-            coupe.HeightRequest = responsiveDesign(80);
-            coupe.Margin = new Thickness(0, responsiveDesign(10), 0, 0);
-            numero.Margin = new Thickness(responsiveDesign(25), responsiveDesign(25), 0, 0);
-            par.Margin = new Thickness(responsiveDesign(205), responsiveDesign(25), 0, 0);
-            score.Margin = new Thickness(responsiveDesign(265), responsiveDesign(25), 0, 0);
-            parlegende.Margin = new Thickness(responsiveDesign(200), responsiveDesign(5), 0, 0);
-            scorelegende.Margin = new Thickness(responsiveDesign(260), responsiveDesign(5), 0, 0);
+            coupe.HeightRequest = MainPage.responsiveDesign(80);
+            coupe.Margin = new Thickness(0, MainPage.responsiveDesign(10), 0, 0);
+            numero.Margin = new Thickness(MainPage.responsiveDesign(25), MainPage.responsiveDesign(25), 0, 0);
+            par.Margin = new Thickness(MainPage.responsiveDesign(205), MainPage.responsiveDesign(25), 0, 0);
+            score.Margin = new Thickness(MainPage.responsiveDesign(265), MainPage.responsiveDesign(25), 0, 0);
+            parlegende.Margin = new Thickness(MainPage.responsiveDesign(200), MainPage.responsiveDesign(5), 0, 0);
+            scorelegende.Margin = new Thickness(MainPage.responsiveDesign(260), MainPage.responsiveDesign(5), 0, 0);
         }
 
         /**
@@ -41,6 +41,9 @@ namespace GreenSa.ViewController.Play.Game
             System.Diagnostics.Debug.WriteLine(partie.ScoreOfThisPartie.scoreHoles.Count);
         }
 
+        /**
+         * Updates the label text describing the user's score
+         */
         private void updateScoreText()
         {
             int sco = 0;
@@ -58,6 +61,9 @@ namespace GreenSa.ViewController.Play.Game
             }
         }
 
+        /**
+         * Updates the label text describing the hole's par
+         */
         private void updateParText()
         {
 
@@ -79,6 +85,9 @@ namespace GreenSa.ViewController.Play.Game
             await Navigation.PopToRootAsync();
         }
 
+        /**
+         * This method is called when the button to consult the game card is clicked
+         */
         private async void OnCardClicked(object sender, EventArgs e)
         {
             Profil profil = StatistiquesGolf.getProfil();
@@ -86,14 +95,12 @@ namespace GreenSa.ViewController.Play.Game
             await Navigation.PushModalAsync(new DetailsPartiePage(partie.ScoreOfThisPartie));
         }
 
+        /**
+         * Cancels the back button action
+         */
         protected override bool OnBackButtonPressed()
         {
             return true;
-        }
-
-        private int responsiveDesign(int pix)
-        {
-            return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
         }
     }
 }

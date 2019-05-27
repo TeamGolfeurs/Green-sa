@@ -26,21 +26,21 @@ namespace GreenSa.ViewController.Play.Game
             InitializeComponent();
             this.partie = partie;
             this.partie.holeFinishedCount = 0;
-            hole_finished.Margin = new Thickness(-8, responsiveDesign(19), 0, responsiveDesign(20));
-            ListShotPartie.Margin = new Thickness(responsiveDesign(10), responsiveDesign(34), responsiveDesign(10), responsiveDesign(58));
-            club.Margin = new Thickness(responsiveDesign(30), responsiveDesign(5), 0, 0);
-            distance.Margin = new Thickness(responsiveDesign(140), responsiveDesign(5), 0, 0);
-            pen.Margin = new Thickness(responsiveDesign(242), responsiveDesign(5), 0, 0);
-            numero.Margin = new Thickness(responsiveDesign(25), responsiveDesign(25), 0, 0);
-            par.Margin = new Thickness(responsiveDesign(205), responsiveDesign(25), 0, 0);
-            score.Margin = new Thickness(responsiveDesign(265), responsiveDesign(25), 0, 0);
-            parlegende.Margin = new Thickness(responsiveDesign(200), responsiveDesign(5), 0, 0);
-            scorelegende.Margin = new Thickness(responsiveDesign(260), responsiveDesign(5), 0, 0);
+            hole_finished.Margin = new Thickness(-8, MainPage.responsiveDesign(19), 0, MainPage.responsiveDesign(20));
+            ListShotPartie.Margin = new Thickness(MainPage.responsiveDesign(10), MainPage.responsiveDesign(34), MainPage.responsiveDesign(10), MainPage.responsiveDesign(58));
+            club.Margin = new Thickness(MainPage.responsiveDesign(30), MainPage.responsiveDesign(5), 0, 0);
+            distance.Margin = new Thickness(MainPage.responsiveDesign(140), MainPage.responsiveDesign(5), 0, 0);
+            pen.Margin = new Thickness(MainPage.responsiveDesign(242), MainPage.responsiveDesign(5), 0, 0);
+            numero.Margin = new Thickness(MainPage.responsiveDesign(25), MainPage.responsiveDesign(25), 0, 0);
+            par.Margin = new Thickness(MainPage.responsiveDesign(205), MainPage.responsiveDesign(25), 0, 0);
+            score.Margin = new Thickness(MainPage.responsiveDesign(265), MainPage.responsiveDesign(25), 0, 0);
+            parlegende.Margin = new Thickness(MainPage.responsiveDesign(200), MainPage.responsiveDesign(5), 0, 0);
+            scorelegende.Margin = new Thickness(MainPage.responsiveDesign(260), MainPage.responsiveDesign(5), 0, 0);
             next.BackgroundColor = Color.FromHex("39B54A");
-            next.Margin = new Thickness(0, responsiveDesign(5), responsiveDesign(5), responsiveDesign(5));
-            stop.Margin = new Thickness(responsiveDesign(5), responsiveDesign(5), 0, responsiveDesign(5));
+            next.Margin = new Thickness(0, MainPage.responsiveDesign(5), MainPage.responsiveDesign(5), MainPage.responsiveDesign(5));
+            stop.Margin = new Thickness(MainPage.responsiveDesign(5), MainPage.responsiveDesign(5), 0, MainPage.responsiveDesign(5));
             next.WidthRequest = stop.Width;
-            add.Margin = new Thickness(responsiveDesign(5), responsiveDesign(15), responsiveDesign(5), 0);
+            add.Margin = new Thickness(MainPage.responsiveDesign(5), MainPage.responsiveDesign(15), MainPage.responsiveDesign(5), 0);
         }
 
         /**
@@ -59,11 +59,6 @@ namespace GreenSa.ViewController.Play.Game
             {
                 next.Text = "Fin de partie";
             }
-        }
-
-        private int responsiveDesign(int pix)
-        {
-            return (int)((pix * 4.1 / 1440.0) * Application.Current.MainPage.Width);
         }
 
         /**
