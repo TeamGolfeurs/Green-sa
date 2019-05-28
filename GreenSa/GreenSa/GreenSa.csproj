@@ -40,41 +40,45 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="MarkupExtension\EmbeddedImage.cs" />
+    <Compile Include="Models\ViewElements\DisplayScoreCard.cs" />
+    <Compile Include="Models\Tools\TestClassFactory.cs" />
     <Compile Include="Models\GolfModel\Club.cs" />
     <Compile Include="Models\GolfModel\ScorePartie.cs" />
     <Compile Include="Models\GolfModel\ScoreHole.cs" />
     <Compile Include="Models\GolfModel\Shot.cs" />
-    <Compile Include="Models\GolfModel\StatistiquesGolf.cs" />
+    <Compile Include="Models\Tools\StatistiquesGolf.cs" />
     <Compile Include="Models\GolfModel\Hole.cs" />
     <Compile Include="Models\Tools\GolfXMLReader.cs" />
     <Compile Include="Models\Tools\GPS_Maps\AddGolfMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomMap.cs" />
     <Compile Include="Models\Tools\GPS_Maps\CustomPin.cs" />
     <Compile Include="Models\Tools\MyPosition.cs" />
-    <Compile Include="Models\Profiles\Profil.cs" />
+    <Compile Include="Models\GolfModel\Profil.cs" />
     <Compile Include="Models\Tools\Services\GpsService.cs" />
     <Compile Include="Models\Tools\Services\NotAvaibleException.cs" />
     <Compile Include="Models\Tools\Services\WindInfo.cs" />
     <Compile Include="Models\Tools\Services\WindService.cs" />
     <Compile Include="Models\ViewElements\BaseViewModel.cs" />
     <Compile Include="Models\ViewElements\GolfCourseListViewModel.cs" />
+    <Compile Include="Models\ViewElements\MySwitch.cs" />
+    <Compile Include="Models\ViewElements\NumericValidationBehavior.cs" />
+    <Compile Include="Models\ViewElements\ShotListViewModel.cs" />
     <Compile Include="Models\ViewElements\MyLabel.cs" />
     <Compile Include="Models\ViewElements\MyButton.cs" />
+    <Compile Include="Models\ViewElements\ScoreCardCell.cs" />
     <Compile Include="Persistence\ISQLiteDb.cs" />
-    <Compile Include="Models\GolfModel\GestionGolfs.cs" />
+    <Compile Include="Models\Tools\GestionGolfs.cs" />
     <Compile Include="Models\GolfModel\GolfCourse.cs" />
-    <Compile Include="Models\GolfModel\Partie.cs" />
+    <Compile Include="Models\Tools\Partie.cs" />
+    <Compile Include="Models\Exceptions\EmptyStringException.cs" />
     <Compile Include="ViewController\MesGolfs\GolfsManager.xaml.cs">
       <DependentUpon>GolfsManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewController\Options\DatabaseDeletionPage.xaml.cs">
-      <DependentUpon>DatabaseDeletionPage.xaml</DependentUpon>
+    <Compile Include="ViewController\Options\OptionPage.xaml.cs">
+      <DependentUpon>OptionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewController\MesGolfs\AddGolf\ImportGolfCourse.xaml.cs">
       <DependentUpon>ImportGolfCourse.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewController\MesGolfs\AddGolf\OptionTabbedPage.xaml.cs">
-      <DependentUpon>OptionTabbedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewController\Profile\MyClubs\ClubSelectionPage.xaml.cs">
       <DependentUpon>ClubSelectionPage.xaml</DependentUpon>
@@ -86,9 +90,6 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewController\Play\ClubSelectionInGamePage.xaml.cs">
-      <DependentUpon>ClubSelectionInGamePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewController\Play\Game\GameFinishedPage.xaml.cs">
       <DependentUpon>GameFinishedPage.xaml</DependentUpon>
     </Compile>
@@ -104,35 +105,32 @@
     <Compile Include="ViewController\Profile\MyGames\ViewPartieListPage.xaml.cs">
       <DependentUpon>ViewPartieListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewController\Profile\Options\ChooseAvatar.xaml.cs">
+      <DependentUpon>ChooseAvatar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewController\Profile\Options\ProfileOptions.xaml.cs">
       <DependentUpon>ProfileOptions.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewController\Profile\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\GeneralStatPage.xaml.cs">
+      <DependentUpon>GeneralStatPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\DistanceClubPage.xaml.cs">
       <DependentUpon>DistanceClubPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\PartieStatPage.xaml.cs">
+      <DependentUpon>PartieStatPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewController\Profile\Statistiques\StatistiqueMainTabbedPage.xaml.cs">
       <DependentUpon>StatistiqueMainTabbedPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewController\Profile\Statistiques\StatistiquesGolfCourse\GolfCourseStatPage.xaml.cs">
+      <DependentUpon>GolfCourseStatPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewController\Test\SeeBDContent.xaml.cs">
       <DependentUpon>SeeBDContent.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\ScorePage.xaml.cs">
-      <DependentUpon>ScorePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\ScoreVsParPage.xaml.cs">
-      <DependentUpon>ScoreVsParPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewController\Profile\Statistiques\SpecificStatistiques\GIRPage.xaml.cs">
-      <DependentUpon>GIRPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewController\Profile\Statistiques\StatistiquesGolfCourse\StatGolfSelectionPage.xaml.cs">
-      <DependentUpon>StatGolfSelectionPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewController\Profile\Statistiques\StatistiquesGolfCourse\StatGolfCoursePage.xaml.cs">
-      <DependentUpon>StatGolfCoursePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -145,26 +143,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Ressources\Clubs\Putter.xml" />
-    <EmbeddedResource Include="ViewController\Profile\Statistiques\SpecificStatistiques\ScorePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ViewController\Profile\Statistiques\SpecificStatistiques\ScoreVsParPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ViewController\Profile\Statistiques\SpecificStatistiques\GIRPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ViewController\Profile\Statistiques\StatistiquesGolfCourse\StatGolfSelectionPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ViewController\Profile\Statistiques\StatistiquesGolfCourse\StatGolfCoursePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microcharts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -203,18 +181,33 @@
     <Reference Include="SQLitePCLRaw.core, Version=1.1.10.86, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SQLitePCLRaw.core.1.1.10\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.core.dll</HintPath>
     </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\portable-net45+win8+wp8+wpa81\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="Windows.Foundation.UniversalApiContract">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Windows Kits\10\References\10.0.16299.0\Windows.Foundation.UniversalApiContract\5.0.0.0\Windows.Foundation.UniversalApiContract.winmd</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Essentials.1.0.1\lib\netstandard1.0\Xamarin.Essentials.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.3.6.0.220655\lib\netstandard1.0\Xamarin.Forms.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.Forms.Maps, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.Maps.2.5.0.122203\lib\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.Maps.dll</HintPath>
-    </Reference>
     <Reference Include="SkiaSharp">
       <HintPath>..\..\packages\SkiaSharp.1.60.0\lib\portable-net45+win8+wpa81+wp8\SkiaSharp.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Maps, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.Maps.3.6.0.220655\lib\netstandard1.0\Xamarin.Forms.Maps.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Maps.Design, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.Maps.3.6.0.220655\lib\netstandard1.0\Xamarin.Forms.Maps.Design.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.3.6.0.220655\lib\netstandard1.0\Xamarin.Forms.Platform.dll</HintPath>
@@ -277,10 +270,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\Play\ClubSelectionInGamePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="ViewController\Play\Game\HoleFinishedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -315,13 +304,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewController\MesGolfs\AddGolf\OptionTabbedPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ViewController\Options\DatabaseDeletionPage.xaml">
+    <EmbeddedResource Include="ViewController\Options\OptionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -349,7 +332,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="ViewController\Profile\Options\ChooseAvatar.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\MesGolfs\GolfsManager.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -358,6 +346,24 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewController\Profile\Options\ProfileOptions.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ViewController\Profile\Statistiques\SpecificStatistiques\GeneralStatPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ViewController\Profile\Statistiques\StatistiquesGolfCourse\GolfCourseStatPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ViewController\Profile\Statistiques\SpecificStatistiques\PartieStatPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -12,25 +12,14 @@ namespace GreenSa.Models.GolfModel
     {
 
         public static Club PUTTER = new Club("Putter", 0);
-        [Ignore]
-        public bool selected { get; set; }//used for IHM
+
 
         [PrimaryKey]
         public string Name { get; set; }
-        public int DistanceMoyenne { get; set; }
-        [Ignore]
-        public Tuple<int,int,int> DistanceMoyenneJoueur
-        {//moy,min,max
-             get
-            {
-                IEnumerable<Tuple<Club, double>> listWith1item = StatistiquesGolf.getAverageDistanceForClubsAsync(c => c.Equals(this));
-                if (listWith1item.Count() == 0)
-                    return new Tuple<int, int, int>( DistanceMoyenne, 0, 0);
-               Tuple<double, double> minMax = StatistiquesGolf.getMinMaxDistanceForClubs(this);
 
-                return new Tuple<int, int, int>((int)listWith1item.First().Item2, (int)minMax.Item1, (int)minMax.Item2);
-            }
-        }
+        public bool selected { get; set; }//Does the user have this club on his bag
+
+        public int DistanceMoyenne { get; set; }
 
         public Club()
         {
@@ -46,7 +35,10 @@ namespace GreenSa.Models.GolfModel
         }
 
 
-           
+        public Boolean IsPutter()
+        {
+            return this.Equals(Club.PUTTER);
+        }
 
         public override string ToString()
         {

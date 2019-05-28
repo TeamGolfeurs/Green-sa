@@ -11,20 +11,16 @@ namespace GreenSa.Models.ViewElements
     {
         public MyButton() : base()
         {
-            this.BackgroundColor = Color.FromHex("0A7210");
-            this.BorderColor = Color.FromHex("0C5E11");
+            this.BackgroundColor = Color.FromHex("39B54A");
             this.TextColor = Color.White;
             this.CornerRadius = 50;
-            this.BorderWidth = 2;
         }
         public MyButton(Color bc, Double opacity) : base()
         {
             this.BackgroundColor = bc;
             this.Opacity = opacity;
-            this.BorderColor = bc;
             this.TextColor = Color.White;
             this.CornerRadius = 50;
-            this.BorderWidth = 2;
         }
     }
 }

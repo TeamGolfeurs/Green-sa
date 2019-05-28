@@ -17,7 +17,7 @@ using GreenSa.Models.Profiles;
 
 using SQLite;
 using System.Collections.ObjectModel;
-
+using GreenSa.Models.Tools;
 
 namespace GreenSa.ViewController.Profile.Options
 {
@@ -30,100 +30,99 @@ namespace GreenSa.ViewController.Profile.Options
         public ProfileOptions()
         {
             InitializeComponent();
-
-            cielhaut.BackgroundColor = Color.FromHex("52D0DD");
-            cielbas.BackgroundColor = Color.FromHex("52D0DD");
-
-            nuage.HeightRequest = haut.Height.Value * 120;
-
-            var flecheGestureRecognizer = new TapGestureRecognizer();
-            flecheGestureRecognizer.Tapped += (s, e) =>
-            {
-                OnArrowClicked(s, e);
-            };
-            fleche.GestureRecognizers.Add(flecheGestureRecognizer);
-
-            //Initialisation de la BDD
-            this.InitBDD();
-            LocalUser = GetProfile("localUser");
-            
-            //elements
-            username.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
-            username.Text = LocalUser.Username;
-
-            index.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
-            index.Text = LocalUser.Index.ToString();
-
-            golfref.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
-            golfref.Text = LocalUser.GolfRef;
-
+            photo.Margin = new Thickness(0, MainPage.responsiveDesign(30), 0, MainPage.responsiveDesign(5));
+            photo.HeightRequest = MainPage.responsiveDesign(140);
+            modifier.Margin = MainPage.responsiveDesign(15);
+            modifier.HeightRequest = MainPage.responsiveDesign(30);
+            arrow.FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label));
+            arrow.Margin = MainPage.responsiveDesign(-15);
+            arrow.HeightRequest = MainPage.responsiveDesign(80);
+            arrow.WidthRequest = MainPage.responsiveDesign(80);
+            golfreftitle.FontSize = 25;
+            indextitle.FontSize = 25;
+            usernametitle.FontSize = 25;
+            golfref.FontSize = 20;
+            index.FontSize = 20;
+            username.FontSize = 20;
+            DBconnection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            updateLabels();
+            boutons.Margin = new Thickness(30, 15, 30, 15);
         }
 
-        public void InitBDD()
+        protected override void OnAppearing()
         {
-            DBconnection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            System.Diagnostics.Debug.WriteLine("connection ok");
-            DBconnection.CreateTable<Profil>();
-            System.Diagnostics.Debug.WriteLine("create ok");
-            if (!DBconnection.Table<Profil>().Any())
+            updateLabels();
+        }
+
+        /**
+         * Updates different labels of the view
+         */
+        private void updateLabels()
+        {
+            LocalUser = StatistiquesGolf.getProfil();
+            username.Text = LocalUser.Username;
+            index.Text = LocalUser.Index.ToString();
+            golfref.Text = LocalUser.GolfRef;
+            photo.Source = "user" + LocalUser.Photo + ".png";
+        }
+
+        /**
+         * When the name is completed by the user, update the profile in the database
+         */
+        private void OnNameCompleted(object sender, EventArgs e)
+        {
+            Entry entry = (Entry) sender;
+            if (entry.Text != "")
             {
-                AddLocalUser();
+                LocalUser.Username = entry.Text;
+                DBconnection.Update(LocalUser);
+            } else
+            {
+                entry.Text = LocalUser.Username;
             }
         }
 
-        public void AddLocalUser()
-        {
-            DBconnection.Insert(new Profil());
-            System.Diagnostics.Debug.WriteLine("user added");
-        }
-
-        public Profil GetProfile(string id)
-        {
-            System.Diagnostics.Debug.WriteLine("get ok");
-            return DBconnection.Table<Profil>().FirstOrDefault(pro => pro.Id == id);
-        }
-
-        private void OnNameCompleted(object sender, EventArgs e)
-        {
-            LocalUser.Username = ((Entry)sender).Text;
-            DBconnection.Update(LocalUser);
-        }
-
+        /**
+         * When the reference golf is completed by the user, update the profile in the database
+         */
         private void OnGolfRefCompleted(object sender, EventArgs e)
         {
-            LocalUser.GolfRef = ((Entry)sender).Text;
-            DBconnection.Update(LocalUser);
+            Entry entry = (Entry)sender;
+            if (entry.Text != "")
+            {
+                LocalUser.GolfRef = entry.Text;
+                DBconnection.Update(LocalUser);
+            }
+            else
+            {
+                entry.Text = LocalUser.GolfRef;
+            }
         }
 
-        private void OnIndexCompleted(object sender, EventArgs e)
+        /**
+         * When the index is completed by the user, update the profile in the database and the average distance of each club
+         */
+        private async void OnIndexCompleted(object sender, EventArgs e)
         {
             LocalUser.Index = double.Parse(((Entry)sender).Text);
             DBconnection.Update(LocalUser);
-        }
-        /**
-            * Méthode déclenchée au click sur le bouton "Profil"
-            * Redirige vers la page "profil"
-            * */
-        async private void OnPartiesClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new MyGames.ViewPartieListPage());
-        }
-        /**
-            * Méthode déclenchée au click sur le bouton "MesGolfs"
-            * Redirige vers la page "GolfSelection"
-            * */
-        async private void OnStatsClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new Statistiques.SpecificStatistiques.DistanceClubPage());
+            List<Club> clubs = await GestionGolfs.getListClubsAsync(null);
+            List<Club> xmlClubs = GolfXMLReader.getListClubFromXMLFiles();
+            foreach (Club club in clubs)
+            {
+                club.DistanceMoyenne = xmlClubs.Find(c => c.Name.Equals(club.Name)).DistanceMoyenne;
+            }
+            DBconnection.UpdateAll(clubs);
         }
 
-        /**
-            * Méthode déclenchée au click sur le bouton "Back"
-            * Redirige vers la page "MainMenu"
-            * */
         async private void OnArrowClicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
+        }
+
+        async private void OnPhotoClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ChooseAvatar());
         }
     }
 }

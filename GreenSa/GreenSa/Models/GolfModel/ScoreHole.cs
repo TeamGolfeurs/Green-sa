@@ -18,6 +18,7 @@ namespace GreenSa.Models.GolfModel
         [OneToOne(CascadeOperations = CascadeOperation.CascadeRead)]
         public Hole Hole { get; set; }
         public int Score { get; set; }
+        public int Penality { get; set; }
         public bool Hit { get; set; }
         public DateTime Date { get; set; }
         public int NombrePutt{get;set ;}
@@ -31,11 +32,12 @@ namespace GreenSa.Models.GolfModel
 
         }
 
-        public ScoreHole(Hole hole, int score,bool hit,int nbPutt,DateTime date)
+        public ScoreHole(Hole hole, int penality, int score,bool hit,int nbPutt,DateTime date)
         {
             this.Hole = hole;
             this.Score = score;
             this.Hit = hit;
+            this.Penality = penality;
             Date = date;
             NombrePutt = nbPutt;
         }

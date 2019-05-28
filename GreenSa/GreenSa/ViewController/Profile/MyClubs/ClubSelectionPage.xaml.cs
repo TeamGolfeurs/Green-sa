@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Diagnostics;
+using GreenSa.Persistence;
 
 namespace GreenSa.ViewController.Profile.MyClubs
 {
@@ -17,20 +18,14 @@ namespace GreenSa.ViewController.Profile.MyClubs
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ClubSelectionPage : ContentPage
     {
-        
-        Partie p;
-
-        public ClubSelectionPage(Partie partie)
+        public ClubSelectionPage()
         {
             InitializeComponent();
-            p = partie;
         }
 
         /**
-       * Méthode qui s'execute automatiquement au chargement de la page
-       * Demande à la classe GestionGolf la liste des clubs
-       * et met à jour la listView
-       * */
+         * This method is executed when the page is loaded
+         * */
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -38,28 +33,31 @@ namespace GreenSa.ViewController.Profile.MyClubs
             listviewclub.ItemsSource = await GestionGolfs.getListClubsAsync(f);
         }
 
-        /*
-         * Appelée à la validation de la selection
-         * doit mettre à jour la partie, et ouvrir la page du jeu (MainGamePage)
-         * */
+        /**
+         * This method is called when the button to valid the club list is clicked
+         */
         private async void onValidClubSelection(object sender, EventArgs e)
         {
-
             Btn.IsEnabled = false;
             Btn.Text = "En cours...";
+            Btn.TextColor = Color.White;
+            SQLite.SQLiteAsyncConnection connection = DependencyService.Get<ISQLiteDb>().GetConnectionAsync();
+            await connection.CreateTableAsync<Club>();
             List<Club> clubselected = new List<Club>();
-            foreach (Club c in listviewclub.ItemsSource){
+            bool atLeastOneSelected = false;
+            foreach (Club c in listviewclub.ItemsSource) {//updates each club 'selected' attribute in the database
                 if(c.selected){
-                    clubselected.Add(c);
+                    atLeastOneSelected = true;
                 }
+                await SQLiteNetExtensionsAsync.Extensions.WriteOperations.UpdateWithChildrenAsync(connection, c);
             }
-            if (clubselected.Count == 0)
+            if (!atLeastOneSelected)//checks if at least one club is selected
             {
                 await DisplayAlert("Aucun club selectionné", "Vous devez selectionner au moins un club", "ok");
-                return;
+            } else
+            {
+                await Navigation.PopAsync();
             }
-            p.Clubs = clubselected;
-            await Navigation.PushAsync(new ViewController.Play.Game.MainGamePage(p),false);
             Btn.IsEnabled = true;
             Btn.Text = "Valider";
         }

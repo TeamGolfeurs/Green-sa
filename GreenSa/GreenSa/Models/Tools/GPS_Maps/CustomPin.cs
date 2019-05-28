@@ -25,19 +25,11 @@ namespace GreenSa.Models.Tools.GPS_Maps
 
         private CustomMap map;
 
-        //
-        // Résumé :
-        //     The latitude and longitude of the Xamarin.Forms.Maps.Pin.
-        //
-        // Notes :
-        //     To be added.
-        public new Xamarin.Forms.Maps.Position Position {
+        public new Position Position {
             get {return base.Position;}
             set {base.Position=value;
-                //Debug.WriteLine("UPDATE SET POSITION IN CUSTOM PIN");
             }
         }
-
 
         public CustomPin(string type) : base()
         {
@@ -59,15 +51,5 @@ namespace GreenSa.Models.Tools.GPS_Maps
             return base.ToString();
         }
 
-      
-
-
-        /*public event PropertyChangedEventHandler PropertyChanged;
-
-
-        protected void OnPropertyChanged(string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }*/
     }
 }

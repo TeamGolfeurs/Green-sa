@@ -13,8 +13,9 @@ namespace GreenSa.Models.GolfModel
     {
         public enum ScorePossible
         {
-            ALBATROS = -3,EAGLE =-2,BIRDIE=-1,PAR=0,BOGEY=1,DOUBLE_BOUGEY=2,MORE=3            
+            ALBATROS = -3,EAGLE =-2,BIRDIE=-1,PAR=0,BOGEY=1,DOUBLE_BOUGEY=2,MORE=3
         }
+
         [PrimaryKey]
         public string Id
         {
@@ -48,12 +49,12 @@ namespace GreenSa.Models.GolfModel
 
         }
 
-
         public Hole(MyPosition p, int par)
         {
             this.Position = p;
             this.Par = par;
         }
+
         public Hole(MyPosition p,int par,GolfCourse golfCourse)
         {
             this.Position = p;
@@ -65,12 +66,18 @@ namespace GreenSa.Models.GolfModel
         {
             return Id+"" ;
         }
+
         public override bool Equals(object obj)
         {
             if (!(obj is Hole))
                 return false;
             Hole h = (Hole)obj;
             return h.Position.Equals(Position) && h.Par==Par;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }

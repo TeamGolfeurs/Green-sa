@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TK.CustomMap;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 //using Xamarin.Forms.GoogleMaps;

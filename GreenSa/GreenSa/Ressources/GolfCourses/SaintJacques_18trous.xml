@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <GolfCourse>
-  <Name>Saint Jacques Parcours 18 trous</Name>
+  <Name>18 trous Saint Jacques</Name>
   <NbTrous>18</NbTrous>
   <NomGolf>Saint Jacques</NomGolf>
   <Coordinates>
@@ -15,7 +15,7 @@
       <lng>-1,7384228110313416</lng>
     </Trou>
     <Trou>
-      <par>4</par>      
+      <par>4</par>    
       <lat>48,06191124481533</lat>
       <lng>-1,7402896285057068</lng>
     </Trou>
@@ -34,9 +34,6 @@
       <lat>48,06192696256268</lat>
       <lng>-1,745017021894455</lng>
     </Trou>
-
-    
-    
     <Trou>
       <par>4</par>
       <lat>48,06523415940042</lat>

@@ -17,7 +17,7 @@ namespace GreenSa.Models.Tools.GPS_Maps
     {
         private List<Position>   routeCoordinates = new List<Position>();
 
-
+        //List of the significative points of the map (use to draw the blue polyline)
         public List<Position> RouteCoordinates
         {
             get {
@@ -56,8 +56,6 @@ namespace GreenSa.Models.Tools.GPS_Maps
 
         public CustomMap()
         {
-
-
             //message which come from the markerListenerDrag (android only, ios set direclty)
             //when the target pin is moved =>update the model position of the target
             MessagingCenter.Subscribe<CustomPin>(this, CustomPin.UPDATEDMESSAGE, (sender) => {
@@ -84,7 +82,6 @@ namespace GreenSa.Models.Tools.GPS_Maps
                 Position = pos,
                 Label = "Trou"
             };
-            
         }
         
         public CustomMap(MapSpan region) : base(region)
@@ -93,49 +90,66 @@ namespace GreenSa.Models.Tools.GPS_Maps
             RouteCoordinates.Add(region.Center);
             RouteCoordinates.Add(region.Center);
             RouteCoordinates.Add(region.Center);
-
         }
 
-        public void setUserPosition(MyPosition pos,int nbShot)
+        /**
+         * Sets the user pin to the given position and update its label with the bumber of shots currently performed
+         * pos : the new position
+         * nbShot : the number of shots
+         */
+        public void setUserPosition(MyPosition pos, int nbShot)
         {
             UserPin.Position = new Position(pos.X, pos.Y);
             UserPin.Label = "Vous : Coup " + nbShot;
-            TargetPin.Position = calculationNewInterTarget();
+            TargetPin.Position = getDefaultTargetPosition();
             update();
 
         }
 
-
+        /**
+         * Set the hole pin to a new position and update its label with the par of the given hole
+         * hole : the hole
+         */
         public void setHolePosition(Hole hole)
         {
             HolePin.Position = new Position(hole.Position.X, hole.Position.Y);
             HolePin.Label = "Par "+hole.Par;
         }
 
-        public Position calculationNewInterTarget()
+        /**
+         * Gets the default target position which is the middle of the user and the hole
+         */
+        public Position getDefaultTargetPosition()
         {
-            return new Position(  (UserPin.Position.Latitude+ HolePin.Position.Latitude )/2, 
-                                    (UserPin.Position.Longitude + HolePin.Position.Longitude)/2);
+            return new Position((UserPin.Position.Latitude + HolePin.Position.Latitude )/2, (UserPin.Position.Longitude + HolePin.Position.Longitude)/2);
         }
 
-
-
+        /**
+         * Updates the map
+         */
         public void update()
         {
+            //updates pin position
             Pins.Clear();
             this.Pins.Add(UserPin);
             this.Pins.Add(TargetPin);
             this.Pins.Add(HolePin);
-            /*Device.BeginInvokeOnMainThread(() =>
-            {*/
+
+            //updates update routeCoordinates list
             var list = new List<Position>();
             list.Add(UserPin.Position);
             list.Add(TargetPin.Position);
             list.Add(HolePin.Position);
             this.RouteCoordinates = list;
-            // });
 
-            this.MoveToRegion(MapSpan.FromCenterAndRadius(TargetPin.Position, Distance.FromMiles(0.12)));
+            //moves the map so that the target pin is in the middle
+            var dist = getDistanceUserHole();
+            /* the radius is computed by linear regression so that the zoom is varying with shot distance: 
+               x =  Dist  |  25   |  50   |  100  |  150  |  200  |  250  |  300  |  350  |  400  |  450  |  500  |	
+               y = Radius | 0.020 | 0.030 | 0.055 | 0.073 | 0.095 | 0.105 | 0.123 | 0.128 | 0.140 | 0.145 | 0.150 |
+             */
+            var radius = dist * 0.000278 + 0.0265;
+            this.MoveToRegion(MapSpan.FromCenterAndRadius(TargetPin.Position, Distance.FromMiles(radius)));
         }
 
 
@@ -157,6 +171,16 @@ namespace GreenSa.Models.Tools.GPS_Maps
                                 TargetPin.Position.Latitude, TargetPin.Position.Longitude, "M");
         }
 
+        /**
+         * Computes the distance between two positions in a specific unit
+         * lat1 : the latitude of the first position
+         * lon1 : the longitude of the first position
+         * lat2 : the latitude of the second position
+         * lon2 : the longitude of the second position
+         * unit : K to gets kilometers
+         *        M to gets meters
+         *        N to gets nautic miles
+         */
         public static double DistanceTo(double lat1, double lon1, double lat2, double lon2, string unit)
         {
             var rlat1 = Math.PI * lat1 / 180;
@@ -178,6 +202,9 @@ namespace GreenSa.Models.Tools.GPS_Maps
             return dist;
         }
 
+        /**
+         * Sets the target pin movable
+         */
         internal void setTargetMovable()
         {
 
@@ -185,17 +212,24 @@ namespace GreenSa.Models.Tools.GPS_Maps
             update();
         }
 
+        /**
+         * Locks the target pin
+         */
         public void lockTarget()
         {
             TargetPin.type = CustomPin.LOCKED;
             update();
         }
-        public new event PropertyChangedEventHandler PropertyChanged;
 
+        /**
+         * Wraps the user pin postion in a MyPosition object
+         */
         internal MyPosition getUserPosition()
         {
             return new MyPosition(userPin.Position.Latitude, userPin.Position.Longitude);
         }
+
+        public new event PropertyChangedEventHandler PropertyChanged;
 
         protected override void OnPropertyChanged(string propertyName = null)
         {

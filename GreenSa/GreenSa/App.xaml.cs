@@ -1,4 +1,5 @@
-﻿using GreenSa.ViewController;
+﻿using GreenSa.Models.GolfModel;
+using GreenSa.ViewController;
 using GreenSa.ViewController.Play.Game;
 using System;
 using System.Collections.Generic;
@@ -14,13 +15,18 @@ namespace GreenSa
         public App()
         {
             InitializeComponent();
-
             MainPage = new NavigationPage(new MainPage());
         }
 
+
         protected override void OnStart()
         {
-            // Handle when your app starts
+            //Create some data to test some features
+            int number = 0;
+            for (int i = 0; i < number; i++)
+            {
+                TestClassFactory.CreateScorePartie();
+            }
         }
 
         protected override void OnSleep()

@@ -16,6 +16,8 @@ using Java.Lang;
 using GreenSa.Droid;
 using Xamarin.Forms;
 using GreenSa.Models.Tools.GPS_Maps;
+using Math = System.Math;
+using GreenSa.Models.GolfModel;
 
 namespace Greensa.Droid
 {
@@ -36,13 +38,17 @@ namespace Greensa.Droid
             //send message to CustomMap AND  mainGamePage
             MessagingCenter.Send<CustomPin>(pin,CustomPin.UPDATEDMESSAGE);
 
+            cmr.updateCircle();
+
 
             cmr.UpdatePolyLinePos(false,marker.Position);
+            //cmr.UpdateShotCone(Math.PI / 4);
         }
 
         public void OnMarkerDragEnd(Marker marker)
         {
             cmr.UpdatePolyLinePos(false,marker.Position);
+            //cmr.UpdateShotCone(Math.PI / 4);
             marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.Target));
 
         }
@@ -50,6 +56,7 @@ namespace Greensa.Droid
         public void OnMarkerDragStart(Marker marker)
         {
             cmr.UpdatePolyLinePos(false, marker.Position);
+            //cmr.UpdateShotCone(Math.PI / 4);
             marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.BigTarget));
             
         }

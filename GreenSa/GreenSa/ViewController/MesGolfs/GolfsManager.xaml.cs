@@ -1,5 +1,6 @@
 ﻿using GreenSa.Models.GolfModel;
 using GreenSa.Models.ViewElements;
+using GreenSa.Persistence;
 using GreenSa.ViewController.Option;
 using System;
 using System.Collections.Generic;
@@ -24,55 +25,62 @@ namespace GreenSa.ViewController.MesGolfs
         public GolfsManager()
         {
             InitializeComponent();
-            
         }
 
-        /**
-         * Méthode qui s'execute automatiquement au chargement de la page GolfsManager
-         * */
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            //Recupere la liste des golfs
             List<GolfCourse> res = await GestionGolfs.getListGolfsAsync(null);
-            //Met à jour la liste des golfs dans la vue
+            //Update the list of golf courses
             gclvm = new GolfCourseListViewModel(res);
-            String str = "";
-            /*foreach (GolfCourse gc in gclvm.GolfCourses)
-            {
-                str += gc.ToString();
-            }
-            await this.DisplayAlert("Test", str, "test");*/
             BindingContext = gclvm;
         }
 
         /**
-         * Méthode déclenchée au click sur le bouton "Ajouter un golf"
-         * Redirige vers la page "ImportGolfCourse"
-         * */
+         * This method is called when tho button to add a new golf course is clicked
+         */
         async private void OnAddGolfClicked(object sender, EventArgs e)
         {
             try
             {
                 await Navigation.PushAsync(new ImportGolfCourse());
-            } catch (TargetInvocationException exception)
+            }
+            catch (TargetInvocationException exception)
             {
                 Debug.WriteLine(exception.StackTrace);
             }
         }
 
+        /** 
+         * Deletes a golf course from the ListView and from the database
+         */
         private async void DeleteGolfCourse(object sender, EventArgs e)
         {
             var image = sender as Image;
             var tgr = image.GestureRecognizers[0] as TapGestureRecognizer;
-            var name = tgr.CommandParameter.ToString();
-            var confirmDelete = await this.DisplayAlert("Suppression d'un golf", "Voulez vous vraiment supprimer le golf : "+ name + " ?", "Oui", "Non");
+            //for each line, the golf course name is stored in the cross image CommandParameter attribute to be able to identify an image to its golf course
+            var name = tgr.CommandParameter.ToString(); 
+            var confirmDelete = await this.DisplayAlert("Suppression d'un golf", "Voulez vous vraiment supprimer le golf : " + name + " ?", "Oui", "Non");
             if (confirmDelete)
             {
+                //remove golf course cell from ListView
                 var toDelete = image.BindingContext as GolfCourse;
                 var vm = BindingContext as GolfCourseListViewModel;
                 vm.RemoveGolfCourse.Execute(toDelete);
-                await this.DisplayAlert("Suppression d'un golf", name + " a été supprimé avec succès !", "Ok");
+
+                SQLite.SQLiteConnection connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+                try
+                {
+                    //remove golf course from database
+                    connection.BeginTransaction();
+                    connection.Delete<GolfCourse>(name);
+                    connection.Commit();
+                }
+                catch (Exception bddException)
+                {
+                    await this.DisplayAlert("Erreur avec la base de donnée", bddException.StackTrace, "Ok");
+                    connection.Rollback();
+                }
             }
         }
     }

@@ -12,7 +12,7 @@ using Foundation;
 using GreenSa.iOS;
 using GreenSa.Models.GolfModel;
 using GreenSa.Models.Tools.GPS_Maps;
-using GreenSa.ViewController.PartieGolf.Game;
+using GreenSa.ViewController.Play.Game;
 using MapKit;
 using ObjCRuntime;
 using UIKit;
@@ -50,7 +50,7 @@ namespace GreenSa.iOS
                 catch (Exception e) { }
             });
 
-            MessagingCenter.Subscribe<Partie>(this, "updateTheCircle", (sender) => {
+            /*MessagingCenter.Subscribe<Partie>(this, "updateTheCircle", (sender) => {
                 try
                 {
                     updateCircle(sender.CurrentClub.DistanceMoyenneJoueur);
@@ -65,7 +65,7 @@ namespace GreenSa.iOS
 
                 }
                 catch (Exception e) { }
-            });
+            });*/
         }
         
 

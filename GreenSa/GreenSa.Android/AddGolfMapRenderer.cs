@@ -1,26 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Xamarin.Forms.Maps.Android;
 using Xamarin.Forms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Gms.Maps;
-using static Android.Gms.Maps.GoogleMap;
 using Xamarin.Forms;
 using GreenSa.Models.Tools.GPS_Maps;
 using Greensa.Droid;
 using GreenSa.Droid;
-using System.Collections.ObjectModel;
-using GreenSa.Models.GolfModel;
-using GreenSa.ViewController.Play.Game;
+
 
 [assembly: ExportRenderer(typeof(AddGolfMap), typeof(AddGolfMapRenderer))]
 namespace Greensa.Droid
@@ -28,14 +19,50 @@ namespace Greensa.Droid
     public class AddGolfMapRenderer : MapRenderer
     {
 
+        GoogleMap map;
+        private List<Marker> Markers;
+        private Boolean isParValidate;
+
         public AddGolfMapRenderer(Context context) : base(context)
         {
-            this.pinsCount = 0;
+            this.Markers = new List<Marker>();
+            this.isParValidate = true;
+            //Suscribes to get a notification to delete the last pin
+            MessagingCenter.Subscribe<Object>(this, "validPar", (obj) =>
+            {
+                if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
+                {
+                    int par = (int)obj;
+                    this.Markers[this.Markers.Count - 1].Title = this.Markers[this.Markers.Count - 1].Title + " / Par : " + par;
+                }
+                this.isParValidate = true;
+            });
+            //Suscribes to get a notification to delete the last pin
+            MessagingCenter.Subscribe<Object>(this, "deleteLastPin", (obj) =>
+            {
+                if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
+                {
+                    var markerToDelete = this.Markers[this.Markers.Count - 1];
+                    this.Markers.RemoveAt(this.Markers.Count - 1);
+                    markerToDelete.Remove();
+                    this.isParValidate = true;
+                }
+            });
+            //Suscribes to get a notification to delete the last pin
+            MessagingCenter.Subscribe<Object>(this, "deleteAllPins", (obj) =>
+            {
+                if (this.Markers.Any()) //prevent IndexOutOfRangeException for empty list
+                {
+                    foreach (Marker markerToDelete in this.Markers)
+                    {
+                        markerToDelete.Remove();
+                    }
+                    this.Markers.Clear();
+                    this.isParValidate = true;
+                }
+            });
         }
 
-        GoogleMap map;
-        int pinsCount;
-        Marker selectedMarker;
 
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
@@ -57,53 +84,27 @@ namespace Greensa.Droid
                 return;
         }
 
-        private class MyMarkerClickListener : Java.Lang.Object, IOnMarkerClickListener
-        {
-            AddGolfMapRenderer context;
-            public MyMarkerClickListener(AddGolfMapRenderer context)
-            {
-                this.context = context;
-            }
 
-            public bool OnMarkerClick(Marker marker)
-            {
-                this.context.selectedMarker = marker;
-                MessagingCenter.Send<Object>(marker, "pinClicked");
-                return true;
-            }
-        }
-
-        protected override void OnMapReady(Android.Gms.Maps.GoogleMap map)
+        protected override void OnMapReady(GoogleMap map)
         {
             base.OnMapReady(map);
             this.map = map;
-            MessagingCenter.Subscribe<Object>(this, "deleteSelectedPin", (obj) =>
-            {
-                this.selectedMarker.Remove();
-            });
-            /*map.MarkerClick += (sender, e) =>
-            {
-                this.selectedMarker = sender as Marker;
-                MessagingCenter.Send<Object>(sender, "pinClicked");
-            };*/
-            map.SetOnMarkerClickListener(new MyMarkerClickListener(this));
-            
             map.MapClick += (sender, e) =>
             {
-                if (this.pinsCount < 18)
+                if (this.Markers.Count < 18 && this.isParValidate)
                 {
-                    this.pinsCount++;
                     var pin = new Pin()
                     {
-                        Label = "Trou n°"+this.pinsCount,
+                        Label = "Trou n°"+ (this.Markers.Count+1),
                         Position = new Position(e.Point.Latitude, e.Point.Longitude)
                     };
                     MessagingCenter.Send<Pin>(pin, "getAddGolfMapPins");
                     var marker = base.CreateMarker(pin);
-                    marker.Draggable(true);
                     BitmapDescriptor ic = BitmapDescriptorFactory.FromResource(Resource.Drawable.flag);
                     marker.SetIcon(ic);
                     var addedMarker = this.map.AddMarker(marker);
+                    this.Markers.Add(addedMarker);
+                    this.isParValidate = false;
                 }
             };
         }

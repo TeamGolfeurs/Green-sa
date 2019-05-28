@@ -11,85 +11,105 @@ using GreenSa.ViewController.Option;
 using GreenSa.ViewController.MesGolfs;
 using GreenSa.ViewController.Profile;
 using GreenSa.Models.GolfModel;
+using GreenSa.Models.Profiles;
 using GreenSa.Models.ViewElements;
+using SQLite;
+using System.Collections.ObjectModel;
+using GreenSa.Persistence;
+using GreenSa.ViewController.Profile.Statistiques;
 
 namespace GreenSa.ViewController.Profile
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProfilePage : ContentPage
     {
+        private SQLiteConnection DBconnection;
+        private Profil LocalUser;
+        private StatistiqueMainTabbedPage statPage;
+
         public ProfilePage()
         {
             InitializeComponent();
+            this.statPage = null;
 
-            cielhaut.BackgroundColor = Color.FromHex("52D0DD");
-            cielbas.BackgroundColor = Color.FromHex("52D0DD");
+            photo.Margin = new Thickness(0, MainPage.responsiveDesign(25), 0, MainPage.responsiveDesign(32));
+            photo.HeightRequest = MainPage.responsiveDesign(140);
+            user.FontSize = 25;
+            engrenage.Margin = MainPage.responsiveDesign(10);
+            engrenage.HeightRequest = MainPage.responsiveDesign(30);
+            arrow.Margin = MainPage.responsiveDesign(10);
+            arrow.HeightRequest = MainPage.responsiveDesign(25);
+            golfref.Margin = new Thickness(0, MainPage.responsiveDesign(26), 0, 0);
+            index.Margin = new Thickness(0, MainPage.responsiveDesign(26), 0, 0);
+            niv.Margin = new Thickness(0, MainPage.responsiveDesign(26), 0, 0);
+            clubs.Margin = new Thickness(0, 0, 0, MainPage.responsiveDesign(15));
+            parties.Margin = new Thickness(0, 0, 0, MainPage.responsiveDesign(15));
+            stats.Margin = new Thickness(0, 0, 0, MainPage.responsiveDesign(15));
+            golfref.FontSize = 17;
+            index.FontSize = 17;
+            niv.FontSize = 17;
+            golfreftitle.FontSize = 20;
+            indextitle.FontSize = 20;
+            nivtitle.FontSize = 20;
+            clubstitle.FontSize = 19;
+            partiestitle.FontSize = 19;
+            statstitle.FontSize = 19;
+            boutons.Margin = new Thickness(10, 0, 10, 15);
 
-            nuage.HeightRequest = haut.Height.Value * 120;
+            updateLabels();
+        }
 
-            var flecheGestureRecognizer = new TapGestureRecognizer();
-            flecheGestureRecognizer.Tapped += (s, e) =>
-            {
-                OnArrowClicked(s, e);
-            };
-            fleche.GestureRecognizers.Add(flecheGestureRecognizer);
-
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (s, e) =>
-            {
-                OnOptionsClicked(s, e);
-            };
-            engrenage.GestureRecognizers.Add(tapGestureRecognizer);
-
-            //buttons
-            clubs.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
-            clubs.BorderWidth = 0;
-
-            parties.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
-            parties.BorderWidth = 0;
-
-            stats.BackgroundColor = Color.FromRgba(0, 0, 0, 0.2);
-            stats.BorderWidth = 0;
+        protected override void OnAppearing()
+        {
+            updateLabels();
         }
 
         /**
-         * Méthode déclenchée au click sur le bouton "Jouer"
-         * Redirige vers la page "GolfSelection"
-         * */
+         * Updates the labels describing the information of the user
+         */
+        public void updateLabels()
+        {
+            LocalUser = StatistiquesGolf.getProfil();
+            user.Text = LocalUser.Username;
+            index.Text = LocalUser.Index.ToString();
+            golfref.Text = LocalUser.GolfRef;
+            photo.Source = "user" + LocalUser.Photo.ToString() + ".png";
+
+            if (LocalUser.Index > 30) { niv.Text = "Debutant"; }
+            else if (LocalUser.Index > 18) { niv.Text = "Moyen"; }
+            else if (LocalUser.Index > 11) { niv.Text = "Confirmé"; }
+            else if (LocalUser.Index > 5) { niv.Text = "Très bon joueur"; }
+            else { niv.Text = "Compétitif"; }
+        }
+
+
+        /**
+         * These methods are called when the corresponding button is pressed and redirects to a new page  
+         */
         async private void OnClubsClicked(object sender, EventArgs e)
         {
-            Partie p = new Partie();
-            await Navigation.PushAsync(new MyClubs.ClubSelectionPage(p));
+            await Navigation.PushAsync(new MyClubs.ClubSelectionPage());
         }
-        /**
-         * Méthode déclenchée au click sur le bouton "Profil"
-         * Redirige vers la page "profil"
-         * */
+
         async private void OnPartiesClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new MyGames.ViewPartieListPage());
         }
-        /**
-         * Méthode déclenchée au click sur le bouton "MesGolfs"
-         * Redirige vers la page "GolfSelection"
-         * */
+
         async private void OnStatsClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Statistiques.SpecificStatistiques.DistanceClubPage());
+            if (this.statPage == null)
+            {
+                this.statPage = new StatistiqueMainTabbedPage();
+            }
+            await Navigation.PushAsync(this.statPage);
         }
-        /**
-         * Méthode déclenchée au click sur le bouton "Option"
-         * Redirige vers la page "OptionTabbedPage"
-         * */
+
         async private void OnOptionsClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new Options.ProfileOptions());
         }
 
-        /**
-         * Méthode déclenchée au click sur le bouton "Back"
-         * Redirige vers la page "MainMenu"
-         * */
         async private void OnArrowClicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();

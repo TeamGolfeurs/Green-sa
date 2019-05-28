@@ -1,9 +1,11 @@
 ﻿using GreenSa.Models.GolfModel;
+using GreenSa.Models.Profiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GreenSa.ViewController.Profile.MyGames;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,31 +20,86 @@ namespace GreenSa.ViewController.Play.Game
         {
             InitializeComponent();
             this.partie = partie;
-            if (partie.ScoreOfThisPartie.scoreHoles.Count < partie.GolfCourse.Holes.Count)
+            coupe.HeightRequest = MainPage.responsiveDesign(80);
+            coupe.Margin = new Thickness(0, MainPage.responsiveDesign(10), 0, 0);
+            numero.Margin = new Thickness(MainPage.responsiveDesign(25), MainPage.responsiveDesign(25), 0, 0);
+            par.Margin = new Thickness(MainPage.responsiveDesign(205), MainPage.responsiveDesign(25), 0, 0);
+            score.Margin = new Thickness(MainPage.responsiveDesign(265), MainPage.responsiveDesign(25), 0, 0);
+            parlegende.Margin = new Thickness(MainPage.responsiveDesign(200), MainPage.responsiveDesign(5), 0, 0);
+            scorelegende.Margin = new Thickness(MainPage.responsiveDesign(260), MainPage.responsiveDesign(5), 0, 0);
+        }
+
+        /**
+         * This method is executed when the page is loaded
+         * */
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            updateScoreText();
+            updateParText();
+            numero.Text = partie.Holes.Count.ToString() + " trous :";
+            System.Diagnostics.Debug.WriteLine(partie.ScoreOfThisPartie.scoreHoles.Count);
+        }
+
+        /**
+         * Updates the label text describing the user's score
+         */
+        private void updateScoreText()
+        {
+            int sco = 0;
+            foreach (ScoreHole sh in partie.ScoreOfThisPartie.scoreHoles)
             {
-                save.IsToggled = false;
-                save.IsEnabled = false;
+                sco += sh.Score;
+            }
+            if (sco >= 0)
+            {
+                score.Text = "+" + sco.ToString();
+            }
+            else
+            {
+                score.Text = sco.ToString();
             }
         }
 
         /**
-       * Méthode qui s'execute automatiquement au chargement de la page
-       * Affiche le résumé de la partie avec possibilité de correction et de ne pas enregistrer cette partie dans les stats
-       * */
-        protected override void OnAppearing()
+         * Updates the label text describing the hole's par
+         */
+        private void updateParText()
         {
-            base.OnAppearing();
+
+            int count = 0;
+            foreach (ScoreHole sh in partie.ScoreOfThisPartie.scoreHoles)
+            {
+                count += sh.Hole.Par;
+            }
+                par.Text = count.ToString();
         }
 
+        /**
+         * This method is called when the button to go back to main menu is clicked
+         */
         private async void OnGoBackClicked(object sender, EventArgs e)
         {
-            await partie.gameFinished(save.IsEnabled && save.IsToggled);
-            OnBackButtonPressed();
+            Profil profil = StatistiquesGolf.getProfil();
+            await partie.gameFinished(profil.SaveStats);
+            await Navigation.PopToRootAsync();
         }
 
+        /**
+         * This method is called when the button to consult the game card is clicked
+         */
+        private async void OnCardClicked(object sender, EventArgs e)
+        {
+            Profil profil = StatistiquesGolf.getProfil();
+            await partie.gameFinished(profil.SaveStats);
+            await Navigation.PushModalAsync(new DetailsPartiePage(partie.ScoreOfThisPartie));
+        }
+
+        /**
+         * Cancels the back button action
+         */
         protected override bool OnBackButtonPressed()
         {
-            Navigation.PopToRootAsync();
             return true;
         }
     }

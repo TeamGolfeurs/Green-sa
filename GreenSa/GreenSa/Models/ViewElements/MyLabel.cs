@@ -11,7 +11,7 @@ namespace GreenSa.Models.ViewElements
     {
         public MyLabel() : base()
         {
-            this.TextColor = Color.FromHex("0A7210");
+            this.TextColor = Color.FromHex("39B54A");
         }
     }
 }

@@ -12,59 +12,58 @@ namespace GreenSa.ViewController.Profile.MyGames
         
         public DetailsPartiePage(ScorePartie sp)
         {
-            
             InitializeComponent();
-
-            //Le Stacklayout contient un label pour le nom du golf et un GridLayout pour faire un tableau de stat par trou
-
-            //Création GridLayout en c#
-            var grid = new Grid();
-            grid.BackgroundColor = Color.Black;
-            grid.ColumnSpacing = 5;
-            /* grid.ColumnDefinitions.Add(new ColumnDefinition {  });
-             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
-             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
-             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
-             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
-             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
-             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });*/
-            var la = new Label { Text = "Partie du "+ sp.DateString , BackgroundColor = Color.White, FontAttributes = FontAttributes.Bold, HorizontalTextAlignment = TextAlignment.Center, };
-            gridContent.Children.Add(la);
-
-            //Création des noms des colonnes 
-            var trou = new Label { Text = "Trou", BackgroundColor=Color.White };
-            var par = new Label { Text = "Par", BackgroundColor = Color.White };
-            var score = new Label { Text = "Score", BackgroundColor = Color.White };
-            var hit = new Label { Text = "Hit", BackgroundColor = Color.White };
-            var nbPutt = new Label { Text = "Nb putt", BackgroundColor = Color.White };
-            grid.Children.Add(trou, 0, 0);
-            grid.Children.Add(par, 1, 0);
-            grid.Children.Add(score, 2, 0);
-            grid.Children.Add(hit, 3, 0);
-            grid.Children.Add(nbPutt, 4, 0);
-            int nb = 1;
-            //On parcout tous le dictionnaire
+            List<DisplayScoreCard> list = new List<DisplayScoreCard>();
+            int i = 1;
+            int totPar = 0;
+            int totPutt = 0;
+            int totPen = 0;
+            var totScore = 0;
+            //computes the total number of pars, putts, penality shots and shots of this game and creates a list of DisplayScoreCard (one by hole)
             foreach (ScoreHole sh in sp.scoreHoles)
             {
-                var n = new Label { Text = nb+"", BackgroundColor = Color.White };
-
-                var parLab = new Label { Text = sh.Hole.Par+"", BackgroundColor = Color.White };
-                var scor = new Label { Text = sh.Score+"", BackgroundColor = Color.White };
-                var hitted = new Label { Text = sh.Hit?"Oui":"Non", BackgroundColor = Color.White };
-                var nbPut = new Label { Text = sh.NombrePutt+"", BackgroundColor = Color.White };
-                
-                grid.Children.Add(n, 0, nb);
-                grid.Children.Add(parLab, 1, nb);
-                grid.Children.Add(scor, 2, nb);
-                grid.Children.Add(hitted, 3, nb);
-                grid.Children.Add(nbPut, 4, nb);
-                nb++;
+                list.Add(new DisplayScoreCard(i, sh));
+                i++;
+                totPar += sh.Hole.Par;
+                totPutt += sh.NombrePutt;
+                totPen += sh.Penality;
+                totScore += (sh.Score + sh.Hole.Par);
             }
+            listScore.ItemsSource = list;
 
-            //On rajoute le grid dans le stacklayout en dessous du label du nom du golf
-            gridContent.Children.Add(grid);
+            //manages the number of shots that the user did over the par of the golf course (top right hand corner of the view)
+            var scoreDelta = totScore - totPar;
+            var sdAbs = Math.Abs(scoreDelta);
+            if (scoreDelta < 0)
+            {
+                score.Text = "-" + sdAbs;
+            }
+            else
+            {
+                score.Text = "+" + scoreDelta;
+            }
+            if (sdAbs >= 100) {
+                score.FontSize = 25;
+                score.Margin = new Thickness(MainPage.responsiveDesign(32), MainPage.responsiveDesign(33), 0, 0);
+            }
+            else if (sdAbs >= 10)
+            {
+                score.FontSize = 30;
+                score.Margin = new Thickness(MainPage.responsiveDesign(35), MainPage.responsiveDesign(29), 0, 0);
+            }
+            else
+            {
+                score.Margin = new Thickness(MainPage.responsiveDesign(39), MainPage.responsiveDesign(27), 0, 0);
+            }
+            title.Margin = new Thickness(MainPage.responsiveDesign(65), MainPage.responsiveDesign(20), 0, 0);
+            totalPar.Text = totPar + "";
+            totalPutt.Text = totPutt + "";
+            totalPen.Text = totPen + "";
+            totalScore.Text = totScore + "";
+
+            partie.Text = sp.GolfName + " :";
+            date.Text = sp.DateString;
         }
-
-       
+    
     }
 }

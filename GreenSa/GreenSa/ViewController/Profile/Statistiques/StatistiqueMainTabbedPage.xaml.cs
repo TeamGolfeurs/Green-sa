@@ -9,31 +9,36 @@ using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Diagnostics;
-
+using GreenSa.ViewController.Play;
+using GreenSa.ViewController.Profile.MyGames;
 
 namespace GreenSa.ViewController.Profile.Statistiques
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StatistiqueMainTabbedPage : TabbedPage
     {
+
+        private GeneralStatPage generalStatPage;
+        private GolfSelectionPage golfSelectionPage;
+        private ViewPartieListPage partieSelectionPage;
+
         public StatistiqueMainTabbedPage()
         {
             InitializeComponent();
-            var Page1 = new DistanceClubPage();
-            Page1.Title = "Distance Clubs";
-            this.Children.Add(Page1);
+            this.BarBackgroundColor = Color.FromHex("0A7210");
+            this.BarTextColor = Color.White;
 
-            var Page2 = new ScorePage();
-            Page2.Title = "Score";
-            this.Children.Add(Page2);
+            this.generalStatPage = new GeneralStatPage();
+            this.generalStatPage.Title = "Général";
+            this.Children.Add(this.generalStatPage);
 
-            var Page3 = new ScoreVsParPage();
-            Page3.Title = "Score par Par";
-            this.Children.Add(Page3);
+            this.golfSelectionPage = new GolfSelectionPage();
+            this.golfSelectionPage.Title = "Par parcours";
+            this.Children.Add(this.golfSelectionPage);
 
-            var Page4 = new GIRPage();
-            Page4.Title = "GIR";
-            this.Children.Add(Page4);
+            this.partieSelectionPage = new ViewPartieListPage(1);
+            this.partieSelectionPage.Title = "Par partie";
+            this.Children.Add(this.partieSelectionPage);
         }
 
         protected override void OnAppearing()
