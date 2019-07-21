@@ -140,7 +140,7 @@ namespace GreenSa.ViewController.Play.Game
                 loadCard();
                 Hole nextHole = partie.getNextHole();
                 map.setHolePosition(nextHole);
-                numcoup.Text = partie.getCurrentHoleNumero() + "";
+                numcoup.Text = partie.getCurrentHoleNumero() + "";                              
                 parTrou.Text = "PAR " + partie.getNextHole().Par.ToString();
                 MyPosition position = new MyPosition(0, 0);
                 //make sure that the GPS is avaible
@@ -278,6 +278,13 @@ namespace GreenSa.ViewController.Play.Game
                 score.Text = "+" + coups.ToString();
             } else {
                 score.Text = coups.ToString();
+            }
+            if (coups >= 10) {
+                score.FontSize = 26;
+            }
+            else
+            {
+                score.FontSize = 28;
             }
         }
 
@@ -556,6 +563,7 @@ namespace GreenSa.ViewController.Play.Game
         protected override bool OnBackButtonPressed()
         {
             Profil profil = StatistiquesGolf.getProfil();
+            System.Diagnostics.Debug.WriteLine(this.partie.holeFinishedCount);
             Device.BeginInvokeOnMainThread(async () =>
             {
                 //the user has to confirm his click
@@ -563,21 +571,21 @@ namespace GreenSa.ViewController.Play.Game
                 {
                     if (profil.SaveStats)//check wether the user wants to save his stats or not (a switch in option page manages this choice)
                     {
-                        if (await DisplayAlert("Sauvegarder", "Voulez vous sauvegarder cette partie ?", "Oui", "Non"))
-                        {
-                            if (this.partie.holeFinishedCount == 0)//check if at least one hole was finished
-                            {
-                                await this.DisplayAlert("Erreur", "Vous devez au moins avoir fait 1 trou pour enregistrer une partie", "Ok");
-                            }
-                            else
-                            {
-                                await Navigation.PushAsync(new GameFinishedPage(partie));
-                            }
-                        }
-                        else
+                        if (this.partie.holeFinishedCount <= 0)
                         {
                             base.OnBackButtonPressed();
                             await Navigation.PopToRootAsync();
+                        } else
+                        {
+                            if (await DisplayAlert("Sauvegarder", "Voulez vous sauvegarder cette partie ?", "Oui", "Non"))
+                            {
+                                await Navigation.PushAsync(new GameFinishedPage(partie));
+                            }
+                            else
+                            {
+                                base.OnBackButtonPressed();
+                                await Navigation.PopToRootAsync();
+                            }
                         }
                     } else
                     {

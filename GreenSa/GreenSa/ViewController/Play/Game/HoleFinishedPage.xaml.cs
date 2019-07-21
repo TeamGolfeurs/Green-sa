@@ -25,7 +25,6 @@ namespace GreenSa.ViewController.Play.Game
         {
             InitializeComponent();
             this.partie = partie;
-            this.partie.holeFinishedCount = 0;
             hole_finished.Margin = new Thickness(-8, MainPage.responsiveDesign(19), 0, MainPage.responsiveDesign(20));
             ListShotPartie.Margin = new Thickness(MainPage.responsiveDesign(10), MainPage.responsiveDesign(34), MainPage.responsiveDesign(10), MainPage.responsiveDesign(58));
             club.Margin = new Thickness(MainPage.responsiveDesign(30), MainPage.responsiveDesign(5), 0, 0);
