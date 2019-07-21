@@ -279,6 +279,13 @@ namespace GreenSa.ViewController.Play.Game
             } else {
                 score.Text = coups.ToString();
             }
+            if (coups >= 10) {
+                score.FontSize = 26;
+            }
+            else
+            {
+                score.FontSize = 28;
+            }
         }
 
         /**

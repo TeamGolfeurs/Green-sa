@@ -8,7 +8,7 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
-	<application android:label="  ">
+	<application android:label="Green'Sa">
 		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDl9BagDICekDiRBq7HNvGiHzAStLw-8UI" />
 	</application>
 </manifest>

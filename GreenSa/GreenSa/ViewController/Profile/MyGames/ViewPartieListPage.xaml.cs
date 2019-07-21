@@ -92,7 +92,7 @@ namespace GreenSa.ViewController.Profile.MyGames
                 {
                     partie.nextHole();//skip holes that was already done
                 }
-                partie.holeFinishedCount++;//needs to increment because this attibute is initialized to -1 for some reasons
+                //partie.holeFinishedCount++;//needs to increment one last time because this attibute is initialized to -1 to start at 0 after first main game page appearing
                 await Navigation.PushAsync(new Play.Game.MainGamePage(partie), false);
             }
         }
